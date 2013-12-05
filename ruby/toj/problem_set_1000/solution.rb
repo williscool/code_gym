@@ -1,4 +1,2 @@
-a = ARGV[0]
-b = ARGV[1]
-
-puts a + b
+#!/usr/bin/env ruby
+puts gets.split(" ").map{|x| x.to_i}.reduce(:+)
