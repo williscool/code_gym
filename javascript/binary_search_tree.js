@@ -2,8 +2,7 @@
 // sys.puts(sys.inspect(someVariable));
 //
 // working BST
-// also need a post order traversal for storing
-// http://leetcode.com/2010/09/saving-binary-search-tree-to-file.html
+// add / remove / travese in, pre, and post order
 
 var Node = function (val) { 
   return {left: null, right: null, value: val};
@@ -89,7 +88,7 @@ BST.prototype = {
      // no need to look to remove node if it wasn't found
       if (!!found){ // http://james.padolsey.com/javascript/truthy-falsey/
        var current = found[0];
-       var parent = found[1];
+           parent = found[1];
       
           //figure out how many children
           childCount = (!!current.left ? 1 : 0) + (!!current.right ?  1 : 0);
@@ -207,8 +206,8 @@ BST.prototype = {
     
     },
 
-    traverse: function(process){
-        
+    traverse: function(process, order){
+
       //helper function
       function inOrder(node){
           if (node){
@@ -227,12 +226,58 @@ BST.prototype = {
               }
           }        
       }
+
+      function preOrder(node){
+          if (node){
+
+              //call the process method on this node
+              process.call(this, node);
+              
+              //traverse the left subtree
+              if (node.left !== null){
+                  preOrder(node.left);
+              }            
+              
+              //traverse the right subtree
+              if (node.right !== null){
+                  postOrder(node.right);
+              }
+          }        
+      }
+
+      // useful for storing
+      // http://leetcode.com/2010/09/saving-binary-search-tree-to-file.html
+      function postOrder(node){
+          if (node){
+              
+              //traverse the left subtree
+              if (node.left !== null){
+                  postOrder(node.left);
+              }            
+              
+          
+              //traverse the right subtree
+              if (node.right !== null){
+                  postOrder(node.right);
+              }
+
+              //call the process method on this node
+              process.call(this, node);
+          }        
+      }
+
       
       //start with the root
-      inOrder(this.root);    
-    },
-    traversePostOrder: function(){
-    
+      if(order == 'pre') {
+        preOrder(this.root);
+      }
+      else if (order == 'post') {
+        postOrder(this.root);    
+      } else{
+        //default to in Order
+        inOrder(this.root);    
+      }
+
     },
     size: function(){
       var length = 0;
@@ -244,12 +289,12 @@ BST.prototype = {
       return length;
     },
 
-    toArray: function(){
+    toArray: function(order){
       var result = [];
       
       this.traverse(function(node){
           result.push(node.value);
-      });
+      }, order);
       
       return result;
     },
