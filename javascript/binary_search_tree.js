@@ -1,7 +1,7 @@
-//var sys = require("util");
+// var sys = require("util");
+// sys.puts(sys.inspect(someVariable));
 //
-// somewhat working BST
-// remove is broken but everything else works
+// working BST
 // also need a post order traversal for storing
 // http://leetcode.com/2010/09/saving-binary-search-tree-to-file.html
 
@@ -53,20 +53,23 @@ BST.prototype = {
 
         var found       = false,
             current     = this.root;
+            parent      = null;
             
         while(!found && current) {
         
             //if the value is less than the current node's, go left
             if (value < current.value){
-                current = current.left;
+              parent = current;
+              current = current.left;
                 
             //if the value is greater than the current node's, go right
             } else if (value > current.value){
-                current = current.right;
+              parent = current;
+              current = current.right;
                 
             //value equal, it was found
             } else {
-                found = true;
+                found = [current,parent];
             }
         }
         
@@ -77,7 +80,6 @@ BST.prototype = {
     remove: function(value) {
 
      var parent  = null,
-     current     = this.root,
      childCount,
      replacement,
      replacementParent; 
@@ -85,10 +87,12 @@ BST.prototype = {
      var found = this.contains(value);
 
      // no need to look to remove node if it wasn't found
-      if (found){
+      if (!!found){ // http://james.padolsey.com/javascript/truthy-falsey/
+       var current = found[0];
+       var parent = found[1];
       
           //figure out how many children
-          childCount = (current.left !== null ? 1 : 0) + (current.right !== null ? 1 : 0);
+          childCount = (!!current.left ? 1 : 0) + (!!current.right ?  1 : 0);
       
           //special case: the value is at the root
           if (current === this.root){
@@ -101,7 +105,7 @@ BST.prototype = {
                       
                   //one child, use one as the root
                   case 1:
-                      this.root = (current.right === null ? current.left : current.right);
+                      this.root = (!current.right ? current.left : current.right);
                       break;
                       
                   //two children, little work to do
@@ -111,13 +115,13 @@ BST.prototype = {
                       replacement = this.root.left;
                       
                       //find the right-most leaf node to be the real new root
-                      while (replacement.right !== null){
+                      while (!!replacement.right) {
                           replacementParent = replacement;
                           replacement = replacement.right;
                       }
        
                       //it's not the first node on the left
-                      if (replacementParent !== null){
+                      if (!!replacementParent){
                       
                           //remove the new root from it's previous position
                           replacementParent.right = replacement.left;
@@ -159,11 +163,11 @@ BST.prototype = {
                   case 1:
                       //if the current value is less than its parent's, reset the left pointer
                       if (current.value < parent.value){
-                          parent.left = (current.left === null ? current.right : current.left);
+                          parent.left = (!current.left ? current.right : current.left);
                           
                       //if the current value is greater than its parent's, reset the right pointer
                       } else {
-                          parent.right = (current.left === null ? current.right : current.left);
+                          parent.right = (!current.left ? current.right : current.left);
                       }
                       break;    
 
@@ -175,7 +179,7 @@ BST.prototype = {
                       replacementParent = current;
                       
                       //find the right-most node
-                      while(replacement.right !== null){
+                      while(!!replacement.right){
                           replacementParent = replacement;
                           replacement = replacement.right;                            
                       }
@@ -227,7 +231,9 @@ BST.prototype = {
       //start with the root
       inOrder(this.root);    
     },
-
+    traversePostOrder: function(){
+    
+    },
     size: function(){
       var length = 0;
       
