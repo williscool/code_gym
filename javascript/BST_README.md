@@ -1,0 +1,7 @@
+ BST = require('./binary_search_tree.js')
+  bst = new BST()
+   bst.add(6)
+    bst.add(7)
+     bst.add(5)
+      bst.remove(6)
+       bst.remove(7)

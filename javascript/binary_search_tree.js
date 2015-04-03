@@ -279,6 +279,58 @@ BST.prototype = {
       }
 
     },
+    levels: function () {
+         if(!this.root){return []}
+
+         var levels = [];
+         var currentLevel = [];
+         var nextLevel = [];
+
+         // start out with root
+         var current = this.root;
+         var childCount = (!!current.left ? 1 : 0) + (!!current.right ?  1 : 0);
+
+         if(childcount === 0){
+            return [this.root]
+         } else {
+           currentLevel.push(current)
+         }
+
+         function walkLevel(element, index, array){
+           current = element;
+           childCount = (!!current.left ? 1 : 0) + (!!current.right ?  1 : 0);
+
+           if(childcount === 0){
+             return ; //add nothing to next level
+           } else {
+
+             if(!!current.left) {
+               nextLevel.push(current.left)
+             }
+
+             if(!!current.right) {
+               nextLevel.push(current.right)
+             }
+           }
+         }
+
+         while(true) {
+
+           levels.push(currentLevel);
+
+           currentLevel.forEach(walkLevel);
+
+           if (nextLevel.length === 0){
+             // computation over. no more levels to this shit
+             break;
+           } else {
+             currentLevel = nextLevel;
+             nextLevel = [];
+           }
+         }
+      
+        return levels;
+    },
     size: function(){
       var length = 0;
       
@@ -287,6 +339,21 @@ BST.prototype = {
       });
       
       return length;
+    },
+
+    height: function(){
+      if(!this.root){
+        return 0
+      } else {
+        var lheight = this.height(node.left)
+        var rheight = this.height(node.right)
+
+        if (lheight > rheight){
+          return(lheight+1);
+        } else{
+         return(rheight+1);
+        }
+      }
     },
 
     toArray: function(order){
