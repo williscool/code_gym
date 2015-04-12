@@ -38,7 +38,7 @@ LinkedList.prototype.removeFront = function() {
     return this;
   } else {
     var new_head = this.head.next;
-    this.head = null;
+    delete this.head;
     this.head = new_head;
     return this;
   }
@@ -56,7 +56,7 @@ LinkedList.prototype.removeEnd = function(){
       cur = cur.next;
     }
 
-    cur = null;
+    delete cur;
   }
 
   return this;
