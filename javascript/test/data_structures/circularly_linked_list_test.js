@@ -1,7 +1,7 @@
 var assert = require('assert');
 var CircularlyLinkedList = require('../../data_structures/linked_list/circularly_linked_list.js');
 
-// never forget object 
+// never forget objects are only cleared across tests of functions not with each subtest of a function
 describe('Circularly Linked List', function(){
 
   describe('#insertFront()', function(){
