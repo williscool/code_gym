@@ -53,8 +53,13 @@ describe('Doubly Linked List', function(){
 
   describe('#removeFront()', function(){
     var llist = new DoublyLinkedList();
-    llist.insertFront(1).insertFront(2);
+    llist.insertFront(1);
 
+    it("works corectly with 1 value", function(){
+      llist.removeFront();
+    });
+
+    llist.insertFront(1).insertFront(2);
     it("removes most recently inserted value", function(){
       llist.removeFront();
       assert.equal(llist.head.value, 1);
@@ -63,8 +68,13 @@ describe('Doubly Linked List', function(){
 
   describe('#removeEnd()', function(){
     var llist = new DoublyLinkedList();
-    llist.insertFront(1).insertFront(2);
+    llist.insertFront(1);
 
+    it("works corectly with 1 value", function(){
+      llist.removeEnd();
+    });
+
+    llist.insertFront(1).insertFront(2);
     it("removes least recently inserted value", function(){
       llist.removeEnd();
       assert.equal(llist.head.value, 2);

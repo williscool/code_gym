@@ -36,25 +36,23 @@ DoublyLinkedList.prototype.insertEnd = function(val){
 DoublyLinkedList.prototype.removeFront = function() {
   
   if(!this.head){
-    return this;
   } else {
     var new_head = this.head.next;
-    this.head = null;
     this.head = new_head;
-    return this;
   }
+  
+  return this;
 }
 
 DoublyLinkedList.prototype.removeEnd = function(){
   
   if(!this.tail){
     // do thing but return for chaining
-    return this;
   } else {
     var new_tail = this.tail.prev;
-    delete this.tail;
     this.tail = new_tail;
-    return this;
+    // since this is now no reference to the old head the garbage collector will delete it. 
+    // we could do that on our own if we wanted though
   }
 
   return this;
