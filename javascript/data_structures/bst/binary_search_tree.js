@@ -281,6 +281,8 @@ BST.prototype = {
            var quene = new Quene();
            quene.enquene(node);
 
+           // heres how you could do it with a js array
+           // http://www.bennadel.com/blog/1796-javascript-array-methods-unshift-shift-push-and-pop.htm
            while(quene.length > 0) {
              var cur = quene.peek();
              
