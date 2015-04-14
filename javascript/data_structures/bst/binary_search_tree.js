@@ -1,8 +1,8 @@
-// var sys = require("util");
-// sys.puts(sys.inspect(someVariable));
-//
 // working BST
 // add / remove / travese in, pre, and post order
+//
+// treats duplicates as an already added value and does nothing with them
+var Quene = require('../quene.js');
 
 var Node = function (val) { 
   return {left: null, right: null, value: val};
@@ -18,7 +18,6 @@ BST.prototype = {
 
       if (this.root === null) {
         this.root = new Node(value);
-        return;
       }
 
       current = this.root;
@@ -30,7 +29,7 @@ BST.prototype = {
           //if no left, then new node goes on lef
           if (current.left === null){
               current.left = new Node(value);
-              return;
+              break;
           } else {                    
               current = current.left;
           }
@@ -38,7 +37,7 @@ BST.prototype = {
         else if (value > current.value ){
           if (current.right === null){
               current.right = new Node(value);
-              return;
+              break;
           } else {                    
               current = current.right;
           }
@@ -46,9 +45,13 @@ BST.prototype = {
         else {break;} // value is equal to an existing value so do nothing
       }
 
+      return this;
+
     },
 
-    contains: function(value) {
+    contains: function(value, return_node_mode) {
+
+      if(!return_node_mode){return_node_mode = false}
 
         var found       = false,
             current     = this.root;
@@ -68,7 +71,11 @@ BST.prototype = {
                 
             //value equal, it was found
             } else {
+               if(return_node_mode){
                 found = [current,parent];
+               } else {
+                found = true;
+               }
             }
         }
         
@@ -83,7 +90,7 @@ BST.prototype = {
      replacement,
      replacementParent; 
 
-     var found = this.contains(value);
+     var found = this.contains(value, true);
 
      // no need to look to remove node if it wasn't found
       if (!!found){ // http://james.padolsey.com/javascript/truthy-falsey/
@@ -203,10 +210,14 @@ BST.prototype = {
           }
       
       }
+
+      return this;
     
     },
 
-    traverse: function(process, order){
+    // http://en.wikipedia.org/wiki/Tree_traversal
+    // http://btv.melezinek.cz/binary-search-tree.html
+    traverse: function(fn, order){
 
       //helper function
       function inOrder(node){
@@ -217,8 +228,8 @@ BST.prototype = {
                   inOrder(node.left);
               }            
               
-              //call the process method on this node
-              process.call(this, node);
+              //call the fn method on this node
+              fn.call(this, node);
           
               //traverse the right subtree
               if (node.right !== null){
@@ -226,12 +237,14 @@ BST.prototype = {
               }
           }        
       }
-
+      
+      // useful for storing
+      // http://leetcode.com/2010/09/saving-binary-search-tree-to-file.html
       function preOrder(node){
           if (node){
 
-              //call the process method on this node
-              process.call(this, node);
+              //call the fn method on this node
+              fn.call(this, node);
               
               //traverse the left subtree
               if (node.left !== null){
@@ -240,13 +253,11 @@ BST.prototype = {
               
               //traverse the right subtree
               if (node.right !== null){
-                  postOrder(node.right);
+                  preOrder(node.right);
               }
           }        
       }
 
-      // useful for storing
-      // http://leetcode.com/2010/09/saving-binary-search-tree-to-file.html
       function postOrder(node){
           if (node){
               
@@ -255,17 +266,43 @@ BST.prototype = {
                   postOrder(node.left);
               }            
               
-          
               //traverse the right subtree
               if (node.right !== null){
                   postOrder(node.right);
               }
 
-              //call the process method on this node
-              process.call(this, node);
+              //call the fn method on this node
+              fn.call(this, node);
           }        
       }
 
+      function levelOrder(node){
+          if (node){
+           var quene = new Quene();
+           quene.enquene(node);
+
+           while(quene.length > 0) {
+             var cur = quene.peek();
+             
+              // add left child to quene if it exists
+              if (cur.left !== null){
+                 quene.enquene(cur.left);
+              }            
+              
+              // add left child to quene if it exists
+              if (cur.right !== null){
+                 quene.enquene(cur.right);
+              }            
+
+             //call the fn method on current node
+             fn.call(this, cur);
+
+             // remove the current node from the quene
+             quene.dequene();
+           }
+
+          }        
+      }
       
       //start with the root
       if(order == 'pre') {
@@ -273,77 +310,34 @@ BST.prototype = {
       }
       else if (order == 'post') {
         postOrder(this.root);    
-      } else{
+      } 
+      else if (order == 'level') {
+        levelOrder(this.root);    
+      } else {
         //default to in Order
         inOrder(this.root);    
       }
 
+      return this;
     },
-    levels: function () {
-         if(!this.root){return []}
-
-         var levels = [];
-         var currentLevel = [];
-         var nextLevel = [];
-
-         // start out with root
-         var current = this.root;
-         var childCount = (!!current.left ? 1 : 0) + (!!current.right ?  1 : 0);
-
-         if(childcount === 0){
-            return [this.root]
-         } else {
-           currentLevel.push(current)
-         }
-
-         function walkLevel(element, index, array){
-           current = element;
-           childCount = (!!current.left ? 1 : 0) + (!!current.right ?  1 : 0);
-
-           if(childcount === 0){
-             return ; //add nothing to next level
-           } else {
-
-             if(!!current.left) {
-               nextLevel.push(current.left)
-             }
-
-             if(!!current.right) {
-               nextLevel.push(current.right)
-             }
-           }
-         }
-
-         while(true) {
-
-           levels.push(currentLevel);
-
-           currentLevel.forEach(walkLevel);
-
-           if (nextLevel.length === 0){
-             // computation over. no more levels to this shit
-             break;
-           } else {
-             currentLevel = nextLevel;
-             nextLevel = [];
-           }
-         }
-      
-        return levels;
-    },
-    size: function(){
-      var length = 0;
+    toArray: function(order){
+      var result = [];
       
       this.traverse(function(node){
-          length++;
-      });
+          result.push(node.value);
+      }, order);
       
-      return length;
+      return result;
     },
-
-    height: function(){
-      if(!this.root){
-        return 0
+    size: function(){
+      return this.toArray().length;
+    },
+    height: function(node){
+        return this.heightFromNode(this.root);
+    },
+    heightFromNode: function(node){
+      if(!node){
+        return 0;
       } else {
         var lheight = this.height(node.left)
         var rheight = this.height(node.right)
@@ -356,22 +350,11 @@ BST.prototype = {
       }
     },
 
-    toArray: function(order){
-      var result = [];
-      
-      this.traverse(function(node){
-          result.push(node.value);
-      }, order);
-      
-      return result;
-    },
-
     toString: function(){
       return this.toArray().toString();
     }
+  
+    //TODO: fun interview style question to code for later
+    //print a binary search tree representation with / \ and such
 
 };
-
-//exports.binary_search_tree = function () {
-//  return BST;
-//};

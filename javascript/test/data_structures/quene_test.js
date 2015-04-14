@@ -8,6 +8,7 @@ describe('Quene with Doubly Linked List', function(){
     it("quene has one item on it", function(){
       quene.enquene(42);
       assert.deepEqual(quene.items.toArray(), [42]);
+      assert.equal(quene.length, 1);
     });
   });
 
@@ -24,8 +25,10 @@ describe('Quene with Doubly Linked List', function(){
     quene.enquene(42).enquene(75).enquene(22);
 
     it("removes items", function(){
+      assert.equal(quene.length, 3);
       quene.dequene(42);
       assert.deepEqual(quene.items.toArray(), [75,22]);
+      assert.equal(quene.length, 2);
     });
 
   });
