@@ -47,7 +47,7 @@ HashTable.prototype.set = function(key, val){
 
   // create it iff it doesnt exist
   if(!bucket) {
-    var bucket = [];
+    bucket = [];
     this.items[index] = bucket;
   }
 
@@ -65,7 +65,7 @@ HashTable.prototype.set = function(key, val){
 
   if(!overwrite){
     // add new key val pair to bucket
-    var obj = new Object();
+    var obj = {};
     obj[key] = val;
     bucket.push(obj);
     this.length++;

@@ -334,7 +334,7 @@ BST.prototype = {
     size: function(){
       return this.toArray().length;
     },
-    height: function(node){
+    height: function(){
         return this.heightFromNode(this.root);
     },
     heightFromNode: function(node){
