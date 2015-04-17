@@ -14,6 +14,7 @@ function makeRandomArray() {
   return result;
 }
 
+// inspired by: https://github.com/addyosmani/bubblesort/blob/master/test/test.js
 // http://stackoverflow.com/questions/7440001/iterate-over-object-keys-in-node-js
 Object.keys(BubbleSort).forEach(function(key) {
   var fn = BubbleSort[key];
