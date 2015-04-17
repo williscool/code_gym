@@ -2,7 +2,7 @@
 // add / remove / travese in, pre, and post order
 //
 // treats duplicates as an already added value and does nothing with them
-var Quene = require('../quene.js');
+var Queue = require('../queue.js');
 
 var Node = function (val) { 
   return {left: null, right: null, value: val};
@@ -278,29 +278,29 @@ BST.prototype = {
 
       function levelOrder(node){
           if (node){
-           var quene = new Quene();
-           quene.enquene(node);
+           var queue = new Queue();
+           queue.enqueue(node);
 
            // heres how you could do it with a js array
            // http://www.bennadel.com/blog/1796-javascript-array-methods-unshift-shift-push-and-pop.htm
-           while(quene.length > 0) {
-             var cur = quene.peek();
+           while(queue.length > 0) {
+             var cur = queue.peek();
              
-              // add left child to quene if it exists
+              // add left child to queue if it exists
               if (cur.left !== null){
-                 quene.enquene(cur.left);
+                 queue.enqueue(cur.left);
               }            
               
-              // add left child to quene if it exists
+              // add left child to queue if it exists
               if (cur.right !== null){
-                 quene.enquene(cur.right);
+                 queue.enqueue(cur.right);
               }            
 
              //call the fn method on current node
              fn.call(this, cur);
 
-             // remove the current node from the quene
-             quene.dequene();
+             // remove the current node from the queue
+             queue.dequeue();
            }
 
           }        
