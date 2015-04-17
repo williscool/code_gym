@@ -51,32 +51,37 @@ module.exports.BubbleSort.Optimized = function (list) {
       }
     }
     
-    len = len - 1;
+    // now all we need to is decrement the number of elements to look at
+    // the last item on each iteration is already in the correct place
+    //
+    // it.. wait for it... bubbled.. to the top
+    // http://cow.org/csi/
+    len = len - 1; 
   } while (!sorted);
   
   return list;
 }
 
-module.exports.BubbleSort.fromRightEnd = function (list) {
+module.exports.BubbleSort.stopAtLastSorted = function (list) {
+  // this algorithm assumes that the last element we had to swap was the last element out of place at that iteration
+  // so it shortens the amount of elements looked at on subsequent iterations by that many
 
-  var len, sorted, i;
+  var len, sorted, i, newLen;
 
   len = list.length;
   
   do {
-    // assume array is sorted at first and let the for loop tell us if it isn't
-    sorted = true; 
-    
+    newLen = 0; 
     for( i = 0; i < len; i++ ){
       
       if(list[i-1] > list[i]) {
         list = swap(list, i-1, i);
-        sorted = false;
+        newLen = i; 
       }
     }
     
-    len = len - 1;
-  } while (len !=0);
+    len = newLen;
+  } while (len != 0);
   
   return list;
 }
