@@ -2,6 +2,8 @@
 
 module.exports.dsalgo = {utils: {}}
 
+// techincally the return here is unnecessary since we never make a deepCopy of the array 
+// so its muting the original. But I just like this interface better
 module.exports.dsalgo.utils.swap = function (list, firstIndex, secondIndex) {
   var temp = list[firstIndex];
   list[firstIndex] = list[secondIndex];
