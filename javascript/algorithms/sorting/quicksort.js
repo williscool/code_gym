@@ -23,11 +23,13 @@ function partition(list, lo, hi) {
 	pivotIndex = choosePivot(list, lo, hi);
 	pivotVal = list[pivotIndex];
 	
-	// move the value of the pivot to the highest index so that it is out of the way (our for loop wont reach this index in the array with its comarision) 
-	// while we compare all of the other elements
+	// move the value of the pivot to the highest index so that it is out of the way 
+	// while we compare all of the other element's values to it to figure out where to move it to
+
 	list = swap(list, pivotIndex, hi);
 	index_to_move_value_to = lo;
 	
+  //once this for loop completes every value before index_to_move_value_to will be lower than pivotVal and everyone after will be higher
 	for (i = lo; i < hi; i++ ){
 		
 		if( list[i] < pivotVal) {
