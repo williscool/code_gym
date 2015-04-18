@@ -1,7 +1,11 @@
 // http://en.wikipedia.org/wiki/Bubble_sort#Implementation
 // https://www.youtube.com/watch?v=hR-NXv5Tma0
 // bubble bubble..
+
 module.exports.BubbleSort = {};
+
+var dsalgo = require('../../utilities.js').dsalgo;
+var swap = dsalgo.utils.swap;
 
 module.exports.BubbleSort.Naive = function (list) {
 
@@ -13,7 +17,7 @@ module.exports.BubbleSort.Naive = function (list) {
     // assume array is sorted at first and let the for loop tell us if it isn't
     sorted = true; 
     
-    for( i = 0; i < len; i++ ){
+    for( i = 1; i < len; i++ ){
       
       if(list[i-1] > list[i]) {
         list = swap(list, i-1, i);
@@ -23,13 +27,6 @@ module.exports.BubbleSort.Naive = function (list) {
     
   } while (!sorted);
   
-  return list;
-}
-
-function swap(list, firstIndex, secondIndex) {
-  var temp = list[firstIndex];
-  list[firstIndex] = list[secondIndex];
-  list[secondIndex] = temp;
   return list;
 }
 
@@ -43,7 +40,7 @@ module.exports.BubbleSort.Optimized = function (list) {
     // assume array is sorted at first and let the for loop tell us if it isn't
     sorted = true; 
     
-    for( i = 0; i < len; i++ ){
+    for( i = 1; i < len; i++ ){
       
       if(list[i-1] > list[i]) {
         list = swap(list, i-1, i);

@@ -1,18 +1,6 @@
 var assert = require('assert');
 var BubbleSort = require('../../../algorithms/sorting/bubblesort.js').BubbleSort;
-
-function makeRandomArray() {
-
-  var precision = 2;
-  var multiplier = 100;
-  var size = 100;
-  var result = [];
-
-  for (var i = size; i > 0; i -= 1) {
-    result.push(parseFloat((Math.random() * multiplier).toFixed(precision)));
-  }
-  return result;
-}
+var dsalgo = require('../../../utilities.js').dsalgo;
 
 // inspired by: https://github.com/addyosmani/bubblesort/blob/master/test/test.js
 // http://stackoverflow.com/questions/7440001/iterate-over-object-keys-in-node-js
@@ -35,12 +23,12 @@ Object.keys(BubbleSort).forEach(function(key) {
     });
 
     it('should work with random non-sorted arrays', function () {
-      var array = makeRandomArray({
+      var array = dsalgo.utils.makeRandomArray({
         precision: 0
       });
       bubblesort(array);
-      for (var i = 0; i < array.length - 1; i += 1) {
-        assert((array[i] <= array[i + 1]) === true);
+      for (var i = 1; i < array.length; i++) {
+        assert((array[i-1] <= array[i]) === true);
       }
     });
 
