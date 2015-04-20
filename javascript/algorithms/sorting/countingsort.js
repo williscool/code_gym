@@ -1,5 +1,18 @@
 // http://en.wikipedia.org/wiki/Counting_sort
 // inspired by http://en.wikibooks.org/wiki/Algorithm_Implementation/Sorting/Counting_sort
+//
+//
+// turns out bucket sort is basically just a generalization of counting sort
+// http://en.wikipedia.org/wiki/Bucket_sort#Comparison_with_other_sorting_algorithms
+//
+// but instead of a bucket for every number you can make up your own arbitrariliy sized buckets
+//
+// presumably / preferably based off of some knowledge that would help you make the buckets some uniform size
+// then you either recursively bbecket sort or use another sort perhaps selection sort on the smaller buckets
+//
+//  http://en.wikipedia.org/wiki/Bucket_sort#Optimizations
+//
+//  so no need to re do for that
 
 module.exports = function (list, power) {
 
@@ -46,7 +59,7 @@ module.exports = function (list, power) {
   // put output values in result array
   //
   // repeat values based on count at counts index
-  counts.forEach(function(val,i,arr){
+  counts.forEach(function(val,i){
     for (j = 0; j < counts[i]; j++){
        result[k] = i + min;
        k = k + 1;
