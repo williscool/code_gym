@@ -68,8 +68,12 @@ module.exports.mergesort.bottomUp = function(list) {
 
   for(blockSize = 1; blockSize < len; blockSize = (blockSize * 2)) {
 
-    for(i = 0 ; i <= len - blockSize; i = i + (blockSize * 2) ){
-      var left = list.slice(i, i + blockSize), // javascript list slice is not inclusive of the element at the end index that you give it
+    // we want to take all of the elements as long as we dont go out of bounds
+    // if we were to do len - blocksize then we would miss the last iteration in some cases where 
+    // the right side is smaller than the left
+    for(i = 0 ; i < len; i = i + (blockSize * 2) ){
+      // javascript list slice is not inclusive of the element at the end index that you give it
+      var left = list.slice(i, i + blockSize),
         right = list.slice(i + blockSize, Math.min((i + (2 * blockSize)), len));
 
        temp = temp.concat(merge(left,right));
