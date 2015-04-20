@@ -1,13 +1,17 @@
 // http://en.wikipedia.org/wiki/Counting_sort
 // inspired by http://en.wikibooks.org/wiki/Algorithm_Implementation/Sorting/Counting_sort
 
-module.exports = function (list) {
+module.exports = function (list, power) {
 
   var i, j, k, min, max, counts = [], result = [], len = list.length;
 
+  var index_function = function (value,min) {
+    return  value - min;
+  }
+
+  // calculate min and max from the numbers in the list
   min = list[0];
   max = list[0];
-
   list.forEach(function(val){
      if(val > max ) {
         max = val; 
@@ -17,6 +21,14 @@ module.exports = function (list) {
         min = val;
      }
   });
+  
+  if(power) {
+    // overwite the index function to use a certain significant digit
+    index_function = function (value, min) {
+
+      return ((value / power) % 10) - min;
+    }
+  }
 
   // setup array to hold counts of differnt values
   for(i = 0; i < max-min + 1; i++) {
@@ -26,7 +38,7 @@ module.exports = function (list) {
   // count number of distinct values in their respective array place
   for(i = 0; i < len; i++) {
     // current value minus the min to keep it in array bounds
-    counts[list[i] - min]++;
+    counts[index_function(list[i],min)]++;
   }
 
   k = 0;
