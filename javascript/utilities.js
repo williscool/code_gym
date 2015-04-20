@@ -13,7 +13,7 @@ module.exports.dsalgo.utils.swap = function (list, firstIndex, secondIndex) {
 
 module.exports.dsalgo.utils.makeRandomArray = function (config) {
   var conf = config || {};
-  var precision = conf.precision || 2;
+  var precision = (typeof conf.precision === undefined) ? 2 : conf.precision;
   var multiplier = 100;
   var size = 100;
   var result = [];
