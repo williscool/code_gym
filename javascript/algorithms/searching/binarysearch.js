@@ -8,7 +8,7 @@ module.exports.binarysearch = {};
 module.exports.binarysearch.recursive = function (list, needle, min, max) {
   var binarysearch = module.exports.binarysearch.recursive;
 
-  var len = list.length,mid,max;
+  var len = list.length, min, mid,max;
 
   // initilize values if they are undefined
   if(!min) min = 0;
@@ -32,4 +32,35 @@ module.exports.binarysearch.recursive = function (list, needle, min, max) {
     return binarysearch(list, needle, min, mid - 1);
   }
   
+};
+
+module.exports.binarysearch.iterative = function (list, needle, min, max) {
+
+  var len = list.length, min,mid,max, result;
+
+  // initilize values if they are undefined
+  if(!min) min = 0;
+  if(!max) max = len;
+
+  result = false;
+
+  // somewhat inspired by
+  // http://www.bradoncode.com/blog/2012/04/big-o-algorithm-examples-in-javascript.html
+  while (min <= max){
+    mid = (min + max) >> 1;
+
+    midValue = list[mid];
+
+    if (needle == midValue){
+      return mid;
+    } else if (needle > midValue){
+      min = mid + 1;
+    }
+    else {
+      max = mid - 1;
+    }
+  
+  }
+  
+  return result;
 };
