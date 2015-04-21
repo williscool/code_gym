@@ -28,8 +28,8 @@ describe('Radix Sort', function(){
         precision: 0
       });
 
-      // another not inplace sort
       array = radixsort(array);
+
       for (var i = 1; i < array.length; i++) {
         assert((array[i - 1] <= array[i]) === true);
       }
