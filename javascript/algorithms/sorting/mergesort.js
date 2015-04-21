@@ -37,7 +37,7 @@ module.exports.mergesort.topDown = function(list) {
 
   var left = [], 
       right = [], 
-      middle = Math.floor(list.length / 2), 
+      middle = list.length >> 1, // http://googleresearch.blogspot.com/2006/06/extra-extra-read-all-about-it-nearly.html
       len = list.length, 
       i;
 

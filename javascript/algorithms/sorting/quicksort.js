@@ -51,7 +51,8 @@ function choosePivot(list, hi, lo) {
   // so you gotta make sure your order of operations is correct
   // because if this pivot returns and incorrect index everything is fucked
   //
-	return Math.floor((hi + lo) / 2);
+  // http://googleresearch.blogspot.com/2006/06/extra-extra-read-all-about-it-nearly.html
+	return (hi + lo) >> 1;
 }
 
 module.exports = function(list) {return quicksort(list,0,list.length - 1)}
