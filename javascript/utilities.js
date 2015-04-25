@@ -23,9 +23,16 @@ utils.isFalsy = function (thing) {
   return !utils.isTruthy(thing);
 }
 
+utils.isDefined = function (thing) {
+  // https://github.com/jasmine/jasmine/blob/master/src/core/matchers/toBeFalsy.js
+  return utils.isFalsy(typeof thing === "undefined");
+}
+
 utils.makeRandomArray = function (config) {
   var conf = config || {};
-  var precision = (utils.isFalsy(config.precision)) ? 2 : conf.precision;
+  // need to be able to set to zero
+  // http://stackoverflow.com/a/7615236/511710
+  var precision = (!utils.isDefined(config.precision)) ? 2 : conf.precision;
   var multiplier = 100;
   var size = 100;
   var result = [];
