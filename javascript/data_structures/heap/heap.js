@@ -1,11 +1,26 @@
 // Heap http://en.wikipedia.org/wiki/Heap_%28data_structure%29#Implementation
+//
+// inspired by
+//
+// http://eloquentjavascript.net/1st_edition/appendix2.html
+//
+// https://gist.github.com/dburger/1008320
+//
+// http://docs.closure-library.googlecode.com/git/local_closure_goog_structs_heap.js.source.html
+// https://github.com/google/closure-library/blob/master/closure/goog/structs/heap.js
+//
+// http://www.bebetterdeveloper.com/data-structure-binary-heap/
+//
+// https://github.com/thauburger/js-heap/blob/master/heap.js
+//// http://www.benfrederickson.com/heap-visualization/
+
 var dsalgo = require('../../utilities.js').dsalgo;
 var swap = dsalgo.utils.swap;
 var seqsearch = require('../../algorithms/searching/sequentialsearch.js');
 
 function Heap(array, compfn) {
   // default to max heap
-  // need to set comparator first or it wont be set for the constructors call to heapify
+  // need to set comparator first or it wont be set for the constructors call to siftUp
   // heaps children can be == to also
   this.comp = compfn || function (a,b) {return a>=b;};
   
