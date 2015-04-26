@@ -35,15 +35,15 @@ describe('Heap', function(){
       // start from last node with children and run back to beginning
       for (var i = (heap.size() - 1 >> 1) - 1; i >=0 ; i--) {
 
-        var curVal = heap.valueAt(i);
+        var curParent = heap.valueAt(i);
         var left = heap.left(i);
         var right = heap.right(i);
 
         //if(!heap.comp(curVal, left) || !(heap.comp(curVal, right))) debugger;
         //
         // Greater than for max heap. Less than for min heap
-        assert( heap.comp(curVal, left) === true );
-        assert( heap.comp(curVal, right) === true );
+        assert( heap.comp(curParent, left) === true );
+        assert( heap.comp(curParent, right) === true );
       }
     });
   });
@@ -102,6 +102,44 @@ describe('Heap', function(){
     });
   });
 
-  // doesnt need a test for contains because it would just be a dupe of the test for sequential search
+  describe('#contains()', function(){
+    var heap = new Heap([32,15,12,47]);
+    it("should find values that are there", function(){
+      assert.equal(heap.contains(47), 0);
+    });
+    it("should not find values that are not there", function(){
+      assert.equal(heap.contains(0), false);
+    });
+  });
+
+  describe('#remove()', function(){
+    it("single node", function(){
+      var heap = new Heap();
+      heap.insert(42);
+      assert.equal(heap.remove(42), 0);
+      assert.equal(heap.size(), 0);
+    });
+
+    it("multiple nodes", function(){
+      var heap = new Heap();
+      heap.insert(42).insert(37).insert(24);
+      assert.equal(heap.remove(37), 1);
+      assert.equal(heap.size(), 2);
+    });
+
+    it("restores heap property and puts values in correct place", function(){
+      var heap = new Heap();
+      heap.insert(42).insert(57).insert(30).insert(25);
+
+      assert.equal(heap.remove(57), 0);
+      assert.equal(heap.size(), 3);
+
+      assert.equal(heap.peek(), 42);
+      assert.equal(heap.left(0), 25);
+
+      assert.equal(heap.right(0), 30);
+    });
+  });
+
 });
 

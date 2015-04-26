@@ -28,8 +28,8 @@ function Heap(array, compfn) {
   this.items = [];
 
   if (array){
-    //http://stackoverflow.com/a/19708033/511710
-    array.forEach(function(val){ this.insert(val) }, this);
+    this.items = array;
+    this.buildHeap();
   }
 }
 
@@ -71,10 +71,13 @@ Heap.prototype.insert = function (val) {
 }
 
 Heap.prototype.siftDown = function(i){
+  // aka heapify
+  // http://en.wikipedia.org/wiki/Binary_heap
   // interesting thing I've learned from research
   //
-  // Many implementaions of heaps (even the one from the famous CLRS) 
-  // refer to what the wikipedia article calls sift-down as heapify
+  // Many implementations of heaps (even the one from the famous CLRS) 
+  // refer to what the main Heap (as opposed to the binary heap) wikipedia article 
+  // calls sift-down as heapify
 
   // extrema is semantic to largest or smallest
   // http://en.wikipedia.org/wiki/Extrema
@@ -129,10 +132,42 @@ Heap.prototype.pop = function (val) {
   
   return retValue;
 }
-//
-// make each sub tree a proper heap by picking the comp () of the childrne
-Heap.prototype.heapify = function() {
-  // idk what im doing lol
+
+// remove abritraty value and re heap
+// http://eloquentjavascript.net/1st_edition/appendix2.html
+Heap.prototype.remove = function(val) {
+  var inHeap = this.contains(val);
+
+  // 0 == false in javascript even though its a valid index so we must explicitly check for false
+  if(inHeap === false ) return false;
+
+  // else
+  
+  var last = this.items.pop();
+
+  if (val == last) return inHeap; // we done return the index we removed it from
+
+  // swap end to the elements position and then reheap
+  this.items[inHeap] = last;
+  this.siftUp(inHeap);
+  this.siftDown(inHeap);
+  return inHeap;
+  
+  // dont know what returning the index you removed from could be useful for but why not?
+  // you could also just return true
+}
+
+Heap.prototype.buildHeap = function() {
+  //  the old way I was doing it was the naive version 
+  //
+  //  in that you just call insert for each element in the array and its O(n log n)
+  //  
+  //  this is now the optimized version 
+  //  http://en.wikipedia.org/wiki/Binary_heap#Building_a_heap
+
+  for (var i = (this.size() - 1) >> 1; i >=0 ; i--) {
+    this.siftDown(i);
+  }
 };
 
 Heap.prototype.peek = function(val){
