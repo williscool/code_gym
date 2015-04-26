@@ -6,15 +6,19 @@ var seqsearch = require('../../algorithms/searching/sequentialsearch.js');
 function Heap(array, compfn) {
   // default to max heap
   // need to set comparator first or it wont be set for the constructors call to heapify
-  this.comp = compfn || function (a,b) {return a>b;};
+  // heaps children can be == to also
+  this.comp = compfn || function (a,b) {return a>=b;};
   
-  if (dsalgo.utils.isFalsy(array)){
-    this.items = [];
-  } else {
-    this.items = array;
-    if(array.length > 1) this.heapify();
+  // always set to an array at first
+  this.items = [];
+
+  if (array){
+    //http://stackoverflow.com/a/19708033/511710
+    array.forEach(function(val){ this.insert(val) }, this);
   }
 }
+
+Heap.prototype.valueAt = function (i) {return this.items[i];};
 
 Heap.prototype.parentI = function (i) {return (i - 1) >> 1;};
 
@@ -45,15 +49,77 @@ Heap.prototype.siftUp = function(i){
 
 }
 
-Heap.prototype.heapify = function() {this.siftUp(this.items.length - 1);};
-
 Heap.prototype.insert = function (val) {
   this.items.push(val);
-	if(this.items.length > 1) {
-      this.siftUp(this.items.length - 1);
-	}
+  if(this.size() > 1) this.siftUp(this.items.length - 1);
   return this;
 }
+
+Heap.prototype.siftDown = function(i){
+
+  // extrema is semantic to largest or smallest
+  // http://en.wikipedia.org/wiki/Extrema
+
+  var extremaPos = i;
+  var extremaVal = this.items[i];
+
+  var leftI = this.leftI(i);
+  var rightI = this.rightI(i);
+
+  var left = this.left(i);
+  var right = this.right(i);
+
+  if(dsalgo.utils.isTruthy(leftI < this.size() && this.comp(left, extremaVal ) )){
+    extremaPos = leftI;
+  }
+
+  if(dsalgo.utils.isTruthy(rightI < this.size() && this.comp(right, extremaVal ) )){
+    extremaPos = rightI;
+  }
+
+  // compare values if they both exist
+  if(leftI < this.size() && rightI < this.size()){
+    var extrema_of_two_i, extrema_of_two;
+    var comp_arr = [left,right];
+    // take highest or lowest every time
+    var extrema_of_two_i; 
+    var extrema_of_two = comp_arr.sort(this.comp).pop();
+
+    if(extrema_of_two == left) extrema_of_two_i = leftI;
+    if(extrema_of_two == right) extrema_of_two_i = rightI;
+  
+    if(this.comp(extrema_of_two, extremaVal)){
+      extremaPos = extrema_of_two_i;
+    }
+  }
+
+  if(extremaPos != i){
+    this.items = swap(this.items, extremaPos, i);
+    this.siftDown(extremaPos);
+  }
+}
+
+// aka extract-min||max http://en.wikipedia.org/wiki/Heap_%28data_structure%29#Operations
+Heap.prototype.pop = function (val) {
+  var retValue = this.items[0];
+  var lastValue = this.items.pop();
+
+  // sift it down 
+  if(this.size() > 1){ 
+    // pop off the last value to shorten array and set it as the new root of the array
+    this.items[0] = lastValue;
+
+    // sift it down into position
+    this.siftDown(0);
+  }  
+  
+  return retValue;
+}
+//
+// make each sub tree a proper heap by picking the comp () of the childrne
+Heap.prototype.heapify = function() {
+  // idk what im doing lol
+};
 
 Heap.prototype.peek = function(val){
   return this.items[0];
@@ -63,4 +129,5 @@ Heap.prototype.size = function(){
   return this.items.length;
 }
 
-module.exports = Heap;
+module.exports.heap = {};
+module.exports.heap.max = Heap;
