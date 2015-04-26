@@ -71,6 +71,10 @@ Heap.prototype.insert = function (val) {
 }
 
 Heap.prototype.siftDown = function(i){
+  // interesting thing I've learned from research
+  //
+  // Many implementaions of heaps (even the one from the famous CLRS) 
+  // refer to what the wikipedia article calls sift-down as heapify
 
   // extrema is semantic to largest or smallest
   // http://en.wikipedia.org/wiki/Extrema
@@ -84,29 +88,24 @@ Heap.prototype.siftDown = function(i){
   var left = this.left(i);
   var right = this.right(i);
 
-  if(dsalgo.utils.isTruthy(leftI < this.size() && this.comp(left, extremaVal ) )){
-    extremaPos = leftI;
-  }
-
-  if(dsalgo.utils.isTruthy(rightI < this.size() && this.comp(right, extremaVal ) )){
-    extremaPos = rightI;
-  }
-
-  // compare values if they both exist
-  if(leftI < this.size() && rightI < this.size()){
-    var extrema_of_two_i, extrema_of_two;
-    var comp_arr = [left,right];
-    // take highest or lowest every time
-    var extrema_of_two_i; 
-    var extrema_of_two = comp_arr.sort(this.comp).pop();
-
-    if(extrema_of_two == left) extrema_of_two_i = leftI;
-    if(extrema_of_two == right) extrema_of_two_i = rightI;
+  // much easier than what I was doing earlier
+  // http://www.cs.rit.edu/~rpj/courses/bic2/studios/studio1/studio121.html
   
-    if(this.comp(extrema_of_two, extremaVal)){
-      extremaPos = extrema_of_two_i;
-    }
-  }
+  // default them to -1 if they are out of bounds which wont ever be a valid array index
+  if (!dsalgo.utils.isDefined(left)) left = -1;
+  if (!dsalgo.utils.isDefined(right)) right = -1;
+
+  var comp_arr = [extremaVal,left,right];
+  var extrema = comp_arr.sort(this.comp).pop();
+
+  // http://algs4.cs.princeton.edu/24pq/
+  // "if records can have duplicate keys, maximum means any record with the largest key value"
+  //
+  // so I pick to always default to not shifting the tree again
+  
+  if(extrema == left) extremaPos = leftI;
+  if(extrema == right) extremaPos = rightI;
+  if(extrema == extremaVal) extremaPos = extremaPos;  //default back to leaving tree alone
 
   if(extremaPos != i){
     this.items = swap(this.items, extremaPos, i);
