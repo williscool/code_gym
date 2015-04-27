@@ -13,15 +13,22 @@
 //
 // https://github.com/thauburger/js-heap/blob/master/heap.js
 //// http://www.benfrederickson.com/heap-visualization/
+//
+//
+// also why heaps are mostly done with arrays
+// http://stackoverflow.com/questions/14719007/why-is-a-binary-heap-better-as-an-array-than-a-tree
 
+var util = require("util");
 var dsalgo = require('../../utilities.js').dsalgo;
 var swap = dsalgo.utils.swap;
 var seqsearch = require('../../algorithms/searching/sequentialsearch.js');
+
 
 function Heap(array, compfn) {
   // default to max heap
   // need to set comparator first or it wont be set for the constructors call to siftUp
   // heaps children can be == to also
+
   this.comp = compfn || function (a,b) {return a>=b;};
   
   // always set to an array at first
@@ -99,7 +106,8 @@ Heap.prototype.siftDown = function(i){
   if (!dsalgo.utils.isDefined(right)) right = -1;
 
   var comp_arr = [extremaVal,left,right];
-  var extrema = comp_arr.sort(this.comp).pop();
+  // also need to drop any values less than zero to discard outof bounds indexes
+  var extrema = comp_arr.sort(this.comp).filter(function(val){return val > -1;}).pop();
 
   // http://algs4.cs.princeton.edu/24pq/
   // "if records can have duplicate keys, maximum means any record with the largest key value"
@@ -178,5 +186,22 @@ Heap.prototype.size = function(){
   return this.items.length;
 }
 
-module.exports.heap = {};
-module.exports.heap.max = Heap;
+// min is the same logic as max just with a different comparator
+function minHeap (array) {
+    var comp = function (a,b) {return a<=b;};
+    minHeap.super_.prototype.constructor.call(this, array, comp);
+}
+
+util.inherits(minHeap, Heap);
+
+function maxHeap (array) {
+    var comp = function (a,b) {return a>=b;};
+    maxHeap.super_.prototype.constructor.call(this, array, comp);
+}
+util.inherits(maxHeap, Heap);
+
+module.exports = {
+  min: minHeap,
+  max: maxHeap,
+  custom: Heap
+};
