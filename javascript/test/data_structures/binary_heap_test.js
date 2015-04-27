@@ -1,8 +1,9 @@
 var assert = require('assert');
 var dsalgo = require('../../utilities.js').dsalgo;
 
-var minHeap = require('../../data_structures/heap/heap.js').min;
-var maxHeap = require('../../data_structures/heap/heap.js').max;
+var Heap = require('../../data_structures/heap/binary_heap.js');
+var minHeap = Heap.min;
+var maxHeap = Heap.max;
 
 describe('Heap', function(){
 

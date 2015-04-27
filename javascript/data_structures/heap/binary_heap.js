@@ -1,3 +1,4 @@
+// http://en.wikipedia.org/wiki/Binary_heap
 // Heap http://en.wikipedia.org/wiki/Heap_%28data_structure%29#Implementation
 //
 // inspired by
