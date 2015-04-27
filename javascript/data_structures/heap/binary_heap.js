@@ -24,7 +24,6 @@ var dsalgo = require('../../utilities.js').dsalgo;
 var swap = dsalgo.utils.swap;
 var seqsearch = require('../../algorithms/searching/sequentialsearch.js');
 
-
 function Heap(array, compfn) {
   // default to max heap
   // need to set comparator first or it wont be set for the constructors call to siftUp
@@ -54,6 +53,14 @@ Heap.prototype.right = function (i) {return this.items[this.rightI(i)];};
 
 Heap.prototype.contains = function(val) {return seqsearch(this.items,val);};
 
+Heap.prototype.peek = function(val){
+  return this.items[0];
+}
+
+Heap.prototype.size = function(){
+  return this.items.length;
+}
+
 Heap.prototype.siftUp = function(i){
   if(i < 1) return; // once we hit the zeroth index we're done
   
@@ -78,7 +85,7 @@ Heap.prototype.insert = function (val) {
   return this;
 }
 
-Heap.prototype.siftDown = function(i){
+Heap.prototype.siftDown = function(i,endPos){
   // aka heapify
   // http://en.wikipedia.org/wiki/Binary_heap
   // interesting thing I've learned from research
@@ -95,7 +102,8 @@ Heap.prototype.siftDown = function(i){
 
   var leftI = this.leftI(i);
   var rightI = this.rightI(i);
-
+  
+  
   var left = this.left(i);
   var right = this.right(i);
 
@@ -105,6 +113,15 @@ Heap.prototype.siftDown = function(i){
   // default them to -1 if they are out of bounds which wont ever be a valid array index
   if (!dsalgo.utils.isDefined(left)) left = -1;
   if (!dsalgo.utils.isDefined(right)) right = -1;
+
+  if (dsalgo.utils.isDefined(endPos)){
+    // if either index value is greater than the endPos in a heapsort 
+    //
+    // it is in the sorted part the array and will be ignored for sifting the value down the heap
+    
+    if (rightI > endPos) right = -1;
+    if (leftI > endPos) left = -1;
+  } 
 
   var comp_arr = [extremaVal,left,right];
   // also need to drop any values less than zero to discard outof bounds indexes
@@ -121,7 +138,7 @@ Heap.prototype.siftDown = function(i){
 
   if(extremaPos != i){
     this.items = swap(this.items, extremaPos, i);
-    this.siftDown(extremaPos);
+    this.siftDown(extremaPos,endPos);
   }
 }
 
@@ -179,12 +196,43 @@ Heap.prototype.buildHeap = function() {
   }
 };
 
-Heap.prototype.peek = function(val){
-  return this.items[0];
-}
+Heap.prototype.heapsort = function(){
+ // note about this function. it can break the heap property of this data structure if you dont restore it!
+ //
+ // how to handle this?
+ // either re heap after or create a copy of the items in original order and reset them later
+ 
+  // store the array in its orginal heapified for so we can restore it later
+  var heapified_list = dsalgo.utils.arrayDeepCopy(this.items);
 
-Heap.prototype.size = function(){
-  return this.items.length;
+  var i,len = this.size();
+
+  var end = len -1;
+
+  // sort the list
+  //
+  // how? what do we know about a max heap? 
+  //
+  // the highest value is at the top...
+  //
+  // so knowing that we can move that value to the end and then make another heap out of the remaining elements 
+  //
+  // ignoring our previously swapped element
+  //
+  // what will this give us? at the top our next highest element! so we repeat this until we reach the end of the list :)
+
+  for (var i = len - 1 ; i > 0 ; i--) {
+    this.items = swap(this.items, 0,i);
+    end = end -1;
+    this.siftDown(0,end);
+  }
+
+  var sorted_list = this.items;
+
+  // restore 
+  this.items = heapified_list;
+
+  return sorted_list;
 }
 
 // min is the same logic as max just with a different comparator

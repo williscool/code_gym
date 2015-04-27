@@ -43,3 +43,10 @@ utils.makeRandomArray = function (config) {
   return result;
 }
 
+
+utils.arrayDeepCopy = function(thing){
+  // array slice is fine for just numbers. would need to use JSON method if needed objects
+  // return JSON.parse(JSON.stringify(thing)) ;
+  // http://davidwalsh.name/javascript-clone-array
+  return thing.slice(0);
+}
