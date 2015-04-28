@@ -29,10 +29,16 @@ describe('Binomial Heap', function(){
       assert.equal(heap.peek().key, [24]);
     });
 
-    it.skip("inserts values in correct place", function(){
+    it("inserts values in correct binomial tree order", function(){
+      // https://www.cs.usfca.edu/~galles/visualization/BinomialQueue.html
       var heap = new BinomialHeap();
       heap.insert(25).insert(57).insert(42).insert(30);
-      assert.equal(heap.peek().key, 25);
+      var root = heap.peek();
+
+      assert.equal(root.key, 25);
+      assert.equal(root.child.key, 30);
+      assert.equal(root.child.child.key, 42);
+      assert.equal(root.child.sibling.key, 57);
     });
   });
 

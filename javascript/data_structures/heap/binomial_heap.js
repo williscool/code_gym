@@ -6,6 +6,11 @@
  * http://xlinux.nist.gov/dads/HTML/binomialheap.html
  * http://www.growingwiththeweb.com/2014/01/binomial-heap.html
  * http://www.cse.yorku.ca/~aaw/Sotirios/BinomialHeapAlgorithm.html
+ *
+ *
+ * debugging viz help from 
+ *
+ * https://www.cs.usfca.edu/~galles/visualization/BinomialQueue.html
 */
 
 var dsalgo = require('../../utilities.js').dsalgo;
@@ -48,7 +53,7 @@ BinomialHeap.prototype.linkTreeNodes = function(node, other) {
   other.parent = node; 
   other.sibling = node.child;
   node.child = other;
-  node.degree++;
+  node.degree += 1;
 }
 
 BinomialHeap.prototype.mergeHeaps = function(a, b) {
@@ -112,8 +117,12 @@ BinomialHeap.prototype.union = function(otherHeap) {
 
   var prev;
   var curr = newRoot;
-  var next = newRoot.next;
-
+  var next = newRoot.sibling;
+  
+//  if(!!prev && prev.degree > 0) debugger;
+//  if(!!curr && curr.degree > 0) debugger;
+//  if(!!next && next.degree > 0) debugger;
+     
   while (next) {
     if(curr.degree !== next.degree || (next.sibling && next.sibling.degree == curr.degree)){
       prev = curr;
@@ -149,7 +158,7 @@ BinomialHeap.prototype.insert = function (key,val){
   var newNode = {
     key: key,
     value: val,
-    degree: null,
+    degree: 0,
     parent: null,
     child: null,
     sibling: null
