@@ -228,11 +228,71 @@ BinomialHeap.prototype.extractMin = function(){
 
 BinomialHeap.prototype.pop = BinomialHeap.prototype.extractMin;
 
-// implement decrease key 
+BinomialHeap.prototype.exchange = function(node,other){
+  
+  // all the other fields get swapped properly just by the key exhange
+
+  var temp = {
+    key: node.key,
+    value: node.val,
+  };
+
+  node.key = other.key;
+  node.value = other.value;
+
+  other.key = temp.key;
+  other.value = temp.value;
+  
+}
+
+// decrease key 
 //
-// if for it to work you're gonna need to know you key ahead of time or keep a seperate data strcture
+// for it to work you're gonna need to know you key ahead of time or keep a seperate data strcture
 //
 // perhaps a hash table that will allow you to search all of the keys in heap
+
+BinomialHeap.prototype.decreaseKey = function(node, newKey) {
+
+  // key should be checked to not be greater according to CLRS 2nd edition
+
+  node.key = newKey;
+
+  // move node up tree until it stops breaking heap property
+  var parent = node.parent;
+
+  while(parent && (node.key <= parent.key)) { // comp
+
+     BinomialHeap.prototype.exchange(node,parent);
+
+     node = parent;
+     parent = parent.parent;
+  }
+  
+  // return the node for its new position
+  return node;
+}
+
+BinomialHeap.prototype.delete = function(node){
+
+  // doing it the academic way of decreasing node to negative inifity
+  // you could also just check for a another parameter i.e. toRoot 
+  // and move the node all the way to the root if for some crazy reason
+  // you needed to store negative infinity but I dont
+  //
+  // only want node objects here no numbers
+  //
+  // if you gave it just a number the extract min function would still run 
+  // and this function would not only silently fail it would also lie that it succeded lol
+  
+  if (!(node instanceof Object)) { return false; }
+
+  BinomialHeap.prototype.decreaseKey(node, Number.NEGATIVE_INFINITY);
+  this.extractMin();
+  return true;
+}
+
+BinomialHeap.prototype.remove = BinomialHeap.prototype.delete;
+
 
 // implement delete which simply decrease key to inifity and remove Root
 
