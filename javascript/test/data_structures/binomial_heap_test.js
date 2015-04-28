@@ -54,6 +54,7 @@ describe('Binomial Heap', function(){
       var heap = new BinomialHeap();
       heap.insert(42).insert(37).insert(24);
       assert.equal(heap.pop().key, 24);
+      assert.equal(heap.peek().key, 37);
       assert.equal(heap.size, 2);
     });
 
@@ -66,17 +67,18 @@ describe('Binomial Heap', function(){
       assert.equal(heap.size, 6);
     });
 
-    it.skip("restores heap property and puts values in correct place", function(){
+    it("restores heap property and puts values in correct place", function(){
+      // https://www.cs.usfca.edu/~galles/visualization/BinomialQueue.html
       var heap = new BinomialHeap();
       heap.insert(42).insert(57).insert(30).insert(25);
 
-      assert.equal(heap.pop().key, 25);
-      assert.equal(heap.size, 3);
+      var oldRoot = heap.pop();
+      var root = heap.peek();
 
-      assert.equal(heap.peek().key, 30);
-      assert.equal(heap.left(0), 57);
-
-      assert.equal(heap.right(0), 42);
+      assert.equal(oldRoot.key, 25);
+      assert.equal(root.key, 30);
+      assert.equal(root.sibling.key, 42);
+      assert.equal(root.sibling.child.key, 57);
     });
   });
 
