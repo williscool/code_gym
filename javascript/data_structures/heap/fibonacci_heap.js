@@ -30,7 +30,7 @@ function FibonacciHeap(node, size) {
   // this could be zero so I gotta use my fancy function
   this.size = dsalgo.utils.isDefined(size) ? size : 0;
 
-  // gotta makesure we increase the size if a node is set in contructor
+  // gotta make sure we increase the size if a node is set in contructor
   if(node) this.size++;
 }
 
@@ -68,8 +68,7 @@ FibonacciHeap.prototype.insert = function (key,val){
     child: null,
     next: null,
     prev: null,
-    isMarked: null,
-    isMinimum: null
+    isMarked: null
   };
  
   // implementation this was inspired by counts on a node never having a null reference to work
@@ -243,15 +242,55 @@ FibonacciHeap.prototype.extractMin = function(){
 
 FibonacciHeap.prototype.pop = FibonacciHeap.prototype.extractMin;
 
+FibonacciHeap.prototype.cut = function(node, parent) {
+   // https://www.youtube.com/watch?v=M37HHf099oM
+   this.removeNodeFromList(node);
+   parent.degree--; 
+   this.mergeRootLists(minNode,node);
+   node.isMarked = false;
+}
+
+FibonacciHeap.prototype.cascadingCut = function(node, parent) {
+  var parent = node.parent;
+  if(parent){
+    if(node.isMarked){
+      cur(node,parent);
+      cascadingCut(parent);
+    } else {
+      node.isMarked = true;
+    }
+  }
+}
 
 FibonacciHeap.prototype.decreaseKey = function(node, newKey) {
 
-  return false;
+  // should tell you to not set a higher key
+  // just dont be stupid lol
+
+  node.key = newKey;
+  var parent = node.parent;
+
+  if(parent && (node.key <= node.parent)) { // comp
+    cut(node,parent);
+    cascadingCut(parent);
+  }
+
+  // comp
+  if(node.key <= this.minNode.key) this.minNode = node;
+
+  return true;
 }
 
 FibonacciHeap.prototype.delete = function(node){
 
-  return false;
+  // doing it the academic way of decreasing node to negative inifity again
+  // but really do. why would you need to store negative infinity?
+  
+  if (!(node instanceof Object)) { return false; }
+
+  this.decreaseKey(node, Number.NEGATIVE_INFINITY);
+  this.extractMin();
+  return true;
 }
 
 FibonacciHeap.prototype.remove = FibonacciHeap.prototype.delete;
