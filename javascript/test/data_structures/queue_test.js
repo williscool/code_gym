@@ -26,7 +26,7 @@ describe('Queue with Doubly Linked List', function(){
 
     it("removes items", function(){
       assert.equal(queue.length, 3);
-      queue.dequeue(42);
+      queue.dequeue();
       assert.deepEqual(queue.items.toArray(), [75,22]);
       assert.equal(queue.length, 2);
     });

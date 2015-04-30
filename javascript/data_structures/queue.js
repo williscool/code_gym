@@ -11,13 +11,13 @@ Queue.prototype.enqueue = function(val){
   return this;
 }
 
-Queue.prototype.dequeue = function(val){
+Queue.prototype.dequeue = function(){
   this.items.removeFront();
   this.length--;
   return this;
 }
 
-Queue.prototype.peek = function(val){
+Queue.prototype.peek = function(){
   return this.items.head.value;
 }
 
