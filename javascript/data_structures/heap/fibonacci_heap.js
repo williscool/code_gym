@@ -25,13 +25,16 @@
 
 var dsalgo = require('../../utilities.js').dsalgo;
 
-function FibonacciHeap(node, size) {
+function FibonacciHeap(node, size, compfn) {
   this.minNode = node || null;
   // this could be zero so I gotta use my fancy function
   this.size = dsalgo.utils.isDefined(size) ? size : 0;
 
   // gotta make sure we increase the size if a node is set in contructor
   if(node) this.size++;
+
+  // fib heap is also a min heap by default
+  this.comp = compfn || function (a,b) {return a.key <= b.key;};
 }
 
 FibonacciHeap.prototype.isEmpty = function (){
@@ -39,7 +42,7 @@ FibonacciHeap.prototype.isEmpty = function (){
 }
 
 FibonacciHeap.prototype.mergeRootLists = function(a, b) {
-  // interesting not here this function dramatically simplifies the union operation 
+  // interesting note here this function dramatically simplifies the union operation 
   // simply by returning the Min(a,b) 
   // would have been nice for them to have done it this way in CLRS
 
@@ -55,7 +58,7 @@ FibonacciHeap.prototype.mergeRootLists = function(a, b) {
   b.next = temp;
   b.next.prev = b;
 
-  return (a.key <= b.key) ? a :b; // comp
+  return this.comp(a,b) ? a :b;
 }
 
 FibonacciHeap.prototype.insert = function (key,val){
@@ -270,13 +273,12 @@ FibonacciHeap.prototype.decreaseKey = function(node, newKey) {
   node.key = newKey;
   var parent = node.parent;
 
-  if(parent && (node.key <= node.parent)) { // comp
+  if(parent && this.comp(node, node.parent)) { 
     cut(node,parent);
     cascadingCut(parent);
   }
 
-  // comp
-  if(node.key <= this.minNode.key) this.minNode = node;
+  if(this.comp(node, this.minNode)) this.minNode = node;
 
   return true;
 }
