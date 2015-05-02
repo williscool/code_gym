@@ -9,6 +9,7 @@
 var dsalgo = require('../utilities.js').dsalgo;
 var BinaryHeap = require('./heap/binary_heap.js').custom;
 var BinomialHeap = require('./heap/binomial_heap.js');
+var FibonacciHeap = require('./heap/fibonacci_heap.js');
 
 module.exports.priorityQueue = {};
 
@@ -126,6 +127,42 @@ binomialHeapPQ.prototype.size = function(){
   return this.heap.size;
 }
 
+
+
+function fibonacciHeapPQ(){
+  // Give a fibonacci heap the right comparator and it will work 
+  // as a stable prority queue like magic too
+  //
+  // again who knew?
+
+  // this instantiation is ugly would like to clean it up
+  this.heap = new FibonacciHeap(null, 0, function(a,b) {
+    if (a.key != b.key) return a.key >= b.key;
+    return a.value.order < b.value.order;
+  });
+}
+
+fibonacciHeapPQ.prototype.enqueue = function(val, p){
+  p = dsalgo.utils.isDefined(p) ? p : 0;
+
+  this.heap.insert(p,{value: val, priority:p, order:this.size()});
+  return this;
+}
+
+fibonacciHeapPQ.prototype.dequeue = function(){
+  var test = this.heap.pop();
+  return this;
+}
+
+fibonacciHeapPQ.prototype.peek = function(){
+  return this.heap.peek().value;
+}
+
+fibonacciHeapPQ.prototype.size = function(){
+  return this.heap.size;
+}
+
 module.exports.priorityQueue.naive = naivePQ;
 module.exports.priorityQueue.binaryHeap = binaryHeapPQ;
 module.exports.priorityQueue.binomialHeap = binomialHeapPQ;
+module.exports.priorityQueue.fibonacciHeap = fibonacciHeapPQ;
