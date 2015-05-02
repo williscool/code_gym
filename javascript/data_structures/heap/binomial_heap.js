@@ -19,14 +19,12 @@ function BinomialHeap(compfn) {
   this.root = null;
   this.size = 0;
 
-  // didnt feel like complicating this code with a comparator
-  // could bring it back later
-  // but most references to this data structure only say it support the min heap property
+  // most references to this data structure only say it supports the min heap property
   //
   // even the last version of CLRS it was in
   //
   // default to min heap
-  // this.comp = compfn || function (a,b) {return a<=b;};
+  this.comp = compfn || function (a,b) {return a.key <= b.key;};
 
 }
 
@@ -37,7 +35,7 @@ BinomialHeap.prototype.findMin = function(){
   var next = min.sibling;
   
   while(next) {
-    if(next.key <= min.key){ // comp
+    if(this.comp(next, min)){
        min = next;
     }
 
@@ -129,7 +127,7 @@ BinomialHeap.prototype.union = function(otherHeap) {
       curr = next;
     } else {
 
-      if (curr.key <= next.key ){ // comp
+      if (this.comp(curr,next)) { 
         curr.sibling = next.sibling;
         BinomialHeap.prototype.linkTreeNodes(curr,next);
       } else {
@@ -211,7 +209,7 @@ BinomialHeap.prototype.extractMin = function(){
   var nextPrev = min;
   
   while(next) {
-    if(next.key <= min.key){ // comp
+    if(this.comp(next,min)){ 
        min = next;
        minPrev = nextPrev;
     }
@@ -260,7 +258,7 @@ BinomialHeap.prototype.decreaseKey = function(node, newKey) {
   // move node up tree until it stops breaking heap property
   var parent = node.parent;
 
-  while(parent && (node.key <= parent.key)) { // comp
+  while(parent && this.comp(node,parent)) {
 
      BinomialHeap.prototype.exchange(node,parent);
 
@@ -286,7 +284,13 @@ BinomialHeap.prototype.delete = function(node){
   
   if (!(node instanceof Object)) { return false; }
 
-  BinomialHeap.prototype.decreaseKey(node, Number.NEGATIVE_INFINITY);
+  // interesting calling this from the constructor doesn't properly set the this value
+  // so decreaseKey would not have access to the proper this context and invariably
+  // the comparision function so we must call it on this instead of BinomialHeap.prototype
+  //
+  // Yay javascript!
+ 
+  this.decreaseKey(node, Number.NEGATIVE_INFINITY);
   this.extractMin();
   return true;
 }
