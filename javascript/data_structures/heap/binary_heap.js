@@ -28,7 +28,10 @@ function Heap(array, compfn) {
   // default to max heap
   // need to set comparator first or it wont be set for the constructors call to siftUp
   // heaps children can be == to also
-
+ 
+  // should better handle only passing a comparison function instead of just an array
+  // weird errors happen if you set array to a function;
+  
   this.comp = compfn || function (a,b) {return a>=b;};
   
   // always set to an array at first
@@ -110,33 +113,44 @@ Heap.prototype.siftDown = function(i,endPos){
   // much easier than what I was doing earlier
   // http://www.cs.rit.edu/~rpj/courses/bic2/studios/studio1/studio121.html
   
-  // default them to -1 if they are out of bounds which wont ever be a valid array index
-  if (!dsalgo.utils.isDefined(left)) left = -1;
-  if (!dsalgo.utils.isDefined(right)) right = -1;
+  // default them to false now because the filter used on comp arr would drop anything
+  // that evaluates to false in the comparison of '> -1' which includes objects lol
+  // which had the unforunate side effect of making this stucture not properly store anything but integers
+  //
+  // BUT WARNING THARE BE DRAGONS!!!
+  //
+  // in javascript 0==false
+  //
+  // so everwhere in this function MUST USE ===
+  //
+  if (!dsalgo.utils.isDefined(left)) left = false;
+  if (!dsalgo.utils.isDefined(right)) right = false;
 
   if (dsalgo.utils.isDefined(endPos)){
     // if either index value is greater than the endPos in a heapsort 
     //
     // it is in the sorted part the array and will be ignored for sifting the value down the heap
     
-    if (rightI > endPos) right = -1;
-    if (leftI > endPos) left = -1;
+    if (rightI > endPos) right = false;
+    if (leftI > endPos) left = false;
   } 
 
   var comp_arr = [extremaVal,left,right];
+  
   // also need to drop any values less than zero to discard outof bounds indexes
-  var extrema = comp_arr.sort(this.comp).filter(function(val){return val > -1;}).pop();
+  //
+  var extrema = comp_arr.sort(this.comp).filter(function(val){return val !== false;}).pop();
 
   // http://algs4.cs.princeton.edu/24pq/
   // "if records can have duplicate keys, maximum means any record with the largest key value"
   //
   // so I pick to always default to not shifting the tree again
   
-  if(extrema == left) extremaPos = leftI;
-  if(extrema == right) extremaPos = rightI;
-  if(extrema == extremaVal) extremaPos = extremaPos;  //default back to leaving tree alone
+  if(extrema === left) extremaPos = leftI;
+  if(extrema === right) extremaPos = rightI;
+  if(extrema === extremaVal) extremaPos = extremaPos;  //default back to leaving tree alone
 
-  if(extremaPos != i){
+  if(extremaPos !== i){
     this.items = swap(this.items, extremaPos, i);
     this.siftDown(extremaPos,endPos);
   }
