@@ -8,6 +8,7 @@
 // then we'll do one for each of the 3 heaps we've already written
 var dsalgo = require('../utilities.js').dsalgo;
 var BinaryHeap = require('./heap/binary_heap.js').custom;
+var BinomialHeap = require('./heap/binomial_heap.js');
 
 module.exports.priorityQueue = {};
 
@@ -90,5 +91,41 @@ binaryHeapPQ.prototype.size = function(){
   return this.heap.size();
 }
 
+
+
+
+function binomialHeapPQ(){
+  // Give a binomial heap the right comparator and it will work 
+  // as a stable prority queue like magic
+  //
+  // who knew?
+
+  this.heap = new BinomialHeap(function(a,b) {
+    if (a.key != b.key) return a.key >= b.key;
+    return a.value.order < b.value.order;
+  });
+}
+
+binomialHeapPQ.prototype.enqueue = function(val, p){
+  p = dsalgo.utils.isDefined(p) ? p : 0;
+
+  this.heap.insert(p,{value: val, priority:p, order:this.size()});
+  return this;
+}
+
+binomialHeapPQ.prototype.dequeue = function(){
+  var test = this.heap.pop();
+  return this;
+}
+
+binomialHeapPQ.prototype.peek = function(){
+  return this.heap.peek().value;
+}
+
+binomialHeapPQ.prototype.size = function(){
+  return this.heap.size;
+}
+
 module.exports.priorityQueue.naive = naivePQ;
 module.exports.priorityQueue.binaryHeap = binaryHeapPQ;
+module.exports.priorityQueue.binomialHeap = binomialHeapPQ;
