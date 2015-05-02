@@ -75,7 +75,7 @@ function binaryHeapPQ(){
 binaryHeapPQ.prototype.enqueue = function(val, p){
   // default could be negative infinity if you wanted 
   p = dsalgo.utils.isDefined(p) ? p : 0;
-  this.heap.insert({priority: p, value: val, order: this.heap.size()});
+  this.heap.insert({priority: p, value: val, order: this.size()});
   return this;
 }
 binaryHeapPQ.prototype.dequeue = function(){
