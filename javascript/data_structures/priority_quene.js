@@ -7,6 +7,7 @@
 //
 // then we'll do one for each of the 3 heaps we've already written
 var dsalgo = require('../utilities.js').dsalgo;
+var BinaryHeap = require('./heap/binary_heap.js').custom;
 
 module.exports.priorityQueue = {};
 
@@ -15,6 +16,7 @@ function naivePQ() {
 }
 
 naivePQ.prototype.enqueue = function(val, p){
+  // default could be negative infinity if you wanted 
   p = dsalgo.utils.isDefined(p) ? p : 0;
   this.items.push({priority: p, value: val});
   return this;
@@ -48,8 +50,45 @@ naivePQ.prototype.dequeue = function(){
   return this;
 }
 
-naivePQ.prototype.peek = function(val){
+naivePQ.prototype.peek = function(){
   return this.findHighest().value;
 }
 
+
+function binaryHeapPQ(){
+  // have to break ties with the order values were inserted in
+  //
+  // http://stackoverflow.com/a/6909699/511710
+  // http://algs4.cs.princeton.edu/25applications/StableMinPQ.java.html
+
+  this.heap = new BinaryHeap([], function (a,b) {
+    if (a.priority != b.priority) return a.priority >= b.priority;
+
+    // this takes a bit of explaining see on line 132 inside the siftDown function
+    // of my heap I compare the elements being compared to do heap rotations with 
+    // the comparision function in an array and take the last value
+    // so we need that last value to be the first element in the order of the quene
+    //
+    return a.order < b.order;
+  });
+}
+binaryHeapPQ.prototype.enqueue = function(val, p){
+  // default could be negative infinity if you wanted 
+  p = dsalgo.utils.isDefined(p) ? p : 0;
+  this.heap.insert({priority: p, value: val, order: this.heap.size()});
+  return this;
+}
+binaryHeapPQ.prototype.dequeue = function(){
+  this.heap.pop();
+  return this;
+}
+
+binaryHeapPQ.prototype.peek = function(){
+  return this.heap.peek().value;
+}
+binaryHeapPQ.prototype.size = function(){
+  return this.heap.size();
+}
+
 module.exports.priorityQueue.naive = naivePQ;
+module.exports.priorityQueue.binaryHeap = binaryHeapPQ;
