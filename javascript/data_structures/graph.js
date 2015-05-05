@@ -8,17 +8,32 @@
 var dsalgo = require('../utilities.js').dsalgo;
 
 function Graph(conf) {
-  this.config = conf || {}; // will add disable flags here later
+  this.config = conf || {enable_matrices: false}; // will add disable flags here later
 
   // ghetto set http://stackoverflow.com/a/18890005/511710
   this.verts = Object.create(null);
   this.edges = Object.create(null);
   
   this.adjacency_list = [];
-  this.adjacency_matrix = [];
-
   this.edge_list = [];
-  this.edge_matrix = [];
+
+  if(this.config.enable_matrices){
+
+    if(!this.config.max_size) {
+      // without this we couldnt set enough zeros and the represention 
+      // could end up not properly representing the graph
+      throw new Error("You must set a maximum size of graph you want to be able to represent.")
+    }
+
+    this.adjacency_matrix = [] ;
+    this.edge_matrix = [];
+
+    var size = this.config.max_size;
+    for(var i = 0; i < size; i++){
+      this.adjacency_matrix[i] = dsalgo.utils.simpleArrayFill(0,size);
+      this.edge_matrix[i] = dsalgo.utils.simpleArrayFill(0,size);
+    }
+  }
 
   // TODO: support adj list in the constructor as well
 
@@ -44,10 +59,6 @@ Graph.prototype.add_edge = function(from, to){
   // init all our lists if they aren't defined up here so the rest of the code reads cleaner;
   if(!dsalgo.utils.isDefined(this.adjacency_list[from])) this.adjacency_list[from] = [];
   if(!dsalgo.utils.isDefined(this.adjacency_list[to])) this.adjacency_list[to] = [];
-  if(!dsalgo.utils.isDefined(this.adjacency_matrix[from])) this.adjacency_matrix[from] = [];
-  if(!dsalgo.utils.isDefined(this.adjacency_matrix[to])) this.adjacency_matrix[to] = [];
-  if(!dsalgo.utils.isDefined(this.edge_matrix[from])) this.edge_matrix[from] = [];
-  if(!dsalgo.utils.isDefined(this.edge_matrix[to])) this.edge_matrix[to] = [];
 
   // This function can produce a graph represented in four different ways
   //
@@ -81,7 +92,7 @@ Graph.prototype.add_edge = function(from, to){
   /*
    *  var adjacency_matrix = [
    *     [0,1,1,1],
-   *     [1,0,0,1],
+   *     [1,0,0,0],
    *     [1,0,0,1],
    *     [1,0,1,0]
    *   ];
@@ -89,8 +100,10 @@ Graph.prototype.add_edge = function(from, to){
    * */
 
   // flip the bits on
-  this.adjacency_matrix[from][to] = 1; 
-  this.adjacency_matrix[to][from] = 1;
+  if(this.config.enable_matrices){
+    this.adjacency_matrix[from][to] = 1; 
+    this.adjacency_matrix[to][from] = 1;
+  }
 
   /*
    * var edge_list = [ [0, 1], [0, 2], [0, 3], [2, 3]];
@@ -108,7 +121,7 @@ Graph.prototype.add_edge = function(from, to){
    *
    * var edge_matrix = [
    *     [1,1,1,0],
-   *     [1,0,0,1],
+   *     [1,0,0,0],
    *     [0,1,0,1],
    *     [0,0,1,1]
    *  ];
@@ -124,18 +137,20 @@ Graph.prototype.add_edge = function(from, to){
   // 
   // Finding it out when you add the next would require you knowing the length of the largest
   // which is waaaay more computationally expensive than just keeping a count
-  
 
-  // if you wanted to decouple the representations of edge list and matrix
-  // obviously you could use a seperate counter but I never intend to use them seperately
-  // so this is fine
 
-  var n = this.edge_list.length - 1; 
-  // remember arrays are 0 indexed but we already pushed the new edge to
-  // edge_list so we need to account for that
+  if(this.config.enable_matrices){
+    // if you wanted to decouple the representations of edge list and matrix
+    // obviously you could use a seperate counter but I never intend to use them seperately
+    // so this is fine
+    var n = this.edge_list.length - 1; 
 
-  this.edge_matrix[to][n] = 1;
-  this.edge_matrix[from][n] = 1;
+    // remember arrays are 0 indexed but we already pushed the new edge to
+    // edge_list so we need to account for that
+
+    this.edge_matrix[to][n] = 1;
+    this.edge_matrix[from][n] = 1;
+  }
 
   /* final notes: 
    *

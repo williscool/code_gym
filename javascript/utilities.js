@@ -44,6 +44,14 @@ utils.makeRandomArray = function (config) {
 }
 
 
+utils.simpleArrayFill = function (value,len) {
+  // http://stackoverflow.com/a/20223361/511710
+  //
+  var A=[], i=0;
+  while (i<len) A[i++]= value;
+  return A;
+}
+
 utils.arrayDeepCopy = function(thing){
   // array slice is fine for just numbers. would need to use JSON method if needed objects
   // return JSON.parse(JSON.stringify(thing)) ;

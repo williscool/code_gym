@@ -10,6 +10,15 @@ describe('Graph', function(){
       // as long as this doesn't blow up im happy
       var graph = new Graph();
     });
+
+    it("throws an error if you ask for matrices without supplying a size", function(){
+      // as long as this doesn't blow up im happy
+      assert.throws(function(){
+        new Graph({
+          enable_matrices : true
+        });
+      }, /maximum size/);
+    });
   });
 
   describe('Vertex Functions', function(){
@@ -76,7 +85,10 @@ describe('Graph', function(){
   });
 
   describe('Edge Functions', function(){
-    var graph = new Graph();
+    var graph = new Graph({
+      enable_matrices: true,
+      max_size: 4
+    });
 
     describe('#add_edge()', function(){
 
@@ -102,10 +114,10 @@ describe('Graph', function(){
         assert.deepEqual(graph.adjacency_list, adjList);
       });
 
-      it.skip("produces a correct adjacency_matrix", function(){
+      it("produces a correct adjacency_matrix", function(){
         var adjMatrix = [
             [0,1,1,1],
-            [1,0,0,1],
+            [1,0,0,0],
             [1,0,0,1],
             [1,0,1,0]
             ];
@@ -119,10 +131,10 @@ describe('Graph', function(){
         assert.deepEqual(graph.edge_list, edgeList);
       });
 
-      it.skip("produces a correct incidence list", function(){
+      it("produces a correct incidence list", function(){
         var edgeMatrix = [
             [1,1,1,0],
-            [1,0,0,1],
+            [1,0,0,0],
             [0,1,0,1],
             [0,0,1,1],
             ];
