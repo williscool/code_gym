@@ -1,10 +1,8 @@
 var assert = require('assert');
 var Graph = require('../../data_structures/graph.js');
 
-// test each representation deep equals correctly then add the other stuff and we are done
-// with the data structure and can write the algorithms
-
 describe('Graph', function(){
+
   describe('constructor', function(){
     it("instantiates", function(){
       // as long as this doesn't blow up im happy
@@ -12,7 +10,6 @@ describe('Graph', function(){
     });
 
     it("throws an error if you ask for matrices without supplying a size", function(){
-      // as long as this doesn't blow up im happy
       assert.throws(function(){
         new Graph({
           enable_matrices : true
@@ -147,7 +144,7 @@ describe('Graph', function(){
       var graph = new Graph();
       graph.add_edge(0,1);
 
-      it("gives correct number of vertices", function(){
+      it("gives correct number of edges", function(){
         assert.equal(graph.size(),1);
       });
     });

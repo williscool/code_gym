@@ -3,7 +3,7 @@
 // So at first I was going to back the graph with each of the four major representations
 // coming from seperate class like objects but then I thought why?
 //
-// Why not just do it all at once and disable the less popular ones by default
+// Why not just do it all at once and disable the ones I dont plan to use much by default
 // that is what is going on here
 var dsalgo = require('../utilities.js').dsalgo;
 
@@ -38,17 +38,22 @@ function Graph(conf) {
   // TODO: support adj list in the constructor as well
 
 }
+
+Graph.prototype.build_from_adjacency_list = function(list){
+  // travese list and call add_edge for each
+
+}
  
+/// for if you want to add a vertex that is not connected to anything
+Graph.prototype.add_vertex = function(val){
+  this.verts[val] = true;
+}
+
 // TODO: avoid duplicates like [0,1] [1,0] with a set
 //
 // http://www.quora.com/What-are-the-various-approaches-you-can-use-to-build-adjacency-list-representation-of-a-undirected-graph-having-time-complexity-better-than-O-V-*-E-and-avoiding-duplicate-edges
 // http://stackoverflow.com/a/18890005/511710
 // https://github.com/mbostock/d3/blob/master/src/arrays/set.js#L10
-
-/// for if you want to add a vertex that is not connected to anything
-Graph.prototype.add_vertex = function(val){
-  this.verts[val] = true;
-}
 
 Graph.prototype.add_edge = function(from, to){
  
