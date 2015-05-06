@@ -43,6 +43,12 @@ utils.makeRandomArray = function (config) {
   return result;
 }
 
+utils.arrayDeepCopy = function(thing){
+  // array slice is fine for just numbers. would need to use JSON method if needed objects
+  // return JSON.parse(JSON.stringify(thing)) ;
+  // http://davidwalsh.name/javascript-clone-array
+  return thing.slice(0);
+}
 
 utils.simpleArrayFill = function (value,len) {
   // http://stackoverflow.com/a/20223361/511710
@@ -52,9 +58,9 @@ utils.simpleArrayFill = function (value,len) {
   return A;
 }
 
-utils.arrayDeepCopy = function(thing){
-  // array slice is fine for just numbers. would need to use JSON method if needed objects
-  // return JSON.parse(JSON.stringify(thing)) ;
-  // http://davidwalsh.name/javascript-clone-array
-  return thing.slice(0);
+utils.makeNumberUnlessNaN = function (val) {
+  var num = parseInt(val);
+
+  if (!isNaN(num)) return num;
+  return val;
 }

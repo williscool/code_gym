@@ -8,9 +8,12 @@
 var dsalgo = require('../utilities.js').dsalgo;
 
 function Graph(conf) {
-  this.config = conf || {enable_matrices: false}; // will add disable flags here later
+  this.config = conf || {enable_matrices: false};
 
-  // ghetto set http://stackoverflow.com/a/18890005/511710
+  // sets
+  // http://stackoverflow.com/a/18890005/511710
+  // https://github.com/mbostock/d3/blob/master/src/arrays/set.js#L10
+  
   this.verts = Object.create(null);
   this.edges = Object.create(null);
   
@@ -35,13 +38,32 @@ function Graph(conf) {
     }
   }
 
-  // TODO: support adj list in the constructor as well
+  if(this.config.adjList) {
+     this.add_from_adjacency_list(this.config.adjList) ;
+  }
 
 }
 
-Graph.prototype.build_from_adjacency_list = function(list){
+Graph.prototype.add_from_adjacency_list = function(list){
   // travese list and call add_edge for each
+  
+  var context = this;
 
+  // doing Object.keys allows us to easily support non integer node names too
+  // but we will coerce them into numbers if we can
+
+  Object.keys(list).forEach(function(from){
+    var u = dsalgo.utils.makeNumberUnlessNaN(from);
+
+    // so here you want to use the actual values in the array and not Object.keys
+    // why? because those are the indexes of this array not the values in them
+    list[from].forEach(function(to){
+      var v = dsalgo.utils.makeNumberUnlessNaN(to);
+
+      // u aka from and v aka to
+      context.add_edge(u,v);
+    });
+  });
 }
  
 /// for if you want to add a vertex that is not connected to anything
@@ -49,19 +71,21 @@ Graph.prototype.add_vertex = function(val){
   this.verts[val] = true;
 }
 
-// TODO: avoid duplicates like [0,1] [1,0] with a set
-//
-// http://www.quora.com/What-are-the-various-approaches-you-can-use-to-build-adjacency-list-representation-of-a-undirected-graph-having-time-complexity-better-than-O-V-*-E-and-avoiding-duplicate-edges
-// http://stackoverflow.com/a/18890005/511710
-// https://github.com/mbostock/d3/blob/master/src/arrays/set.js#L10
+Graph.prototype.add_edge = function(from, to, opts){
 
-Graph.prototype.add_edge = function(from, to){
+  var options = opts  || {allow_parallel: false}
+  var edge_key = [from,to].sort().join("");
  
+  if (!options.allow_parallel && this.edges[edge_key]){
+    // quit this whole function so we dont duplicate anything.
+    return this;
+  }
+  
   // add vertices to the list if they didnt exist already
   this.verts[from] = true;
   this.verts[to] = true;
 
-  // init all our lists if they aren't defined up here so the rest of the code reads cleaner;
+  // init all lists that may not be defined up here so the rest of the code reads cleaner
   if(!dsalgo.utils.isDefined(this.adjacency_list[from])) this.adjacency_list[from] = [];
   if(!dsalgo.utils.isDefined(this.adjacency_list[to])) this.adjacency_list[to] = [];
 
@@ -73,6 +97,8 @@ Graph.prototype.add_edge = function(from, to){
   // - adjacency matrix
   // - edge list
   // - incidence matrix
+  //
+  // also I later added an edge set to support not making duplicate edges
   //
   // The examples below are based on first graph from here
   //
@@ -157,12 +183,30 @@ Graph.prototype.add_edge = function(from, to){
     this.edge_matrix[from][n] = 1;
   }
 
+  /* edge hash for handling duplicates aka graphs that do not support parallel edges
+   * 
+   * to avoid duplicates like [0,1] [1,0] with a set
+   *
+   * http://www.quora.com/What-are-the-various-approaches-you-can-use-to-build-adjacency-list-representation-of-a-undirected-graph-having-time-complexity-better-than-O-V-*-E-and-avoiding-duplicate-edges
+   *
+   * here's how we sort the name of the keys by their "string Unicode code points" https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+   *
+   * then store them as a string key in a set. 
+   *
+   * The value of that key could be the cost of the edge but for now merely stores existance
+   *
+   * 
+   * var edge_set =  {"01":true, "02":true, "03":true, "23":true};
+   *
+   * */
+
+  this.edges[edge_key] = true;
+
   /* final notes: 
    *
    * 1. this version does not support edges having a cost. 
    *
-   * here's how I would do that though. I would sort the name of the keys by their utf-8 order
-   * then store them as a string key in a set. The value of that key would be the cost of the edge
+   * while I have updated this to support not making dupes I haven't added costs yet
    *
    * 2. here are some other nifty graph data structures you could use
    *

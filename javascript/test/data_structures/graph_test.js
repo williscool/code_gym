@@ -16,6 +16,21 @@ describe('Graph', function(){
         });
       }, /maximum size/);
     });
+
+    it("can build from an adjacency_list", function(){
+     var adjList = [
+        [1,2,3], 
+        [0], 
+        [0,3], 
+        [0,2]
+        ]; 
+      
+      var graph = new Graph({
+          adjList : adjList
+        });
+      
+      assert.deepEqual(graph.adjacency_list, adjList);
+    });
   });
 
   describe('Vertex Functions', function(){
@@ -136,6 +151,11 @@ describe('Graph', function(){
             [0,0,1,1],
             ];
         assert.deepEqual(graph.edge_matrix, edgeMatrix);
+      });
+
+      it("produces a correct edge set", function(){
+        var edgeSet =  {"01":true, "02":true, "03":true, "23":true};
+        assert.deepEqual(graph.edges, edgeSet);
       });
 
     });
