@@ -194,7 +194,13 @@ Graph.prototype.add_edge = function(from, to, opts){
    * then store them as a string key in a set. 
    *
    * The value of that key could be the cost of the edge but for now merely stores existance
+   * 
+   * very similar to add_edge from the boost c++ library
    *
+   * http://www.boost.org/doc/libs/1_58_0/libs/graph/doc/adjacency_list.html
+   *
+   * would have liked to link to so similar code in the boost library 
+   *   but I dont understand C++ well enough to know what the fuck is going on in there lol
    * 
    * var edge_set =  {"01":true, "02":true, "03":true, "23":true};
    *
