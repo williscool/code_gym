@@ -1,5 +1,4 @@
 // TODO: add insertAt() and removeAt()
-//
 var DoublyLinkedList = require('../../data_structures/linked_list/doubly_linked_list.js');
 
 var util = require('util');
@@ -59,7 +58,7 @@ CircularlyLinkedList.prototype.insertEnd = function(val){
 CircularlyLinkedList.prototype.removeFront = function() {
   
   if(!this.head){
-    // do thing but return for chaining
+    // do nothing but return for chaining
   } else {
     var new_head = this.head.next;
     new_head.prev = this.head.prev;
@@ -71,9 +70,7 @@ CircularlyLinkedList.prototype.removeFront = function() {
 
 CircularlyLinkedList.prototype.removeEnd = function(){
   
-  if(!this.tail){
-    // do thing but return for chaining
-  } else {
+  if(this.tail){
     var new_tail = this.tail.prev;
     new_tail.next = this.tail.next;
     this.tail = new_tail;

@@ -1,3 +1,4 @@
+// http://en.wikipedia.org/wiki/Doubly_linked_list
 function DoublyLinkedList() {
   this.head = null;
   this.tail = null;
@@ -7,6 +8,7 @@ DoublyLinkedList.prototype.insertFront = function(val){
   var node = {value: val, prev: null, next:null };
   
   if(!this.head){
+    // create special case of one node doubly linked list 
     this.head = node;
     this.tail = node;
   } else {
@@ -22,6 +24,7 @@ DoublyLinkedList.prototype.insertEnd = function(val){
   var node = {value: val, next:null };
   
   if(!this.tail){
+    // create special case of one node doubly linked list 
     this.tail = node;
     this.head = node;
   } else {
@@ -35,8 +38,17 @@ DoublyLinkedList.prototype.insertEnd = function(val){
 
 DoublyLinkedList.prototype.removeFront = function() {
   
-  if(!this.head){
-  } else {
+  if(this.head){
+
+    // special case for removal of node from a list with only one node where 
+    // that node is both the head and the tail
+    //
+    // this is a convention people use to make the code for adding subsequent nodes easier
+    // because you never have to do any null checking
+    if(this.head == this.tail){
+      this.tail = null; 
+    }
+
     var new_head = this.head.next;
     this.head = new_head;
   }
@@ -46,9 +58,13 @@ DoublyLinkedList.prototype.removeFront = function() {
 
 DoublyLinkedList.prototype.removeEnd = function(){
   
-  if(!this.tail){
-    // do thing but return for chaining
-  } else {
+  if(this.tail){
+
+    // special case for list with one item
+    if(this.head == this.tail){
+      this.head = null; 
+    }
+
     var new_tail = this.tail.prev;
     this.tail = new_tail;
     // since this is now no reference to the old head the garbage collector will delete it. 
