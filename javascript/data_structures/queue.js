@@ -12,9 +12,10 @@ Queue.prototype.enqueue = function(val){
 }
 
 Queue.prototype.dequeue = function(){
+  var value = this.peek();
   this.items.removeFront();
   this.length--;
-  return this;
+  return value;
 }
 
 Queue.prototype.peek = function(){
