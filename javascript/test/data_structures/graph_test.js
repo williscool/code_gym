@@ -17,20 +17,42 @@ describe('Graph', function(){
       }, /maximum size/);
     });
 
-    it("can build from an adjacency_list", function(){
-     var adjList = [
-        [1,2,3], 
-        [0], 
-        [0,3], 
-        [0,2]
-        ]; 
-      
-      var graph = new Graph({
-          adjList : adjList
+    describe("can build from an adjacency_list", function(){
+        it("correctly", function(){
+         var adjList = [
+            [1,2,3], 
+            [0], 
+            [0,3], 
+            [0,2]
+            ]; 
+          
+          var graph = new Graph({
+              adjList : adjList
+            });
+          
+          assert.deepEqual(graph.adjacency_list, adjList);
         });
-      
-      assert.deepEqual(graph.adjacency_list, adjList);
+
+        it("with an unconnected vertex correctly", function(){
+          var adjListToo = [
+              [1],
+              [0, 4, 5],
+              [3, 4, 5],
+              [2, 6],
+              [1, 2],
+              [1, 2, 6],
+              [3, 5],
+              []
+              ];
+          
+          var graph = new Graph({
+              adjList : adjListToo
+            });
+          
+          assert.deepEqual(graph.adjacency_list, adjListToo);
+        });
     });
+
   });
 
   describe('Vertex Functions', function(){

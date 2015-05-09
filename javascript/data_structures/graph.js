@@ -45,7 +45,7 @@ function Graph(conf) {
 }
 
 Graph.prototype.add_from_adjacency_list = function(list){
-  // travese list and call add_edge for each
+  // go through list and add vertices and edges
   
   var context = this;
 
@@ -55,20 +55,31 @@ Graph.prototype.add_from_adjacency_list = function(list){
   Object.keys(list).forEach(function(from){
     var u = dsalgo.utils.makeNumberUnlessNaN(from);
 
-    // so here you want to use the actual values in the array and not Object.keys
-    // why? because those are the indexes of this array not the values in them
-    list[from].forEach(function(to){
-      var v = dsalgo.utils.makeNumberUnlessNaN(to);
+      if(list[from].length === 0) {
 
-      // u aka from and v aka to
-      context.add_edge(u,v);
-    });
+        // this is a vertex with no edges connected to it.
+        // add it to vertex list but dont connect it anywhere
+        context.add_vertex(from);
+
+      } else{
+
+        // so here you want to use the actual values in the array and not Object.keys
+        // why? because those are the indexes of this array not the values in them
+        list[from].forEach(function(to){
+            var v = dsalgo.utils.makeNumberUnlessNaN(to);
+            // u aka from and v aka to
+            context.add_edge(u,v);
+        });
+      }
   });
 }
  
 /// for if you want to add a vertex that is not connected to anything
 Graph.prototype.add_vertex = function(val){
   this.verts[val] = true;
+
+  // init its adjacency list to empty unless its already there
+  if(!dsalgo.utils.isDefined(this.adjacency_list[val])) this.adjacency_list[val] = [];
 }
 
 Graph.prototype.add_edge = function(from, to, opts){
@@ -82,12 +93,8 @@ Graph.prototype.add_edge = function(from, to, opts){
   }
   
   // add vertices to the list if they didnt exist already
-  this.verts[from] = true;
-  this.verts[to] = true;
-
-  // init all lists that may not be defined up here so the rest of the code reads cleaner
-  if(!dsalgo.utils.isDefined(this.adjacency_list[from])) this.adjacency_list[from] = [];
-  if(!dsalgo.utils.isDefined(this.adjacency_list[to])) this.adjacency_list[to] = [];
+  this.add_vertex(from);
+  this.add_vertex(to);
 
   // This function can produce a graph represented in four different ways
   //
