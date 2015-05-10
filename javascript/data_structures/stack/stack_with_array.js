@@ -4,6 +4,7 @@ function Stack() {
 	this.push = function (thing) {
     this.stack_top_index = this.stack_top_index + 1 ;
 		this.items[this.stack_top_index] = thing;
+    return this;
 	}
 	
 	this.pop = function () {
@@ -15,6 +16,10 @@ function Stack() {
 			throw Error("stack empty");
 		}
 	}
+
+  this.isEmpty = function (){
+    return this.stack_top_index === -1;
+  }
 }
 
 module.exports = Stack;
