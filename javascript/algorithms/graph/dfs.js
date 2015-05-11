@@ -1,8 +1,11 @@
 // http://en.wikipedia.org/wiki/Depth-first_search
 
+module.exports.DFS = {};
+
+var dsalgo = require('../../utilities.js').dsalgo;
 var Stack = require('../../data_structures/stack/stack_with_array.js');
 
-module.exports = function (graph, start_vertex) {
+module.exports.DFS.iterative = function (graph, start_vertex) {
   
   if (graph.order() < 1) return Error("come on dog there's no nodes in this graph.")
 
@@ -10,8 +13,10 @@ module.exports = function (graph, start_vertex) {
   var info = [];
   
   for(var i = 0; i < graph.order() ; i++) {
-    info[i] = {distance: 0, predecessor:null, visitedOrder:null, isVisited: false};
+    info[i] = {distance: null, predecessor:null, visitedOrder:null, isVisited: false};
   }
+
+  info[start_vertex] = {distance: 0, predecessor:null, visitedOrder:visiting, isVisited: false}
 
   var stack = new Stack();
 
@@ -44,4 +49,47 @@ module.exports = function (graph, start_vertex) {
   }
 
   return info;
+};
+
+// inspired by
+// https://github.com/adlawson/search-algorithms/blob/master/javascript/dfs.js
+module.exports.DFS.recursive = function (graph, v, visited, fn) {
+  var DFS = module.exports.DFS.recursive;
+
+  if (graph.order() < 1) return Error("come on dog there's no nodes in this graph.")
+
+  if(visited[v] === true) return;
+
+  visited[v] = true;
+
+  for(var i in graph.adjacency_list[v]) {
+
+    var w = graph.adjacency_list[v][i];
+
+    if(visited[w] !== true) {
+      fn(v,w);
+      DFS(graph, w, visited,fn);
+    }
+
+  } 
+
+};
+
+module.exports.DFS.recursive_info = function (graph, start_vertex) {
+    var info = [];
+    for(var i = 0; i < graph.order() ; i++) {
+      info[i] = {distance: null, predecessor:null, visitedOrder:null, isVisited: false};
+    }
+    var visiting = 1;
+
+    info[start_vertex] = {distance: 0, predecessor:null, visitedOrder:visiting, isVisited: true}
+
+    var DFS = module.exports.DFS.recursive;
+
+    DFS(graph, start_vertex, Object.create(null), function(v,w){
+        visiting += 1;
+        info[w] = {distance: info[v].distance + 1, predecessor:v, visitedOrder:visiting, isVisited: true}
+    });
+
+    return info;
 };
