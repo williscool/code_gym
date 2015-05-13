@@ -133,8 +133,8 @@ describe('Graph', function(){
       });
 
 
-      it("#order() is correct", function(){
-        assert.equal(graph.order(), 4);
+      it("#size() is correct", function(){
+        assert.equal(graph.size(), 4);
       });
 
       it("produces a correct adjacency_list", function(){
@@ -180,6 +180,22 @@ describe('Graph', function(){
         assert.deepEqual(graph.edges, edgeSet);
       });
 
+      it("supports edges with weights", function(){
+        var graph = new Graph();
+        graph.add_edge(30,20,112);
+        assert.equal(112, graph.get_edge_weight(20,30));
+      });
+
+    });
+
+    describe('#set_edge_weight()', function(){
+      var graph = new Graph();
+      graph.add_edge(0,1);
+
+      it("updates the weight of a previously created edge", function(){
+        graph.set_edge_weight(0,1,112);
+        assert.equal(112, graph.get_edge_weight(0,1));
+      });
     });
 
     describe('#size()', function(){

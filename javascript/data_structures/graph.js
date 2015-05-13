@@ -80,14 +80,43 @@ Graph.prototype.add_vertex = function(val){
 
   // init its adjacency list to empty unless its already there
   if(!dsalgo.utils.isDefined(this.adjacency_list[val])) this.adjacency_list[val] = [];
+
+  return this;
 }
 
-Graph.prototype.add_edge = function(from, to, opts){
+Graph.prototype.edge_key = function(from, to){
+  return [from,to].sort().join("");
+};
+
+Graph.prototype.edge_present = function(from, to){
+  // is there an edge between these two?
+  //
+  // this is necessary now that edge weights are supported. because in js 0 == false
+  return dsalgo.utils.isDefined(this.edges[this.edge_key(from,to)]);
+};
+
+Graph.prototype.set_edge_weight = function(from, to, weight){
+  // support setting edge weights on edges that have already been added to a graph
+  if(this.edge_present(from,to)){
+    this.edges[this.edge_key(from,to)] = weight;
+  } 
+
+  return this;
+};
+
+Graph.prototype.get_edge_weight = function(from, to){
+  // support setting edge weights on edges that have already been added to a graph
+  if(this.edge_present(from,to)){
+    return this.edges[this.edge_key(from,to)];
+  } 
+};
+
+Graph.prototype.add_edge = function(from, to, weight, opts){
 
   var options = opts  || {allow_parallel: false}
-  var edge_key = [from,to].sort().join("");
+  var edge_key = this.edge_key(from,to);
  
-  if (!options.allow_parallel && this.edges[edge_key]){
+  if (!options.allow_parallel && this.edge_present(from,to)){
     // quit this whole function so we dont duplicate anything.
     return this;
   }
@@ -211,17 +240,20 @@ Graph.prototype.add_edge = function(from, to, opts){
    * 
    * var edge_set =  {"01":true, "02":true, "03":true, "23":true};
    *
+   * later updated to support edges having weights
+   *
+   * ala {"01":10}
+   *
+   * YAY!
+   *
    * */
 
   this.edges[edge_key] = true;
+  if(dsalgo.utils.isDefined(weight)) this.edges[edge_key] = weight;
 
   /* final notes: 
    *
-   * 1. this version does not support edges having a cost. 
-   *
-   * while I have updated this to support not making dupes I haven't added costs yet
-   *
-   * 2. here are some other nifty graph data structures you could use
+   * 1. here are some other nifty graph data structures you could use
    *
    * http://en.wikipedia.org/wiki/Sparse_matrix#Yale
    *
