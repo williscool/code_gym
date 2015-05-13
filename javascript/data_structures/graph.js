@@ -8,7 +8,12 @@
 var dsalgo = require('../utilities.js').dsalgo;
 
 function Graph(conf) {
-  this.config = conf || {enable_matrices: false};
+  this.config = conf || {enable_matrices: false, directed: false};
+
+  this.directed = this.config.directed;
+
+  // set directed to false unless its explicity set to true
+  if(conf && !conf.directed === true) this.config.directed = false;
 
   // sets
   // http://stackoverflow.com/a/18890005/511710
@@ -19,6 +24,11 @@ function Graph(conf) {
   
   this.adjacency_list = [];
   this.edge_list = [];
+
+  // the matrices can use ALOT of memory
+  // so we disable them unless they are explicity enabled
+
+  if(conf && !conf.enable_matrices === true) this.config.enable_matrices = false;
 
   if(this.config.enable_matrices){
 
@@ -42,6 +52,34 @@ function Graph(conf) {
      this.add_from_adjacency_list(this.config.adjList) ;
   }
 
+  if(this.config.ewd) {
+     this.add_from_ewd(this.config.ewd);
+  }
+
+}
+
+Graph.prototype.add_from_ewd = function(list){
+  // i.e. http://algs4.cs.princeton.edu/44sp/tinyEWD.txt
+  
+  var context = this;
+  var rest_of_list = list.trim().split("\n");
+
+  // Get rid of the first 2 lines we dont need because dynamic arrays
+  var num_vertices = rest_of_list.shift();
+  var num_edges = rest_of_list.shift();
+
+  rest_of_list.forEach(function(line){
+    var info = line.split(" ");
+    var from = info[0];
+    var to = info[1];
+    var weight = parseFloat(info[2]);
+
+    var u = dsalgo.utils.makeNumberUnlessNaN(from);
+    var v = dsalgo.utils.makeNumberUnlessNaN(to);
+    // u aka from and v aka to
+    
+    context.add_edge(u,v,weight);
+  });
 }
 
 Graph.prototype.add_from_adjacency_list = function(list){
@@ -84,7 +122,10 @@ Graph.prototype.add_vertex = function(val){
   return this;
 }
 
-Graph.prototype.edge_key = function(from, to){
+Graph.prototype.edge_key = function(from, to, directed){
+  if(directed){
+    return [from,to].join("");
+  }
   return [from,to].sort().join("");
 };
 
@@ -112,11 +153,13 @@ Graph.prototype.get_edge_weight = function(from, to){
 };
 
 Graph.prototype.add_edge = function(from, to, weight, opts){
+  // in a directed graph an edge from -> to does not imply and edge to -> from
+  // updated to account for this
 
   var options = opts  || {allow_parallel: false}
-  var edge_key = this.edge_key(from,to);
+  var edge_key = this.edge_key(from,to, this.directed);
  
-  if (!options.allow_parallel && this.edge_present(from,to)){
+  if (!this.config.directed && !options.allow_parallel && this.edge_present(from,to)){
     // quit this whole function so we dont duplicate anything.
     return this;
   }
@@ -154,7 +197,7 @@ Graph.prototype.add_edge = function(from, to, weight, opts){
    * */
   
   this.adjacency_list[from].push(to);
-  this.adjacency_list[to].push(from);
+  if(!this.directed) this.adjacency_list[to].push(from);
 
   /*
    *  var adjacency_matrix = [
@@ -169,7 +212,7 @@ Graph.prototype.add_edge = function(from, to, weight, opts){
   // flip the bits on
   if(this.config.enable_matrices){
     this.adjacency_matrix[from][to] = 1; 
-    this.adjacency_matrix[to][from] = 1;
+    if(!this.directed) this.adjacency_matrix[to][from] = 1;
   }
 
   /*

@@ -1,5 +1,6 @@
 var assert = require('assert');
 var Graph = require('../../data_structures/graph.js');
+var dsalgo = require('../../utilities.js').dsalgo;
 
 describe('Graph', function(){
 
@@ -50,6 +51,65 @@ describe('Graph', function(){
             });
           
           assert.deepEqual(graph.adjacency_list, adjListToo);
+        });
+    });
+    describe("can build from an edge weighted digraph", function(){
+      // http://algs4.cs.princeton.edu/44sp/images/edge-weighted-digraph-representation.png
+      // i.e. http://algs4.cs.princeton.edu/44sp/tinyEWD.txt
+        it("string correctly", function(){
+         var EWD = dsalgo.utils.multilineString(function(){/*!
+8
+15
+4 5 0.35
+5 4 0.35
+4 7 0.37
+5 7 0.28
+7 5 0.28
+5 1 0.32
+0 4 0.38
+0 2 0.26
+7 3 0.39
+1 3 0.29
+2 7 0.34
+6 2 0.40
+3 6 0.52
+6 0 0.58
+6 4 0.93
+*/});
+          
+          var graph = new Graph({
+              directed : true,
+              ewd : EWD
+            });
+          
+          var adjList = [ [ 4, 2 ],
+                          [ 3 ],
+                          [ 7 ],
+                          [ 6 ],
+                          [ 5, 7 ],
+                          [ 4, 7, 1 ],
+                          [ 2, 0, 4 ],
+                          [ 5, 3 ] ]
+
+          var edgeSet = { 
+                      '02': 0.26,
+                      '04': 0.38,
+                      '13': 0.29,
+                      '27': 0.34,
+                      '36': 0.52,
+                      '45': 0.35,
+                      '47': 0.37,
+                      '51': 0.32,
+                      '54': 0.35,
+                      '57': 0.28,
+                      '60': 0.58,
+                      '62': 0.4,
+                      '64': 0.93,
+                      '73': 0.39,
+                      '75': 0.28
+                    }
+          assert.deepEqual(graph.adjacency_list, adjList);
+          assert.deepEqual(graph.edges, edgeSet);
         });
     });
 

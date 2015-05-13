@@ -64,3 +64,23 @@ utils.makeNumberUnlessNaN = function (val) {
   if (!isNaN(num)) return num;
   return val;
 }
+
+utils.multilineString = function(f) {
+  // http://stackoverflow.com/questions/805107/creating-multiline-strings-in-javascript/5571069#5571069
+  return f.toString().
+      replace(/^[^\/]+\/\*!?/, '').
+      replace(/\*\/[^\/]+$/, '');
+}
+
+// http://stackoverflow.com/a/12834464/511710
+utils.sortObjectByKey = function(obj) {
+    var keys = Object.keys(obj).sort();
+    var sorted_obj = {};
+
+    // create new array based on Sorted Keys
+    keys.forEach(function(key){
+        sorted_obj[key] = obj[key];
+    });
+
+    return sorted_obj;
+}
