@@ -1,5 +1,7 @@
 // so things dont get dupped all over the place
 
+var fs = require('fs');
+var resolve = require('path').resolve;
 module.exports.dsalgo = {utils: {}}
 var utils = module.exports.dsalgo.utils;
 
@@ -83,4 +85,19 @@ utils.sortObjectByKey = function(obj) {
     });
 
     return sorted_obj;
+}
+
+utils.requireText = function(dir , path) {
+  
+  if(arguments.length < 2) return Error("give me a file and a pathname or you are gonna have a bad time");
+
+  // inspired by 
+  //
+  // http://stackoverflow.com/a/6832105/511710
+  // http://stackoverflow.com/a/12753026/511710
+  //
+  // also you have to pass dir because if not you'd have to do all kinds of crazy shit to get resolve to use the right path
+  // re: google "node resolve caller"
+  //
+ return fs.readFileSync(resolve(dir + "../" + path)).toString();
 }

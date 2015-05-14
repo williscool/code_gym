@@ -53,10 +53,42 @@ describe('Graph', function(){
           assert.deepEqual(graph.adjacency_list, adjListToo);
         });
     });
+
     describe("can build from an edge weighted digraph", function(){
-      // http://algs4.cs.princeton.edu/44sp/images/edge-weighted-digraph-representation.png
-      // i.e. http://algs4.cs.princeton.edu/44sp/tinyEWD.txt
+          
+          var adjList = [ [ 4, 2 ],
+                          [ 3 ],
+                          [ 7 ],
+                          [ 6 ],
+                          [ 5, 7 ],
+                          [ 4, 7, 1 ],
+                          [ 2, 0, 4 ],
+                          [ 5, 3 ] ];
+
+          var edgeSet = { 
+                      '02': 0.26,
+                      '04': 0.38,
+                      '13': 0.29,
+                      '27': 0.34,
+                      '36': 0.52,
+                      '45': 0.35,
+                      '47': 0.37,
+                      '51': 0.32,
+                      '54': 0.35,
+                      '57': 0.28,
+                      '60': 0.58,
+                      '62': 0.4,
+                      '64': 0.93,
+                      '73': 0.39,
+                      '75': 0.28
+                    };
+
+
         it("string correctly", function(){
+          
+// http://algs4.cs.princeton.edu/44sp/images/edge-weighted-digraph-representation.png
+// i.e. http://algs4.cs.princeton.edu/44sp/tinyEWD.txt
+// http://algs4.cs.princeton.edu/44sp/images/shortest-path.png
          var EWD = dsalgo.utils.multilineString(function(){/*!
 8
 15
@@ -76,38 +108,23 @@ describe('Graph', function(){
 6 0 0.58
 6 4 0.93
 */});
-          
           var graph = new Graph({
               directed : true,
               ewd : EWD
             });
           
-          var adjList = [ [ 4, 2 ],
-                          [ 3 ],
-                          [ 7 ],
-                          [ 6 ],
-                          [ 5, 7 ],
-                          [ 4, 7, 1 ],
-                          [ 2, 0, 4 ],
-                          [ 5, 3 ] ]
+          assert.deepEqual(graph.adjacency_list, adjList);
+          assert.deepEqual(graph.edges, edgeSet);
+        });
 
-          var edgeSet = { 
-                      '02': 0.26,
-                      '04': 0.38,
-                      '13': 0.29,
-                      '27': 0.34,
-                      '36': 0.52,
-                      '45': 0.35,
-                      '47': 0.37,
-                      '51': 0.32,
-                      '54': 0.35,
-                      '57': 0.28,
-                      '60': 0.58,
-                      '62': 0.4,
-                      '64': 0.93,
-                      '73': 0.39,
-                      '75': 0.28
-                    }
+        it("file correctly", function(){
+          
+         var EWD = dsalgo.utils.requireText(__dirname, '../../data/graph/tinyEWD.txt');
+          var graph = new Graph({
+              directed : true,
+              ewd : EWD
+            });
+          
           assert.deepEqual(graph.adjacency_list, adjList);
           assert.deepEqual(graph.edges, edgeSet);
         });
