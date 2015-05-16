@@ -1,11 +1,12 @@
 // http://en.wikipedia.org/wiki/Priority_queue
 //
-// so we are gonna do naive where dequene 
+// so there is naive where #dequene()
 //
-// will start from the front of quene and look for the highest prority element to the 
+// starts from the front of quene and looks for the highest/lowest prority element to the 
 // end and only change the element if another element's priority is higher
 //
 // then we'll do one for each of the 3 heaps we've already written
+
 var dsalgo = require('../utilities.js').dsalgo;
 var BinaryHeap = require('./heap/binary_heap.js').custom;
 var BinomialHeap = require('./heap/binomial_heap.js');
@@ -13,47 +14,59 @@ var FibonacciHeap = require('./heap/fibonacci_heap.js');
 
 module.exports.priorityQueue = {};
 
-function naivePQ() {
+function naivePQ(extreme,comp) {
   this.items = [];
+
+  if(arguments.length > 0 && arguments.length < 2) throw new Error("need to define extreme and compartor for function to work correctly");
+
+  // default to max pq
+  this.extreme = dsalgo.utils.isDefined(extreme) ? extreme : Number.NEGATIVE_INFINITY;
+  this.comp = comp || function(a,b) {return a > b};
+
 }
 
 naivePQ.prototype.enqueue = function(val, p){
   // default could be negative infinity if you wanted 
+  //
+  // But I'm assuming you would want the default to be neutral.
+  // So you could proritize or deproritize based on your explicity settings 
+
   p = dsalgo.utils.isDefined(p) ? p : 0;
   this.items.push({priority: p, value: val});
   return this;
 }
 
-naivePQ.prototype.findHighest = function(val){
-  // need to get item with highest prority
+naivePQ.prototype.findExtreme = function(val){
+  // need to get item with highest/lowest prority
   //
   // assume its item one with whatever prority than look for any item higher
   //
   // http://jsperf.com/comparison-of-numbers
   // 
   // obviously this is an O(n) operation.
-  var highItem;
-  var highest = Number.NEGATIVE_INFINITY;
+ 
+  var extremaItem;
+  var extreme = this.extreme;
   var tmp;
   for (var i = 0; i < this.items.length ; i++) {
     tmp = this.items[i].priority;
     
-    if(tmp > highest) {
-      highest = tmp;
-      highItem = this.items[i];
-      highItem.index = i;
+    if(this.comp(tmp,extreme)) {
+      extreme = tmp;
+      extremaItem = this.items[i];
+      extremaItem.index = i;
     }
   }
-  return highItem;
+  return extremaItem;
 }
 
 naivePQ.prototype.dequeue = function(){
-  this.items.splice(this.findHighest().index, 1);
+  this.items.splice(this.findExtreme().index, 1);
   return this;
 }
 
 naivePQ.prototype.peek = function(){
-  return this.findHighest().value;
+  return this.findExtreme().value;
 }
 
 
