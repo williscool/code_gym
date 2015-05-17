@@ -94,7 +94,7 @@ var naiveDijkstra = function (graph, start_vertex, target_vertex) {
   this.info = info;
 };
 
-naiveDijkstra.prototype.shortest_path = function(target_vertex) {
+var shortestPath = function(target_vertex) {
 
   if(!this.info) throw new Error("dude I need a graph traversal to work with");
 
@@ -160,6 +160,8 @@ naiveDijkstra.prototype.shortest_path = function(target_vertex) {
    });
 
    return path_info;
-};
+}
+
+naiveDijkstra.prototype.shortest_path = shortestPath;
 
 module.exports.naive = naiveDijkstra;
