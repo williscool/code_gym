@@ -50,7 +50,8 @@ module.exports = function (graph, start_vertex, target_vertex) {
 
     if(index == -1){
       // this means everything else was pos infinity. just return the next vertex in the set
-      return Object.keys(vertexHash)[0];
+      //return Object.keys(vertexHash)[0];
+      throw new Error("index set to negative one in findMinIndex. This should not happen!")
     }
 
     return index;
