@@ -118,8 +118,8 @@ Graph.prototype.add_vertex = function(val){
   return this;
 }
 
-Graph.prototype.edge_key = function(from, to, directed){
-  if(directed){
+Graph.prototype.edge_key = function(from, to){
+  if(this.directed){
     return [from,to].join("");
   }
   return [from,to].sort().join("");
@@ -153,7 +153,7 @@ Graph.prototype.add_edge = function(from, to, weight, opts){
   // updated to account for this
 
   var options = opts  || {allow_parallel: false}
-  var edge_key = this.edge_key(from,to, this.directed);
+  var edge_key = this.edge_key(from,to);
  
   if (!this.config.directed && !options.allow_parallel && this.edge_present(from,to)){
     // quit this whole function so we dont duplicate anything.
