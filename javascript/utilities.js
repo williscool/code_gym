@@ -101,3 +101,10 @@ utils.requireText = function(dir , path) {
   //
  return fs.readFileSync(resolve(dir + "../" + path)).toString();
 }
+
+utils.simpleSet = function(){
+  // http://stackoverflow.com/a/18890005/511710
+  // https://github.com/mbostock/d3/blob/master/src/arrays/set.js#L10
+
+  return Object.create(null);
+}

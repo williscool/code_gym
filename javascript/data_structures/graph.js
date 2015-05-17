@@ -15,12 +15,8 @@ function Graph(conf) {
   // set directed to false unless its explicity set to true
   if(conf && !conf.directed === true) this.config.directed = false;
 
-  // sets
-  // http://stackoverflow.com/a/18890005/511710
-  // https://github.com/mbostock/d3/blob/master/src/arrays/set.js#L10
-  
-  this.verts = Object.create(null);
-  this.edges = Object.create(null);
+  this.verts = dsalgo.utils.simpleSet();
+  this.edges = dsalgo.utils.simpleSet();
   
   this.adjacency_list = [];
   this.edge_list = [];
