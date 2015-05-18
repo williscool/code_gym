@@ -36,20 +36,7 @@ describe('Heap', function(){
 
         var heap = new maxHeap(array);
 
-        // http://stackoverflow.com/questions/15579240/max-heapify-algorithm-results/15582773#15582773
-        // start from last node with children and run back to beginning
-        for (var i = (heap.size() - 1 >> 1) - 1; i >=0 ; i--) {
-
-          var curParent = heap.valueAt(i);
-          var left = heap.left(i);
-          var right = heap.right(i);
-
-          //if(!heap.comp(curVal, left) || !(heap.comp(curVal, right))) debugger;
-          //
-          // Greater than for max heap. Less than for min heap
-          assert( heap.comp(curParent, left) === true );
-          assert( heap.comp(curParent, right) === true );
-        }
+        assert(heap.isValid());
       });
     });
 
@@ -147,6 +134,19 @@ describe('Heap', function(){
       });
     });
 
+    describe('#updateValue()', function(){
+      it("update values that are in the heap", function(){
+        var heap = new maxHeap([32,15,12,42]);
+        var newIndex = heap.updateValue(42,14);
+        assert.equal(heap.valueAt(newIndex), 14);
+        assert(heap.isValid());
+      });
+      it("returns false for values that are not there", function(){
+      var heap = new maxHeap([32,15,12,47]);
+        assert.equal(heap.updateValue(0,31), false);
+      });
+    });
+
   });
 
   describe('Min', function(){
@@ -178,20 +178,7 @@ describe('Heap', function(){
 
         var heap = new minHeap(array);
 
-        // http://stackoverflow.com/questions/15579240/max-heapify-algorithm-results/15582773#15582773
-        // start from last node with children and run back to beginning
-        for (var i = (heap.size() - 1 >> 1) - 1; i >=0 ; i--) {
-
-          var curParent = heap.valueAt(i);
-          var left = heap.left(i);
-          var right = heap.right(i);
-
-          // if(!heap.comp(curParent, left) || !(heap.comp(curParent, right))) debugger;
-          
-          // Greater than for max heap. Less than for min heap
-          assert( heap.comp(curParent, left) === true );
-          assert( heap.comp(curParent, right) === true );
-        }
+        assert(heap.isValid());
       });
     });
 
@@ -286,6 +273,19 @@ describe('Heap', function(){
         assert.equal(heap.left(0), 57);
 
         assert.equal(heap.right(0), 42);
+      });
+    });
+
+    describe('#updateValue()', function(){
+      it("update values that are in the heap", function(){
+        var heap = new minHeap([32,15,12,42]);
+        var newIndex = heap.updateValue(42,14);
+        assert(heap.isValid());
+        assert.equal(heap.valueAt(newIndex), 14);
+      });
+      it("returns false for values that are not there", function(){
+      var heap = new minHeap([32,15,12,47]);
+        assert.equal(heap.updateValue(0,31), false);
       });
     });
 

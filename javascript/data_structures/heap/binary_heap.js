@@ -218,13 +218,44 @@ Heap.prototype.remove = function(val) {
 
   // swap end to the elements position and then reheap
   this.items[inHeap] = last;
-  this.siftUp(inHeap);
-  this.siftDown(inHeap);
+  this.reHeapifyAt(inHeap);
   return inHeap;
   
   // dont know what returning the index you removed from could be useful for but why not?
   // you could also just return true
-}
+};
+
+Heap.prototype.updateValue = function(val, newValue) {
+  var indexInHeap = this.contains(val);
+
+  // 0 == false in javascript even though its a valid index so we must explicitly check for false
+  if(indexInHeap === false) return false;
+
+  // else
+
+  if(val !== newValue) {
+    this.items[indexInHeap] = newValue;
+
+    // need to remove old value from valueSet and add new one
+    delete this.valueSet[val];
+    this.valueSet[newValue] = indexInHeap;
+
+    this.reHeapifyAt(indexInHeap);
+  }
+
+  // return new index of new value
+  return this.valueSet[newValue];
+};
+
+Heap.prototype.reHeapifyAt = function(index) {
+  if(!dsalgo.utils.isDefined(this.items[index])) return false;
+
+  // set new value and rejigger heap to satify heap property again
+  // rejigger being the techincal term
+  this.siftUp(index);
+  this.siftDown(index);
+  return this;
+};
 
 Heap.prototype.buildHeap = function() {
   //  the old way I was doing it was the naive version 
@@ -276,6 +307,29 @@ Heap.prototype.heapsort = function(){
   this.items = heapified_list;
 
   return sorted_list;
+}
+
+// http://stackoverflow.com/questions/15579240/max-heapify-algorithm-results/15582773#15582773
+// start from last node with children and run back to beginning
+Heap.prototype.isValid = function(){
+  var heap = this;
+
+  for (var i = (heap.size() - 1 >> 1) - 1; i >=0 ; i--) {
+
+    var curParent = heap.valueAt(i);
+    var left = heap.left(i);
+    var right = heap.right(i);
+
+    //if(!heap.comp(curVal, left) || !(heap.comp(curVal, right))) debugger;
+    //
+    // Comparator is Greater than for max heap and Less than for min heap of course
+
+    // here we return false if ever a parent child relationship fails the Comparison
+    if (heap.comp(curParent, left) !== true) return false;
+    if (heap.comp(curParent, right) !== true) return false;
+  }
+
+  return true;
 }
 
 // min is the same logic as max just with a different comparator
