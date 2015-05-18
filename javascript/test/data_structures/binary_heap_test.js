@@ -109,7 +109,7 @@ describe('Heap', function(){
 
     describe('#contains()', function(){
       it("should find values that are there", function(){
-      var heap = new maxHeap([32,15,12,47]);
+      var heap = new maxHeap([32,15,12,47,4]);
         assert.equal(heap.contains(47), 0);
       });
       it("should not find values that are not there", function(){

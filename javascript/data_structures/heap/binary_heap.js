@@ -21,7 +21,6 @@
 
 var util = require("util");
 var dsalgo = require('../../utilities.js').dsalgo;
-var swap = dsalgo.utils.swap;
 var seqsearch = require('../../algorithms/searching/sequentialsearch.js');
 
 function Heap(array, compfn) {
@@ -29,18 +28,42 @@ function Heap(array, compfn) {
   // need to set comparator first or it wont be set for the constructors call to siftUp
   // heaps children can be == to also
  
-  // should better handle only passing a comparison function instead of just an array
+  // TODO: should better handle only passing a comparison function instead of just an array
   // weird errors happen if you set array to a function;
   
   this.comp = compfn || function (a,b) {return a>=b;};
   
   // always set to an array at first
   this.items = [];
+ 
+  // creation and updating of value set heavily influenced by 
+  //
+  // http://stackoverflow.com/a/17581306/511710
+  // http://stackoverflow.com/questions/17009056/how-to-implement-ologn-decrease-key-operation-for-min-heap-based-priority-queu#comment24578437_17009056
+  // and http://en.wikipedia.org/wiki/Dijkstra's_algorithm#Running_time
+  this.valueSet = dsalgo.utils.simpleSet();
 
   if (array){
     this.items = array;
+    // add the items to our set with their index
+    var ctx = this;
+    this.items.forEach(function(val,i){ctx.valueSet[val] = i});
     this.buildHeap();
   }
+}
+
+// updated swap here to also move index in value set
+// attaching it to the heap's prototype also allows the this value to bind properly
+// so that we are referencing the valueSet of this heap object 
+Heap.prototype.swap = function (list, firstIndex, secondIndex) {
+  var firstItem = list[firstIndex];
+  var secondItem = list[secondIndex];
+   
+  // here we are swaping the index values at the set key of each value NOT the set keys themselves.
+  this.valueSet[secondItem] = firstIndex;
+  this.valueSet[firstItem] = secondIndex;
+
+  return dsalgo.utils.swap(list, firstIndex, secondIndex);
 }
 
 Heap.prototype.valueAt = function (i) {return this.items[i];};
@@ -54,7 +77,12 @@ Heap.prototype.rightI = function (i) {return ( i * 2 ) + 2;};
 Heap.prototype.left = function (i) {return this.items[this.leftI(i)];};
 Heap.prototype.right = function (i) {return this.items[this.rightI(i)];};
 
-Heap.prototype.contains = function(val) {return seqsearch(this.items,val);};
+Heap.prototype.contains = function(val) {
+  if(!dsalgo.utils.isDefined(this.valueSet[val])) return false;
+  return this.valueSet[val]; 
+};
+
+Heap.prototype.naiveContains = function(val) {return seqsearch(this.items,val);};
 
 Heap.prototype.peek = function(val){
   return this.items[0];
@@ -74,7 +102,7 @@ Heap.prototype.siftUp = function(i){
   var currentIVal = this.items[i];
 
   if(this.comp(currentIVal,parent)){
-    this.items = swap(this.items, i, parentI);
+    this.items = this.swap(this.items, i, parentI);
     // obviously this is the recursive style you could do it iteratively ala bubbleUp here
     // http://eloquentjavascript.net/1st_edition/appendix2.html
     this.siftUp(parentI);
@@ -84,6 +112,7 @@ Heap.prototype.siftUp = function(i){
 
 Heap.prototype.insert = function (val) {
   this.items.push(val);
+  this.valueSet[val] = this.size() - 1; //since we put the value at the end its starting vertex is the last of the array 
   if(this.size() > 1) this.siftUp(this.items.length - 1);
   return this;
 }
@@ -137,8 +166,7 @@ Heap.prototype.siftDown = function(i,endPos){
 
   var comp_arr = [extremaVal,left,right];
   
-  // also need to drop any values less than zero to discard outof bounds indexes
-  //
+  // also need to drop any values less than zero to discard out of bounds indexes
   var extrema = comp_arr.sort(this.comp).filter(function(val){return val !== false;}).pop();
 
   // http://algs4.cs.princeton.edu/24pq/
@@ -151,13 +179,13 @@ Heap.prototype.siftDown = function(i,endPos){
   if(extrema === extremaVal) extremaPos = extremaPos;  //default back to leaving tree alone
 
   if(extremaPos !== i){
-    this.items = swap(this.items, extremaPos, i);
+    this.items = this.swap(this.items, extremaPos, i);
     this.siftDown(extremaPos,endPos);
   }
 }
 
 // aka extract-min||max http://en.wikipedia.org/wiki/Heap_%28data_structure%29#Operations
-Heap.prototype.pop = function (val) {
+Heap.prototype.pop = function () {
   var retValue = this.items[0];
   var lastValue = this.items.pop();
 
@@ -170,16 +198,17 @@ Heap.prototype.pop = function (val) {
     this.siftDown(0);
   }  
   
+  delete this.valueSet[retValue];
   return retValue;
 }
 
-// remove abritraty value and re heap
+// remove arbitrary value and re heap
 // http://eloquentjavascript.net/1st_edition/appendix2.html
 Heap.prototype.remove = function(val) {
   var inHeap = this.contains(val);
 
   // 0 == false in javascript even though its a valid index so we must explicitly check for false
-  if(inHeap === false ) return false;
+  if(inHeap === false) return false;
 
   // else
   
@@ -236,7 +265,7 @@ Heap.prototype.heapsort = function(){
   // what will this give us? at the top our next highest element! so we repeat this until we reach the end of the list :)
 
   for (var i = len - 1 ; i > 0 ; i--) {
-    this.items = swap(this.items, 0,i);
+    this.items = this.swap(this.items, 0,i);
     end = end -1;
     this.siftDown(0,end);
   }
