@@ -202,8 +202,7 @@ binomialHeapPQ.prototype.enqueue = function(val, p){
 }
 
 binomialHeapPQ.prototype.dequeue = function(){
-  var test = this.heap.pop();
-  return this;
+  return this.heap.pop().value;
 }
 
 binomialHeapPQ.prototype.peek = function(){
@@ -251,7 +250,6 @@ binomialHeapPQ.prototype.changePriority = function(val,newPriority,order){
   //  so we can just update the priority on it directly
   node.value.priority = newPriority;
 
-  debugger
   this.heap.decreaseKey(node, newPriority);
   
 }

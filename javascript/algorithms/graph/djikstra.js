@@ -169,6 +169,12 @@ var shortestPath = function(target_vertex) {
 
 naiveDijkstra.prototype.shortest_path = shortestPath;
 
+var valueIfObject = function(a){
+  // to handle my data structures that return value objects
+  if (dsalgo.utils.isDefined(a.value)) return a.value;
+  return a;
+}
+
 var heapPQDijkstra = function (graph, start_vertex, heapQueue) {
   
   if (graph.order() < 1) return Error("come on dog there's no nodes in this graph.")
@@ -189,7 +195,7 @@ var heapPQDijkstra = function (graph, start_vertex, heapQueue) {
 
    // u starts at the source vertex
    // because of course it is the lowest value in our min heap at the start of the algorithm
-   var u = queue.dequeue();
+   var u = valueIfObject(queue.dequeue()); 
 
     for(var i = 0; i < graph.adjacency_list[u].length ; i++){
         var v = graph.adjacency_list[u][i];
@@ -243,8 +249,27 @@ var binaryHeapPQDijkstra = function (graph, start_vertex) {
 
 binaryHeapPQDijkstra.prototype.shortest_path = shortestPath;
 
+var BinomialHeap = require('../../data_structures/heap/binomial_heap.js');
+var binomialHeapPQ = require('../../data_structures/priority_quene.js').priorityQueue.binomialHeap;
+
+var binomialHeapPQDijkstra = function (graph, start_vertex) {
+  // min priority queue with binomial heap
+  var queue = new binomialHeapPQ(new BinomialHeap(function (a,b) {
+    if (a.key != b.key) return a.key <= b.key;
+    return a.value.order < b.value.order;
+  }));
+
+  var obj = heapPQDijkstra(graph, start_vertex, queue);
+
+  this.source = obj.sv;
+  this.info = obj.nfo;
+}
+
+binomialHeapPQDijkstra.prototype.shortest_path = shortestPath;
+
 module.exports = {
   naive: naiveDijkstra,
-  binaryHeapPQ: binaryHeapPQDijkstra
+  binaryHeapPQ: binaryHeapPQDijkstra,
+  binomialHeapPQ: binomialHeapPQDijkstra
 };
 
