@@ -214,6 +214,12 @@ var binaryHeapPQDijkstra = function (graph, start_vertex) {
             //
             // also usefully each vertex is named the order its inserted in
             // you could also keep that in the info array if you were using non number keys
+            //
+            // Also fun fact a 2007 paper from UT (djikstra's long time post) says doing decreaseKey
+            // doesn't perform as well on many graphs wonder what their implementation was? 
+            // havent had time to read it yet
+            //
+            // http://stackoverflow.com/a/18540646/511710
             queue.changePriority(v, alt,v);
         }
         
