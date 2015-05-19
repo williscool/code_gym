@@ -1,5 +1,10 @@
 // http://en.wikipedia.org/wiki/Dijkstra's_algorithm
+//
+// other sources
 // http://algs4.cs.princeton.edu/44sp/
+// http://stackoverflow.com/questions/9255620/why-does-dijkstras-algorithm-use-decrease-key
+// https://gabormakrai.wordpress.com/2015/02/11/experimenting-with-dijkstras-algorithm/
+// https://github.com/gabormakrai/dijkstra-performance
 
 var dsalgo = require('../../utilities.js').dsalgo;
 
@@ -164,25 +169,11 @@ var shortestPath = function(target_vertex) {
 
 naiveDijkstra.prototype.shortest_path = shortestPath;
 
-var BinaryHeap = require('../../data_structures/heap/binary_heap.js').custom;
-var binaryHeapPQ = require('../../data_structures/priority_quene.js').priorityQueue.binaryHeap;
-
-// inspired by
-// https://gabormakrai.wordpress.com/2015/02/11/experimenting-with-dijkstras-algorithm/
-var binaryHeapPQDijkstra = function (graph, start_vertex) {
-  this.source = start_vertex;
+var heapPQDijkstra = function (graph, start_vertex, heapQueue) {
   
   if (graph.order() < 1) return Error("come on dog there's no nodes in this graph.")
 
-  // min priority queue
-  var queue = new binaryHeapPQ(new BinaryHeap([], function (a,b) {
-    if (a.priority != b.priority) return a.priority <= b.priority;
-
-    // break value ties with insertion order
-    // remember djikstra is greedy so it would always pick first anyway
-    return a.order < b.order;
-  }));
-
+  var queue = heapQueue;
   var info = [];
   info[start_vertex] = {distance: 0, predecessor:null};
 
@@ -227,8 +218,28 @@ var binaryHeapPQDijkstra = function (graph, start_vertex) {
 
   }
 
-  this.info = info;
+  return {sv: start_vertex, nfo: info};
 };
+
+
+var BinaryHeap = require('../../data_structures/heap/binary_heap.js').custom;
+var binaryHeapPQ = require('../../data_structures/priority_quene.js').priorityQueue.binaryHeap;
+
+var binaryHeapPQDijkstra = function (graph, start_vertex) {
+  // min priority queue
+  var queue = new binaryHeapPQ(new BinaryHeap([], function (a,b) {
+    if (a.priority != b.priority) return a.priority <= b.priority;
+
+    // break value ties with insertion order
+    // remember djikstra is greedy so it would always pick first anyway
+    return a.order < b.order;
+  }));
+
+  var obj = heapPQDijkstra(graph, start_vertex, queue);
+
+  this.source = obj.sv;
+  this.info = obj.nfo;
+}
 
 binaryHeapPQDijkstra.prototype.shortest_path = shortestPath;
 
