@@ -70,32 +70,42 @@ naivePQ.prototype.peek = function(){
 }
 
 
-function binaryHeapPQ(){
+function binaryHeapPQ(binHeap){
   // have to break ties with the order values were inserted in
   //
   // http://stackoverflow.com/a/6909699/511710
   // http://algs4.cs.princeton.edu/25applications/StableMinPQ.java.html
 
-  this.heap = new BinaryHeap([], function (a,b) {
+  this.heap = binHeap || new BinaryHeap([], function (a,b) {
     if (a.priority != b.priority) return a.priority >= b.priority;
 
-    // this takes a bit of explaining see on line 132 inside the siftDown function
+    // this takes a bit of explaining see around line 132 inside the siftDown function
     // of my heap I compare the elements being compared to do heap rotations with 
     // the comparision function in an array and take the last value
     // so we need that last value to be the first element in the order of the quene
     //
     return a.order < b.order;
   });
+
+  // I just didnt want to add yet another function to the constructor 
+  // pls dont judge me
+  this.heap.valueToString = function(a){
+    var string = a.value + ":" + a.order;
+    return string;
+  };
 }
+
 binaryHeapPQ.prototype.enqueue = function(val, p){
   // default could be negative infinity if you wanted 
+  // But I think zero is more useful as it allows you to reproritize both postively and negatively
+
   p = dsalgo.utils.isDefined(p) ? p : 0;
   this.heap.insert({priority: p, value: val, order: this.size()});
   return this;
 }
+
 binaryHeapPQ.prototype.dequeue = function(){
-  this.heap.pop();
-  return this;
+  return this.heap.pop().value;
 }
 
 binaryHeapPQ.prototype.peek = function(){
@@ -105,7 +115,66 @@ binaryHeapPQ.prototype.size = function(){
   return this.heap.size();
 }
 
+binaryHeapPQ.prototype.changePriority = function(val,newPriority,order){
+  // So there are several ways to accomplish what this function is set to do with a binary heap
+  //
+  // for instance
+  // you could search for the value in the array representing the heap remove the value and then reinsert it
+  // 
+  // but that operation is O(n * log(n))
+  // O(n) to find the element and then log(n) to resatify the heap property
+  //
+  // not to mention we would need to do that operation V times (on each vertex) in the worse case in djikstra.
+  //
+  // so we can do better. though it will cost us O(n) extra space for our faster algorithm
+  //
+  // all we need to do maintain a set along side of our binary heap that keeps track of where
+  // each value is in the heap as we update it
+  //
+  // and binary heap was updated to do so
+  //
+  // http://en.wikipedia.org/wiki/Dijkstra's_algorithm#Running_time
+  
+  var orderInserted = null;
+  // REMEMBER Order is the insertion order of a zero indexed array
 
+  if(!dsalgo.utils.isDefined(order)) {
+    
+    // if the user doesn't define an order we have to linear search for the value
+    // this is obviously O(n). but we will be using this with djikstra's algorithm in which we will know the insertion order 
+    // greatly increasing the total speed of this whole operation
+
+    var totalElements = this.heap.size();
+    var i = 0;
+    while(i < totalElements){
+    
+      var testObj = {value: val, order: i};
+      var index = this.heap.contains(testObj);
+      if ( index !== false){
+         orderInserted = i ;
+         break;
+      } 
+
+      i = i + 1;
+    }
+
+  } else {
+    orderInserted = order;
+  }
+
+  // why will this work? 
+  // because our toString function for this heap only looks at the value and the order it was inserted in
+  var oldValueObj =  {value: val, order: orderInserted};
+
+  var indexInQueue = this.heap.contains(oldValueObj);
+
+  if(indexInQueue === false) return false; // value isnt here we are done
+
+  var newValueObj = {priority: newPriority, value: val, order: orderInserted};
+
+  this.heap.updateValue(oldValueObj , newValueObj);
+  return indexInQueue;
+}
 
 
 function binomialHeapPQ(){

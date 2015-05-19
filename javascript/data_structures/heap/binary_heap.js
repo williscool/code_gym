@@ -32,6 +32,7 @@ function Heap(array, compfn) {
   // weird errors happen if you set array to a function;
   
   this.comp = compfn || function (a,b) {return a>=b;};
+  this.valueToString = function (a) {return JSON.stringify(a);}; // quick and dirty way to support objects also since they wont be that big
   
   // always set to an array at first
   this.items = [];
@@ -47,9 +48,22 @@ function Heap(array, compfn) {
     this.items = array;
     // add the items to our set with their index
     var ctx = this;
-    this.items.forEach(function(val,i){ctx.valueSet[val] = i});
+    this.items.forEach(function(val,i){ ctx.addToValueSet(val,i)});
     this.buildHeap();
   }
+}
+
+Heap.prototype.addToValueSet = function(key,val){
+  // key = value storing, val = indexAt
+  this.valueSet[this.valueToString(key)] = val;
+}
+
+Heap.prototype.getFromValueSet = function(key){
+  return this.valueSet[this.valueToString(key)];
+}
+
+Heap.prototype.removeFromValueSet = function(key){
+  delete this.valueSet[this.valueToString(key)];
 }
 
 // updated swap here to also move index in value set
@@ -60,8 +74,8 @@ Heap.prototype.swap = function (list, firstIndex, secondIndex) {
   var secondItem = list[secondIndex];
    
   // here we are swaping the index values at the set key of each value NOT the set keys themselves.
-  this.valueSet[secondItem] = firstIndex;
-  this.valueSet[firstItem] = secondIndex;
+  this.addToValueSet(secondItem,firstIndex);
+  this.addToValueSet(firstItem,secondIndex);
 
   return dsalgo.utils.swap(list, firstIndex, secondIndex);
 }
@@ -78,8 +92,9 @@ Heap.prototype.left = function (i) {return this.items[this.leftI(i)];};
 Heap.prototype.right = function (i) {return this.items[this.rightI(i)];};
 
 Heap.prototype.contains = function(val) {
-  if(!dsalgo.utils.isDefined(this.valueSet[val])) return false;
-  return this.valueSet[val]; 
+  var index = this.getFromValueSet(val);
+  if(!dsalgo.utils.isDefined(index)) return false;
+  return index; 
 };
 
 Heap.prototype.naiveContains = function(val) {return seqsearch(this.items,val);};
@@ -112,7 +127,7 @@ Heap.prototype.siftUp = function(i){
 
 Heap.prototype.insert = function (val) {
   this.items.push(val);
-  this.valueSet[val] = this.size() - 1; //since we put the value at the end its starting vertex is the last of the array 
+  this.addToValueSet(val, this.size() - 1); //since we put the value at the end its starting vertex is the last of the array 
   if(this.size() > 1) this.siftUp(this.items.length - 1);
   return this;
 }
@@ -198,7 +213,7 @@ Heap.prototype.pop = function () {
     this.siftDown(0);
   }  
   
-  delete this.valueSet[retValue];
+  this.removeFromValueSet(retValue);
   return retValue;
 }
 
@@ -233,18 +248,16 @@ Heap.prototype.updateValue = function(val, newValue) {
 
   // else
 
-  if(val !== newValue) {
-    this.items[indexInHeap] = newValue;
+  this.items[indexInHeap] = newValue;
 
-    // need to remove old value from valueSet and add new one
-    delete this.valueSet[val];
-    this.valueSet[newValue] = indexInHeap;
+  // need to remove old value from valueSet and add new one
+  this.removeFromValueSet(val);
+  this.addToValueSet(newValue, indexInHeap);
 
-    this.reHeapifyAt(indexInHeap);
-  }
+  this.reHeapifyAt(indexInHeap);
 
   // return new index of new value
-  return this.valueSet[newValue];
+  return this.getFromValueSet(newValue);
 };
 
 Heap.prototype.reHeapifyAt = function(index) {

@@ -172,8 +172,9 @@ describe('Priority Queue with Binary Heap', function(){
 
       it("removes items", function(){
         assert.equal(queue.size(), 3);
-        queue.dequeue();
+        var oldTop = queue.dequeue();
         // stucture of heap is already tests in binary heap test
+        assert.equal(oldTop, 42);
         assert.equal(queue.peek(), 75);
         assert.equal(queue.size(), 2);
       });
@@ -207,7 +208,8 @@ describe('Priority Queue with Binary Heap', function(){
         queue.enqueue(42).enqueue(75,10).enqueue(22);
 
         assert.equal(queue.size(), 3);
-        queue.dequeue();
+        var oldTop = queue.dequeue();
+        assert.equal(oldTop, 75);
         assert.equal(queue.peek(), 42);
         assert.equal(queue.size(), 2);
       });
@@ -219,6 +221,25 @@ describe('Priority Queue with Binary Heap', function(){
 
         queue.dequeue();
         assert.equal(queue.peek(), 42);
+      });
+    });
+
+    describe('#changePriority()', function(){
+      describe("updates the prority of an item", function(){
+        it("without supplying and order", function(){
+          var queue = new binaryHeapPQ();
+          queue.enqueue(42).enqueue(14, 5);
+          queue.changePriority(42,27);
+          assert.equal(queue.peek(), 42);
+          assert.equal(queue.heap.items[0].priority, 27);
+        });
+        it("with an order supplied", function(){
+          var queue = new binaryHeapPQ();
+          queue.enqueue(42).enqueue(14, 5);
+          queue.changePriority(42,27,0);
+          assert.equal(queue.peek(), 42);
+          assert.equal(queue.heap.items[0].priority, 27);
+        });
       });
     });
   });
