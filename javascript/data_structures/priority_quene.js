@@ -213,7 +213,7 @@ binomialHeapPQ.prototype.size = function(){
   return this.heap.size;
 }
 
-binomialHeapPQ.prototype.changePriority = function(val,newPriority,order){
+var bionomialAndFibchangePriority = function(val,newPriority,order){
   var orderInserted = null;
   // REMEMBER Order is the insertion order of a zero indexed array
 
@@ -254,18 +254,24 @@ binomialHeapPQ.prototype.changePriority = function(val,newPriority,order){
   
 }
 
+binomialHeapPQ.prototype.changePriority = bionomialAndFibchangePriority;
 
-function fibonacciHeapPQ(){
+function fibonacciHeapPQ(heap){
   // Give a fibonacci heap the right comparator and it will work 
   // as a stable prority queue like magic too
   //
   // again who knew?
 
   // this instantiation is ugly would like to clean it up
-  this.heap = new FibonacciHeap(null, 0, function(a,b) {
+  this.heap = heap || new FibonacciHeap(null, 0, function(a,b) {
     if (a.key != b.key) return a.key >= b.key;
     return a.value.order < b.value.order;
   });
+  
+  // still didnt want to add yet another function to the constructor 
+  // 
+  // I regret nothing
+  this.heap.valueToString = heapValueToString;
 }
 
 fibonacciHeapPQ.prototype.enqueue = function(val, p){
@@ -276,8 +282,7 @@ fibonacciHeapPQ.prototype.enqueue = function(val, p){
 }
 
 fibonacciHeapPQ.prototype.dequeue = function(){
-  var test = this.heap.pop();
-  return this;
+  return this.heap.pop().value;
 }
 
 fibonacciHeapPQ.prototype.peek = function(){
@@ -287,6 +292,8 @@ fibonacciHeapPQ.prototype.peek = function(){
 fibonacciHeapPQ.prototype.size = function(){
   return this.heap.size;
 }
+
+fibonacciHeapPQ.prototype.changePriority = bionomialAndFibchangePriority;
 
 module.exports.priorityQueue.naive = naivePQ;
 module.exports.priorityQueue.binaryHeap = binaryHeapPQ;

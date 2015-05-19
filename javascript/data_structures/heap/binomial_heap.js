@@ -31,7 +31,6 @@ function BinomialHeap(compfn) {
   // lovely property of this data structure is it uses objects to represent its nodes instead of array values
   // so as long as we have a reference to that object we dont care what happens to it unless we need to delete it
   //
-  // should work same for fib heap
   this.nodeSet = dsalgo.utils.simpleSet();
   this.valueToString = function(a){
     return JSON.stringify(a);

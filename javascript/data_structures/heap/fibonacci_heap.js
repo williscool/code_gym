@@ -35,6 +35,26 @@ function FibonacciHeap(node, size, compfn) {
 
   // fib heap is also a min heap by default
   this.comp = compfn || function (a,b) {return a.key <= b.key;};
+
+  // node set for keeping track of references to objects
+  // same use as in binomial heap
+  this.nodeSet = dsalgo.utils.simpleSet();
+  this.valueToString = function(a){
+    return JSON.stringify(a);
+  };
+}
+
+FibonacciHeap.prototype.addToNodeSet = function(key,val){
+  // key = value storing, val = node reference
+  this.nodeSet[this.valueToString(key)] = val;
+}
+
+FibonacciHeap.prototype.getFromNodeSet = function(key){
+  return this.nodeSet[this.valueToString(key)];
+}
+
+FibonacciHeap.prototype.removeFromNodeSet = function(key){
+  delete this.nodeSet[this.valueToString(key)];
 }
 
 FibonacciHeap.prototype.isEmpty = function (){
@@ -86,6 +106,10 @@ FibonacciHeap.prototype.insert = function (key,val){
   this.minNode = this.mergeRootLists(this.minNode, newNode);
   this.size++;
   
+  // add node to nodeSet
+  // just need a reference
+  this.addToNodeSet(val,newNode);
+
   return this;
 };
 
@@ -285,16 +309,24 @@ FibonacciHeap.prototype.decreaseKey = function(node, newKey) {
 
 FibonacciHeap.prototype.delete = function(node){
 
-  // doing it the academic way of decreasing node to negative inifity again
+  // doing it the academic way of decreasing node to negative infinity again
   // but really do. why would you need to store negative infinity?
   
   if (!(node instanceof Object)) { return false; }
 
   this.decreaseKey(node, Number.NEGATIVE_INFINITY);
   this.extractMin();
+
+  // remove node from nodeSet
+  this.removeFromNodeSet(node.value);
   return true;
 }
 
 FibonacciHeap.prototype.remove = FibonacciHeap.prototype.delete;
+
+FibonacciHeap.prototype.contains = function(val){
+  var node = this.getFromNodeSet(val);
+  return dsalgo.utils.isDefined(node) ? node : false;
+}
 
 module.exports = FibonacciHeap;
