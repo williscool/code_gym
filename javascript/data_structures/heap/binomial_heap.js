@@ -26,6 +26,29 @@ function BinomialHeap(compfn) {
   // default to min heap
   this.comp = compfn || function (a,b) {return a.key <= b.key;};
 
+  // gotta make sure to update this on insert and delete
+  //
+  // lovely property of this data structure is it uses objects to represent its nodes instead of array values
+  // so as long as we have a reference to that object we dont care what happens to it unless we need to delete it
+  //
+  // should work same for fib heap
+  this.nodeSet = dsalgo.utils.simpleSet();
+  this.valueToString = function(a){
+    return JSON.stringify(a);
+  };
+}
+
+BinomialHeap.prototype.addToNodeSet = function(key,val){
+  // key = value storing, val = node reference
+  this.nodeSet[this.valueToString(key)] = val;
+}
+
+BinomialHeap.prototype.getFromNodeSet = function(key){
+  return this.nodeSet[this.valueToString(key)];
+}
+
+BinomialHeap.prototype.removeFromNodeSet = function(key){
+  delete this.nodeSet[this.valueToString(key)];
 }
 
 BinomialHeap.prototype.findMin = function(){
@@ -56,7 +79,8 @@ BinomialHeap.prototype.linkTreeNodes = function(node, other) {
 
 BinomialHeap.prototype.mergeHeaps = function(a, b) {
 
-  // all we are doing here is merging the linked list that represents 
+  // all we are doing here is merging the linked lists that represents 
+  //
   // the roots of the each sub binomial tree a and b in order 
   //
   // we aren't doing anything else to the tree right now
@@ -104,7 +128,7 @@ BinomialHeap.prototype.mergeHeaps = function(a, b) {
 BinomialHeap.prototype.union = function(otherHeap) {
   this.size += otherHeap.size;
 
-  // merge heaps will give us  the lowest valued and root node of the two root chains after merging them 
+  // merge heaps will give us the lowest valued and root node of the two root chains after merging them 
 
   var newRoot = BinomialHeap.prototype.mergeHeaps(this, otherHeap);
 
@@ -166,6 +190,10 @@ BinomialHeap.prototype.insert = function (key,val){
   tempHeap.size++;
   
   this.union(tempHeap);
+
+  // add node to nodeSet
+  // just need a reference
+  this.addToNodeSet(val,newNode);
 
   return this;
 };
@@ -232,7 +260,7 @@ BinomialHeap.prototype.exchange = function(node,other){
 
   var temp = {
     key: node.key,
-    value: node.val,
+    value: node.value,
   };
 
   node.key = other.key;
@@ -244,14 +272,12 @@ BinomialHeap.prototype.exchange = function(node,other){
 }
 
 // decrease key 
-//
-// for it to work you're gonna need to know you key ahead of time or keep a seperate data strcture
-//
-// perhaps a hash table that will allow you to search all of the keys in heap
-
+// needs node out of node set to work
 BinomialHeap.prototype.decreaseKey = function(node, newKey) {
 
   // key should be checked to not be greater according to CLRS 2nd edition
+  // they were wrong you dont have to :) but you have to have your comparator working correctly
+  // to make sure values dont get put in weird places
 
   node.key = newKey;
 
@@ -260,7 +286,7 @@ BinomialHeap.prototype.decreaseKey = function(node, newKey) {
 
   while(parent && this.comp(node,parent)) {
 
-     BinomialHeap.prototype.exchange(node,parent);
+     this.exchange(node,parent);
 
      node = parent;
      parent = parent.parent;
@@ -292,12 +318,17 @@ BinomialHeap.prototype.delete = function(node){
  
   this.decreaseKey(node, Number.NEGATIVE_INFINITY);
   this.extractMin();
+
+  // remove node from nodeSet
+  this.removeFromNodeSet(node.value);
   return true;
 }
 
+BinomialHeap.prototype.contains = function(val){
+  var node = this.getFromNodeSet(val);
+  return dsalgo.utils.isDefined(node) ? node : false;
+}
+
 BinomialHeap.prototype.remove = BinomialHeap.prototype.delete;
-
-
-// implement delete which simply decrease key to inifity and remove Root
 
 module.exports = BinomialHeap;

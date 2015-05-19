@@ -69,6 +69,10 @@ naivePQ.prototype.peek = function(){
   return this.findExtreme().value;
 }
 
+function heapValueToString (a) {
+    var string = a.value + ":" + a.order;
+    return string;
+}
 
 function binaryHeapPQ(binHeap){
   // have to break ties with the order values were inserted in
@@ -89,10 +93,7 @@ function binaryHeapPQ(binHeap){
 
   // I just didnt want to add yet another function to the constructor 
   // pls dont judge me
-  this.heap.valueToString = function(a){
-    var string = a.value + ":" + a.order;
-    return string;
-  };
+  this.heap.valueToString = heapValueToString;
 }
 
 binaryHeapPQ.prototype.enqueue = function(val, p){
@@ -177,16 +178,20 @@ binaryHeapPQ.prototype.changePriority = function(val,newPriority,order){
 }
 
 
-function binomialHeapPQ(){
+function binomialHeapPQ(heap){
   // Give a binomial heap the right comparator and it will work 
   // as a stable prority queue like magic
   //
   // who knew?
 
-  this.heap = new BinomialHeap(function(a,b) {
+  this.heap = heap || new BinomialHeap(function(a,b) {
     if (a.key != b.key) return a.key >= b.key;
     return a.value.order < b.value.order;
   });
+  
+  // still didnt want to add yet another function to the constructor 
+  // again pls dont judge me
+  this.heap.valueToString = heapValueToString;
 }
 
 binomialHeapPQ.prototype.enqueue = function(val, p){
@@ -209,6 +214,47 @@ binomialHeapPQ.prototype.size = function(){
   return this.heap.size;
 }
 
+binomialHeapPQ.prototype.changePriority = function(val,newPriority,order){
+  var orderInserted = null;
+  // REMEMBER Order is the insertion order of a zero indexed array
+
+  if(!dsalgo.utils.isDefined(order)) {
+
+    // slow linear search we wont have to do in djikstra
+    var totalElements = this.size();
+    var i = 0;
+    while(i < totalElements){
+    
+      var testObj = {value: val, order: i};
+      var node = this.heap.contains(testObj);
+      if ( node !== false){
+         orderInserted = i ;
+         break;
+      } 
+
+      i = i + 1;
+    }
+
+  } else {
+    orderInserted = order;
+  }
+
+  // why will this work? 
+  // because our toString function for this heap only looks at the value and the order it was inserted in
+  var oldValueObj =  {value: val, order: orderInserted};
+
+  var node = this.heap.contains(oldValueObj);
+
+  if(node === false) return false; // value isnt here we are done
+
+  // remember this is a reference to the actual node in the tree
+  //  so we can just update the priority on it directly
+  node.value.priority = newPriority;
+
+  debugger
+  this.heap.decreaseKey(node, newPriority);
+  
+}
 
 
 function fibonacciHeapPQ(){
