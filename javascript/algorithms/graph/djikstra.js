@@ -3,7 +3,7 @@
 
 var dsalgo = require('../../utilities.js').dsalgo;
 
-var naiveDijkstra = function (graph, start_vertex, target_vertex) {
+var naiveDijkstra = function (graph, start_vertex) {
   this.source = start_vertex;
   // lightly influenced by 
   // https://github.com/gabormakrai/dijkstra-performance/blob/master/Dijkstra.md
@@ -164,4 +164,70 @@ var shortestPath = function(target_vertex) {
 
 naiveDijkstra.prototype.shortest_path = shortestPath;
 
-module.exports.naive = naiveDijkstra;
+var BinaryHeap = require('../../data_structures/heap/binary_heap.js').custom;
+var binaryHeapPQ = require('../../data_structures/priority_quene.js').priorityQueue.binaryHeap;
+
+// inspired by
+// https://gabormakrai.wordpress.com/2015/02/11/experimenting-with-dijkstras-algorithm/
+var binaryHeapPQDijkstra = function (graph, start_vertex) {
+  this.source = start_vertex;
+  
+  if (graph.order() < 1) return Error("come on dog there's no nodes in this graph.")
+
+  // min priority queue
+  var queue = new binaryHeapPQ(new BinaryHeap([], function (a,b) {
+    if (a.priority != b.priority) return a.priority <= b.priority;
+
+    // break value ties with insertion order
+    // remember djikstra is greedy so it would always pick first anyway
+    return a.order < b.order;
+  }));
+
+  var info = [];
+  info[start_vertex] = {distance: 0, predecessor:null};
+
+  for(var i = 0; i < graph.order() ; i++) {
+    if(i != start_vertex ){
+      info[i] = {distance: Number.POSITIVE_INFINITY, predecessor:null};
+    } 
+    
+    queue.enqueue(i, info[i].distance);
+  }
+
+  while(queue.size() > 0) {
+
+   // u starts at the source vertex
+   // because of course it is the lowest value in our min heap at the start of the algorithm
+   var u = queue.dequeue();
+
+    for(var i = 0; i < graph.adjacency_list[u].length ; i++){
+        var v = graph.adjacency_list[u][i];
+        var alt = info[u].distance + graph.get_edge_weight(u,v);
+
+        if(alt < info[v].distance){
+            
+            info[v].distance = alt;
+            info[v].predecessor = u;
+
+            // in my pq implementation you can change up or down
+            // but in djikstra you only ever decrease priority
+            //
+            // also usefully each vertex is named the order its inserted in
+            // you could also keep that in the info array if you were using non number keys
+            queue.changePriority(v, alt,v);
+        }
+        
+    } 
+
+  }
+
+  this.info = info;
+};
+
+binaryHeapPQDijkstra.prototype.shortest_path = shortestPath;
+
+module.exports = {
+  naive: naiveDijkstra,
+  binaryHeapPQ: binaryHeapPQDijkstra
+};
+
