@@ -48,14 +48,14 @@ function Graph(conf) {
      this.add_from_adjacency_list(this.config.adjList) ;
   }
 
-  if(this.config.ewd) {
-     this.add_from_ewd(this.config.ewd);
+  if(this.config.ewg) {
+     this.add_from_ewg(this.config.ewg);
   }
 
 }
 
-Graph.prototype.add_from_ewd = function(list){
-  // i.e. http://algs4.cs.princeton.edu/44sp/tinyEWD.txt
+Graph.prototype.add_from_ewg = function(list){
+  // i.e. http://algs4.cs.princeton.edu/44sp/tinyewg.txt
   
   var context = this;
   var rest_of_list = list.trim().split("\n");

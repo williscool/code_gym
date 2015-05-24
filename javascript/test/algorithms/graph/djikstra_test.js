@@ -11,8 +11,8 @@ Object.keys(Djikstra).forEach(function(key){
   describe(key + ' Djikstra', function(){
 
     var graph = new Graph({
-        directed : true,
-        ewd : EWD
+        ewg : EWD,
+        directed: true
     });
     
     var traversal = new Djikstra[key](graph,0);

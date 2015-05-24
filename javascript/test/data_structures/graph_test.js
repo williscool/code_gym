@@ -109,8 +109,8 @@ describe('Graph', function(){
 6 4 0.93
 */});
           var graph = new Graph({
-              directed : true,
-              ewd : EWD
+              ewg : EWD,
+              directed : true
             });
           
           assert.deepEqual(graph.adjacency_list, adjList);
@@ -121,8 +121,8 @@ describe('Graph', function(){
           
          var EWD = dsalgo.utils.requireText(__dirname, '../../data/graph/tinyEWD.txt');
           var graph = new Graph({
-              directed : true,
-              ewd : EWD
+              ewg : EWD,
+              directed : true
             });
           
           assert.deepEqual(graph.adjacency_list, adjList);
