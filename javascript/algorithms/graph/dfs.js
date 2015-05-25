@@ -3,7 +3,7 @@
 module.exports.DFS = {};
 
 var dsalgo = require('../../utilities.js').dsalgo;
-var Stack = require('../../data_structures/stack/stack_with_array.js');
+var Stack = require('../../data_structures/stack.js').array;
 
 module.exports.DFS.iterative = function (graph, start_vertex) {
   
