@@ -20,7 +20,7 @@
 // fun observation level order traversing a binary search tree is a depth first search
 // but for depth first search on a graph a node can be connected to more than 2 other nodes
 
-var Queue = require('../../data_structures/queue.js');
+var Queue = require('../../data_structures/queue.js').doubly_linked_list;
 
 module.exports = function (graph, start_vertex) {
   

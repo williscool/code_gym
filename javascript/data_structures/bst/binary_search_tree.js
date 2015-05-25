@@ -2,7 +2,7 @@
 // add / remove / travese in, pre, and post order
 //
 // treats duplicates as an already added value and does nothing with them
-var Queue = require('../queue.js');
+var Queue = require('../queue.js').doubly_linked_list;
 
 var Node = function (val) { 
   return {left: null, right: null, value: val};
@@ -281,8 +281,6 @@ BST.prototype = {
            var queue = new Queue();
            queue.enqueue(node);
 
-           // heres how you could do it with a js array
-           // http://www.bennadel.com/blog/1796-javascript-array-methods-unshift-shift-push-and-pop.htm
            while(queue.length > 0) {
              var cur = queue.peek();
              
