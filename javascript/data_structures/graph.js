@@ -55,7 +55,7 @@ function Graph(conf) {
 }
 
 Graph.prototype.add_from_ewg = function(list){
-  // i.e. http://algs4.cs.princeton.edu/44sp/tinyewg.txt
+  // i.e. http://algs4.cs.princeton.edu/44sp/tinyEWD.txt
   
   var context = this;
   var rest_of_list = list.trim().split("\n");
@@ -119,10 +119,15 @@ Graph.prototype.add_vertex = function(val){
 }
 
 Graph.prototype.edge_key = function(from, to){
-  if(this.directed){
-    return [from,to].join("");
+  var key_arr = [from,to];
+
+  if(!this.directed){
+    // if the graph is not a directed graph we will always refer to 
+    // the vertex with lowest sorted value first
+    key_arr = key_arr.sort();
   }
-  return [from,to].sort().join("");
+
+  return key_arr.join("");
 };
 
 Graph.prototype.edge_present = function(from, to){
