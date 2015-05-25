@@ -221,7 +221,12 @@ Graph.prototype.add_edge = function(from, to, weight, opts){
    *
    * */
  
-  this.edge_list.push([from,to]);
+  // I could add a better flag for this one but I only use along with the matrices
+  //
+  // Also I could use the edge hash to generate this every time but then its O(n) each time its called
+  if(this.config.enable_matrices){
+    this.edge_list.push([from,to]);
+  }
 
   /*
    * Incidence Matrix or what I call an edge matrix
@@ -345,7 +350,7 @@ Graph.prototype.order = function(){
 
 // number of edges
 Graph.prototype.size = function(){
-  return this.edge_list.length;
+  return Object.keys(this.edges).length;
 }
 
 module.exports = Graph;
