@@ -51,7 +51,6 @@ function Graph(conf) {
   if(this.config.ewg) {
      this.add_from_ewg(this.config.ewg);
   }
-
 }
 
 Graph.prototype.add_from_ewg = function(list){
@@ -118,6 +117,8 @@ Graph.prototype.add_vertex = function(val){
   return this;
 }
 
+Graph.prototype.edge_key_split_string_fn = function() {return ","};
+
 Graph.prototype.edge_key = function(from, to){
   var key_arr = [from,to];
 
@@ -127,7 +128,15 @@ Graph.prototype.edge_key = function(from, to){
     key_arr = key_arr.sort();
   }
 
-  return key_arr.join("");
+  return key_arr.join(this.edge_key_split_string_fn());
+};
+
+Graph.prototype.edge_key_vertex_from = function(edge_key){
+  return edge_key.split(this.edge_key_split_string_fn())[0];
+};
+
+Graph.prototype.edge_key_vertex_to = function(edge_key){
+  return edge_key.split(this.edge_key_split_string_fn())[1];
 };
 
 Graph.prototype.edge_present = function(from, to){
@@ -348,9 +357,13 @@ Graph.prototype.order = function(){
   return this.vertex_list().length;
 }
 
+Graph.prototype.edge_set_list = function(){
+  return Object.keys(this.edges);
+}
+
 // number of edges
 Graph.prototype.size = function(){
-  return Object.keys(this.edges).length;
+  return this.edge_set_list().length;
 }
 
 module.exports = Graph;

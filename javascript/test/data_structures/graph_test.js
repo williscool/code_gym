@@ -66,21 +66,21 @@ describe('Graph', function(){
                           [ 5, 3 ] ];
 
           var edgeSet = { 
-                      '02': 0.26,
-                      '04': 0.38,
-                      '13': 0.29,
-                      '27': 0.34,
-                      '36': 0.52,
-                      '45': 0.35,
-                      '47': 0.37,
-                      '51': 0.32,
-                      '54': 0.35,
-                      '57': 0.28,
-                      '60': 0.58,
-                      '62': 0.4,
-                      '64': 0.93,
-                      '73': 0.39,
-                      '75': 0.28
+                      '0,2': 0.26,
+                      '0,4': 0.38,
+                      '1,3': 0.29,
+                      '2,7': 0.34,
+                      '3,6': 0.52,
+                      '4,5': 0.35,
+                      '4,7': 0.37,
+                      '5,1': 0.32,
+                      '5,4': 0.35,
+                      '5,7': 0.28,
+                      '6,0': 0.58,
+                      '6,2': 0.4,
+                      '6,4': 0.93,
+                      '7,3': 0.39,
+                      '7,5': 0.28
                     };
 
 
@@ -253,7 +253,7 @@ describe('Graph', function(){
       });
 
       it("produces a correct edge set", function(){
-        var edgeSet =  {"01":true, "02":true, "03":true, "23":true};
+        var edgeSet =  {"0,1":true, "0,2":true, "0,3":true, "2,3":true};
         assert.deepEqual(graph.edges, edgeSet);
       });
 
@@ -281,6 +281,20 @@ describe('Graph', function(){
 
       it("gives correct number of edges", function(){
         assert.equal(graph.size(),1);
+      });
+    });
+
+    describe('#edge_set_list() and #edge_key_vertex_*()', function(){
+      var graph = new Graph();
+      graph.add_edge(0,1);
+      var first_edge_key = graph.edge_set_list()[0];
+
+      it("#edge_key_vertex_from", function(){
+        assert.equal(graph.edge_key_vertex_from(first_edge_key),0);
+      });
+
+      it("#edge_key_vertex_to", function(){
+        assert.equal(graph.edge_key_vertex_to(first_edge_key),1);
       });
     });
 
