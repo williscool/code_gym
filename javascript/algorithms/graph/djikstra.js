@@ -227,19 +227,17 @@ var heapPQDijkstra = function (graph, start_vertex, heapQueue) {
   return {sv: start_vertex, nfo: info};
 };
 
-
-var BinaryHeap = require('../../data_structures/heap/binary_heap.js').custom;
 var binaryHeapPQ = require('../../data_structures/priority_quene.js').priorityQueue.binaryHeap;
 
 var binaryHeapPQDijkstra = function (graph, start_vertex) {
   // min priority queue
-  var queue = new binaryHeapPQ(new BinaryHeap([], function (a,b) {
+  var queue = new binaryHeapPQ(function (a,b) {
     if (a.priority != b.priority) return a.priority <= b.priority;
 
     // break value ties with insertion order
     // remember djikstra is greedy so it would always pick first anyway
     return a.order < b.order;
-  }));
+  });
 
   var obj = heapPQDijkstra(graph, start_vertex, queue);
 
@@ -249,16 +247,14 @@ var binaryHeapPQDijkstra = function (graph, start_vertex) {
 
 binaryHeapPQDijkstra.prototype.shortest_path = shortestPath;
 
-
-var BinomialHeap = require('../../data_structures/heap/binomial_heap.js');
 var binomialHeapPQ = require('../../data_structures/priority_quene.js').priorityQueue.binomialHeap;
 
 var binomialHeapPQDijkstra = function (graph, start_vertex) {
   // min priority queue with binomial heap
-  var queue = new binomialHeapPQ(new BinomialHeap(function (a,b) {
+  var queue = new binomialHeapPQ(function (a,b) {
     if (a.key != b.key) return a.key <= b.key;
     return a.value.order < b.value.order;
-  }));
+  });
 
   var obj = heapPQDijkstra(graph, start_vertex, queue);
 
@@ -268,16 +264,14 @@ var binomialHeapPQDijkstra = function (graph, start_vertex) {
 
 binomialHeapPQDijkstra.prototype.shortest_path = shortestPath;
 
-
-var fibonacciHeap = require('../../data_structures/heap/fibonacci_heap.js');
 var fibonacciHeapPQ = require('../../data_structures/priority_quene.js').priorityQueue.fibonacciHeap;
 
 var fibonacciHeapPQDijkstra = function (graph, start_vertex) {
   // min priority queue with fibonacci heap
-  var queue = new fibonacciHeapPQ(new fibonacciHeap(null,0, function (a,b) {
+  var queue = new fibonacciHeapPQ(function (a,b) {
     if (a.key != b.key) return a.key <= b.key;
     return a.value.order < b.value.order;
-  }));
+  });
 
   var obj = heapPQDijkstra(graph, start_vertex, queue);
 

@@ -74,13 +74,13 @@ function heapValueToString (a) {
     return string;
 }
 
-function binaryHeapPQ(binHeap){
+function binaryHeapPQ(comp){
   // have to break ties with the order values were inserted in
   //
   // http://stackoverflow.com/a/6909699/511710
   // http://algs4.cs.princeton.edu/25applications/StableMinPQ.java.html
 
-  this.heap = binHeap || new BinaryHeap([], function (a,b) {
+  this.comp = comp || function (a,b) {
     if (a.priority != b.priority) return a.priority >= b.priority;
 
     // this takes a bit of explaining see around line 132 inside the siftDown function
@@ -89,7 +89,9 @@ function binaryHeapPQ(binHeap){
     // so we need that last value to be the first element in the order of the quene
     //
     return a.order < b.order;
-  });
+  };
+
+  this.heap = new BinaryHeap([], this.comp);
 
   // I just didnt want to add yet another function to the constructor 
   // pls dont judge me
@@ -178,16 +180,18 @@ binaryHeapPQ.prototype.changePriority = function(val,newPriority,order){
 }
 
 
-function binomialHeapPQ(heap){
+function binomialHeapPQ(comp){
   // Give a binomial heap the right comparator and it will work 
   // as a stable prority queue like magic
   //
   // who knew?
 
-  this.heap = heap || new BinomialHeap(function(a,b) {
+  this.comp = comp || function(a,b) {
     if (a.key != b.key) return a.key >= b.key;
     return a.value.order < b.value.order;
-  });
+  };
+
+  this.heap = new BinomialHeap(this.comp);
   
   // still didnt want to add yet another function to the constructor 
   // again pls dont judge me
@@ -256,17 +260,19 @@ var bionomialAndFibchangePriority = function(val,newPriority,order){
 
 binomialHeapPQ.prototype.changePriority = bionomialAndFibchangePriority;
 
-function fibonacciHeapPQ(heap){
+function fibonacciHeapPQ(comp){
   // Give a fibonacci heap the right comparator and it will work 
   // as a stable prority queue like magic too
   //
   // again who knew?
 
-  // this instantiation is ugly would like to clean it up
-  this.heap = heap || new FibonacciHeap(null, 0, function(a,b) {
+  this.comp = comp || function(a,b) {
     if (a.key != b.key) return a.key >= b.key;
     return a.value.order < b.value.order;
-  });
+  };
+
+  // this instantiation is ugly would like to clean it up
+  this.heap = new FibonacciHeap(null, 0, this.comp);
   
   // still didnt want to add yet another function to the constructor 
   // 
