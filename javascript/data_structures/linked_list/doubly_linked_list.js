@@ -76,6 +76,11 @@ DoublyLinkedList.prototype.removeEnd = function(){
 
 DoublyLinkedList.prototype.toArray = function(){
   var arr = [];
+  
+  // special case for list with one item
+  if(this.head == this.tail){
+    return [this.head.value]; 
+  }
 
   var cur = this.head;
 

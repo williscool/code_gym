@@ -19,8 +19,15 @@ describe('Doubly Linked List', function(){
   });
 
   describe('#toArray()', function(){
-    var llist = new DoublyLinkedList();
+    it("converts list with one item an array", function(){
+      var llist = new DoublyLinkedList();
+      llist.insertFront(1);
+
+      // http://stackoverflow.com/questions/13225274/the-difference-between-assert-equal-and-assert-deepequal-in-javascript-testing-w
+      assert.deepEqual(llist.toArray(), [1]);
+    });
     it("converts list to an array", function(){
+      var llist = new DoublyLinkedList();
       llist.insertFront(1).insertFront(2);
 
       // http://stackoverflow.com/questions/13225274/the-difference-between-assert-equal-and-assert-deepequal-in-javascript-testing-w
