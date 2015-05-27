@@ -30,6 +30,8 @@ queueDll.prototype.toArray = function(){
   return this.items.toArray();
 }
 
+queueDll.prototype.forEach = function(fn){ this.toArray().forEach(fn)};
+
 function queueArr() {
   this.items = [];
   this.length = 0;
@@ -45,7 +47,9 @@ queueArr.prototype.dequeue = function(){
   // this is O(n) each time
   // https://github.com/v8/v8/blob/master/src/array.js#L620
   //
-  // which is fine for our academic purposes the way to allow both enqueue and dequene to be constant time with an array
+  // which is fine for our academic purposes 
+  //
+  // the way to allow both enqueue and dequene to be constant time with an array
   // backed queue is to use a fixed size queue and manipulate the front and rear indexs
   //
   // ala
@@ -69,7 +73,7 @@ queueArr.prototype.toArray = function(){
   return this.items;
 }
 
-// want to add this to use a backwards js array to implement
+queueArr.prototype.forEach = function(fn){ this.toArray().forEach(fn)};
 
 module.exports = {
   doubly_linked_list: queueDll,

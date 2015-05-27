@@ -298,6 +298,17 @@ describe('Graph', function(){
       });
     });
 
+    describe('#get_edge_weight_by_key()', function(){
+      var graph = new Graph();
+      graph.add_edge(0,1);
+      var first_edge_key = graph.edge_set_list()[0];
+      graph.set_edge_weight(0,1,112);
+
+      it("updates the weight of a previously created edge", function(){
+        assert.equal(112, graph.get_edge_weight_by_key(first_edge_key));
+      });
+    });
+
   });
 
 });

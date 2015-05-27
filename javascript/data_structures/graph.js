@@ -155,8 +155,17 @@ Graph.prototype.set_edge_weight = function(from, to, weight){
   return this;
 };
 
+Graph.prototype.get_edge_weight_by_key = function(key){
+  var from = this.edge_key_vertex_from(key);
+  var to = this.edge_key_vertex_to(key);
+
+  if(this.edge_present(from,to)){
+    return this.edges[this.edge_key(from,to)];
+  } 
+};
+
 Graph.prototype.get_edge_weight = function(from, to){
-  // support setting edge weights on edges that have already been added to a graph
+  // support getting edge weights on edges that have already been added to a graph
   if(this.edge_present(from,to)){
     return this.edges[this.edge_key(from,to)];
   } 
