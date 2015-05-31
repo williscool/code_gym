@@ -309,6 +309,21 @@ describe('Graph', function(){
       });
     });
 
+    describe('#edge_key_other_vertex()', function(){
+      var graph = new Graph();
+      graph.add_edge(0,1);
+      var first_edge_key = graph.edge_set_list()[0];
+
+      it("gives the other vertex when given vertex from the edge", function(){
+        assert.equal(graph.edge_key_other_vertex(first_edge_key, 0), 1);
+        assert.equal(graph.edge_key_other_vertex(first_edge_key, 1), 0);
+      });
+
+      it("returns false when given an invalid vertex", function(){
+        assert.equal(graph.edge_key_other_vertex(first_edge_key, 300), false);
+      });
+    });
+
   });
 
 });

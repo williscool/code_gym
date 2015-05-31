@@ -139,6 +139,19 @@ Graph.prototype.edge_key_vertex_to = function(edge_key){
   return edge_key.split(this.edge_key_split_string_fn())[1];
 };
 
+Graph.prototype.edge_key_other_vertex = function(edge_key, v){
+  
+  var u = this.edge_key_vertex_from(edge_key);
+  var w = this.edge_key_vertex_to(edge_key);
+
+  // using the type coersion because they will be strings cominf from the edge_key_vertex_* functions
+  // making a note of this in case is blows up in my face
+  if(v == u) return w;
+  if(v == w) return u;
+
+  return false;
+};
+
 Graph.prototype.edge_present = function(from, to){
   // is there an edge between these two?
   //
