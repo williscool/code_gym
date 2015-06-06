@@ -1,6 +1,7 @@
 // http://en.wikipedia.org/wiki/Disjoint-set_data_structure
 // http://algs4.cs.princeton.edu/15uf/
 var dsalgo = require('../../utilities.js').dsalgo;
+var util = require("util");
 
 function quickFindUF(thingy) {
 
@@ -65,6 +66,7 @@ quickFindUF.prototype.union = function(p,q){
 }
 
 // http://algs4.cs.princeton.edu/15uf/images/quick-union-overview.png
+// https://www.youtube.com/watch?v=Il3Ro8yGENE
 function quickUnionUF(thingy) {
 
   // this data structure / algorithm sucks it could devolve both find and union into O(n) very quickly for densely connected components if a connection tree gets large
@@ -127,6 +129,102 @@ quickUnionUF.prototype.union = function(p,q){
   return this;
 }
 
+function weightedQuickUnionUF(thingy) {
+
+  if(!dsalgo.utils.isDefined(thingy)) throw new Error("need number of sites or a connections string to properly initalize parent array");
+
+  var N,connections;
+
+  if(typeof thingy === "number"){
+    N = thingy;
+  } else {
+    connections = thingy; 
+  }
+
+  this.parent = [];
+  this.size = [];
+  if(N) this.initalize_component_array(N);
+  if(connections) this.add_from_text(connections);
+}
+
+util.inherits(weightedQuickUnionUF, quickUnionUF);
+
+weightedQuickUnionUF.prototype.initalize_component_array = function(N){
+  // init empty UF data structure with N isolated components
+  for(var i=0; i < N; i++) {
+    this.parent[i] = i;
+    this.size[i] = i;
+  };
+  this.count = N;
+}
+
+// https://www.youtube.com/watch?v=R45MPl59MC0
+weightedQuickUnionUF.prototype.union = function(p,q){
+
+  var rootP = this.find(p);
+  var rootQ = this.find(q);
+
+  if( rootP === rootQ ) return;
+
+  if(this.size[rootP] < this.size[rootQ]){
+
+    this.parent[rootP] = rootQ;
+    this.size[rootQ] = this.size[rootQ] + this.size[rootP];
+
+  } else{
+
+    this.parent[rootQ] = rootP;
+    this.size[rootP] = this.size[rootP] + this.size[rootQ];
+  }
+
+  this.count = this.count - 1;
+  return this;
+}
+
+function weightedQuickUnionPathCompressionUF(thingy) {
+  // https://nodejs.org/api/util.html#util_util_inherits_constructor_superconstructor
+  weightedQuickUnionUF.call(this,thingy);
+}
+
+util.inherits(weightedQuickUnionPathCompressionUF, weightedQuickUnionUF);
+
+weightedQuickUnionPathCompressionUF.prototype.find = function(p){
+  this.validate(p);
+  // look for root start at the site we are given
+  var root = p;
+  while(root != this.parent[root]){
+    root = this.parent[root];
+  }
+
+  // take all the other nodes along the path and connect them to the root of the tree
+  while(p != root) {
+    var newP = this.parent[p];
+    this.parent[p] = root;
+    p = newP;
+  }
+
+  return root;
+}
+
+function weightedQuickUnionPathHalvingUF(thingy) {
+  // https://nodejs.org/api/util.html#util_util_inherits_constructor_superconstructor
+  weightedQuickUnionUF.call(this,thingy);
+}
+
+util.inherits(weightedQuickUnionPathHalvingUF, weightedQuickUnionUF);
+
+weightedQuickUnionPathHalvingUF.prototype.find = function(p){
+  this.validate(p);
+
+  // this version makes each node in the tree point to its grandparent
+  while(p != this.parent[p]){
+    this.parent[p] = this.parent[this.parent[p]];
+    p = this.parent[p];
+  }
+  
+  return p;
+}
+
 var add_site_from_text = function(list){
   // i.e. http://algs4.cs.princeton.edu/15uf/tinyUF.txt
   
@@ -150,8 +248,14 @@ var add_site_from_text = function(list){
 
 quickFindUF.prototype.add_from_text = add_site_from_text;
 quickUnionUF.prototype.add_from_text = add_site_from_text;
+weightedQuickUnionUF.prototype.add_from_text = add_site_from_text;
+weightedQuickUnionPathCompressionUF.prototype.add_from_text = add_site_from_text;
+weightedQuickUnionPathHalvingUF.prototype.add_from_text = add_site_from_text;
 
 module.exports = {
   quick_find: quickFindUF,
-  quick_union: quickUnionUF 
+  quick_union: quickUnionUF,
+  weighted_quick_union: weightedQuickUnionUF,
+  weighted_quick_union_with_path_compression: weightedQuickUnionPathCompressionUF,
+  weighted_quick_union_with_path_halving: weightedQuickUnionPathHalvingUF 
 };
