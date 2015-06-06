@@ -388,4 +388,10 @@ Graph.prototype.size = function(){
   return this.edge_set_list().length;
 }
 
+// TODO: would also like to add the check functionality from here http://algs4.cs.princeton.edu/43mst/KruskalMST.java.html
+// to this. 
+// this would allow us to do stuff like
+//
+// graph.isAcyclic()
+// also could add cut check for prim and kruskal
 module.exports = Graph;
