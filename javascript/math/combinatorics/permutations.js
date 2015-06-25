@@ -6,9 +6,13 @@
 var factorial = require('../factorial.js');
 var dsalgo = require('../../utilities.js').dsalgo;
 
+// TODO: this function should throw an error is k is higher than n
+// https://github.com/josdejong/mathjs/blob/master/lib/function/probability/combinations.js#L47
 module.exports = function(n, k) {
   
   if(!dsalgo.utils.isDefined(k)) return factorial(n);
+
+  if(k === 0) return 0;
 
   var result = n;
   var iteration = 1;
