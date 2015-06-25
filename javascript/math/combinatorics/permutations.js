@@ -8,7 +8,7 @@ var dsalgo = require('../../utilities.js').dsalgo;
 
 // TODO: this function should throw an error is k is higher than n
 // https://github.com/josdejong/mathjs/blob/master/lib/function/probability/combinations.js#L47
-module.exports = function(n, k) {
+function withoutRep(n, k) {
   
   if(!dsalgo.utils.isDefined(k)) return factorial(n);
 
@@ -23,4 +23,14 @@ module.exports = function(n, k) {
   }
   
   return result;
+}
+
+// https://www.mathsisfun.com/combinatorics/combinations-permutations.html
+function withRep(n, k) {
+  return Math.pow(n,k);
+}
+
+module.exports = {
+  without_repetition: withoutRep,
+  with_repetition: withRep
 }
