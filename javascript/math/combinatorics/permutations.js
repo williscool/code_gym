@@ -26,6 +26,7 @@ function withoutRep(n, k) {
 }
 
 // https://www.mathsisfun.com/combinatorics/combinations-permutations.html
+// with repetition (often refeered to as with replacement which I think is a poor choice of words and horribly confusing in this context)
 function withRep(n, k) {
   return Math.pow(n,k);
 }
