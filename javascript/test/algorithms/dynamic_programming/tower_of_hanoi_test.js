@@ -1,8 +1,8 @@
 // inspired by: https://github.com/josdejong/mathjs/blob/master/test/function/probability/factorial.test.js
 
 var assert = require('assert');
-var toh = require('../../algorithms/tower_of_hanoi.js');
-describe("Tower of Hanor",function(){
+var toh = require('../../../algorithms/dynamic_programming/tower_of_hanoi.js');
+describe("Tower of Hanoi",function(){
   it("3 disks", function(){
     var n = 3;
     var moves = toh(n,1,2,3);

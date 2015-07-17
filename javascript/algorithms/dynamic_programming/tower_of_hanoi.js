@@ -5,10 +5,10 @@
 // my own personal hang up with this problem at first is that unlike many of the other dp solutions for problems 
 // the classical solution to the tower of  is exponential in time complexity as opposed to linear such as memoized nth fibbonaci) 
 //
-// however a cleve professor Eastern Washington University has figured out how to trade exponential time for exponential space complexity
+// however a clever professor Eastern Washington University has figured out how to trade exponential time for exponential space complexity o.o
 // here http://penguin.ewu.edu/~trolfe/DynamicHanoi/
 //
-// if you implement this let me know. I'd be interesting talking about it
+// if you implement this let me know. It would be interesting to talk about it
 //
 //
 // inspired by:
