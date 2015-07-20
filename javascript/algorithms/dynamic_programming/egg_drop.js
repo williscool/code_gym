@@ -27,16 +27,49 @@ function naiveEggDrop(n,k){
     // the left side of Math.max function assumes the egg broke at this floor and recursively calls the eggDrop function again on the remaining (k - 1) floors with the remaining (n-1) eggs 
     //
     // the right side on the other hand assumes this floor DID NOT break the egg and recursively calls the eggDrop function with n eggs (since none broke) and (k - x)  floors. Where x is the interval we are skipping because if this floor did not break the egg neither will the floors below it
-    result = Math.max(naiveEggDrop(n -1, x - 1), naiveEggDrop(n, k - x));
+    //
+    // The 1 represents the "cost" of one trial of whether or not the egg breaks  
+    // re: Lemma 5 from the Sniedovich paper/website
+
+    result = 1 + Math.max(naiveEggDrop(n -1, x - 1), naiveEggDrop(n, k - x));
     if(result < min) min = result;
   }
 
-  // The 1 represents the "cost" of one trial of whether or not the egg breaks  
-  // re: Lemma 5 from the Sniedovich paper/website
-  return min + 1;
+  return min;
+}
+
+// inspired by: http://algohub.blogspot.in/2014/05/egg-drop-puzzle.html
+var dsalgo = require('../../utilities.js').dsalgo;
+var cache = dsalgo.utils.simpleSet();
+
+function dpEggDrop(n,k){
+
+  var cacheKey = n + ":" + k;
+
+  if(cache[cacheKey]) return cache[cacheKey];
+
+  // 0 or 1 floors
+  if(k <= 1) return k;
+
+  // 1 egg
+  if(n == 1) return k;
+
+  var min = Number.POSITIVE_INFINITY, 
+      x,
+      result;
+
+  // n eggs
+  for(var x = 1; x <= k; x++ ){
+    result = 1 + Math.max(dpEggDrop(n -1, x - 1), dpEggDrop(n, k - x));
+    if(result < min) min = result;
+  }
+  
+  cache[cacheKey] = min;
+  return min;
 }
 
 
 module.exports = {
-  naive: naiveEggDrop
+  naive: naiveEggDrop,
+  dp: dpEggDrop
 };
