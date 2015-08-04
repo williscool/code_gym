@@ -49,7 +49,30 @@ function topDownKnapsack(W, itemWeight, itemValue, n ) {
 }
 
 
+// this version though starts from the base problem of no weight and 0 items and builds up all the subproblem cache until the answer
+function bottomUpKnapsack(W, itemWeight, itemValue, n ) {
+
+  var buCache=[];
+
+  for(var i = 0; i <= n; i++ ){
+    buCache[i] = [];  //init cache array
+    for(var w = 0; w <= W; w++){
+
+      if(i === 0 || w === 0) buCache[i][w] = 0;
+      else if(itemWeight[i-1] <= w) {
+        buCache[i][w] = Math.max(itemValue[i-1]  + buCache[i-1][w - itemWeight[i-1]], buCache[i-1][w]) ;
+      } else {
+        buCache[i][w] = buCache[i - 1][w];
+      } 
+
+    }
+  }
+
+  return buCache[n][W];
+}
+
 module.exports = {
   naive: naiveKnapsack,
-  top_down: topDownKnapsack
+  top_down: topDownKnapsack,
+  bottom_up: bottomUpKnapsack
 };
