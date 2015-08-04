@@ -10,7 +10,7 @@
 function naiveKnapsack(W, itemWeight, itemValue, n ) {
   
   // base case of zero capacity or zero items
-  if(n === 0 || W === 0 ) return 0;
+  if(n === 0 || W === 0) return 0;
 
   // skip this item if its W is greater than W
   // nth item of zero indexed array
@@ -26,5 +26,30 @@ function naiveKnapsack(W, itemWeight, itemValue, n ) {
 
 }
 
+// loosely inspired by: http://www.programminglogic.com/knapsack-problem-dynamic-programming-algorithm/
+// this version is just caching the naive version's subproblem answers
+var dsalgo = require('../../utilities.js').dsalgo;
+var tdCache = [];
+function topDownKnapsack(W, itemWeight, itemValue, n ) {
+  
+  if (dsalgo.utils.isDefined(tdCache[n]) && dsalgo.utils.isDefined(tdCache[n][W])) return tdCache[n][W];
 
-module.exports = naiveKnapsack;
+  if(n === 0 || W === 0) return 0;
+
+  if(itemWeight[n-1] > W) return naiveKnapsack(W, itemWeight, itemValue, n-1);
+
+  // init nth dimension cache array if need be
+  if (!dsalgo.utils.isDefined(tdCache[n])) tdCache[n] = [];
+
+  tdCache[n][W] = Math.max( itemValue[n-1] + naiveKnapsack(W - itemWeight[n-1], itemWeight, itemValue, n-1)
+      , 
+      naiveKnapsack(W, itemWeight, itemValue, n-1));
+
+  return tdCache[n][W];
+}
+
+
+module.exports = {
+  naive: naiveKnapsack,
+  top_down: topDownKnapsack
+};
