@@ -108,3 +108,8 @@ utils.simpleSet = function(){
 
   return Object.create(null);
 }
+
+utils.dec2bin = function(n){
+  // http://stackoverflow.com/questions/9939760/how-do-i-convert-an-integer-to-binary-in-javascript/16155417#16155417
+  return (n >>> 0).toString(2);
+}
