@@ -71,7 +71,7 @@ function dectoieee(dec){
    var fraction_chars = fraction.split("");
 
    while(fraction_chars[0] == "0") {
-      leading_zeros.push(fraction_chars.unshift(0));
+      leading_zeros.push(fraction_chars.shift(0));
    }
 
    // shift up significant figs so it doesnt confuse parseInt to think its an octal number
@@ -130,12 +130,17 @@ function dectoieee(dec){
 
    } else if ( INT_PART_ZERO && !FRACTION_PART_ZERO) {
 
-      bin_fraction_chars = binary_fraction.split("");
+      // will have to move over an extra one in the end because we drop the leading one
+      exponent_num = -1;
+
+      var bin_fraction_chars = binary_fraction.split("");
 
       while(parseInt(bin_fraction_chars[0]) === 0) {
-        bin_fraction_chars.unshift(0);
+        bin_fraction_chars.shift(0);
         exponent_num = exponent_num - 1;
       }
+
+      mantissa = bin_fraction_chars.join("").substr(1);
 
    } else {
       // fraction and integer part zero   
@@ -151,6 +156,14 @@ function dectoieee(dec){
    if (INT_PART_ZERO && FRACTION_PART_ZERO) {
      // special case
       exponent = "00000000";
+   }
+
+   // ieee single precision 
+   // need this cuz js drops leading zero
+   if (exponent.length != 8) {
+      var extra_zeros = dsalgo.utils.simpleArrayFill(0 , 8 - exponent.length);
+      
+      exponent = extra_zeros.join("") + exponent;
    }
 
    var possibly_short_ieee = sign_bit + exponent + mantissa;
