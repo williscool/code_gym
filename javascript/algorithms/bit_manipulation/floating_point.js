@@ -30,6 +30,8 @@
 //  
 // Lord it took me a lot of resources to understand this shit lol
 //
+// doesn't handle lots of edge and corner cases but is fine for educational purposes
+//
 
 var dsalgo = require('../../utilities.js').dsalgo;
 
@@ -179,10 +181,58 @@ function dectoieee(dec){
 };
 
 function ieeetodec(ieee){
+   // https://en.wikipedia.org/wiki/Single-precision_floating-point_format#Converting_from_single-precision_binary_to_decimal
 
-  var dec = ieee;
+   var numbers = ieee.split("");
 
-  return dec;
+   var sign_bit = numbers[0];
+   var ieee_exponent = numbers.slice(1,9);
+   var ieee_mantissa = numbers.slice(9,32);
+   var integer,fraction,decimal_integer,decimal_fraction;
+   
+   // http://stackoverflow.com/questions/10258828/how-to-convert-binary-string-to-decimal
+   var exponent_shift = parseInt(ieee_exponent.join(""),2) - 127;
+   
+   // add back the one that gets removed in conversion
+   var binary_mantissa = [1].concat(ieee_mantissa);
+   
+   if(parseInt(sign_bit) === 0)  debugger;
+
+   if(exponent_shift > 0) {
+     // array slice is not inclusive of second param so we need to add one
+     integer = binary_mantissa.slice(0,exponent_shift + 1);
+     // array slice is inclusive of first param so add one here too
+     fraction = binary_mantissa.slice(exponent_shift + 1,binary_mantissa.length);
+     decimal_integer = parseInt(integer.join(""),2);
+   } else {
+     integer = 0;
+     decimal_integer = 0;
+
+     // we start multiply at the .5 place so we add one less zero than would be needed for the full shift... I think
+     var extra_zeros = dsalgo.utils.simpleArrayFill(0 , Math.abs(exponent_shift) - 1);
+     fraction = extra_zeros.concat(binary_mantissa);
+   }
+
+   if(parseInt(sign_bit) === 0)  debugger;
+   // init fraction value
+   decimal_fraction = 0;
+
+   var value_at_place = .5;
+
+   while(fraction.length > 0) {
+      var num = fraction.shift();
+
+      decimal_fraction += num * value_at_place;
+      value_at_place = value_at_place / 2;
+   }
+
+   var dec = decimal_integer + decimal_fraction;
+
+   if(parseInt(sign_bit) == "1") {
+      dec = "-" + dec;
+   }
+
+   return dec;
 };
 
 module.exports = {

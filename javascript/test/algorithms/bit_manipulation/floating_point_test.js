@@ -17,6 +17,10 @@ describe("Floating Point",function(){
   });
   it("IEEE to Decimal", function(){
       var ieeetodec = IEEEConverter.ieeetodec;
-      assert.deepEqual(ieeetodec("11000001100010100000000000000000"), "-17.25")
+      assert.deepEqual(ieeetodec("11000000101110000000000000000000"), "-5.75");
+      assert.deepEqual(ieeetodec("11000001100010100000000000000000"), "-17.25");
+
+      assert.deepEqual(ieeetodec("01000000101110000000000000000000"), "5.75");
+      assert.deepEqual(ieeetodec("00111110110000000000000000000000"), "0.375");
   });
 });
