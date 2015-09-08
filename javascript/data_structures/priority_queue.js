@@ -1,8 +1,8 @@
 // http://en.wikipedia.org/wiki/Priority_queue
 //
-// so there is naive where #dequene()
+// so there is naive where #dequeue()
 //
-// starts from the front of quene and looks for the highest/lowest prority element to the 
+// starts from the front of queue and looks for the highest/lowest prority element to the 
 // end and only change the element if another element's priority is higher
 //
 // then we'll do one for each of the 3 heaps we've already written
@@ -86,7 +86,7 @@ function binaryHeapPQ(comp){
     // this takes a bit of explaining see around line 132 inside the siftDown function
     // of my heap I compare the elements being compared to do heap rotations with 
     // the comparision function in an array and take the last value
-    // so we need that last value to be the first element in the order of the quene
+    // so we need that last value to be the first element in the order of the queue
     //
     return a.order < b.order;
   };

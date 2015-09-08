@@ -1,9 +1,9 @@
 var assert = require('assert');
-var naivePQ = require('../../data_structures/priority_quene.js').priorityQueue.naive;
+var naivePQ = require('../../data_structures/priority_queue.js').priorityQueue.naive;
 var naiveMinPQ = new naivePQ(Number.POSITIVE_INFINITY,function(a,b) {return a < b});
-var binaryHeapPQ = require('../../data_structures/priority_quene.js').priorityQueue.binaryHeap;
-var binomialHeapPQ = require('../../data_structures/priority_quene.js').priorityQueue.binomialHeap;
-var fibonacciHeapPQ = require('../../data_structures/priority_quene.js').priorityQueue.fibonacciHeap;
+var binaryHeapPQ = require('../../data_structures/priority_queue.js').priorityQueue.binaryHeap;
+var binomialHeapPQ = require('../../data_structures/priority_queue.js').priorityQueue.binomialHeap;
+var fibonacciHeapPQ = require('../../data_structures/priority_queue.js').priorityQueue.fibonacciHeap;
 
 describe('Naive Max Priority Queue', function(){
 
@@ -255,7 +255,7 @@ describe('Priority Queue with Binomial Heap', function(){
     // 
     // of course it will be in the first test because there is only one item
     
-    describe('#enquene and #peek()', function(){
+    describe('#enqueue and #peek()', function(){
       var queue = new binomialHeapPQ();
       it("returns top item value", function(){
         queue.enqueue(42);
@@ -346,9 +346,9 @@ describe('Priority Queue with Fibonacci Heap', function(){
   describe('with no priority set', function(){
 
     // in a fib heap you only ever keep a pointer to the min node
-    // so again not interesting to test enquene and peek of one value separately
+    // so again not interesting to test enqueue and peek of one value separately
     
-    describe('#enquene and #peek()', function(){
+    describe('#enqueue and #peek()', function(){
       var queue = new fibonacciHeapPQ();
       it("returns top item value", function(){
         queue.enqueue(42);

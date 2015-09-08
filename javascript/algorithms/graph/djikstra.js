@@ -21,7 +21,7 @@ var naiveDijkstra = function (graph, start_vertex) {
   // 
   // "u ← vertex in Q with min dist[u]" 
   // 
-  // is actually the same operation as a priority quene but it is a naive and unoptimized one
+  // is actually the same operation as a priority queue but it is a naive and unoptimized one
   // being that it is always going to look for the shortest distance in the queue
   
   if (graph.order() < 1) return Error("come on dog there's no nodes in this graph.")
@@ -65,7 +65,7 @@ var naiveDijkstra = function (graph, start_vertex) {
 
    // fun fact that is TERRIBLY (that is not at all) explained in wikipedia article
    //
-   // at the first iteration of this function after you've added everything to the quene 
+   // at the first iteration of this function after you've added everything to the queue 
    // the distance in the distance info array of all the verticies is POSITIVE_INFINITY
    //
    // EXCEPT ONE which is our source vertex.
@@ -227,7 +227,7 @@ var heapPQDijkstra = function (graph, start_vertex, heapQueue) {
   return {sv: start_vertex, nfo: info};
 };
 
-var binaryHeapPQ = require('../../data_structures/priority_quene.js').priorityQueue.binaryHeap;
+var binaryHeapPQ = require('../../data_structures/priority_queue.js').priorityQueue.binaryHeap;
 
 var binaryHeapPQDijkstra = function (graph, start_vertex) {
   // min priority queue
@@ -247,7 +247,7 @@ var binaryHeapPQDijkstra = function (graph, start_vertex) {
 
 binaryHeapPQDijkstra.prototype.shortest_path = shortestPath;
 
-var binomialHeapPQ = require('../../data_structures/priority_quene.js').priorityQueue.binomialHeap;
+var binomialHeapPQ = require('../../data_structures/priority_queue.js').priorityQueue.binomialHeap;
 
 var binomialHeapPQDijkstra = function (graph, start_vertex) {
   // min priority queue with binomial heap
@@ -264,7 +264,7 @@ var binomialHeapPQDijkstra = function (graph, start_vertex) {
 
 binomialHeapPQDijkstra.prototype.shortest_path = shortestPath;
 
-var fibonacciHeapPQ = require('../../data_structures/priority_quene.js').priorityQueue.fibonacciHeap;
+var fibonacciHeapPQ = require('../../data_structures/priority_queue.js').priorityQueue.fibonacciHeap;
 
 var fibonacciHeapPQDijkstra = function (graph, start_vertex) {
   // min priority queue with fibonacci heap

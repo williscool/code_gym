@@ -49,7 +49,7 @@ queueArr.prototype.dequeue = function(){
   //
   // which is fine for our academic purposes 
   //
-  // the way to allow both enqueue and dequene to be constant time with an array
+  // the way to allow both enqueue and dequeue to be constant time with an array
   // backed queue is to use a fixed size queue and manipulate the front and rear indexs
   //
   // ala
