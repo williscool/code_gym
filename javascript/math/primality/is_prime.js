@@ -16,11 +16,11 @@ function naiveTrialDivision(n) {
   // http://www.quora.com/Why-dont-we-have-negative-prime-numbers
 
   if (n < 2) return false;
-  
+
   var divisor = 2;
 
-  while(n > divisor){
-    if(n % divisor == 0) {
+  while (n > divisor) {
+    if (n % divisor === 0) {
       return false;
     } else {
       divisor = divisor + 1;
@@ -28,7 +28,7 @@ function naiveTrialDivision(n) {
   }
 
   return true;
-};
+}
 
 // inspried by http://www.thatjsdude.com/interview/js1.html#primeExtra
 // https://github.com/mgechev/javascript-algorithms/blob/master/src/primes/is-prime.js
@@ -44,23 +44,23 @@ function naiveTrialDivision(n) {
 // This is because all integers can be expressed as (6k + i) for some integer k and for i = -1, 0, 1, 2, 3, or 4; 2 divides (6k + 0), (6k + 2), (6k + 4); and 3 divides (6k + 3). 
 // So a more efficient method is to test if n is divisible by 2 or 3, then to check through all the numbers of form 6k ± 1 <= sqrt(n).
 //
-function optimizedTrialDivision (n) {
-  
+function optimizedTrialDivision(n) {
+
   if (n < 2) return false;
 
   if (n <= 3) return true;
 
-  if( (n % 2 == 0) || (n % 3 == 0) ) return false;
+  if ((n % 2 === 0) || (n % 3 === 0)) return false;
 
   // divisor * divisor <= n
   var divisor = 5;
   var limit = Math.floor(Math.sqrt(n));
 
-  while(divisor <= limit){
-    if( (n % divisor == 0) || ( n % (divisor + 2) == 0) ) return false;
+  while (divisor <= limit) {
+    if ((n % divisor === 0) || (n % (divisor + 2) === 0)) return false;
     divisor += 6;
   }
-  
+
   return true;
 }
 
@@ -71,5 +71,5 @@ function optimizedTrialDivision (n) {
 
 module.exports = {
   naive_trial_division: naiveTrialDivision,
-  optimized_trial_division: optimizedTrialDivision 
+  optimized_trial_division: optimizedTrialDivision
 };

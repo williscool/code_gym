@@ -9,10 +9,14 @@ function CircularlyLinkedList() {
 
 util.inherits(CircularlyLinkedList, DoublyLinkedList);
 
-CircularlyLinkedList.prototype.insertFront = function(val){
-  var node = {value: val, prev: null, next:null };
-  
-  if(!this.head){
+CircularlyLinkedList.prototype.insertFront = function(val) {
+  var node = {
+    value: val,
+    prev: null,
+    next: null
+  };
+
+  if (!this.head) {
     this.head = node;
     this.tail = node;
     node.next = node;
@@ -31,12 +35,15 @@ CircularlyLinkedList.prototype.insertFront = function(val){
   }
 
   return this;
-}
+};
 
-CircularlyLinkedList.prototype.insertEnd = function(val){
-  var node = {value: val, next:null };
-  
-  if(!this.tail){
+CircularlyLinkedList.prototype.insertEnd = function(val) {
+  var node = {
+    value: val,
+    next: null
+  };
+
+  if (!this.tail) {
     this.tail = node;
     this.head = node;
     node.next = node;
@@ -53,11 +60,11 @@ CircularlyLinkedList.prototype.insertEnd = function(val){
   }
 
   return this;
-}
+};
 
 CircularlyLinkedList.prototype.removeFront = function() {
-  
-  if(!this.head){
+
+  if (!this.head) {
     // do nothing but return for chaining
   } else {
     var new_head = this.head.next;
@@ -66,23 +73,23 @@ CircularlyLinkedList.prototype.removeFront = function() {
   }
 
   return this;
-}
+};
 
-CircularlyLinkedList.prototype.removeEnd = function(){
-  
-  if(this.tail){
+CircularlyLinkedList.prototype.removeEnd = function() {
+
+  if (this.tail) {
     var new_tail = this.tail.prev;
     new_tail.next = this.tail.next;
     this.tail = new_tail;
   }
 
   return this;
-}
+};
 
-CircularlyLinkedList.prototype.toArray = function(){
+CircularlyLinkedList.prototype.toArray = function() {
   var arr = [];
 
-  if(!this.head){
+  if (!this.head) {
     return arr;
   }
 
@@ -90,12 +97,12 @@ CircularlyLinkedList.prototype.toArray = function(){
 
   var cur = this.head.next;
 
-  while(cur != this.head ) {
+  while (cur != this.head) {
     arr.push(cur.value);
     cur = cur.next;
   }
 
   return arr;
-}
+};
 
 module.exports = CircularlyLinkedList;

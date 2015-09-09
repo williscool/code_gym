@@ -19,7 +19,9 @@
 // also decided to make it (mostly) conform to es6 Map api because why not. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
 
 function HashTable(size) {
-  if(!size) {size = 8};
+  if (!size) {
+    size = 8;
+  }
   this.items = [];
   this.length = 0;
   this.limit = size;
@@ -28,7 +30,9 @@ function HashTable(size) {
 HashTable.prototype.hashFunc = function(str, max) {
   // TODO: should probably return an error when you dont provide a str key
   var hash = 0;
-  if(!max) {max = this.limit};
+  if (!max) {
+    max = this.limit;
+  }
   for (var i = 0; i < str.length; i++) {
     var letter = str[i];
     hash = (hash << 5) + letter.charCodeAt(0);
@@ -37,7 +41,7 @@ HashTable.prototype.hashFunc = function(str, max) {
   return hash;
 };
 
-HashTable.prototype.set = function(key, val){
+HashTable.prototype.set = function(key, val) {
 
   // computer index with hashing function
   var index = this.hashFunc(key, this.limit);
@@ -46,95 +50,96 @@ HashTable.prototype.set = function(key, val){
   var bucket = this.items[index];
 
   // create it iff it doesnt exist
-  if(!bucket) {
+  if (!bucket) {
     bucket = [];
     this.items[index] = bucket;
   }
 
   // check bucket to see if we are updating a previously inserted value
   var overwrite = false;
+  var obj;
 
   for (var i = 0; i < bucket.length; i++) {
-    var obj = bucket[i];
+    obj = bucket[i];
 
-    if(!!obj[key]) {
-       obj[key] = val;
-       overwrite = true;
+    if (!!obj[key]) {
+      obj[key] = val;
+      overwrite = true;
     }
   }
 
-  if(!overwrite){
+  if (!overwrite) {
     // add new key val pair to bucket
-    var obj = {};
+    obj = {};
     obj[key] = val;
     bucket.push(obj);
     this.length++;
   }
 
   // if we have filled with 3/4 of value limit increase its size
-  if(this.length > this.limit * 0.75){
+  if (this.length > this.limit * 0.75) {
     this.resize(this.limit * 2);
   }
 
   return this;
-}
+};
 
-HashTable.prototype.get = function(key){
+HashTable.prototype.get = function(key) {
   var index = this.hashFunc(key, this.limit);
   var bucket = this.items[index];
   result = null;
- 
+
   if (!bucket) {
     return result;
   }
- 
+
   for (var i = 0; i < bucket.length; i++) {
     var obj = bucket[i];
 
-    if(!!obj[key]) {
+    if (!!obj[key]) {
       result = obj[key];
     }
   }
- 
-  return result;
-}
 
-HashTable.prototype.has = function(key){
-  if(this.get(key)){
+  return result;
+};
+
+HashTable.prototype.has = function(key) {
+  if (this.get(key)) {
     return true;
   } else {
     return false;
   }
-}
+};
 
-HashTable.prototype.delete = function(key){
+HashTable.prototype.delete = function(key) {
   var index = this.hashFunc(key, this.limit);
   var bucket = this.items[index];
   result = null;
- 
+
   if (!bucket) {
     return result;
   }
- 
+
   for (var i = 0; i < bucket.length; i++) {
     var obj = bucket[i];
 
-    if(!!obj[key]) {
+    if (!!obj[key]) {
       result = obj[key];
-      bucket.splice(i,1); // remove the element at this index
+      bucket.splice(i, 1); // remove the element at this index
       this.length--;
 
     }
   }
 
   return result;
-}
+};
 
-HashTable.prototype.resize = function(newLimit){
-  var oldItems = this.items; 
+HashTable.prototype.resize = function(newLimit) {
+  var oldItems = this.items;
 
   this.limit = newLimit;
-  
+
   // reset properties as they will be recalculated as hash table is resized
   this.length = 0;
   this.items = [];
@@ -145,7 +150,7 @@ HashTable.prototype.resize = function(newLimit){
     if (!bucket) {
       // need continue here not break
       // http://stackoverflow.com/questions/6414/c-sharp-loop-break-vs-continue
-       continue; 
+      continue;
     }
 
     for (var j = 0; j < bucket.length; j++) {
@@ -153,11 +158,11 @@ HashTable.prototype.resize = function(newLimit){
       var key = Object.keys(obj)[0];
       var val = obj[key];
 
-      this.set(key,val);
+      this.set(key, val);
     }
   }
- 
+
   return result;
-}
+};
 
 module.exports = HashTable;

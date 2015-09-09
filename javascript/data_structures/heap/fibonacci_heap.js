@@ -31,45 +31,47 @@ function FibonacciHeap(node, size, compfn) {
   this.size = dsalgo.utils.isDefined(size) ? size : 0;
 
   // gotta make sure we increase the size if a node is set in contructor
-  if(node) this.size++;
+  if (node) this.size++;
 
   // fib heap is also a min heap by default
-  this.comp = compfn || function (a,b) {return a.key <= b.key;};
+  this.comp = compfn || function(a, b) {
+      return a.key <= b.key;
+  };
 
   // node set for keeping track of references to objects
   // same use as in binomial heap
   this.nodeSet = dsalgo.utils.simpleSet();
-  this.valueToString = function(a){
+  this.valueToString = function(a) {
     return JSON.stringify(a);
   };
 }
 
-FibonacciHeap.prototype.addToNodeSet = function(key,val){
+FibonacciHeap.prototype.addToNodeSet = function(key, val) {
   // key = value storing, val = node reference
   this.nodeSet[this.valueToString(key)] = val;
-}
+};
 
-FibonacciHeap.prototype.getFromNodeSet = function(key){
+FibonacciHeap.prototype.getFromNodeSet = function(key) {
   return this.nodeSet[this.valueToString(key)];
-}
+};
 
-FibonacciHeap.prototype.removeFromNodeSet = function(key){
+FibonacciHeap.prototype.removeFromNodeSet = function(key) {
   delete this.nodeSet[this.valueToString(key)];
-}
+};
 
-FibonacciHeap.prototype.isEmpty = function (){
+FibonacciHeap.prototype.isEmpty = function() {
   return !dsalgo.utils.isDefined(this.minNode);
-}
+};
 
 FibonacciHeap.prototype.mergeRootLists = function(a, b) {
   // interesting note here this function dramatically simplifies the union operation 
   // simply by returning the Min(a,b) 
   // would have been nice for them to have done it this way in CLRS
 
-  if(!a && !b) return; 
-  if(!a) return b; 
-  if(!b) return a; 
-    
+  if (!a && !b) return;
+  if (!a) return b;
+  if (!b) return a;
+
   var temp = a.next;
 
   a.next = b.next;
@@ -78,10 +80,10 @@ FibonacciHeap.prototype.mergeRootLists = function(a, b) {
   b.next = temp;
   b.next.prev = b;
 
-  return this.comp(a,b) ? a :b;
-}
+  return this.comp(a, b) ? a : b;
+};
 
-FibonacciHeap.prototype.insert = function (key,val){
+FibonacciHeap.prototype.insert = function(key, val) {
 
   var newNode = {
     key: key,
@@ -93,7 +95,7 @@ FibonacciHeap.prototype.insert = function (key,val){
     prev: null,
     isMarked: null
   };
- 
+
   // implementation this was inspired by counts on a node never having a null reference to work
   // as opposed to null checking every where our clever conspirator chose to make nodes have circular
   // references at first that get set properly upon being merged into a tree
@@ -102,13 +104,13 @@ FibonacciHeap.prototype.insert = function (key,val){
 
   newNode.next = newNode;
   newNode.prev = newNode;
-   
+
   this.minNode = this.mergeRootLists(this.minNode, newNode);
   this.size++;
-  
+
   // add node to nodeSet
   // just need a reference
-  this.addToNodeSet(val,newNode);
+  this.addToNodeSet(val, newNode);
 
   return this;
 };
@@ -118,20 +120,20 @@ FibonacciHeap.prototype.union = function(otherHeap) {
   this.size += otherHeap.size;
 };
 
-FibonacciHeap.prototype.findMin = function(){
+FibonacciHeap.prototype.findMin = function() {
   return this.minNode;
-}
+};
 
 FibonacciHeap.prototype.peek = FibonacciHeap.prototype.findMin;
 
 
-FibonacciHeap.prototype.removeNodeFromList = function(node){
+FibonacciHeap.prototype.removeNodeFromList = function(node) {
   // another simplifying helper function
   // the CLRS implementation does alot of adding one list to another minus 
   // the node you are removing. why not just make them point to each other?
 
-  var prev = node.prev
-     , next = node.next;
+  var prev = node.prev,
+    next = node.next;
 
   prev.next = next;
   next.prev = prev;
@@ -142,16 +144,16 @@ FibonacciHeap.prototype.removeNodeFromList = function(node){
   node.prev = node;
 
   return node;
-}
+};
 
 
-FibonacciHeap.prototype.linkHeaps = function(max, min){
+FibonacciHeap.prototype.linkHeaps = function(max, min) {
   max = removeNodeFromList(max);
-  min.child = mergeRootLists(max,min.child);
+  min.child = mergeRootLists(max, min.child);
 
   max.parent = min;
   max.isMarked = false;
-}
+};
 
 /* Consolidate
  * per the wikipedia article
@@ -165,7 +167,7 @@ FibonacciHeap.prototype.linkHeaps = function(max, min){
  *
  * */
 
-FibonacciHeap.prototype.consolidate = function(){
+FibonacciHeap.prototype.consolidate = function() {
 
   var toVisit = []; //aka an array of the nodes we are going to visit from the root list
   var treeRankTable = [];
@@ -178,21 +180,21 @@ FibonacciHeap.prototype.consolidate = function(){
   //
   // iteration will work fine because on the first iteration toVisit[0] is undefined
   //
-  while (start && (toVisit[0] !== start)){
+  while (start && (toVisit[0] !== start)) {
     toVisit.push(start);
     // iterate until we visit the whole root chain
     start = start.next;
   }
 
   // this is javascript so we dont have to initalize our rank table with nulls
-  
+
   var i = 0;
 
-  while(i < toVisit.length){
+  while (i < toVisit.length) {
 
     var current = toVisit[i];
     // we havent found a tree of this rank yet
-    if(!(treeRankTable[current.degree])){
+    if (!(treeRankTable[current.degree])) {
       // put this tree there
       treeRankTable[current.degree] = current;
       // and leave this iteration of the while true loop
@@ -201,16 +203,16 @@ FibonacciHeap.prototype.consolidate = function(){
 
     // there was a node at this rank before lets put them together
 
-    if(other.key > current.key){
+    if (other.key > current.key) {
       // other should be further down the tree do it first and save current for later
       var temp = current;
       current = treeRankTable[current.degree];
       treeRankTable[current.degree] = temp;
     }
 
-    this.linkHeaps(treeRankTable[current.degree],current);
+    this.linkHeaps(treeRankTable[current.degree], current);
 
-    treeRankTable[current.degree] = null; 
+    treeRankTable[current.degree] = null;
     current.degree++;
 
     treeRankTable[current.degree] = current;
@@ -221,31 +223,31 @@ FibonacciHeap.prototype.consolidate = function(){
   this.minNode = null;
 
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach
-  toVisit.forEach(function(node){
-     // remove sibling relationships from nodes
-     if(node){
+  toVisit.forEach(function(node) {
+    // remove sibling relationships from nodes
+    if (node) {
       node.next = node;
       node.prev = node;
-     }
-     
-     this.minNode = this.mergeRootLists(this.minNode, node);
+    }
+
+    this.minNode = this.mergeRootLists(this.minNode, node);
   }, this);
 
-}
+};
 
 
-FibonacciHeap.prototype.extractMin = function(){
+FibonacciHeap.prototype.extractMin = function() {
 
   var min = this.minNode;
-  
-  if(min){
+
+  if (min) {
     // set parent to null for min's children
-    if(min.child) {
+    if (min.child) {
       var child = min.child;
 
       do {
-        child.parent = null; 
-        child = child.next; 
+        child.parent = null;
+        child = child.next;
       } while (child != min.child);
     }
 
@@ -254,40 +256,40 @@ FibonacciHeap.prototype.extractMin = function(){
 
     this.removeNodeFromList(min);
     this.size--;
-    
+
     // Merge kids of min node with current root list
     this.minNode = this.mergeRootLists(nextInRootList, min.child);
 
-    if(nextInRootList){
+    if (nextInRootList) {
       this.minNode = nextInRootList;
       this.consolidate();
     }
   }
 
   return min;
-}
+};
 
 FibonacciHeap.prototype.pop = FibonacciHeap.prototype.extractMin;
 
 FibonacciHeap.prototype.cut = function(node, parent) {
-   // https://www.youtube.com/watch?v=M37HHf099oM
-   this.removeNodeFromList(node);
-   parent.degree--; 
-   this.mergeRootLists(minNode,node);
-   node.isMarked = false;
-}
+  // https://www.youtube.com/watch?v=M37HHf099oM
+  this.removeNodeFromList(node);
+  parent.degree--;
+  this.mergeRootLists(minNode, node);
+  node.isMarked = false;
+};
 
-FibonacciHeap.prototype.cascadingCut = function(node, parent) {
+FibonacciHeap.prototype.cascadingCut = function(node) {
   var parent = node.parent;
-  if(parent){
-    if(node.isMarked){
-      cur(node,parent);
+  if (parent) {
+    if (node.isMarked) {
+      cur(node, parent);
       cascadingCut(parent);
     } else {
       node.isMarked = true;
     }
   }
-}
+};
 
 FibonacciHeap.prototype.decreaseKey = function(node, newKey) {
 
@@ -297,22 +299,25 @@ FibonacciHeap.prototype.decreaseKey = function(node, newKey) {
   node.key = newKey;
   var parent = node.parent;
 
-  if(parent && this.comp(node, node.parent)) { 
-    cut(node,parent);
+  if (parent && this.comp(node, node.parent)) {
+    cut(node, parent);
     cascadingCut(parent);
   }
 
-  if(this.comp(node, this.minNode)) this.minNode = node;
+  if (this.comp(node, this.minNode))
+    this.minNode = node;
 
   return true;
-}
+};
 
-FibonacciHeap.prototype.delete = function(node){
+FibonacciHeap.prototype.delete = function(node) {
 
   // doing it the academic way of decreasing node to negative infinity again
   // but really do. why would you need to store negative infinity?
-  
-  if (!(node instanceof Object)) { return false; }
+
+  if (!(node instanceof Object)) {
+    return false;
+  }
 
   this.decreaseKey(node, Number.NEGATIVE_INFINITY);
   this.extractMin();
@@ -320,13 +325,13 @@ FibonacciHeap.prototype.delete = function(node){
   // remove node from nodeSet
   this.removeFromNodeSet(node.value);
   return true;
-}
+};
 
 FibonacciHeap.prototype.remove = FibonacciHeap.prototype.delete;
 
-FibonacciHeap.prototype.contains = function(val){
+FibonacciHeap.prototype.contains = function(val) {
   var node = this.getFromNodeSet(val);
   return dsalgo.utils.isDefined(node) ? node : false;
-}
+};
 
 module.exports = FibonacciHeap;

@@ -3,37 +3,37 @@ var dsalgo = require('../../utilities.js').dsalgo;
 
 var BinomialHeap = require('../../data_structures/heap/binomial_heap.js');
 
-describe('Binomial Heap', function(){
+describe('Binomial Heap', function() {
 
-  describe('contructor works', function(){
+  describe('contructor works', function() {
 
-    it("at all", function(){
+    it("at all", function() {
       var heap = new BinomialHeap();
       assert.equal(heap.size, 0);
     });
 
   });
 
-  describe('#insert()', function(){
-    it("single node", function(){
+  describe('#insert()', function() {
+    it("single node", function() {
       var heap = new BinomialHeap();
       heap.insert(42);
       assert.equal(heap.peek().key, 42);
       assert.equal(heap.size, 1);
     });
 
-    it("multiple nodes", function(){
+    it("multiple nodes", function() {
       var heap = new BinomialHeap();
       heap.insert(42).insert(37).insert(24);
       assert.equal(heap.size, 3);
       assert.equal(heap.peek().key, [24]);
     });
 
-    it("inserts values in correct binomial tree order", function(){
+    it("inserts values in correct binomial tree order", function() {
       // https://www.cs.usfca.edu/~galles/visualization/BinomialQueue.html
       var heap = new BinomialHeap();
       heap.insert(25).insert(57).insert(42).insert(30);
-      
+
       /// peek always returns min but its not guarenteed to be the root of the tree
       // unless you store a seperate pointer to it in your implmentation which I have not
       var min = heap.peek();
@@ -45,15 +45,15 @@ describe('Binomial Heap', function(){
     });
   });
 
-  describe('pop()', function(){
-    it("single node", function(){
+  describe('pop()', function() {
+    it("single node", function() {
       var heap = new BinomialHeap();
       heap.insert(42);
       assert.equal(heap.pop().key, 42);
       assert.equal(heap.size, 0);
     });
 
-    it("multiple nodes", function(){
+    it("multiple nodes", function() {
       var heap = new BinomialHeap();
       heap.insert(42).insert(37).insert(24);
       assert.equal(heap.pop().key, 24);
@@ -61,16 +61,16 @@ describe('Binomial Heap', function(){
       assert.equal(heap.size, 2);
     });
 
-    it("even more modes", function(){
+    it("even more modes", function() {
       var heap = new BinomialHeap();
       heap.insert(24).insert(37).insert(42)
-      .insert(25).insert(57).insert(39).insert(30);
+        .insert(25).insert(57).insert(39).insert(30);
       assert.equal(heap.pop().key, 24);
       assert.equal(heap.peek().key, 25);
       assert.equal(heap.size, 6);
     });
 
-    it("restores heap property and puts values in correct place", function(){
+    it("restores heap property and puts values in correct place", function() {
       // https://www.cs.usfca.edu/~galles/visualization/BinomialQueue.html
       var heap = new BinomialHeap();
       heap.insert(42).insert(57).insert(30).insert(25);
@@ -85,8 +85,8 @@ describe('Binomial Heap', function(){
     });
   });
 
-  describe('#decreaseKey()', function(){
-    it("reduces a node's key value", function(){
+  describe('#decreaseKey()', function() {
+    it("reduces a node's key value", function() {
       var heap = new BinomialHeap();
       heap.insert(42);
 
@@ -95,9 +95,9 @@ describe('Binomial Heap', function(){
       heap.decreaseKey(node, 17);
 
       assert.equal(node.key, 17);
-      
+
     });
-    it("moves value properly when heap property is violated", function(){
+    it("moves value properly when heap property is violated", function() {
       var heap = new BinomialHeap();
       heap.insert(42).insert(57).insert(30).insert(25);
 
@@ -115,15 +115,15 @@ describe('Binomial Heap', function(){
     });
   });
 
-  describe('remove()', function(){
-    it("single node", function(){
+  describe('remove()', function() {
+    it("single node", function() {
       var heap = new BinomialHeap();
       heap.insert(42);
       assert(heap.remove(heap.root));
       assert.equal(heap.size, 0);
     });
 
-    it("multiple nodes", function(){
+    it("multiple nodes", function() {
       var heap = new BinomialHeap();
       heap.insert(42).insert(37).insert(24);
       assert(heap.remove(heap.root));
@@ -131,16 +131,16 @@ describe('Binomial Heap', function(){
       assert.equal(heap.size, 2);
     });
 
-    it("even more modes", function(){
+    it("even more modes", function() {
       var heap = new BinomialHeap();
       heap.insert(24).insert(37).insert(42)
-      .insert(25).insert(57).insert(39).insert(30);
+        .insert(25).insert(57).insert(39).insert(30);
       assert(heap.remove(heap.root));
       assert.equal(heap.peek().key, 24);
       assert.equal(heap.size, 6);
     });
 
-    it("restores heap property and puts values in correct place", function(){
+    it("restores heap property and puts values in correct place", function() {
       var heap = new BinomialHeap();
       heap.insert(42).insert(57).insert(30).insert(25);
 

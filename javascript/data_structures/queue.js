@@ -5,45 +5,47 @@ function queueDll() {
   this.length = 0;
 }
 
-queueDll.prototype.enqueue = function(val){
+queueDll.prototype.enqueue = function(val) {
   this.items.insertEnd(val);
   this.length++;
   return this;
-}
+};
 
-queueDll.prototype.dequeue = function(){
+queueDll.prototype.dequeue = function() {
   var value = this.peek();
   this.items.removeFront();
   this.length--;
   return value;
-}
+};
 
-queueDll.prototype.peek = function(){
+queueDll.prototype.peek = function() {
   return this.items.head.value;
-}
+};
 
-queueDll.prototype.isEmpty = function(){
+queueDll.prototype.isEmpty = function() {
   return this.length === 0;
-}
+};
 
-queueDll.prototype.toArray = function(){
+queueDll.prototype.toArray = function() {
   return this.items.toArray();
-}
+};
 
-queueDll.prototype.forEach = function(fn){ this.toArray().forEach(fn)};
+queueDll.prototype.forEach = function(fn) {
+  this.toArray().forEach(fn);
+};
 
 function queueArr() {
   this.items = [];
   this.length = 0;
 }
 
-queueArr.prototype.enqueue = function(val){
+queueArr.prototype.enqueue = function(val) {
   this.items.push(val);
   this.length++;
   return this;
-}
+};
 
-queueArr.prototype.dequeue = function(){
+queueArr.prototype.dequeue = function() {
   // this is O(n) each time
   // https://github.com/v8/v8/blob/master/src/array.js#L620
   //
@@ -59,21 +61,23 @@ queueArr.prototype.dequeue = function(){
   var value = this.items.shift();
   this.length--;
   return value;
-}
+};
 
-queueArr.prototype.peek = function(){
+queueArr.prototype.peek = function() {
   return this.items[this.items.length - 1];
-}
+};
 
-queueArr.prototype.isEmpty = function(){
+queueArr.prototype.isEmpty = function() {
   return this.length === 0;
-}
+};
 
-queueArr.prototype.toArray = function(){
+queueArr.prototype.toArray = function() {
   return this.items;
-}
+};
 
-queueArr.prototype.forEach = function(fn){ this.toArray().forEach(fn)};
+queueArr.prototype.forEach = function(fn) {
+  this.toArray().forEach(fn);
+};
 
 module.exports = {
   doubly_linked_list: queueDll,

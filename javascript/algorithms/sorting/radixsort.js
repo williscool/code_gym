@@ -18,53 +18,55 @@ function arrayMax(numArray) {
   return Math.max.apply(null, numArray);
 }
 
-module.exports = function (list) {
+module.exports = function(list) {
 
-   if(list.length < 2) {
+  if (list.length < 2) {
     return list;
-   }
+  }
 
-   var max, maxLen, i, base = 10, buckets = [], digit;
+  var max, maxLen, i,
+    base = 10,
+    buckets = [], digit;
 
-   // http://stackoverflow.com/a/8492462/511710
-   var log = function(b, n) {  
-    return Math.log(n) / Math.log(b);  
-   };
+  // http://stackoverflow.com/a/8492462/511710
+  var log = function(b, n) {
+    return Math.log(n) / Math.log(b);
+  };
 
-   var index_function = function (value, digit) {
-     // get the digit at a place in the number
-    return  Math.floor( value / Math.pow(base, digit) % base ); 
-   };
- 
-   max = arrayMax(list);
-   maxLen = Math.floor(log(base, max) + 1);
-   
-   i = 0;
-   while(i < base){
-     // make buckets for numbers to go into
-     // another bucket sort
-     buckets[i] = [];
-     i++;
-   }
+  var index_function = function(value, digit) {
+    // get the digit at a place in the number
+    return Math.floor(value / Math.pow(base, digit) % base);
+  };
 
-   for(digit = 0; digit < maxLen; digit++ ){
+  max = arrayMax(list);
+  maxLen = Math.floor(log(base, max) + 1);
 
-     // im sorry im sick of writing for loops
-     list.forEach(function(val){
+  i = 0;
+  while (i < base) {
+    // make buckets for numbers to go into
+    // another bucket sort
+    buckets[i] = [];
+    i++;
+  }
+
+  for (digit = 0; digit < maxLen; digit++) {
+
+    // im sorry im sick of writing for loops
+    list.forEach(function(val) {
       //var index = index_function(val,digit); 
       //if(!buckets[index]) debugger;
-      buckets[index_function(val,digit)].push(val);
-     });
-     
-     // now that we've built the buckets and shifted them 
-     // we need to flatten them back into the list
-     list = []; 
-     buckets.forEach(function(val, i){
-        list = list.concat(val);
-        // then reset buckets to get them ready for next round
-        buckets[i] = [];
-     });
-   }
+      buckets[index_function(val, digit)].push(val);
+    });
+
+    // now that we've built the buckets and shifted them 
+    // we need to flatten them back into the list
+    list = [];
+    buckets.forEach(function(val, i) {
+      list = list.concat(val);
+      // then reset buckets to get them ready for next round
+      buckets[i] = [];
+    });
+  }
 
   return list;
 };

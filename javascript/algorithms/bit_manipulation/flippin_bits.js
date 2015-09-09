@@ -8,10 +8,10 @@
 
 var dsalgo = require('../../utilities.js').dsalgo;
 
-module.exports = function(a,b){
-  
+module.exports = function(a, b) {
+
   var flips = {};
-  
+
   flips.binarya = dsalgo.utils.dec2bin(a);
   flips.binaryb = dsalgo.utils.dec2bin(b);
 

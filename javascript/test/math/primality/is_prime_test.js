@@ -1,10 +1,10 @@
 var assert = require('assert');
 var isPrimeFns = require('../../../math/primality/is_prime.js');
 
-Object.keys(isPrimeFns).forEach(function(key){
+Object.keys(isPrimeFns).forEach(function(key) {
   var isPrime = isPrimeFns[key];
-  describe(key + " isPrime",function(){
-    it("should calculate if a number is prime", function(){
+  describe(key + " isPrime", function() {
+    it("should calculate if a number is prime", function() {
       assert.equal(isPrime(0), false);
       assert.equal(isPrime(1), false); // because math https://primes.utm.edu/notes/faq/one.html 
       assert.equal(isPrime(2), true);

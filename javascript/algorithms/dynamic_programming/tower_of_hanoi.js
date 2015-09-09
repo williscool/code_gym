@@ -17,15 +17,15 @@
 // http://www2.hh.se/staff/vero/itads/2007/lectures/lecture4/printL4.pdf
 // http://introcs.cs.princeton.edu/java/23recursion/TowersOfHanoi.java.html
 
-function Hanoi(num_disks, source, destination, spare, result){
+function Hanoi(num_disks, source, destination, spare, result) {
 
   // if(num_disks === 0) // do nothing
-  
-  var result = result || [];
 
-  if(num_disks > 0) {
+  result = result || [];
+
+  if (num_disks > 0) {
     Hanoi(num_disks - 1, source, spare, destination, result);
-    result.push([source,destination]);
+    result.push([source, destination]);
     Hanoi(num_disks - 1, spare, destination, source, result);
   }
 

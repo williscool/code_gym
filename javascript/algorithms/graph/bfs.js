@@ -22,14 +22,17 @@
 
 var Queue = require('../../data_structures/queue.js').doubly_linked_list;
 
-module.exports = function (graph, start_vertex) {
-  
-  if (graph.order() < 1) return Error("come on dog there's no nodes in this graph.")
+module.exports = function(graph, start_vertex) {
+
+  if (graph.order() < 1) return Error("come on dog there's no nodes in this graph.");
 
   var info = [];
-  
-  for(var i = 0; i < graph.order() ; i++) {
-    info[i] = {distance: null, predecessor:null};
+
+  for (var i = 0; i < graph.order(); i++) {
+    info[i] = {
+      distance: null,
+      predecessor: null
+    };
   }
 
   info[start_vertex].distance = 0;
@@ -39,7 +42,7 @@ module.exports = function (graph, start_vertex) {
 
 
   // Traverse the graph
-  
+
   // As long as the queue is not empty:
   //  Repeatedly dequeue a vertex v from the queue.
   //  
@@ -48,21 +51,21 @@ module.exports = function (graph, start_vertex) {
   //     Set predecessor to v
   //     Enqueue w
 
-  while(queue.length > 0) {
+  while (queue.length > 0) {
 
-   var v = queue.dequeue();
-  
-    for(var i = 0; i < graph.adjacency_list[v].length ; i++){
-        var w = graph.adjacency_list[v][i];
-        
-        if(info[w].distance === null){
-            
-            info[w].distance = info[v].distance + 1;
-            info[w].predecessor = v;
-            queue.enqueue(w);    
-        }
-        
-    } 
+    var v = queue.dequeue();
+
+    for (var j = 0; j < graph.adjacency_list[v].length; j++) {
+      var w = graph.adjacency_list[v][j];
+
+      if (info[w].distance === null) {
+
+        info[w].distance = info[v].distance + 1;
+        info[w].predecessor = v;
+        queue.enqueue(w);
+      }
+
+    }
 
   }
 

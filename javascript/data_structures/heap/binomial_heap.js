@@ -24,7 +24,9 @@ function BinomialHeap(compfn) {
   // even the last version of CLRS it was in
   //
   // default to min heap
-  this.comp = compfn || function (a,b) {return a.key <= b.key;};
+  this.comp = compfn || function(a, b) {
+      return a.key <= b.key;
+  };
 
   // gotta make sure to update this on insert and delete
   //
@@ -32,49 +34,49 @@ function BinomialHeap(compfn) {
   // so as long as we have a reference to that object we dont care what happens to it unless we need to delete it
   //
   this.nodeSet = dsalgo.utils.simpleSet();
-  this.valueToString = function(a){
+  this.valueToString = function(a) {
     return JSON.stringify(a);
   };
 }
 
-BinomialHeap.prototype.addToNodeSet = function(key,val){
+BinomialHeap.prototype.addToNodeSet = function(key, val) {
   // key = value storing, val = node reference
   this.nodeSet[this.valueToString(key)] = val;
-}
+};
 
-BinomialHeap.prototype.getFromNodeSet = function(key){
+BinomialHeap.prototype.getFromNodeSet = function(key) {
   return this.nodeSet[this.valueToString(key)];
-}
+};
 
-BinomialHeap.prototype.removeFromNodeSet = function(key){
+BinomialHeap.prototype.removeFromNodeSet = function(key) {
   delete this.nodeSet[this.valueToString(key)];
-}
+};
 
-BinomialHeap.prototype.findMin = function(){
-  if(!this.root) return;
+BinomialHeap.prototype.findMin = function() {
+  if (!this.root) return;
 
   var min = this.root;
   var next = min.sibling;
-  
-  while(next) {
-    if(this.comp(next, min)){
-       min = next;
+
+  while (next) {
+    if (this.comp(next, min)) {
+      min = next;
     }
 
     next = next.sibling;
   }
 
   return min;
-}
+};
 
 BinomialHeap.prototype.peek = BinomialHeap.prototype.findMin;
 
 BinomialHeap.prototype.linkTreeNodes = function(node, other) {
-  other.parent = node; 
+  other.parent = node;
   other.sibling = node.child;
   node.child = other;
   node.degree += 1;
-}
+};
 
 BinomialHeap.prototype.mergeHeaps = function(a, b) {
 
@@ -83,8 +85,8 @@ BinomialHeap.prototype.mergeHeaps = function(a, b) {
   // the roots of the each sub binomial tree a and b in order 
   //
   // we aren't doing anything else to the tree right now
-  
-  if(!a.root) {
+
+  if (!a.root) {
     return b.root;
   } else if (!b.root) {
     return a.root;
@@ -93,36 +95,36 @@ BinomialHeap.prototype.mergeHeaps = function(a, b) {
     var aNext = a.root;
     var bNext = b.root;
 
-    if(a.root.degree <= b.root.degree){
-      root = a.root; 
+    if (a.root.degree <= b.root.degree) {
+      root = a.root;
       aNext = aNext.sibling;
     } else {
-      root = b.root; 
+      root = b.root;
       bNext = bNext.sibling;
     }
 
-     var tail = root;
+    var tail = root;
 
-     while (aNext && bNext) {
-        if(aNext.degree <= bNext.degree){
-          tail.sibling = aNext; 
-          aNext = aNext.sibling;
-        } else {
-          tail.sibling = bNext; 
-          bNext = bNext.sibling;
-        }
+    while (aNext && bNext) {
+      if (aNext.degree <= bNext.degree) {
+        tail.sibling = aNext;
+        aNext = aNext.sibling;
+      } else {
+        tail.sibling = bNext;
+        bNext = bNext.sibling;
+      }
 
-        tail = tail.sibling;
-     }
+      tail = tail.sibling;
+    }
 
-     // finally once we reach the end of either previous root chain we set our new root chains's
-     // tail to either chain that still has more nodes in it
-     
-     tail.sibling = aNext ? aNext : bNext;
-    
+    // finally once we reach the end of either previous root chain we set our new root chains's
+    // tail to either chain that still has more nodes in it
+
+    tail.sibling = aNext ? aNext : bNext;
+
     return root;
   }
-}
+};
 
 BinomialHeap.prototype.union = function(otherHeap) {
   this.size += otherHeap.size;
@@ -139,20 +141,20 @@ BinomialHeap.prototype.union = function(otherHeap) {
   var prev;
   var curr = newRoot;
   var next = newRoot.sibling;
-  
-//  if(!!prev && prev.degree > 0) debugger;
-//  if(!!curr && curr.degree > 0) debugger;
-//  if(!!next && next.degree > 0) debugger;
-     
+
+  //  if(!!prev && prev.degree > 0) debugger;
+  //  if(!!curr && curr.degree > 0) debugger;
+  //  if(!!next && next.degree > 0) debugger;
+
   while (next) {
-    if(curr.degree !== next.degree || (next.sibling && next.sibling.degree == curr.degree)){
+    if (curr.degree !== next.degree || (next.sibling && next.sibling.degree == curr.degree)) {
       prev = curr;
       curr = next;
     } else {
 
-      if (this.comp(curr,next)) { 
+      if (this.comp(curr, next)) {
         curr.sibling = next.sibling;
-        BinomialHeap.prototype.linkTreeNodes(curr,next);
+        BinomialHeap.prototype.linkTreeNodes(curr, next);
       } else {
         if (!prev) {
           newRoot = next;
@@ -160,7 +162,7 @@ BinomialHeap.prototype.union = function(otherHeap) {
           prev.sibling = next;
         }
 
-        BinomialHeap.prototype.linkTreeNodes(next,curr);
+        BinomialHeap.prototype.linkTreeNodes(next, curr);
         curr = next;
 
       }
@@ -172,10 +174,10 @@ BinomialHeap.prototype.union = function(otherHeap) {
   this.root = newRoot;
 };
 
-BinomialHeap.prototype.insert = function (key,val){
+BinomialHeap.prototype.insert = function(key, val) {
 
   var tempHeap = new BinomialHeap();
-  
+
   var newNode = {
     key: key,
     value: val,
@@ -184,32 +186,32 @@ BinomialHeap.prototype.insert = function (key,val){
     child: null,
     sibling: null
   };
-  
-  tempHeap.root = newNode;  
+
+  tempHeap.root = newNode;
   tempHeap.size++;
-  
+
   this.union(tempHeap);
 
   // add node to nodeSet
   // just need a reference
-  this.addToNodeSet(val,newNode);
+  this.addToNodeSet(val, newNode);
 
   return this;
 };
 
 
-BinomialHeap.prototype.removeRoot = function(heap, root, prev){
-  if(root === heap.root ) {
+BinomialHeap.prototype.removeRoot = function(heap, root, prev) {
+  if (root === heap.root) {
     heap.root = root.sibling;
   } else {
     prev.sibling = root.sibling;
   }
-  
+
   var newRoot;
   var child = root.child;
 
   // reverse order of the roots children
-  while(child) {
+  while (child) {
     var next = child.sibling;
 
     child.sibling = newRoot;
@@ -223,22 +225,22 @@ BinomialHeap.prototype.removeRoot = function(heap, root, prev){
   newHeap.root = newRoot;
 
   heap.union(newHeap);
-}
+};
 
 
-BinomialHeap.prototype.extractMin = function(){
-  if(!this.root) return;
+BinomialHeap.prototype.extractMin = function() {
+  if (!this.root) return;
 
   var min = this.root;
   var minPrev;
 
   var next = min.sibling;
   var nextPrev = min;
-  
-  while(next) {
-    if(this.comp(next,min)){ 
-       min = next;
-       minPrev = nextPrev;
+
+  while (next) {
+    if (this.comp(next, min)) {
+      min = next;
+      minPrev = nextPrev;
     }
 
     nextPrev = next;
@@ -249,12 +251,12 @@ BinomialHeap.prototype.extractMin = function(){
   this.size--;
 
   return min;
-}
+};
 
 BinomialHeap.prototype.pop = BinomialHeap.prototype.extractMin;
 
-BinomialHeap.prototype.exchange = function(node,other){
-  
+BinomialHeap.prototype.exchange = function(node, other) {
+
   // all the other fields get swapped properly just by the key exhange
 
   var temp = {
@@ -267,8 +269,8 @@ BinomialHeap.prototype.exchange = function(node,other){
 
   other.key = temp.key;
   other.value = temp.value;
-  
-}
+
+};
 
 // decrease key 
 // needs node out of node set to work
@@ -283,19 +285,19 @@ BinomialHeap.prototype.decreaseKey = function(node, newKey) {
   // move node up tree until it stops breaking heap property
   var parent = node.parent;
 
-  while(parent && this.comp(node,parent)) {
+  while (parent && this.comp(node, parent)) {
 
-     this.exchange(node,parent);
+    this.exchange(node, parent);
 
-     node = parent;
-     parent = parent.parent;
+    node = parent;
+    parent = parent.parent;
   }
-  
+
   // return the node for its new position
   return node;
-}
+};
 
-BinomialHeap.prototype.delete = function(node){
+BinomialHeap.prototype.delete = function(node) {
 
   // doing it the academic way of decreasing node to negative inifity
   // you could also just check for a another parameter i.e. toRoot 
@@ -306,27 +308,29 @@ BinomialHeap.prototype.delete = function(node){
   //
   // if you gave it just a number the extract min function would still run 
   // and this function would not only silently fail it would also lie that it succeded lol
-  
-  if (!(node instanceof Object)) { return false; }
+
+  if (!(node instanceof Object)) {
+    return false;
+  }
 
   // interesting calling this from the constructor doesn't properly set the this value
   // so decreaseKey would not have access to the proper this context and invariably
   // the comparision function so we must call it on this instead of BinomialHeap.prototype
   //
   // Yay javascript!
- 
+
   this.decreaseKey(node, Number.NEGATIVE_INFINITY);
   this.extractMin();
 
   // remove node from nodeSet
   this.removeFromNodeSet(node.value);
   return true;
-}
+};
 
-BinomialHeap.prototype.contains = function(val){
+BinomialHeap.prototype.contains = function(val) {
   var node = this.getFromNodeSet(val);
   return dsalgo.utils.isDefined(node) ? node : false;
-}
+};
 
 BinomialHeap.prototype.remove = BinomialHeap.prototype.delete;
 

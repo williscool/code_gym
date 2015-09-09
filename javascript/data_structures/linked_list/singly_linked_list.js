@@ -2,10 +2,13 @@ function LinkedList() {
   this.head = null;
 }
 
-LinkedList.prototype.insertFront = function(val){
-  var node = {value: val, next:null };
-  
-  if(!this.head){
+LinkedList.prototype.insertFront = function(val) {
+  var node = {
+    value: val,
+    next: null
+  };
+
+  if (!this.head) {
     this.head = node;
   } else {
     node.next = this.head;
@@ -13,28 +16,31 @@ LinkedList.prototype.insertFront = function(val){
   }
 
   return this;
-}
+};
 
-LinkedList.prototype.insertEnd = function(val){
-  var node = {value: val, next:null };
-  
-  if(!this.head){
+LinkedList.prototype.insertEnd = function(val) {
+  var node = {
+    value: val,
+    next: null
+  };
+
+  if (!this.head) {
     this.head = node;
   } else {
     var cur = this.head;
 
-    while(cur.next) {
+    while (cur.next) {
       cur = cur.next;
     }
     cur.next = node;
   }
 
   return this;
-}
+};
 
 LinkedList.prototype.removeFront = function() {
-  
-  if(!this.head){
+
+  if (!this.head) {
     return this;
   } else {
     var new_head = this.head.next;
@@ -42,38 +48,38 @@ LinkedList.prototype.removeFront = function() {
     this.head = new_head;
     return this;
   }
-}
+};
 
-LinkedList.prototype.removeEnd = function(){
-  
-  if(!this.head){
+LinkedList.prototype.removeEnd = function() {
+
+  if (!this.head) {
     // do thing but return for chaining
     return this;
   } else {
     var cur = this.head;
 
-    while(cur) {
+    while (cur) {
       cur = cur.next;
     }
 
-    delete cur;
+    cur = null;
   }
 
   return this;
-}
+};
 
-LinkedList.prototype.toArray = function(){
+LinkedList.prototype.toArray = function() {
   var arr = [];
 
   var cur = this.head;
 
-  while(cur) {
+  while (cur) {
     arr.push(cur.value);
     cur = cur.next;
   }
 
   return arr;
-}
+};
 
 // http://stackoverflow.com/questions/9893592/node-js-object-is-not-a-function-module-exports
 module.exports = LinkedList;

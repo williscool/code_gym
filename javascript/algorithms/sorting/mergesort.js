@@ -6,18 +6,18 @@ module.exports.mergesort = {};
 
 // inspired by http://www.nczonline.net/blog/2012/10/02/computer-science-and-javascript-merge-sort/
 // the wikipedia entry psuedocode was doing to much
-function merge(left,right) {
+function merge(left, right) {
   var result = [],
-      iLeft = 0,
-      iRight = 0;
+    iLeft = 0,
+    iRight = 0;
 
-  while (iLeft < left.length && iRight < right.length ){
-    if (left[iLeft] < right[iRight]){
-     result.push(left[iLeft]);
-     iLeft = iLeft + 1;
+  while (iLeft < left.length && iRight < right.length) {
+    if (left[iLeft] < right[iRight]) {
+      result.push(left[iLeft]);
+      iLeft = iLeft + 1;
     } else {
-     result.push(right[iRight]);
-     iRight = iRight + 1;
+      result.push(right[iRight]);
+      iRight = iRight + 1;
     }
   }
 
@@ -29,61 +29,61 @@ function merge(left,right) {
 }
 
 module.exports.mergesort.topDown = function(list) {
- var mergesort = module.exports.mergesort.topDown;	
+  var mergesort = module.exports.mergesort.topDown;
 
-  if(list.length <= 1){
+  if (list.length <= 1) {
     return list;
   }
 
-  var left = [], 
-      right = [], 
-      middle = list.length >> 1, // http://googleresearch.blogspot.com/2006/06/extra-extra-read-all-about-it-nearly.html
-      len = list.length, 
-      i;
+  var left = [],
+    right = [],
+    middle = list.length >> 1, // http://googleresearch.blogspot.com/2006/06/extra-extra-read-all-about-it-nearly.html
+    len = list.length,
+    i;
 
-  for(i = 0; i < len; i++ ) {
+  for (i = 0; i < len; i++) {
     if (i < middle) {
       left.push(list[i]);
     } else {
       right.push(list[i]);
     }
   }
-  
+
   left = mergesort(left);
   right = mergesort(right);
 
-	return merge(left,right);
+  return merge(left, right);
 };
 
 module.exports.mergesort.bottomUp = function(list) {
- var mergesort = module.exports.mergesort.bottomUp;	
+  var mergesort = module.exports.mergesort.bottomUp;
 
-  if(list.length <= 1){
+  if (list.length <= 1) {
     return list;
   }
 
-  var len = list.length, 
-      temp = [],
-      blockSize, i;
+  var len = list.length,
+    temp = [],
+    blockSize, i;
 
-  for(blockSize = 1; blockSize < len; blockSize = (blockSize * 2)) {
+  for (blockSize = 1; blockSize < len; blockSize = (blockSize * 2)) {
 
     // we want to take all of the elements as long as we dont go out of bounds
     // if we were to do len - blocksize then we would miss the last iteration in some cases where 
     // the right side is smaller than the left
-    for(i = 0 ; i < len; i = i + (blockSize * 2) ){
+    for (i = 0; i < len; i = i + (blockSize * 2)) {
       // javascript list slice is not inclusive of the element at the end index that you give it
       var left = list.slice(i, i + blockSize),
         right = list.slice(i + blockSize, Math.min((i + (2 * blockSize)), len));
 
-       temp = temp.concat(merge(left,right));
+      temp = temp.concat(merge(left, right));
     }
 
     list = temp;
     temp = [];
   }
-  
-	return list;
-}
+
+  return list;
+};
 
 
