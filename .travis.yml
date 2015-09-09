@@ -1,0 +1,16 @@
+### should be able to cd just to the directory and run npm test but can't yet 
+# re  https://github.com/ebdrup/mocha-jshint/issues/14
+language: node_js
+node_js:
+  - "0.12"
+  - "0.11"
+  - "0.10"
+  - "iojs"
+install: 
+  - npm install -g mocha
+  - cd javascript/
+  - npm install
+script:
+  - cd ../
+  - mocha javascript/test/ --recursive
+#  - npm test

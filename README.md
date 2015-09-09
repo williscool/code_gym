@@ -1,6 +1,8 @@
 Welcome to the code gym
 =====
 
+[![Build Status](https://travis-ci.org/williscool/code_gym.svg?branch=master)](https://travis-ci.org/williscool/code_gym)
+
 ### The Philosophy
 
 The code gym is like a real life gym. But its code.
