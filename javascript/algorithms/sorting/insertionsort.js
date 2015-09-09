@@ -2,9 +2,7 @@
 var dsalgo = require('../../utilities.js').dsalgo;
 var swap = dsalgo.utils.swap;
 
-module.exports.insertionsort = {};
-
-module.exports.insertionsort.naive = function(list) {
+var naive = function(list) {
 
   var len, i, j;
 
@@ -34,7 +32,7 @@ module.exports.insertionsort.naive = function(list) {
   return list;
 };
 
-module.exports.insertionsort.optimized = function(list) {
+var optimized = function(list) {
 
   var len, i, j, value_being_sorted_now;
 
@@ -54,4 +52,9 @@ module.exports.insertionsort.optimized = function(list) {
   }
 
   return list;
+};
+
+module.exports = {
+  naive: naive,
+  optimized: optimized
 };

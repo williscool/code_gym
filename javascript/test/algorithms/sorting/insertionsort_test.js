@@ -1,5 +1,5 @@
 var assert = require('assert');
-var InsertionSort = require('../../../algorithms/sorting/insertionsort.js').insertionsort;
+var InsertionSort = require('../../../algorithms/sorting/insertionsort.js');
 var dsalgo = require('../../../utilities.js').dsalgo;
 
 Object.keys(InsertionSort).forEach(function(key) {

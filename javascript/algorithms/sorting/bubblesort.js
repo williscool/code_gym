@@ -2,12 +2,10 @@
 // https://www.youtube.com/watch?v=hR-NXv5Tma0
 // bubble bubble..
 
-module.exports.BubbleSort = {};
-
 var dsalgo = require('../../utilities.js').dsalgo;
 var swap = dsalgo.utils.swap;
 
-module.exports.BubbleSort.Naive = function(list) {
+var naive = function(list) {
 
   var len, sorted, i;
 
@@ -30,7 +28,7 @@ module.exports.BubbleSort.Naive = function(list) {
   return list;
 };
 
-module.exports.BubbleSort.Optimized = function(list) {
+var optimized = function(list) {
 
   var len, sorted, i;
 
@@ -59,7 +57,7 @@ module.exports.BubbleSort.Optimized = function(list) {
   return list;
 };
 
-module.exports.BubbleSort.stopAtLastSorted = function(list) {
+var stopAtLastSorted = function(list) {
   // this algorithm assumes that the last element we had to swap was the last element out of place at that iteration
   // so it shortens the amount of elements looked at on subsequent iterations by that many
 
@@ -81,4 +79,10 @@ module.exports.BubbleSort.stopAtLastSorted = function(list) {
   } while (len !== 0);
 
   return list;
+};
+
+module.exports = {
+  naive: naive,
+  optimized: optimized,
+  stopAtLastSorted:stopAtLastSorted
 };

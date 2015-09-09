@@ -2,8 +2,6 @@
 var dsalgo = require('../../utilities.js').dsalgo;
 var swap = dsalgo.utils.swap;
 
-module.exports.mergesort = {};
-
 // inspired by http://www.nczonline.net/blog/2012/10/02/computer-science-and-javascript-merge-sort/
 // the wikipedia entry psuedocode was doing to much
 function merge(left, right) {
@@ -28,8 +26,8 @@ function merge(left, right) {
   return result.concat(left.slice(iLeft)).concat(right.slice(iRight));
 }
 
-module.exports.mergesort.topDown = function(list) {
-  var mergesort = module.exports.mergesort.topDown;
+var topDown = function(list) {
+  var mergesort = topDown;
 
   if (list.length <= 1) {
     return list;
@@ -55,8 +53,8 @@ module.exports.mergesort.topDown = function(list) {
   return merge(left, right);
 };
 
-module.exports.mergesort.bottomUp = function(list) {
-  var mergesort = module.exports.mergesort.bottomUp;
+var bottomUp = function(list) {
+  var mergesort = bottomUp;
 
   if (list.length <= 1) {
     return list;
@@ -87,3 +85,7 @@ module.exports.mergesort.bottomUp = function(list) {
 };
 
 
+module.exports = {
+  topDown: topDown,
+  bottomUp: bottomUp
+};

@@ -243,7 +243,7 @@ var heapPQDijkstra = function(graph, start_vertex, heapQueue) {
   };
 };
 
-var binaryHeapPQ = require('../../data_structures/priority_queue.js').priorityQueue.binaryHeap;
+var binaryHeapPQ = require('../../data_structures/priority_queue.js').binaryHeap;
 
 var binaryHeapPQDijkstra = function(graph, start_vertex) {
   // min priority queue
@@ -263,7 +263,7 @@ var binaryHeapPQDijkstra = function(graph, start_vertex) {
 
 binaryHeapPQDijkstra.prototype.shortest_path = shortestPath;
 
-var binomialHeapPQ = require('../../data_structures/priority_queue.js').priorityQueue.binomialHeap;
+var binomialHeapPQ = require('../../data_structures/priority_queue.js').binomialHeap;
 
 var binomialHeapPQDijkstra = function(graph, start_vertex) {
   // min priority queue with binomial heap
@@ -280,7 +280,7 @@ var binomialHeapPQDijkstra = function(graph, start_vertex) {
 
 binomialHeapPQDijkstra.prototype.shortest_path = shortestPath;
 
-var fibonacciHeapPQ = require('../../data_structures/priority_queue.js').priorityQueue.fibonacciHeap;
+var fibonacciHeapPQ = require('../../data_structures/priority_queue.js').fibonacciHeap;
 
 var fibonacciHeapPQDijkstra = function(graph, start_vertex) {
   // min priority queue with fibonacci heap

@@ -12,12 +12,11 @@ var Node = function(val) {
   };
 };
 
-var BST = module.exports = function() {
+var BST = function() {
   this.root = null;
 };
 
 BST.prototype = {
-  constructor: BST,
 
   add: function(value) {
     var current;
@@ -364,3 +363,5 @@ BST.prototype = {
   //print a binary search tree representation with / \ and such
 
 };
+
+module.exports = BST;

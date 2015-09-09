@@ -1,12 +1,11 @@
 // http://en.wikipedia.org/wiki/Binary_search_algorithm
-module.exports.binarysearch = {};
 
 //inspired by 
 //
 // http://en.wikipedia.org/wiki/Binary_search_algorithm#Recursive
 // http://en.wikibooks.org/wiki/Algorithm_Implementation/Search/Binary_search#JavaScript
-module.exports.binarysearch.recursive = function(list, needle, min, max) {
-  var binarysearch = module.exports.binarysearch.recursive;
+var recursive = function(list, needle, min, max) {
+  var binarysearch = recursive;
 
   var len = list.length, mid, result; /*min , max defined in function call*/
 
@@ -35,7 +34,7 @@ module.exports.binarysearch.recursive = function(list, needle, min, max) {
 
 };
 
-module.exports.binarysearch.iterative = function(list, needle, min, max) {
+var iterative = function(list, needle, min, max) {
 
   var len = list.length, mid, result; /*min , max defined in function call*/
 
@@ -65,4 +64,9 @@ module.exports.binarysearch.iterative = function(list, needle, min, max) {
   }
 
   return result;
+};
+
+module.exports = {
+  recursive: recursive,
+  iterative: iterative
 };

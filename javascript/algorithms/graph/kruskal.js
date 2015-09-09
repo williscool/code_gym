@@ -5,7 +5,7 @@ var dsalgo = require('../../utilities.js').dsalgo;
 var UF = require('../../algorithms/graph/uf.js').weighted_quick_union_with_path_halving;
 
 var Queue = require('../../data_structures/queue.js').doubly_linked_list;
-var binaryHeapPQ = require('../../data_structures/priority_queue.js').priorityQueue.binaryHeap;
+var binaryHeapPQ = require('../../data_structures/priority_queue.js').binaryHeap;
 
 // inspired by http://algs4.cs.princeton.edu/43mst/KruskalMST.java.html
 function Kruskal(graph) {

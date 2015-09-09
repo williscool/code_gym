@@ -1,5 +1,5 @@
 var assert = require('assert');
-var BubbleSort = require('../../../algorithms/sorting/bubblesort.js').BubbleSort;
+var BubbleSort = require('../../../algorithms/sorting/bubblesort.js');
 var dsalgo = require('../../../utilities.js').dsalgo;
 
 // inspired by: https://github.com/addyosmani/bubblesort/blob/master/test/test.js

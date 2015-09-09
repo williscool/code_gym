@@ -1,5 +1,5 @@
 var assert = require('assert');
-var DFSContainer = require('../../../algorithms/graph/dfs.js').DFS;
+var DFSContainer = require('../../../algorithms/graph/dfs.js');
 var Graph = require('../../../data_structures/graph.js');
 var dsalgo = require('../../../utilities.js').dsalgo;
 

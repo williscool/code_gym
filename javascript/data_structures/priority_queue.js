@@ -12,7 +12,6 @@ var BinaryHeap = require('./heap/binary_heap.js').custom;
 var BinomialHeap = require('./heap/binomial_heap.js');
 var FibonacciHeap = require('./heap/fibonacci_heap.js');
 
-module.exports.priorityQueue = {};
 
 function naivePQ(extreme, comp) {
   this.items = [];
@@ -336,7 +335,10 @@ fibonacciHeapPQ.prototype.size = function() {
 
 fibonacciHeapPQ.prototype.changePriority = bionomialAndFibchangePriority;
 
-module.exports.priorityQueue.naive = naivePQ;
-module.exports.priorityQueue.binaryHeap = binaryHeapPQ;
-module.exports.priorityQueue.binomialHeap = binomialHeapPQ;
-module.exports.priorityQueue.fibonacciHeap = fibonacciHeapPQ;
+module.exports = {
+  naive : naivePQ,
+  binaryHeap : binaryHeapPQ,
+  binomialHeap : binomialHeapPQ,
+  fibonacciHeap : fibonacciHeapPQ
+};
+

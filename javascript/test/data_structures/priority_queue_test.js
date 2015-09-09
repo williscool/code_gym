@@ -1,11 +1,11 @@
 var assert = require('assert');
-var naivePQ = require('../../data_structures/priority_queue.js').priorityQueue.naive;
+var naivePQ = require('../../data_structures/priority_queue.js').naive;
 var naiveMinPQ = new naivePQ(Number.POSITIVE_INFINITY, function(a, b) {
   return a < b;
 });
-var binaryHeapPQ = require('../../data_structures/priority_queue.js').priorityQueue.binaryHeap;
-var binomialHeapPQ = require('../../data_structures/priority_queue.js').priorityQueue.binomialHeap;
-var fibonacciHeapPQ = require('../../data_structures/priority_queue.js').priorityQueue.fibonacciHeap;
+var binaryHeapPQ = require('../../data_structures/priority_queue.js').binaryHeap;
+var binomialHeapPQ = require('../../data_structures/priority_queue.js').binomialHeap;
+var fibonacciHeapPQ = require('../../data_structures/priority_queue.js').fibonacciHeap;
 
 describe('Naive Max Priority Queue', function() {
 

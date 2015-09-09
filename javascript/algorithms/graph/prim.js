@@ -10,7 +10,7 @@
 var dsalgo = require('../../utilities.js').dsalgo;
 
 var Queue = require('../../data_structures/queue.js').doubly_linked_list;
-var binaryHeapPQ = require('../../data_structures/priority_queue.js').priorityQueue.binaryHeap;
+var binaryHeapPQ = require('../../data_structures/priority_queue.js').binaryHeap;
 
 // inspired by http://algs4.cs.princeton.edu/43mst/LazyPrimMST.java.html
 function lazyPrimMST(graph, start_vertex) {

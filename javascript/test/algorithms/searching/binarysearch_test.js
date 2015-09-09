@@ -1,5 +1,5 @@
 var assert = require('assert');
-var BSearch = require('../../../algorithms/searching/binarysearch.js').binarysearch;
+var BSearch = require('../../../algorithms/searching/binarysearch.js');
 var quicksort = require('../../../algorithms/sorting/quicksort.js');
 var dsalgo = require('../../../utilities.js').dsalgo;
 

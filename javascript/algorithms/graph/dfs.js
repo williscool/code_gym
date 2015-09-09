@@ -1,11 +1,9 @@
 // http://en.wikipedia.org/wiki/Depth-first_search
 
-module.exports.DFS = {};
-
 var dsalgo = require('../../utilities.js').dsalgo;
 var Stack = require('../../data_structures/stack.js').array;
 
-module.exports.DFS.iterative = function(graph, start_vertex) {
+var iterative = function(graph, start_vertex) {
 
   if (graph.order() < 1) return Error("come on dog there's no nodes in this graph.");
 
@@ -63,8 +61,8 @@ module.exports.DFS.iterative = function(graph, start_vertex) {
 
 // inspired by
 // https://github.com/adlawson/search-algorithms/blob/master/javascript/dfs.js
-module.exports.DFS.recursive = function(graph, v, visited, fn) {
-  var DFS = module.exports.DFS.recursive;
+var recursive = function(graph, v, visited, fn) {
+  var DFS = recursive;
 
   if (graph.order() < 1) return Error("come on dog there's no nodes in this graph.");
 
@@ -85,7 +83,7 @@ module.exports.DFS.recursive = function(graph, v, visited, fn) {
 
 };
 
-module.exports.DFS.recursive_info = function(graph, start_vertex) {
+var recursive_info = function(graph, start_vertex) {
   var info = [];
   for (var i = 0; i < graph.order(); i++) {
     info[i] = {
@@ -104,7 +102,7 @@ module.exports.DFS.recursive_info = function(graph, start_vertex) {
     isVisited: true
   };
 
-  var DFS = module.exports.DFS.recursive;
+  var DFS = recursive;
 
   DFS(graph, start_vertex, Object.create(null), function(v, w) {
     visiting += 1;
@@ -117,4 +115,10 @@ module.exports.DFS.recursive_info = function(graph, start_vertex) {
   });
 
   return info;
+};
+
+module.exports = {
+  iterative: iterative,
+  recursive: recursive, 
+  recursive_info : recursive_info 
 };
