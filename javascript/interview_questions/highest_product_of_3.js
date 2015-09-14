@@ -1,3 +1,4 @@
+// https://www.interviewcake.com/question/highest-product-of-3
 function  highestProductOfThree(ints) {
   var highest_product_of_three, lowest_product_of_two, highest_product_of_two, highest, lowest;
 

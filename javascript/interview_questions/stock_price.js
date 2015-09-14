@@ -1,3 +1,4 @@
+// https://www.interviewcake.com/question/stock-price
 var GetMaxProfit = function(stock_prices_yesterday) {
 
   if (stock_prices_yesterday.length < 2) {

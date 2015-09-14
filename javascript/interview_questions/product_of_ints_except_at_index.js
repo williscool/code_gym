@@ -1,4 +1,4 @@
-
+// https://www.interviewcake.com/question/product-of-other-numbers
 
 // n^2
 
