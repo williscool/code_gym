@@ -58,7 +58,8 @@ function bottomUpKnapsack(W, itemWeight, itemValue, n) {
     for (var w = 0; w <= W; w++) {
 
       if (i === 0 || w === 0)
-        buCache[i][w] = 0;else if (itemWeight[i - 1] <= w) {
+        buCache[i][w] = 0;
+      else if (itemWeight[i - 1] <= w) {
         buCache[i][w] = Math.max(itemValue[i - 1] + buCache[i - 1][w - itemWeight[i - 1]], buCache[i - 1][w]);
       } else {
         buCache[i][w] = buCache[i - 1][w];
