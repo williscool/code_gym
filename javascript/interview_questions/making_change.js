@@ -37,6 +37,7 @@ function numWaysRecursive(amount, denoms){
 	if(denoms.length === 0) return 0;
 	
 	current_denom = denoms[0];
+
 	remaining_denoms = denoms.slice(1,denoms.length);
 	
 	while (amount >= 0) {
@@ -50,20 +51,20 @@ function numWaysRecursive(amount, denoms){
 
 function numWaysIterative(amount, denoms){
 	
-	var ways_of_making_n_cents = dsalgo.utils.simpleArrayFill(0,amount + 1);;
+	var ways_of_making_n_cents = dsalgo.utils.simpleArrayFill(0,amount + 1);
 	ways_of_making_n_cents[0] = 1; 
 	
-	var new_amount, new_amount_remainder;
+	var next_amount, next_amount_remainder;
 	
 	for(var i = 0;  i < denoms.length ; i++ ){
 		current_denom = denoms[i];
 		
 		for(var j = current_denom; j < amount + 1; j++){
-			new_amount = j;
+			next_amount = j;
 			
-      new_amount_remainder = new_amount - current_denom;
+      next_amount_remainder = next_amount - current_denom;
 			
-			ways_of_making_n_cents[new_amount] = ways_of_making_n_cents[new_amount] + ways_of_making_n_cents[new_amount_remainder];
+			ways_of_making_n_cents[next_amount] = ways_of_making_n_cents[next_amount] + ways_of_making_n_cents[next_amount_remainder];
 		}
 	}
 	

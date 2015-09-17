@@ -1,7 +1,7 @@
 var assert = require('assert');
-var naiveSubsetSum = require('../../interview_questions/making_change.js').naive;
-var recursiveSubsetSum = require('../../interview_questions/making_change.js').recursive;
-var iterativeSubsetSum = require('../../interview_questions/making_change.js').iterative;
+var naiveNumWays = require('../../interview_questions/making_change.js').naive;
+var recursiveNumWays = require('../../interview_questions/making_change.js').recursive;
+var iterativeNumWays = require('../../interview_questions/making_change.js').iterative;
 
 describe("Making Change Question", function() {
 
@@ -12,7 +12,7 @@ describe("Making Change Question", function() {
       amount = 4;
       denominations = [1,2,3];
 
-      assert.equal(naiveSubsetSum(amount, denominations), 4);
+      assert.equal(naiveNumWays(amount, denominations), 4);
     });
   });
 
@@ -23,7 +23,7 @@ describe("Making Change Question", function() {
       amount = 4;
       denominations = [1,2,3];
 
-      assert.equal(recursiveSubsetSum(amount, denominations), 4);
+      assert.equal(recursiveNumWays(amount, denominations), 4);
     });
   });
 
@@ -34,7 +34,7 @@ describe("Making Change Question", function() {
       amount = 4;
       denominations = [1,2,3];
 
-      assert.equal(iterativeSubsetSum(amount, denominations), 4);
+      assert.equal(iterativeNumWays(amount, denominations), 4);
     });
   });
 
