@@ -2,7 +2,9 @@
 // add / remove / travese in, pre, and post order
 //
 // treats duplicates as an already added value and does nothing with them
+var dsalgo = require('../../utilities.js').dsalgo;
 var Queue = require('../queue.js').doubly_linked_list;
+var Stack = require('../stack.js').array;
 
 var Node = function(val) {
   return {
@@ -357,11 +359,59 @@ BST.prototype = {
 
   toString: function() {
     return this.toArray().toString();
+  },
+
+  // https://www.interviewcake.com/question/ruby/bst-checker
+  isBSTValid: function(current_node, lower_bound, upper_bound) {
+	
+    // always call with MIN AND MAX int or would need to add if(!upper_bound && !lower_bound) check
+
+    if (current_node === null) return true;
+    
+    if(current_node.value > lower_bound && current_node.value < upper_bound) {
+      return this.isBSTValid(current_node.left, lower_bound, current_node.value) && this.isBSTValid(current_node.right, current_node.value, upper_bound);			
+    } 
+
+    // didnt recurse so return false
+	  return false;
+  },
+  
+  isBSTValidIterative: function(root){
+    var nodeStack = new Stack();
+    nodeStack.push([root,Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY]);
+    
+    var nodeInfoArr, current_node, lower_bound, upper_bound;
+    
+    while(!nodeStack.isEmpty()) {
+      nodeInfoArr = nodeStack.pop();
+
+      current_node = nodeInfoArr[0];
+      lower_bound = nodeInfoArr[1];
+      upper_bound = nodeInfoArr[2];
+
+      if(current_node.value > lower_bound && current_node.value < upper_bound) {
+
+        if (current_node.left) nodeStack.push([current_node.left, lower_bound, current_node.value]);
+        if (current_node.right) nodeStack.push([current_node.right, current_node.value, upper_bound]);
+
+      } else {
+        return false;
+      }
+    }
+    
+    return true;
+  },
+
+  isValid: function() { 
+    return this.isBSTValid(this.root, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY); 
+  },
+
+  isValidIterative: function() { 
+    return this.isBSTValidIterative(this.root); 
   }
 
   //TODO: fun interview style question to code for later
   //print a binary search tree representation with / \ and such
-
 };
 
 module.exports = BST;

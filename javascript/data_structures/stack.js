@@ -9,6 +9,7 @@ function stackWithArray() {
 
   this.pop = function() {
     if (this.stack_top_index > -1) {
+      // TODO: fix this memory leak of leaving stuff we aren't pointing to anymore
       var top_item = this.items[this.stack_top_index];
       this.stack_top_index--;
       return top_item;

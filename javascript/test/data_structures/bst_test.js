@@ -156,6 +156,19 @@ describe('Binary Search Tree', function() {
     });
   });
 
+  describe('#isValid()', function() {
+    it("recursive", function() {
+      var bst = new BST();
+      bst.add(60).add(45).add(70).add(65).add(67).add(80);
+      assert.equal(bst.isValid(), true);
+    });
+
+    it("iterative", function() {
+      var bst = new BST();
+      bst.add(60).add(45).add(70).add(65).add(67).add(80);
+      assert.equal(bst.isValidIterative(), true);
+    });
+  });
 
 });
 
