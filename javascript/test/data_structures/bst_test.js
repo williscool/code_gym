@@ -170,5 +170,20 @@ describe('Binary Search Tree', function() {
     });
   });
 
+  describe('#findLargest()', function() {
+    it("iterative", function() {
+      var bst = new BST();
+      bst.add(60).add(45).add(70).add(65).add(67).add(80);
+      assert.equal(bst.findLargest().value, 80);
+    });
+  });
+
+  describe('#findSecondLargest()', function() {
+    it("iterative", function() {
+      var bst = new BST();
+      bst.add(60).add(45).add(70).add(65).add(67).add(80);
+      assert.equal(bst.findSecondLargest().value, 70);
+    });
+  });
 });
 

@@ -408,7 +408,44 @@ BST.prototype = {
 
   isValidIterative: function() { 
     return this.isBSTValidIterative(this.root); 
+  },
+
+  findLargestAtNode: function (current_node){
+    
+    while(current_node.right) {
+      current_node = current_node.right;
+    }
+	
+    return current_node;
+  },
+
+  findLargest: function (){
+    return this.findLargestAtNode(this.root);
+  },
+
+  // https://www.interviewcake.com/question/ruby/second-largest-item-in-bst
+  findSecondLargest: function (){
+    var current_node = this.root;
+
+    while(current_node.right) {
+
+      // node is parent of largest node and the largest node has no children
+      if(current_node.right !== null && current_node.right.right === null && current_node.right.left === null ) {
+        return current_node;
+      }
+
+      // current is largest and it has a left subtree. so whatever is the largest of that tree is second largest
+      if(current_node.left !== null && current_node.right === null) {
+        return findLargestAtNode(current_node.left);
+      }
+
+      current_node = current_node.right;
+
+    }
+	
+    
   }
+
 
   //TODO: fun interview style question to code for later
   //print a binary search tree representation with / \ and such
