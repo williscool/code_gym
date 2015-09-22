@@ -13,6 +13,8 @@
 //  http://en.wikipedia.org/wiki/Bucket_sort#Optimizations
 //
 //  so no need to re do for that
+//
+//  https://www.interviewcake.com/question/ruby/top-scores
 
 module.exports = function(list, power) {
 
