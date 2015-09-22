@@ -25,6 +25,12 @@ Object.keys(Stack).forEach(function(key) {
       it("zero items on stack", function() {
         assert.equal(-1, stack.stack_top_index);
       });
+
+      it("works with more than one item on the stack", function() {
+        stack.push(42).push(50).push(75);
+        assert.equal(stack.pop(), 75);
+        assert.equal(stack.pop(), 50);
+      });
     });
 
     describe('#isEmpty()', function() {
