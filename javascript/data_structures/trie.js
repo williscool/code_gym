@@ -3,6 +3,10 @@
 //
 // http://ejohn.org/blog/javascript-trie-performance-analysis/
 // http://codereview.stackexchange.com/questions/25359/simple-trie-implementation-in-javascript
+//
+// http://algs4.cs.princeton.edu/52trie/
+// http://algs4.cs.princeton.edu/lectures/52Tries.pdf
+// 
 var dsalgo = require('../utilities.js').dsalgo;
 
 function Trie() {
