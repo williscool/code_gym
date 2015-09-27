@@ -1,4 +1,26 @@
+// https://en.wikipedia.org/wiki/Subset_sum_problem
+// 
+// also fun fact subset sum is actually a special case of knapsack where the weight and cost of items are equal
+// https://en.wikipedia.org/wiki/Knapsack_problem#Subset-sum_problem
+//
+// but really shouts out to
 // https://www.interviewcake.com/question/ruby/coin  
+//
+// also this is really a subset sum count. subset sum as defined by wikipedia short circuts when it finds the first solution and return true
+// signifying that there is one if there is
+//
+// http://www.algorithmist.com/index.php/Subset_Sum
+// http://stackoverflow.com/questions/22891076/count-number-of-subsets-with-sum-equal-to-k#
+//
+// another fun fact that most solutions carelessly in my opinion forget to mention is that these solutions only work for postive numbers
+//
+// the solution that works with negative numbers is pseudo polynomial in the range of the Sum of Negative values on the low end and the sum of the positive on the high end
+//
+// https://en.wikipedia.org/wiki/Subset_sum_problem#Pseudo-polynomial_time_dynamic_programming_solution
+//
+// another fun fact its only pseudo polynomial if the list is bounded. it devolves to exponential time any way if not lol
+// http://cs.stackexchange.com/questions/1689/subset-sum-pseudo-polynomial-time-dynamic-programming-solution/3159#3159
+//
 var dsalgo = require('../utilities.js').dsalgo;
 
 function numWaysNaiveRecursive(amount, denoms){
