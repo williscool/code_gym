@@ -37,7 +37,7 @@ Object.keys(Queue).forEach(function(key) {
     });
 
     describe('#isEmpty()', function() {
-      it("returns true when queue has one item on it", function() {
+      it("returns false when queue has one item on it", function() {
         var queue = new Queue[key]();
         queue.enqueue(42).enqueue(50);
         assert.equal(false, queue.isEmpty());

@@ -9,8 +9,9 @@ function stackWithArray() {
 
   this.pop = function() {
     if (this.stack_top_index > -1) {
-      // TODO: fix this memory leak of leaving stuff we aren't pointing to anymore
       var top_item = this.items[this.stack_top_index];
+      this.items.splice(this.stack_top_index);
+      // http://stackoverflow.com/questions/500606/javascript-array-delete-elements/500617#500617
       this.stack_top_index--;
       return top_item;
     } else {
