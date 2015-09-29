@@ -12,11 +12,11 @@ function matchingParens(string, paren_pos){
   
   while(start_paren_count > 0 ) {
     
-      ifQ (string[end] == ")") start_paren_count--; 
+      if(string[end] == ")") start_paren_count--; 
       end--;
       
       if(end == paren_pos) return Error("parens mismatch");
-      if (end == 0) return Error("no end parens");
+      if (end === 0) return Error("no end parens");
     }
   
   return end;
