@@ -20,7 +20,7 @@ function partition(list, lo, hi) {
   var pivotIndex, pivotVal, i, index_to_move_value_to;
 
   // pick our pivot value
-  pivotIndex = choosePivot(list, lo, hi);
+  pivotIndex = choosePivot(lo, hi);
   pivotVal = list[pivotIndex];
 
   // move the value of the pivot to the highest index so that it is out of the way 
@@ -42,16 +42,23 @@ function partition(list, lo, hi) {
   list = swap(list, index_to_move_value_to, hi);
 
   // then we return the value of the index we just put the pivot in
+  // that is our new pivot index
   return index_to_move_value_to;
 }
 
-function choosePivot(list, hi, lo) {
+function choosePivot(hi, lo) {
   // lol worthy thing that happend with this function
   //
   // so you gotta make sure your order of operations is correct
   // because if this pivot returns and incorrect index everything is fucked
   //
   // http://googleresearch.blogspot.com/2006/06/extra-extra-read-all-about-it-nearly.html
+  // 
+  // I prefer using the midpoint but some algos call for using the first aka lo
+  // i.e. https://www.hackerrank.com/challenges/quicksort2
+  //
+  // https://en.wikipedia.org/wiki/Quicksort#Choice_of_pivot
+  //
   return (hi + lo) >> 1;
 }
 
