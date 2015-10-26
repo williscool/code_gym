@@ -7,6 +7,7 @@
 // https://web.archive.org/web/20110726180804/http://archive.ite.journal.informs.org/Vol4No1/Sniedovich/index.php
 // http://stackoverflow.com/a/25239471/511710
 
+// O(nk^2)
 function naiveEggDrop(n, k) {
 
   // n eggs
@@ -39,6 +40,7 @@ function naiveEggDrop(n, k) {
   return min;
 }
 
+// O(nk) because we cache 
 // inspired by: http://algohub.blogspot.in/2014/05/egg-drop-puzzle.html
 var dsalgo = require('../../utilities.js').dsalgo;
 var cache = dsalgo.utils.simpleSet();
@@ -70,6 +72,9 @@ function dpEggDrop(n, k) {
   return min;
 }
 
+
+// fun thing for another time write b search O(n log k)
+// https://en.wikipedia.org/wiki/Dynamic_programming#Faster_DP_solution_using_a_different_parametrization
 
 module.exports = {
   naive: naiveEggDrop,

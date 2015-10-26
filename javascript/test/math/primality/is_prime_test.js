@@ -17,6 +17,7 @@ Object.keys(isPrimeFns).forEach(function(key) {
       // https://github.com/mgechev/javascript-algorithms/blob/master/test/primes/is-prime.spec.js
       assert.equal(isPrime(104743), true);
       assert.equal(isPrime(104744), false);
+      assert.equal(isPrime(79629), false);
     });
   });
 });
