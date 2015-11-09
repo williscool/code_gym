@@ -11,7 +11,7 @@ function memoizedRecursive(n) {
   var cache = [0, 1];
 
   if (!dsalgo.utils.isDefined(cache[n])) {
-    cache[n] = naiveRecursive(n - 2) + naiveRecursive(n - 1);
+    cache[n] = memoizedRecursive(n - 2) + memoizedRecursive(n - 1);
   }
 
   return cache[n];
@@ -48,6 +48,7 @@ function iterativeConstantSpace(n) {
   return n1;
 }
 
+// Great explantion of log(n) fib http://otfried.org/courses/cs300/notes/dynamic-programming.pdf
 
 module.exports = {
   naive_recursive: naiveRecursive,
