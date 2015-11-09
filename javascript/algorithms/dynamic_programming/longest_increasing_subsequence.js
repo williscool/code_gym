@@ -110,51 +110,27 @@ function iLIS (arr) {
 // to make sure you return the max length from the largest tree
 //
 // again HORRIBLY explained around the internet
+//
+// this is a O(2^n) algorithm that I dont really see how you could cache
 
-var MAX = 1;
-function recursiveLIS(arr, len)  {
-
-  if(len <= 1) return 1;
+var max_list = [];
+function recursiveLIS(arr, k, tmp_list)  {
   
-	var max_ending_here = 1; // init to just having one. i.e if this num was lower than the previous and we are starting a new subseq
+  tmp_list.push(arr[k]);
 
-  for(var i = 0; i < len; i++) {
+  for(var i = k; i < arr.length - 1; i++) {
 	
-      var maxAtI = recursiveLIS(arr, i);
-      if( arr[i - 1] < arr[len - 1]) {
-         max_ending_here = Math.max(max_ending_here, maxAtI + 1);
+      if( arr[k] < arr[i + 1]) {
+        recursiveLIS(arr, i + 1, tmp_list);
       }
 
   }
 
-  MAX = Math.max(MAX, max_ending_here)
-  return max_ending_here;
-}
-
-
-function recursive(arr){
-	var len = arr.length;
-	
-	if (len <= 1) return arr;
-	
-	var memo = [{length:1, prev: arr.length}];
-	
-	memo = recursiveLIS(arr, arr.length, memo);
-
-  var result = [];
- 
-  var pos = longestLenPosition;
-  
-  console.log(memo);
-  for (var k = 0; k < max; k++) {
-    result.push(arr[pos]);
-    pos = memo[pos].prev;
-  }
-
-  return result.reverse();
+  if(tmp_list.length > max_list.length) max_list = dsalgo.utils.arrayDeepCopy(tmp_list);
+  if(tmp_list.length > 0) tmp_list.pop();
 }
 
 module.exports = {
   iterative: iLIS,
-  recursive: function(arr){  recursiveLIS(arr, arr.length); return MAX; }
+  recursive: function(arr){  recursiveLIS(arr, 0, []); return max_list; }
 };
