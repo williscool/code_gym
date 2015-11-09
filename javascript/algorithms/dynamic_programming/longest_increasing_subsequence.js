@@ -1,3 +1,4 @@
+var dsalgo = require('../../utilities.js').dsalgo;
 // https://en.wikipedia.org/wiki/Longest_increasing_subsequence
 //
 // https://www.youtube.com/watch?v=4fQJGoeW5VE
@@ -46,14 +47,12 @@
 //
 // 1. The interger lenght of longest subesquence we have been able to create thus far at this element
 // 2. A pointer to the index of the first array element that gave us a subsequence of that length
-//
-//
 
 function iLIS (arr) {
   var len = arr.length;
   
   if(len == 1) return arr;
-  
+
   var memo = [], longestLen = 0, longestLenPosition = -1;
   
   for(var i = 0; i < len; i++) {
@@ -93,6 +92,69 @@ function iLIS (arr) {
   return result.reverse();
 }
 
-module.exports = {
-  iterative: iLIS
+// http://www.geeksforgeeks.org/dynamic-programming-set-3-longest-increasing-subsequence/
+// http://codingtonic.blogspot.com/2015/02/longest-increasing-sub-sequence-dynamic.html
+// http://edusagar.com/questions/dynamic-programming/longest-increasing-subsequence-lis
+// http://codereview.stackexchange.com/questions/102232/calculating-longest-increasing-sub-sequence-recursively
+// http://jeffe.cs.illinois.edu/teaching/algorithms/notes/03-backtracking.pdf
+// http://jeffe.cs.illinois.edu/teaching/algorithms/notes/05-dynprog.pdf        
+//
+// http://zsurface.com/html/indexLongestIncreasingSubsequenceRecursion.html
+// also pg 45 of Competitive Programming ed 1 http://cpbook.net/
+//
+// http://settri.blogspot.com/2015/08/dynamic-programming.html
+//
+// Fun fact about the recursive solution to this problem that I think I undestand correctly  but im not sure.
+//
+// So there are recursion tree's that give suboptimal values and you have to use a global variable for the max or max list
+// to make sure you return the max length from the largest tree
+//
+// again HORRIBLY explained around the internet
+
+var MAX = 1;
+function recursiveLIS(arr, len)  {
+
+  if(len <= 1) return 1;
+  
+	var max_ending_here = 1; // init to just having one. i.e if this num was lower than the previous and we are starting a new subseq
+
+  for(var i = 0; i < len; i++) {
+	
+      var maxAtI = recursiveLIS(arr, i);
+      if( arr[i - 1] < arr[len - 1]) {
+         max_ending_here = Math.max(max_ending_here, maxAtI + 1);
+      }
+
+  }
+
+  MAX = Math.max(MAX, max_ending_here)
+  return max_ending_here;
 }
+
+
+function recursive(arr){
+	var len = arr.length;
+	
+	if (len <= 1) return arr;
+	
+	var memo = [{length:1, prev: arr.length}];
+	
+	memo = recursiveLIS(arr, arr.length, memo);
+
+  var result = [];
+ 
+  var pos = longestLenPosition;
+  
+  console.log(memo);
+  for (var k = 0; k < max; k++) {
+    result.push(arr[pos]);
+    pos = memo[pos].prev;
+  }
+
+  return result.reverse();
+}
+
+module.exports = {
+  iterative: iLIS,
+  recursive: function(arr){  recursiveLIS(arr, arr.length); return MAX; }
+};
