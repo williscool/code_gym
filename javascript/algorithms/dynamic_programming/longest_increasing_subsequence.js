@@ -113,7 +113,7 @@ function iLIS (arr) {
 //
 // this is a O(2^n) algorithm that I dont really see how you could cache
 
-var max_list = [];
+var max_list; 
 function recursiveLIS(arr, k, tmp_list)  {
   
   tmp_list.push(arr[k]);
@@ -130,7 +130,47 @@ function recursiveLIS(arr, k, tmp_list)  {
   if(tmp_list.length > 0) tmp_list.pop();
 }
 
+// https://en.wikipedia.org/wiki/Longest_increasing_subsequence#Efficient_algorithms
+// http://marcodiiga.github.io/longest-increasing-subsequence/
+// http://www.cs.cmu.edu/afs/cs/academic/class/15210-f13/www/recitations/rec13.pdf
+// http://www.geeksforgeeks.org/longest-monotonically-increasing-subsequence-size-n-log-n/
+// http://www.geeksforgeeks.org/construction-of-longest-monotonically-increasing-subsequence-n-log-n/
+
+// this version only works for sequences with no duplicates. have to do the crazy parent array thing for dups
+function nlogkLIS(arr) {
+
+    var lo,hi,mid;
+    var lis = [];
+
+    for(var i = 0; i < arr.length ; i++){
+       lo = 0;
+       hi = lis.length - 1;
+
+       while(lo <= hi){
+         mid = (lo + hi) >> 1;
+         
+         if(arr[i] > lis[mid]) {
+           ++lo;
+         } else {
+           --hi; 
+         }
+       }
+
+       if(lo >= lis.length){
+          lis.push(arr[i]);
+          // console.log(lis);
+       }
+
+    }
+
+    return lis;
+}
+
+// fun fact had to rewrite the recusive init anonymous function to init the max_list to nothing 
+// otherwise it will only ever calculate the correct value for the first list you give it
+
 module.exports = {
   iterative: iLIS,
-  recursive: function(arr){  recursiveLIS(arr, 0, []); return max_list; }
+  recursive: function(arr){ max_list = []; recursiveLIS(arr, 0, []); return max_list; },
+  nlogk: nlogkLIS
 };

@@ -6,6 +6,7 @@ Object.keys(LISfns).forEach(function(key) {
     var LIS = LISfns[key];
 
     assert.deepEqual(LIS([ 1, 12, 7, 0, 23, 11, 52, 31, 61, 69, 70, 2 ]), [1,12,23,52,61,69,70]);
+    assert.deepEqual(LIS([1,2,4,3]), [1,2,4]);
    
     // since the length is the thing and which one you return is arbitrary 
     //
@@ -16,6 +17,7 @@ Object.keys(LISfns).forEach(function(key) {
     //
     // http://algorithms.tutorialhorizon.com/dynamic-programming-longest-increasing-subsequence/
      assert.deepEqual(LIS([ 1, 12, 7, 0, 23, 11, 52, 31, 61, 69, 70, 2 ]).length, [1,7,11,31,61,69,70].length );
-    //assert.deepEqual(LIS([2, 4, 1, 2, 3]), [1,2,3].length );
+    // TODO: make this work for sequences with dupes with geeksforgeeks solution
+    // assert.deepEqual(LIS([2, 4, 1, 2, 3]), [1,2,3] );
   });
 });
