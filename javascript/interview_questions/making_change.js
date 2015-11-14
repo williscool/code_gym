@@ -8,8 +8,13 @@
 //
 // also this is really a subset sum count. subset sum as defined by wikipedia short circuts when it finds the first solution and return true
 // signifying that there is one if there is
-//
+// 
+// Actually those are 2 different problems according to 
 // http://www.algorithmist.com/index.php/Subset_Sum
+// 
+// The count is the one
+// And the decision problem is another
+//
 // http://stackoverflow.com/questions/22891076/count-number-of-subsets-with-sum-equal-to-k#
 //
 // another fun fact that most solutions carelessly in my opinion forget to mention is that these solutions only work for postive numbers

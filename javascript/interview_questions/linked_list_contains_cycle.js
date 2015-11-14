@@ -1,4 +1,5 @@
 // https://www.interviewcake.com/question/ruby/linked-list-cycles
+// https://en.wikipedia.org/wiki/Cycle_detection
 function containsCycle(list) {
   var current_node = list.head;
 
