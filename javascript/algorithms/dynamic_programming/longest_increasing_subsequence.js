@@ -135,35 +135,67 @@ function recursiveLIS(arr, k, tmp_list)  {
 // http://www.cs.cmu.edu/afs/cs/academic/class/15210-f13/www/recitations/rec13.pdf
 // http://www.geeksforgeeks.org/longest-monotonically-increasing-subsequence-size-n-log-n/
 // http://www.geeksforgeeks.org/construction-of-longest-monotonically-increasing-subsequence-n-log-n/
+// http://stackoverflow.com/questions/3992697/longest-increasing-subsequence
 
 // this version only works for sequences with no duplicates. have to do the crazy parent array thing for dups
 function nlogkLIS(arr) {
+    
+    if(arr.length < 2){
+      return arr; 
+    }
 
-    var lo,hi,mid;
-    var lis = [];
+    arr = [0].concat(arr); // adds to length of arr so we dont have to change loop length
 
-    for(var i = 0; i < arr.length ; i++){
-       lo = 0;
-       hi = lis.length - 1;
+    var lo,hi,mid,j;
 
-       while(lo <= hi){
-         mid = (lo + hi) >> 1;
-         
-         if(arr[i] > lis[mid]) {
-           ++lo;
-         } else {
-           --hi; 
+    var M = [0]; // aka the tail index array of longest increasing subsequence ending at any index i 
+    var P = [null]; // aka the previous indexes (..? idk)
+
+    var L = 0;
+    for(var i = 1; i < arr.length; i++) {
+
+      if(L == 0 || arr[M[1]] >= arr[i]){
+        j = 0;
+      } else {
+
+         lo = 1;
+         hi = L + 1;
+
+         while(lo < hi - 1){
+           mid = (lo + hi) >> 1;
+           
+           if(arr[M[mid]] < arr[i]) {
+              lo = mid;
+           } else {
+              hi = mid; 
+           }
          }
-       }
 
-       if(lo >= lis.length){
-          lis.push(arr[i]);
-          // console.log(lis);
-       }
+         j = lo; // aka newL in wikipedia solution or the newest length of longest subsequence at the current arr[i]
+       
+      }
+
+      P[i] = M[j];
+
+      if(j == L || arr[i] < arr[M[j + 1]] ){
+        M[j + 1] = i;
+        // Math.max is the universal convient way to say if something is larger take that larger one
+        L = Math.max(L, j +1);
+      }
 
     }
 
-    return lis;
+    var result = [];
+    var pos = M[L]; 
+
+    console.log(M)
+    console.log(P)
+    for(var k = 0; k < L; k++) {
+      result.push(arr[pos]);
+      pos = P[pos]
+    }
+
+    return result.reverse();
 }
 
 // fun fact had to rewrite the recusive init anonymous function to init the max_list to nothing 
