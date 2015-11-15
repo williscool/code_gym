@@ -144,27 +144,25 @@ function nlogkLIS(arr) {
       return arr; 
     }
 
-    arr = [0].concat(arr); // adds to length of arr so we dont have to change loop length
-
     var lo,hi,mid,j;
 
     var M = [0]; // aka the tail index array of longest increasing subsequence ending at any index i 
-    var P = [null]; // aka the previous indexes (..? idk)
+    var P = []; // aka the previous index number in arr of the longest increasing subsequence at i
 
-    var L = 0;
+    var L = 1;
     for(var i = 1; i < arr.length; i++) {
 
-      if(L == 0 || arr[M[1]] >= arr[i]){
-        j = 0;
+      lo = 0;
+      hi = L;
+
+      if(arr[M[hi -1]] < arr[i]){
+        j = hi;
       } else {
 
-         lo = 1;
-         hi = L + 1;
-
-         while(lo < hi - 1){
+         while(hi - lo > 1){
            mid = (lo + hi) >> 1;
            
-           if(arr[M[mid]] < arr[i]) {
+           if(arr[M[mid - 1]] < arr[i]) {
               lo = mid;
            } else {
               hi = mid; 
@@ -175,10 +173,10 @@ function nlogkLIS(arr) {
        
       }
 
-      P[i] = M[j];
+      P[i] = M[j - 1];
 
-      if(j == L || arr[i] < arr[M[j + 1]] ){
-        M[j + 1] = i;
+      if(j == L || arr[i] < arr[M[j]] ){
+        M[j] = i;
         // Math.max is the universal convient way to say if something is larger take that larger one
         L = Math.max(L, j +1);
       }
@@ -186,13 +184,14 @@ function nlogkLIS(arr) {
     }
 
     var result = [];
-    var pos = M[L]; 
+    var pos = M[L - 1]; 
 
-    console.log(M)
-    console.log(P)
+    // console.log(M)
+    // console.log(P)
     for(var k = 0; k < L; k++) {
+      // console.log(pos)
       result.push(arr[pos]);
-      pos = P[pos]
+      pos = P[pos];
     }
 
     return result.reverse();
