@@ -24,7 +24,7 @@ function iLCS(x,y) {
     }
   }
  
-  var m = M + 1, n = N + 1;
+  var m = M, n = N;
   var result = [];
 
   // http://www.geeksforgeeks.org/printing-longest-common-subsequence/

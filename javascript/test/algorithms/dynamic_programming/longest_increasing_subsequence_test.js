@@ -19,7 +19,7 @@ Object.keys(LISfns).forEach(function(key) {
     //
     // "If multiple increasing subsequences exist, the one that ends with the smallest value is preferred"
 
-    //assert.deepEqual(LIS([ 1, 2]).length, [1,2].length);
+    assert.deepEqual(LIS([1, 2]).length, [1,2].length);
     assert.deepEqual(LIS([ 2, 1]).length, [1].length);
     assert.deepEqual(LIS([ 1, 12, 7, 0, 23, 11, 52, 31, 61, 69, 70, 2 ]).length, [1,12,23,52,61,69,70].length);
     assert.deepEqual(LIS([1,2,4,3]).length, [1,2,4].length);

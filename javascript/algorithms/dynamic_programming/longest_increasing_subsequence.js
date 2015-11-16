@@ -197,11 +197,21 @@ function nlogkLIS(arr) {
     return result.reverse();
 }
 
+var LCS = require('./longest_common_subsequence.js').iterative;
+
+// http://introcs.cs.princeton.edu/java/96optimization/
+function LISwithLCS(arr){
+  var copy = dsalgo.utils.arrayDeepCopy(arr);
+  var lis = LCS(arr, copy.sort());
+  return lis;
+}
+
 // fun fact had to rewrite the recusive init anonymous function to init the max_list to nothing 
 // otherwise it will only ever calculate the correct value for the first list you give it
 
 module.exports = {
   iterative: iLIS,
   recursive: function(arr){ max_list = []; recursiveLIS(arr, 0, []); return max_list; },
-  nlogk: nlogkLIS
+  nlogk: nlogkLIS,
+  LISwithLCS: LISwithLCS
 };
