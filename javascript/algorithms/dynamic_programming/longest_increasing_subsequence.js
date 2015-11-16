@@ -53,7 +53,7 @@ function iLIS (arr) {
   
   if(len == 1) return arr;
 
-  var memo = [], longestLen = 0, longestLenPosition = -1;
+  var memo = [], longestLen = 1, longestLenPosition = 0;
   
   for(var i = 0; i < len; i++) {
     
@@ -159,7 +159,7 @@ function nlogkLIS(arr) {
         j = hi;
       } else {
 
-         while(hi - lo > 1){
+         while( lo > hi - 1){
            mid = (lo + hi) >> 1;
            
            if(arr[M[mid - 1]] < arr[i]) {
