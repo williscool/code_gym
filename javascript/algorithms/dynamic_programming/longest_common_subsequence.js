@@ -50,11 +50,33 @@ function iLCS(x,y) {
   return result.reverse();
 }
 
-function recursiveLCS(arr)  {
+// https://youtu.be/xnWqLAI3TKs?t=277
+function rLCS(x,y)  {
+
+  // slicing isn't free and costs this algo more time
+ // If performance was a concern I would do something else... like not using the recursive version of this function in the first place lol
+ 
+  if (x.length === 0 || y.length === 0) return [];
+
+  var x0 = x[0], y0 = y[0];
+  var xRest = x.slice(1), yRest = y.slice(1);
+  
+  if(x0 == y0){
+    return [x0].concat(rLCS(xRest,yRest));
+  } else {
+    var lcsRestWithoutX0 = rLCS(x,yRest);
+    var lcsRestWithoutY0 = rLCS(xRest,y);
+
+    if(lcsRestWithoutX0.length > lcsRestWithoutY0.length){
+      return lcsRestWithoutX0;
+    } else {
+      return lcsRestWithoutY0;
+    }
+  }
   
 }
 
 module.exports = {
-  iterative: iLCS //,
-  // recursive: function(arr){ max_list = []; recursiveLIS(arr, 0, []); return max_list; },
+  iterative: iLCS,
+  recursive: rLCS
 };
