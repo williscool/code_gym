@@ -2,6 +2,17 @@ var dsalgo = require('../../utilities.js').dsalgo;
 // https://en.wikipedia.org/wiki/Longest_common_subsequence_problem
 // http://introcs.cs.princeton.edu/java/96optimization/
 // http://code.cloudkaksha.org/algorithm/dynamic-programming/longest-common-subsequence
+//
+// fun fact: you can use LCS of some combination of you input to get a solution for many other problems. 
+// though its usually not the most optimal solution it does work (i've previously done it with LIS)
+//
+// LIS = LCS(input,input.sort())
+// 
+// for example longest palindromic subsequence is merely
+//
+// LPS = LCS(input,input.reverse())
+// http://www.geeksforgeeks.org/dynamic-programming-set-12-longest-palindromic-subsequence/
+// http://cs.stackexchange.com/questions/2466/fastest-algorithm-for-finding-the-longest-palindrome-subsequence/10698#10698
 
 function iLCS(x,y) {
   var M = x.length;
