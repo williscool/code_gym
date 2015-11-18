@@ -13,6 +13,9 @@ var dsalgo = require('../../utilities.js').dsalgo;
 // LPS = LCS(input,input.reverse())
 // http://www.geeksforgeeks.org/dynamic-programming-set-12-longest-palindromic-subsequence/
 // http://cs.stackexchange.com/questions/2466/fastest-algorithm-for-finding-the-longest-palindrome-subsequence/10698#10698
+//
+// http://algorithms.tutorialhorizon.com/longest-palindromic-subsequence/
+// LPS on its own https://www.quora.com/What-is-a-dynamic-programming-algorithm-to-find-the-longest-palindrome-that-is-a-subsequence-of-a-given-input-string-without-reversing-the-string
 
 function iLCS(x,y) {
   var M = x.length;
