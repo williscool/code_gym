@@ -234,7 +234,7 @@ Heap.prototype.pop = function() {
   var lastValue = this.items.pop();
 
   // sift it down 
-  if (this.size() > 1) {
+  if (this.size() > 0) {
     // pop off the last value to shorten array and set it as the new root of the array
     this.items[0] = lastValue;
 

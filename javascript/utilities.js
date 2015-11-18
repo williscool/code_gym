@@ -114,3 +114,30 @@ utils.dec2bin = function(n) {
   // http://stackoverflow.com/questions/9939760/how-do-i-convert-an-integer-to-binary-in-javascript/16155417#16155417
   return (n >>> 0).toString(2);
 };
+
+utils.bisectRight = function(arr, number, lo, hi){
+  // bisect like from python
+  //
+  // https://github.com/python/cpython/blob/master/Lib/bisect.py
+  // https://github.com/python/cpython/blob/master/Lib/test/test_bisect.py
+  // 
+  // https://github.com/mbostock/d3/wiki/Arrays#d3_bisect
+  // https://github.com/mbostock/d3/blob/master/src/arrays/bisect.js
+  // https://github.com/mbostock/d3/blob/master/test/arrays/bisect-test.js
+  
+  if(!utils.isDefined(lo)) lo = 0;
+  if(!utils.isDefined(hi)) hi = arr.length;
+
+  while(lo < hi){
+    mid = (lo + hi) >>> 1;
+    
+    if(number < arr[mid] ) {
+      hi = mid;
+    } else {
+      lo = mid + 1 ;
+    }
+  }
+
+  return lo;
+}
+;
