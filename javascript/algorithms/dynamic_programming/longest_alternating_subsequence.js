@@ -34,7 +34,30 @@ function iLAS(arr) {
   return longest;
 }
 
+// https://www.quora.com/Is-it-possible-to-compute-longest-alternating-subsequence-of-a-sequence-O-n-time-If-so-how
+function linLAS(arr){
+  var curL = 0, longestL = 0, lastDir = 0, lastVal = arr[0];
+  
+  var newDir;
+
+  for(var i = 1;  i < arr.length ; i++){
+    newDir = arr[i] - lastVal; 
+
+    if( newDir * lastDir > 0 ) {
+      curL = 0;
+    } else {
+      curL++;
+      longestL = Math.max(longestL, curL);
+    }
+    
+    lastVal = arr[i];
+    lastDir = newDir;
+  }
+  
+  return longestL;
+}
+
 module.exports = {
-//  iterative: iEditDistance,
-  iterative: iLAS
+  quadratic: iLAS,
+  linear: linLAS
 };
