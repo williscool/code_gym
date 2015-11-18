@@ -18,7 +18,7 @@ function findPile(top_cards, n){
   
 }
 
-module.exports = function(list) {
+module.exports = function(list, LIS_MODE) {
 
   var top_cards = [];
   var piles = [];
@@ -37,6 +37,10 @@ module.exports = function(list) {
       piles[pile_id].push(newNum);
     }
   
+  }
+  
+  if(LIS_MODE){
+    return top_cards;
   }
 
   // piles are now created and we have our LIS in top piles

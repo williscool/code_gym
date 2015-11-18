@@ -206,6 +206,17 @@ function LISwithLCS(arr){
   return lis;
 }
 
+// https://en.wikipedia.org/wiki/Patience_sorting#Algorithm_for_finding_a_longest_increasing_subsequence
+// https://www.cs.princeton.edu/courses/archive/spring13/cos423/lectures/LongestIncreasingSubsequence.pdf
+// http://www.perlmonks.org/?node_id=547199
+//
+// Think about it if you run through your list from beginning to end and make a new pile every time you meet a number higher than your last pile
+// which numbers are at the top of your piles? the Longest_increasing_subsequence :)
+var patiencesort = require('../sorting/patiencesort.js');
+function LISwithPatienceSort(arr){
+  return patiencesort(arr, true);
+}
+
 // fun fact had to rewrite the recusive init anonymous function to init the max_list to nothing 
 // otherwise it will only ever calculate the correct value for the first list you give it
 
@@ -213,5 +224,6 @@ module.exports = {
   iterative: iLIS,
   recursive: function(arr){ max_list = []; recursiveLIS(arr, 0, []); return max_list; },
   nlogk: nlogkLIS,
-  LISwithLCS: LISwithLCS
+  LISwithLCS: LISwithLCS,
+  LISwithPatienceSort: LISwithPatienceSort
 };
