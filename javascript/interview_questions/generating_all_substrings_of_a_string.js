@@ -15,7 +15,22 @@ function rSubstringsOfString(rest){
   return substrings;
 }
 
+// http://www.programmingsimplified.com/java/source-code/java-program-find-substrings-of-string
+function iSubstringsOfString(str){
+ 
+  var substrings = []
+  
+  // c for character
+  for(var c = 0; c < str.length; c++) {
+    for(var i = 1;  i <= str.length - c ; i++){
+      substrings = substrings.concat([str.slice(c, c+i)]);
+    }
+  }
+
+  return substrings;
+}
+
 module.exports = {
-  // iterative: iLCS,
+  iterative: iSubstringsOfString,
   recursive: rSubstringsOfString
 };
