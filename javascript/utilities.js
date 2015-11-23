@@ -139,5 +139,11 @@ utils.bisectRight = function(arr, number, lo, hi){
   }
 
   return lo;
-}
-;
+};
+
+utils.create2Darray = function(n) {
+  // http://stackoverflow.com/a/23867573/511710
+  var arr = []; 
+  while (arr.push([]) < n);
+  return arr;
+};
