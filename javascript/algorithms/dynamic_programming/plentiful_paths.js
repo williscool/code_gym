@@ -21,23 +21,37 @@ function rPP(A,x,y){
   }
 }
 
-function iEditDistance(A,x,y) {
+function iPP(A,M,N) {
 
-  var m = x.length, n = y.length;
+  var memo = dsalgo.utils.create2Darray(N + 1);
 
-  var memo = [];
- 
-  for(var i = 0; i <= m; i++) {
-    for(var j = 0;  j <= n ; j++){
+  for(var x = 1; x <= M; x++) {
+    for(var y = 1;  y <= N; y++){
+
+      if(!dsalgo.utils.isDefined(A[x][y])) A[x][y] = 0;
+      if(!dsalgo.utils.isDefined(memo[x][y])) memo[x][y] = 0;
+
+      if(x === 1) {
+        if(y === 1) {
+          memo[x][y] = A[x][y];
+        } else {
+          memo[x][y] = A[x][y] + memo[x][y-1];
+        }
+      } else {
+        if(y === 1) {
+          memo[x][y] = A[x][y] + memo[x - 1][y];
+        } else {
+          memo[x][y] = A[x][y] + Math.max( memo[x - 1][y], memo[x][y-1]);
+        }
+      }
 	  
     }
   }
-    
-  return memo[m][n];
+
+  return memo[M][N];
 }
 
-
 module.exports = {
-  // iterative: iEditDistance,
+  iterative: iPP,
   recursive: rPP
 };
