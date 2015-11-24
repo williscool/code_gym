@@ -141,9 +141,16 @@ utils.bisectRight = function(arr, number, lo, hi){
   return lo;
 };
 
-utils.create2Darray = function(n) {
+utils.create2Darray = function(rows,cols) {
+
+  // original here only worked with perfectly square matrices. new version works regardless
   // http://stackoverflow.com/a/23867573/511710
-  var arr = []; 
-  while (arr.push([]) < n);
+  //
+  // http://stackoverflow.com/a/3690005/511710
+  
+  if(!utils.isDefined(cols)) cols = rows;
+  var arr = [], row = []; 
+  // while (cols--) row.push(); // only need this if adding a fill
+  while (rows--) arr.push(row.slice());
   return arr;
 };
