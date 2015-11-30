@@ -7,8 +7,9 @@ Object.keys(stringCombinationsFns).forEach(function(key) {
     it('prints combinations of all characters of a string', function() {
       assert.deepEqual ( stringCombinations("abc") , [ '', 'a', 'ab', 'abc', 'ac', 'b', 'bc', 'c' ] );
     });
-    // it('prints combinations of size k characters of a string', function() {
-    //   assert.deepEqual ( stringCombinations("abc", 2) , [ '', 'a', 'ab', 'ab', 'ac', 'b', 'bc', 'c' ] );
-    // });
+
+   it('prints combinations of size k characters of a string', function() {
+       assert.deepEqual ( stringCombinations("abc", 2) , [ 'ab', 'ac', 'bc' ] );
+   });
   });
 });
