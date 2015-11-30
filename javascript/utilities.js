@@ -90,7 +90,7 @@ utils.sortObjectByKey = function(obj) {
 
 utils.requireText = function(dir, path) {
 
-  if (arguments.length < 2) return Error("give me a file and a pathname or you are gonna have a bad time");
+  if (arguments.length < 2) return Error("give me a first the directory path or __dirname and then the file name or you are gonna have a bad time");
 
   // inspired by 
   //
