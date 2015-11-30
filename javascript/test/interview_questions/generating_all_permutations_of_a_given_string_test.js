@@ -3,7 +3,12 @@ var stringPermutationsFns = require('../../interview_questions/generating_all_pe
 
 Object.keys(stringPermutationsFns).forEach(function(key) {
   var stringPermutations = stringPermutationsFns[key];
-  it(key + ' String Permuations Words Question', function() {
-    assert.deepEqual ( stringPermutations("cat") , [ 'cat', 'cta', 'act', 'atc', 'tca', 'tac' ] );
+  describe(key + ' String Permuations Words Question', function() {
+    it('prints permutations of all characters of a string', function() {
+      assert.deepEqual ( stringPermutations("cat") , [ 'cat', 'cta', 'act', 'atc', 'tca', 'tac' ] );
+    });
+    it('prints permutations of k characters of a string', function() {
+      assert.deepEqual ( stringPermutations("cat", 2) , [ 'ca', 'ct', 'ac', 'at', 'tc', 'ta' ] );
+    });
   });
 });
