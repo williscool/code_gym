@@ -2,43 +2,43 @@
 // minus the empty one
 //
 // http://introcs.cs.princeton.edu/java/23recursion/Combinations.java.html
+//
+// https://docs.python.org/2/library/itertools.html
+// https://github.com/Zolmeister/Polish.js/blob/master/polish.js
+// http://thomas-cokelaer.info/blog/2012/11/how-do-use-itertools-in-python-to-build-permutation-or-combination/
 
 var dsalgo = require('../utilities.js').dsalgo;
+var result, combLen, replace;
 
-function recursiveStringCombinations(prefix, string, k){
+function generateRecursiveStringCombinations(prefix, remaining) {
 
-  var combinations = [prefix];
+  // if we are about to go over the length of combinations we want to generate quit recursion now
+  if(dsalgo.utils.isDefined(combLen) && prefix.length >= combLen) return;
 
-  for(var i = 0; i < string.length; i++) {
-    combinations = combinations.concat( recursiveStringCombinations( prefix + string[i], string.slice(i+1) , k));
-  }
-  
-  return combinations;
-}
-
-function recStringKCombs(string, prefix, k){
-
-  var combinations = [];
-
-  if(k === 0){
-    combinations = combinations.concat([prefix]);
-    return combinations; 
-  } else {
-    for(var i = 0; i < string.length; i++) {
-      combinations = combinations.concat( recStringKCombs( string.slice(i+1), prefix + string[i] , k - 1));
+  for(var i = 0, l = remaining.length ; i < l; i++) {
+    
+    // if there is no predetermined length always append our new combination. if there is a length defined than wait until our prefix reaches the proper size to
+    if(!dsalgo.utils.isDefined(combLen) || prefix.length + 1 == combLen) {
+      result.push(prefix + remaining[i]); 
     }
+
+    generateRecursiveStringCombinations( prefix + remaining[i], replace ? remaining : remaining.slice(i + 1) );
   }
 
-  return combinations;
 }
 
 module.exports = {
-  recursive: function (str, k) { 
+  recursive: function (str, k, shouldReplace) { 
+    if(dsalgo.utils.isDefined(k)) combLen = k;
 
-    if(dsalgo.utils.isDefined(k)) {
-      return recStringKCombs(str, "", k) ;
+    if(!dsalgo.utils.isDefined(shouldReplace)) {
+      replace = false;
+    } else {
+      replace = shouldReplace;
     }
-
-    return recursiveStringCombinations("", str) ;
+    
+    result = [];
+    generateRecursiveStringCombinations("", str);
+    return result;
   }
 };

@@ -4,12 +4,17 @@ var stringCombinationsFns = require('../../interview_questions/generating_all_co
 Object.keys(stringCombinationsFns).forEach(function(key) {
   var stringCombinations = stringCombinationsFns[key];
   describe(key + ' Combinations of a String', function() {
-    it('prints combinations of all characters of a string', function() {
-      assert.deepEqual ( stringCombinations("abc") , [ '', 'a', 'ab', 'abc', 'ac', 'b', 'bc', 'c' ] );
-    });
+   it('prints combinations of all characters of a string', function() {
+      assert.deepEqual ( stringCombinations("abc") , ['a', 'ab', 'abc', 'ac', 'b', 'bc', 'c' ] );
+   });
+
+   it('prints combinations of all characters of a string with replacement', function() {
+       assert.deepEqual ( stringCombinations("abc", 2 , true), ["aa","ab","ac","ba","bb","bc","ca","cb","cc"]);
+   });
 
    it('prints combinations of size k characters of a string', function() {
        assert.deepEqual ( stringCombinations("abc", 2) , [ 'ab', 'ac', 'bc' ] );
    });
+
   });
 });
