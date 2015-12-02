@@ -154,3 +154,11 @@ utils.create2Darray = function(rows,cols) {
   while (rows--) arr.push(row.slice());
   return arr;
 };
+
+// correctly calculates a mod b even if a < 0
+// https://www.topcoder.com/community/data-science/data-science-tutorials/introduction-to-string-searching-algorithms/
+// https://github.com/djktno/rabin-karp-js/blob/master/rk.js
+// https://github.com/morenoh149/rabin-karp-search/blob/master/index.js
+utils.mod = function(a,b){
+  return ((a % b) + b) % b;
+};
