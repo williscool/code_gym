@@ -1,7 +1,7 @@
 // so things dont get dupped all over the place
 
 var fs = require('fs');
-var resolve = require('path').resolve;
+var path = require('path');
 module.exports.dsalgo = {
   utils: {}
 };
@@ -88,9 +88,9 @@ utils.sortObjectByKey = function(obj) {
   return sorted_obj;
 };
 
-utils.requireText = function(dir, path) {
+utils.requireText = function(dirName, pathName) {
 
-  if (arguments.length < 2) return Error("give me a first the directory path or __dirname and then the file name or you are gonna have a bad time");
+  if (arguments.length < 2) return Error("first give me the directory path or __dirname and then the file path or you are gonna have a bad time");
 
   // inspired by 
   //
@@ -100,7 +100,9 @@ utils.requireText = function(dir, path) {
   // also you have to pass dir because if not you'd have to do all kinds of crazy shit to get resolve to use the right path
   // re: google "node resolve caller"
   //
-  return fs.readFileSync(resolve(dir + "../" + path)).toString();
+  // Also TODO: check if I can replace this now https://nodejs.org/api/path.html#path_path_relative_from_to
+  //
+  return fs.readFileSync(path.resolve(dirName + "../" + pathName)).toString();
 };
 
 utils.simpleSet = function() {
@@ -131,10 +133,10 @@ utils.bisectRight = function(arr, number, lo, hi){
   while(lo < hi){
     mid = (lo + hi) >>> 1;
     
-    if(number < arr[mid] ) {
+    if( number < arr[mid] ) {
       hi = mid;
     } else {
-      lo = mid + 1 ;
+      lo = mid + 1;
     }
   }
 
