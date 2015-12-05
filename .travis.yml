@@ -1,7 +1,11 @@
 ### should be able to cd just to the directory and run npm test but can't yet 
 # re  https://github.com/ebdrup/mocha-jshint/issues/14
+#
+# https://nodejs.org/en/download/releases/
 language: node_js
 node_js:
+  - "5.1"
+  - "4.2"
   - "0.12"
   - "0.11"
   - "0.10"
