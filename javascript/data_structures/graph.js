@@ -51,11 +51,15 @@ function Graph(conf) {
   }
 
   if (this.config.ewg) {
-    this.add_from_ewg(this.config.ewg);
+    this.add_from_graph_data(this.config.ewg);
+  }
+  
+  if (this.config.graphData) {
+    this.add_from_graph_data(this.config.graphData);
   }
 }
 
-Graph.prototype.add_from_ewg = function(list) {
+Graph.prototype.add_from_graph_data = function(list) {
   // i.e. http://algs4.cs.princeton.edu/44sp/tinyEWD.txt
 
   var context = this;
@@ -69,7 +73,12 @@ Graph.prototype.add_from_ewg = function(list) {
     var info = line.split(" ");
     var from = info[0];
     var to = info[1];
-    var weight = parseFloat(info[2]);
+    
+    // NOTE:
+    // im abusing the fact that this will be undefined in the unwieghted graph depictions
+    // so I dont have add an unweighted or weighted flag to the graph object. 
+    // making a not in case it blows up in my face yet again
+    var weight = parseFloat(info[2]); 
 
     var u = dsalgo.utils.makeNumberUnlessNaN(from);
     var v = dsalgo.utils.makeNumberUnlessNaN(to);

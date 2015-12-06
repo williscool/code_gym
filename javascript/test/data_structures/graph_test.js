@@ -132,6 +132,70 @@ describe('Graph', function() {
       });
     });
 
+    // http://algs4.cs.princeton.edu/41graph/
+    describe("can build from an unweighted graph data type", function() {
+
+      // http://algs4.cs.princeton.edu/41graph/images/adjacency-lists.png
+      var adjList = [[6, 2, 1, 5],
+        [0],
+        [0],
+        [5,4],
+        [5, 6, 3],
+        [3, 4, 0],
+        [0, 4],
+        [8],
+        [7],
+        [11,10, 12],
+        [9],
+        [9, 12],
+        [11,9]];
+
+      it("string correctly", function() {
+
+        // http://algs4.cs.princeton.edu/41graph/images/graph-input.png
+        // i.e. http://algs4.cs.princeton.edu/41graph/tinyG.txt
+        // http://algs4.cs.princeton.edu/44sp/images/shortest-path.png
+        var graphText = dsalgo.utils.multilineString(function() {
+/*!
+13
+13
+0 5
+4 3
+0 1
+9 12
+6 4
+5 4
+0 2
+11 12
+9 10
+0 6
+7 8
+9 11
+5 3
+*/
+});
+        var graph = new Graph({
+          graphData: graphText,
+        });
+
+        graph.adjacency_list.forEach(function(arr, i){
+          assert.deepEqual(graph.adjacency_list[i].sort(), adjList[i].sort());
+        });
+      });
+
+      it("file correctly", function() {
+
+        var gd = dsalgo.utils.requireText(__dirname, '../../data/graph/tinyG.txt');
+        var graph = new Graph({
+          graphData: gd,
+        });
+
+        graph.adjacency_list.forEach(function(arr, i){
+          assert.deepEqual(graph.adjacency_list[i].sort(), adjList[i].sort());
+        });
+      });
+    });
+
   });
 
   describe('Vertex Functions', function() {
