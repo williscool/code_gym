@@ -49,8 +49,61 @@ function undirectedDFSCycleCheck(graph, v, visited, parent) {
   return false; 
 }
 
+// http://algs4.cs.princeton.edu/41graph/Cycle.java.html
+function selfLoop(graph) {
+
+  for (var v in graph.vertex_list()) {
+      for (var i = 0; i < graph.adjacency_list[v].length; i++) {
+        var w = graph.adjacency_list[v][i];
+        if( v == w){
+          var loop = [];
+          loop.push(v);
+          loop.push(v);
+          return loop;
+        } 
+      }
+  }
+
+  return []; 
+}
+
+// http://algs4.cs.princeton.edu/41graph/Cycle.java.html
+// so my Graph data stucture is designed to support one parallel edge for each edge between graph nodes in an undirected graph
+// so to assess if there are parallel edges in mine you need to count how many times you see an edge and if its more than 2 there is a parallel edge
+function parallelEdges(graph) {
+  var seenEdge = dsalgo.utils.simpleSet();
+
+  for (var v in graph.vertex_list()) {
+      for (var i = 0; i < graph.adjacency_list[v].length; i++) {
+        var w = graph.adjacency_list[v][i];
+        if(!dsalgo.utils.isDefined(seenEdge[graph.edge_key(v,w)])){
+          seenEdge[graph.edge_key(v,w)] = 0;
+        } 
+        if (seenEdge[graph.edge_key(v,w)] > 2) {
+          var cycle = [];
+          cycle.push(v);
+          cycle.push(w);
+          cycle.push(v);
+          return cycle;
+        } 
+        seenEdge[graph.edge_key(v,w)]++;
+      }
+  }
+  return []; 
+}
+
 module.exports = {
-  dfsish: function(graph, start_vertex){
+  utils: {
+    selfLoop: selfLoop,
+    hasSelfLoop: function(graph){
+      return selfLoop(graph).length > 0;
+    },
+    parallelEdges: parallelEdges,
+    hasParallelEdges: function(graph){
+      return parallelEdges(graph).length > 0;
+    },
+  },
+  dfsish: function(graph, start_vertex) {
 
     if (graph.order() < 1) return Error("come on dog there's no nodes in this graph.");
 

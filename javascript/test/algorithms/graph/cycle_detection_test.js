@@ -5,6 +5,8 @@ var dsalgo = require('../../../utilities.js').dsalgo;
 
 Object.keys(CycleDetectors).forEach(function(key) {
 
+  if(key == "utils") return;
+
   describe(key + ' Cycle Dectector', function() {
 
     var isCyclic = CycleDetectors[key];
@@ -125,4 +127,61 @@ Object.keys(CycleDetectors).forEach(function(key) {
     });
 
   });
+});
+
+describe('Cycle Dectector utils', function() {
+
+  describe('Parellel Edge Detection', function() {
+    var gd = dsalgo.utils.requireText(__dirname, '../../../data/graph/tinyG.txt');
+    var parallelEdges = CycleDetectors.utils.parallelEdges;
+
+    it('detects abscence of parallel edges', function() {
+      var graph = new Graph({
+        graphData: gd
+      });
+
+      assert.deepEqual(parallelEdges(graph), []);
+      assert.equal(CycleDetectors.utils.hasParallelEdges(graph), false);
+    });
+    // http://algs4.cs.princeton.edu/41graph/images/graph-input.png
+    // add dupes
+    it('detects parallel edges', function() {
+
+      var dupGraph = new Graph({
+        graphData: gd
+      });
+
+      dupGraph.adjacency_list[0].push(1);
+      dupGraph.adjacency_list[1].push(0);
+      assert.deepEqual(parallelEdges(dupGraph), [1,0,1]);
+      assert.equal(CycleDetectors.utils.hasParallelEdges(dupGraph), true);
+    });
+  });
+
+  describe('Self Loop Detection', function() {
+    var gd = dsalgo.utils.requireText(__dirname, '../../../data/graph/tinyG.txt');
+    var selfLoop = CycleDetectors.utils.selfLoop;
+
+    it('detects abscence of self loops', function() {
+      var graph = new Graph({
+        graphData: gd
+      });
+
+      assert.deepEqual(selfLoop(graph), []);
+      assert.equal(CycleDetectors.utils.hasSelfLoop(graph), false);
+    });
+    // http://algs4.cs.princeton.edu/41graph/images/graph-input.png
+    // add dupes
+    it('detects self loops', function() {
+
+      var dupGraph = new Graph({
+        graphData: gd
+      });
+
+      dupGraph.adjacency_list[0].push(0);
+      assert.deepEqual(selfLoop(dupGraph), [0,0]);
+      assert.equal(CycleDetectors.utils.hasSelfLoop(dupGraph), true);
+    });
+  });
+
 });
