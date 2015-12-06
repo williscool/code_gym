@@ -13,10 +13,9 @@ function Graph(conf) {
       directed: false
   };
 
-  this.directed = this.config.directed;
-
   // set directed to false unless its explicity set to true
   if (conf && !dsalgo.utils.isDefined(conf.directed)) this.config.directed = false;
+  this.directed = this.config.directed;
 
   this.verts = dsalgo.utils.simpleSet();
   this.edges = dsalgo.utils.simpleSet();
@@ -199,7 +198,7 @@ Graph.prototype.add_edge = function(from, to, weight, opts) {
     };
   var edge_key = this.edge_key(from, to);
 
-  if (!this.config.directed && !options.allow_parallel && this.edge_present(from, to)) {
+  if (!this.directed && !options.allow_parallel && this.edge_present(from, to)) {
     // quit this whole function so we dont duplicate anything.
     return this;
   }
