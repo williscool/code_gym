@@ -27,25 +27,43 @@ Object.keys(CycleDetectors).forEach(function(key) {
         directed: true
       });
 
-      it("in directed graphs with a given start_vertex", function() {
-        assert.equal(isCyclic(graphWithCycle, 1), true);
+      describe('in directed graphs ', function() {
+        it("with a given start_vertex", function() {
+          assert.equal(isCyclic(graphWithCycle, 1), true);
+        });
+
+        it("with no given start_vertex", function() {
+          assert.equal(isCyclic(graphWithCycle), true);
+        });
       });
 
-      it("in directed graphs with no given start_vertex", function() {
-        assert.equal(isCyclic(graphWithCycle), true);
+      describe('in undirected graphs ', function() {
+        var undirectedGraphWithCycle = new Graph({
+          adjList: adjListwithCycle
+        });
+
+        it("with a given start_vertex", function() {
+          assert.equal(isCyclic(undirectedGraphWithCycle , 1), true);
+        });
+
+        it("with no given start_vertex", function() {
+          assert.equal(isCyclic(undirectedGraphWithCycle), true);
+        });
+
+        var gd = dsalgo.utils.requireText(__dirname, '../../../data/graph/tinyG.txt');
+        var undirectedGraphFromFile = new Graph({
+          graphData: gd
+        });
+
+        it("from a file with a given start_vertex", function() {
+          assert.equal(isCyclic(undirectedGraphFromFile , 0), true);
+        });
+
+        it("from a file with no given start_vertex", function() {
+          assert.equal(isCyclic(undirectedGraphFromFile), true);
+        });
       });
 
-      var undirectedGraphWithCycle = new Graph({
-        adjList: adjListwithCycle
-      });
-
-      it("in undirected graphs with a given start_vertex", function() {
-        assert.equal(isCyclic(undirectedGraphWithCycle , 1), true);
-      });
-
-      it("in undirected graphs with no given start_vertex", function() {
-        assert.equal(isCyclic(undirectedGraphWithCycle), true);
-      });
 
     });
 
@@ -70,34 +88,38 @@ Object.keys(CycleDetectors).forEach(function(key) {
         []
       ];
 
-      it("in directed graphs with a given start_vertex", function() {
-        var graphWithNoCycle = new Graph({
-          adjList: adjListNoCycle,
-          directed: true
+      describe('in directed graphs ', function() {
+        it("with a given start_vertex", function() {
+          var graphWithNoCycle = new Graph({
+            adjList: adjListNoCycle,
+            directed: true
+          });
+
+          assert.equal(isCyclic(graphWithNoCycle, 1), false);
         });
 
-        assert.equal(isCyclic(graphWithNoCycle, 1), false);
+        it("with no start_vertex", function() {
+          var graphWithNoCycle = new Graph({
+            adjList: adjListNoCycle,
+            directed: true
+          });
+
+          assert.equal(isCyclic(graphWithNoCycle), false);
+        });
       });
 
-      it("in directed graphs with no start_vertex", function() {
-        var graphWithNoCycle = new Graph({
-          adjList: adjListNoCycle,
-          directed: true
+      describe('in undirected graphs ', function() {
+        var undirectedGraphWithNoCycle = new Graph({
+          adjList: adjListNoCycle
         });
 
-        assert.equal(isCyclic(graphWithNoCycle), false);
-      });
+        it("with a given start_vertex", function() {
+          assert.equal(isCyclic(undirectedGraphWithNoCycle , 1), false);
+        });
 
-      var undirectedGraphWithNoCycle = new Graph({
-        adjList: adjListNoCycle
-      });
-
-      it("in undirected graphs with a given start_vertex", function() {
-        assert.equal(isCyclic(undirectedGraphWithNoCycle , 1), false);
-      });
-
-      it("in undirected graphs with no given start_vertex", function() {
-        assert.equal(isCyclic(undirectedGraphWithNoCycle), false);
+        it("with no given start_vertex", function() {
+          assert.equal(isCyclic(undirectedGraphWithNoCycle), false);
+        });
       });
 
     });
