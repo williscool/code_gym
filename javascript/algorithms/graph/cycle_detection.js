@@ -1,4 +1,6 @@
 // https://en.wikipedia.org/wiki/Cycle_(graph_theory)#Cycle_detection
+//
+// http://www.geeksforgeeks.org/detect-cycle-in-a-graph/
 
 var dsalgo = require('../../utilities.js').dsalgo;
 
@@ -6,7 +8,7 @@ var dsalgo = require('../../utilities.js').dsalgo;
 //
 // this algorithm is bascically dfs but it short circuts if it finds a cycle
 
-function dfsCycleCheck(graph, v, visited, recRecordKeeper) {
+function directedDFSCycleCheck(graph, v, visited, recRecordKeeper) {
 
   if (!dsalgo.utils.isDefined(visited[v]) || visited[v] === false) {
 
@@ -16,7 +18,7 @@ function dfsCycleCheck(graph, v, visited, recRecordKeeper) {
     for (var i in graph.adjacency_list[v]) {
       var w = graph.adjacency_list[v][i];
 
-      if (visited[w] !== true && dfsCycleCheck(graph, w, visited, recRecordKeeper)) {
+      if (visited[w] !== true && directedDFSCycleCheck(graph, w, visited, recRecordKeeper)) {
         return true; 
       } else if (recRecordKeeper[w] === true){
         return true;
@@ -28,18 +30,50 @@ function dfsCycleCheck(graph, v, visited, recRecordKeeper) {
   return false; 
 }
 
+// http://www.geeksforgeeks.org/detect-cycle-undirected-graph/
+function undirectedDFSCycleCheck(graph, v, visited, parent) {
+  visited[v] = true;
+
+  for (var i in graph.adjacency_list[v]) {
+    var w = graph.adjacency_list[v][i];
+
+    if (visited[w] !== true) {
+      if (undirectedDFSCycleCheck(graph, w, visited, v)) {
+        return true; 
+      }
+    } else if (w != parent){
+      return true;
+    }
+  }
+
+  return false; 
+}
+
 module.exports = {
   dfsish: function(graph, start_vertex){
+
     if (graph.order() < 1) return Error("come on dog there's no nodes in this graph.");
 
+    var cycleChecker;
+    var sentinal;
+
+    if(graph.directed) {
+      cycleChecker = directedDFSCycleCheck;
+      sentinal = dsalgo.utils.simpleSet();
+    } else {
+      cycleChecker = undirectedDFSCycleCheck;
+      sentinal = null;
+    }
+
     if(dsalgo.utils.isDefined(start_vertex)){
-      return dfsCycleCheck(graph, start_vertex, dsalgo.utils.simpleSet(), dsalgo.utils.simpleSet());
+      return cycleChecker(graph, start_vertex, dsalgo.utils.simpleSet(), sentinal );
     } else {
       // if there is no explicit start vertex set try them all
       for (var i in graph.vertex_list()) {
-        if (dfsCycleCheck(graph, i, dsalgo.utils.simpleSet(), dsalgo.utils.simpleSet())) return true;
+        if (cycleChecker(graph, i, dsalgo.utils.simpleSet(), sentinal)) return true;
       }
       return false;
     }
   } 
+
 };

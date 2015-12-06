@@ -52,6 +52,8 @@ Object.keys(CycleDetectors).forEach(function(key) {
     describe('detects no cycles when there are none', function() {
 
       // http://en.wikipedia.org/wiki/Depth-first_search#/media/File:Depth-first-tree.svg
+      //
+      // directed version
       var adjListNoCycle = [
         [], // make zero an un connected vertex so I can number stuff just like picture
         [2, 7, 8],
@@ -68,7 +70,7 @@ Object.keys(CycleDetectors).forEach(function(key) {
         []
       ];
 
-      it("in directed graphs", function() {
+      it("in directed graphs with a given start_vertex", function() {
         var graphWithNoCycle = new Graph({
           adjList: adjListNoCycle,
           directed: true
@@ -77,12 +79,13 @@ Object.keys(CycleDetectors).forEach(function(key) {
         assert.equal(isCyclic(graphWithNoCycle, 1), false);
       });
 
-      it("in undirected graphs", function() {
+      it("in directed graphs with no start_vertex", function() {
         var graphWithNoCycle = new Graph({
           adjList: adjListNoCycle,
+          directed: true
         });
 
-        assert.equal(isCyclic(graphWithNoCycle, 1), false);
+        assert.equal(isCyclic(graphWithNoCycle), false);
       });
 
       var undirectedGraphWithNoCycle = new Graph({
