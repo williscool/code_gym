@@ -472,15 +472,30 @@ describe('Graph', function() {
   });
 
   describe('util functions', function() {
-    it("can tell if its cyclic", function() {
+    describe('#isAcylic', function() {
+      it("can tell if its cyclic", function() {
 
-      var gd = dsalgo.utils.requireText(__dirname, '../../data/graph/tinyDG.txt');
-      var fileGraph = new Graph({
-        graphData: gd,
-        directed: true
+        var gd = dsalgo.utils.requireText(__dirname, '../../data/graph/tinyDG.txt');
+        var fileGraph = new Graph({
+          graphData: gd,
+          directed: true
+        });
+
+         assert.equal(fileGraph.isAcylic(), false);
       });
+    });
 
-       assert.equal(fileGraph.isAcylic(), false);
+    describe('#components', function() {
+      it("gives graph components", function() {
+
+        var gd = dsalgo.utils.requireText(__dirname, '../../data/graph/tinyG.txt');
+        var fileGraph = new Graph({
+          graphData: gd,
+        });
+
+        assert.equal(fileGraph.components().length > 0,  true);
+        assert.equal(fileGraph.components().length === 3,  true);
+      });
     });
   });
 

@@ -417,6 +417,39 @@ Graph.prototype.isAcylic = function() {
   return this.cycles().length === 0;
 };
 
+var UF = require('../algorithms/graph/uf.js').weighted_quick_union_with_path_compression;
+Graph.prototype.components = function() {
+  // based on 
+  // http://algs4.cs.princeton.edu/41graph/CC.java.html
+  var uf = new UF(this.order());
+  
+  var ctx = this; 
+
+  this.edge_set_list().forEach(function(edge_key) {
+    var v = ctx.edge_key_vertex_from(edge_key);
+    var w = ctx.edge_key_vertex_to(edge_key);
+
+    v = dsalgo.utils.makeNumberUnlessNaN(v);
+    w = dsalgo.utils.makeNumberUnlessNaN(w);
+
+    uf.union(v,w);
+  });
+  
+  var compSet = dsalgo.utils.simpleSet();
+
+  for(var v in this.vertex_list()) {
+    if( !dsalgo.utils.isDefined(compSet[uf.find(v)])) compSet[uf.find(v)] = [];
+    compSet[uf.find(v)].push(v);
+  }
+
+  var components = [];
+
+  for (var comp in compSet){
+    components.push(compSet[comp]);
+  }
+
+  return components;
+};
 
 // TODO: would also like to add the rest check functionality from here http://algs4.cs.princeton.edu/43mst/KruskalMST.java.html
 // to this. 
