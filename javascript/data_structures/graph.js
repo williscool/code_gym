@@ -70,7 +70,9 @@ Graph.prototype.add_from_graph_data = function(list) {
   var num_edges = rest_of_list.shift();
 
   rest_of_list.forEach(function(line) {
-    var info = line.split(" ");
+    // match non white space insted of trying to get rid of white space
+    // http://stackoverflow.com/questions/14912502/how-do-i-split-a-string-by-whitespace-and-ignoring-leading-and-trailing-whitespa
+    var info = line.match(/\S+/g);
     var from = info[0];
     var to = info[1];
     

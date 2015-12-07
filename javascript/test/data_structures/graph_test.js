@@ -196,6 +196,80 @@ describe('Graph', function() {
       });
     });
 
+    // http://algs4.cs.princeton.edu/42digraph/
+    describe("can build from an unweighted digraph data type", function() {
+
+      // http://algs4.cs.princeton.edu/42digraph/images/digraph-input.png
+      var adjList = [
+        [1, 5],
+        [],
+        [0,3],
+        [2,5],
+        [3,2],
+        [4],
+        [0,8,4,9],
+        [9,6],
+        [6],
+        [10,11],
+        [12],
+        [12,4],
+        [9]
+      ];
+
+      it("string correctly", function() {
+
+        var graphText = dsalgo.utils.multilineString(function() {
+/*!
+13
+22
+ 4  2
+ 2  3
+ 3  2
+ 6  0
+ 0  1
+ 2  0
+11 12
+12  9
+ 9 10
+ 9 11
+ 7  9
+10 12
+11  4
+ 4  3
+ 3  5
+ 6  8
+ 8  6
+ 5  4
+ 0  5
+ 6  4
+ 6  9
+ 7  6
+*/
+});
+        var gt = new Graph({
+          graphData: graphText,
+          directed: true
+        });
+
+        gt.adjacency_list.forEach(function(arr, i){
+          assert.deepEqual(gt.adjacency_list[i].sort(), adjList[i].sort());
+        });
+      });
+
+      it("file correctly", function() {
+
+        var gd = dsalgo.utils.requireText(__dirname, '../../data/graph/tinyDG.txt');
+        var fileGraph = new Graph({
+          graphData: gd,
+          directed: true
+        });
+
+        fileGraph.adjacency_list.forEach(function(arr, i){
+          assert.deepEqual(fileGraph.adjacency_list[i].sort(), adjList[i].sort());
+        });
+      });
+    });
+
   });
 
   describe('Vertex Functions', function() {
