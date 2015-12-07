@@ -164,3 +164,19 @@ utils.create2Darray = function(rows,cols) {
 utils.mod = function(a,b){
   return ((a % b) + b) % b;
 };
+
+// https://github.com/rails/rails/blob/42b0c942520e59399d70c2170253aa5275a42af1/activesupport/lib/active_support/core_ext/object/blank.rb
+// https://github.com/jashkenas/underscore/blob/master/underscore.js#L1266
+//
+// https://github.com/jprichardson/string.js/blob/master/lib/string.js // if i want to update to be just like blank and check for blank strings
+
+utils.isEmpty = function(thing) {
+  // does thingy exisit
+  if(!utils.isDefined(thing)) return true;
+  if(utils.isDefined(thing.length) && typeof thing.length === "number" && isNaN(thing) ) return false;
+  // this would fail if an object has a length property that somehow gets set to NaN thus the above line
+  // see if thingy is array like
+  if(utils.isDefined(thing.length) && typeof thing.length === "number" ) return thing.length === 0; // its an array like thingling
+  // otherwise is an object
+  return Object.keys(thing).length === 0;
+};
