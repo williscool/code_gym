@@ -471,5 +471,18 @@ describe('Graph', function() {
 
   });
 
+  describe('util functions', function() {
+    it("can tell if its cyclic", function() {
+
+      var gd = dsalgo.utils.requireText(__dirname, '../../data/graph/tinyDG.txt');
+      var fileGraph = new Graph({
+        graphData: gd,
+        directed: true
+      });
+
+       assert.equal(fileGraph.isAcylic(), false);
+    });
+  });
+
 });
 

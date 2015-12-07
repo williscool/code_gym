@@ -408,10 +408,18 @@ Graph.prototype.size = function() {
   return this.edge_set_list().length;
 };
 
-// TODO: would also like to add the check functionality from here http://algs4.cs.princeton.edu/43mst/KruskalMST.java.html
+var cycleChecker = require('../algorithms/graph/cycle_detection.js').dfsish;
+Graph.prototype.cycles = function() {
+  return cycleChecker(this);
+};
+
+Graph.prototype.isAcylic = function() {
+  return this.cycles().length === 0;
+};
+
+
+// TODO: would also like to add the rest check functionality from here http://algs4.cs.princeton.edu/43mst/KruskalMST.java.html
 // to this. 
-// this would allow us to do stuff like
 //
-// graph.isAcyclic()
-// also could add cut check for prim and kruskal
+// cut check for prim and kruskal
 module.exports = Graph;
