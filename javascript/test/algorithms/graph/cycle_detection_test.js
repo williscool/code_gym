@@ -31,11 +31,11 @@ Object.keys(CycleDetectors).forEach(function(key) {
 
       describe('in directed graphs ', function() {
         it("with a given start_vertex", function() {
-          assert.equal(isCyclic(graphWithCycle, 1), true);
+          assert.equal(isCyclic(graphWithCycle, 1).length > 0, true);
         });
 
         it("with no given start_vertex", function() {
-          assert.equal(isCyclic(graphWithCycle), true);
+          assert.equal(isCyclic(graphWithCycle).length > 0, true);
         });
       });
 
@@ -45,11 +45,11 @@ Object.keys(CycleDetectors).forEach(function(key) {
         });
 
         it("with a given start_vertex", function() {
-          assert.equal(isCyclic(undirectedGraphWithCycle , 1), true);
+          assert.equal(isCyclic(undirectedGraphWithCycle , 1).length > 0, true);
         });
 
         it("with no given start_vertex", function() {
-          assert.equal(isCyclic(undirectedGraphWithCycle), true);
+          assert.equal(isCyclic(undirectedGraphWithCycle).length > 0, true);
         });
 
         var gd = dsalgo.utils.requireText(__dirname, '../../../data/graph/tinyG.txt');
@@ -58,11 +58,11 @@ Object.keys(CycleDetectors).forEach(function(key) {
         });
 
         it("from a file with a given start_vertex", function() {
-          assert.equal(isCyclic(undirectedGraphFromFile , 0), true);
+          assert.equal(isCyclic(undirectedGraphFromFile , 0).length > 0, true);
         });
 
         it("from a file with no given start_vertex", function() {
-          assert.equal(isCyclic(undirectedGraphFromFile), true);
+          assert.equal(isCyclic(undirectedGraphFromFile).length > 0, true);
         });
       });
 
