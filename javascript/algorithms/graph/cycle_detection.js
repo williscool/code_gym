@@ -3,6 +3,7 @@
 // http://www.geeksforgeeks.org/detect-cycle-in-a-graph/
 
 var dsalgo = require('../../utilities.js').dsalgo;
+var onStack; // used to keep track of nodes we looked at before in directed graph version of dfs cyclecheck
 
 // checks for if a cycle exists and returns an array representing the cycle if so. if not it returns an empty array
 //
@@ -12,11 +13,23 @@ var dsalgo = require('../../utilities.js').dsalgo;
 // http://www.geeksforgeeks.org/detect-cycle-in-a-graph/
 //
 // updated to be more like http://algs4.cs.princeton.edu/41graph/Cycle.java.html
+// 
+// so inspired by this http://stackoverflow.com/questions/8935323/detecting-cycles-of-a-graphmaybe-directed-or-undirected-in-haskell
 //
-// doesnt short circut
+// I went looking for a better solution than having side effects
 //
-function DFSCycleCheck(graph, v, parent, visited, edgeTo) {
+// so inspired by these 
+//
+// http://matt.might.net/articles/by-example-continuation-passing-style/
+// http://www.2ality.com/2012/06/continuation-passing-style.html
+//
+// I thought about the way my dfs pass a function to show display the order the nodes were visited in
+//
+// and I ended up with an algorithm that finds muliple cycles. pretty neat
+//
+function DFSCycleCheck(graph, v, parent, visited, edgeTo, fn) {
   visited[v] = true;
+  if(graph.directed) onStack[v] = true;
 
   for (var i in graph.adjacency_list[v]) {
     var w = graph.adjacency_list[v][i];
@@ -24,9 +37,9 @@ function DFSCycleCheck(graph, v, parent, visited, edgeTo) {
     if (visited[w] !== true) {
 
       edgeTo[w] = v;
-      DFSCycleCheck(graph, w, v, visited, edgeTo);
+      DFSCycleCheck(graph, w, v, visited, edgeTo, fn);
 
-    } else if (w != parent){
+    } else if ( (!graph.directed && w != parent) || (graph.directed && onStack[w] === true) ){
 
       var cycle = [];
       // while x isDefined and not w
@@ -35,11 +48,13 @@ function DFSCycleCheck(graph, v, parent, visited, edgeTo) {
       }
       cycle.push(w); 
       cycle.push(v); 
+      fn(cycle);
       return cycle;
     }
   }
 
-  return []; 
+  if(graph.directed) onStack[v] = false;
+  return fn([]); 
 }
 
 // http://algs4.cs.princeton.edu/41graph/Cycle.java.html
@@ -100,17 +115,32 @@ module.exports = {
 
     if (graph.order() < 1) return Error("come on dog there's no nodes in this graph.");
 
+    // couldnt figure out how to do this functionally :(
+    // all the stuff from googling "dfs directed graph cycle haskell"
+    // is over my head lol
+    if(graph.directed) onStack = dsalgo.utils.simpleSet();
+
+    var cycles = [];
+
+    var cycleAdder = function cycleAdder(possibleCycle){
+      if(graph.directed) possibleCycle.reverse(); // if the graph is directed we pushed the nodes of the cycle on in reversed order. if not it dont matter since the graph aint directed
+      if(possibleCycle.length > 0) cycles.push(possibleCycle);
+    };
+
     if(dsalgo.utils.isDefined(start_vertex)){
-      return DFSCycleCheck(graph, start_vertex, null, dsalgo.utils.simpleSet(), dsalgo.utils.simpleSet());
+
+       DFSCycleCheck(graph, start_vertex, null, dsalgo.utils.simpleSet(), dsalgo.utils.simpleSet(), cycleAdder);
+
     } else {
+
       // if there is no explicit start vertex set try them all
       for (var i in graph.vertex_list()) {
-        var cycles = DFSCycleCheck(graph, i, null, dsalgo.utils.simpleSet(), dsalgo.utils.simpleSet());
-        if ( cycles.length > 0) return cycles;
+         DFSCycleCheck(graph, i, null, dsalgo.utils.simpleSet(), dsalgo.utils.simpleSet(), cycleAdder);
       }
-      return [];
+
     }
 
+    return cycles;
   } 
 
 };

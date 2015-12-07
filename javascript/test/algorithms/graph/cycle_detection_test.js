@@ -37,6 +37,24 @@ Object.keys(CycleDetectors).forEach(function(key) {
         it("with no given start_vertex", function() {
           assert.equal(isCyclic(graphWithCycle).length > 0, true);
         });
+
+        describe("from a file", function() {
+
+          var gd = dsalgo.utils.requireText(__dirname, '../../../data/graph/tinyDG.txt');
+          var dg = new Graph({
+            graphData: gd, 
+            directed: true
+          });
+
+          describe("with a given start_vertex", function() {
+            var cycle = isCyclic(dg , 4);
+            assert.equal(cycle.length > 0, true);
+          });
+
+          it("with no given start_vertex", function() {
+            assert.equal(isCyclic(dg).length > 0, true);
+          });
+        });
       });
 
       describe('in undirected graphs ', function() {
@@ -52,18 +70,26 @@ Object.keys(CycleDetectors).forEach(function(key) {
           assert.equal(isCyclic(undirectedGraphWithCycle).length > 0, true);
         });
 
-        var gd = dsalgo.utils.requireText(__dirname, '../../../data/graph/tinyG.txt');
-        var undirectedGraphFromFile = new Graph({
-          graphData: gd
+        describe("from a file", function() {
+
+          var gd = dsalgo.utils.requireText(__dirname, '../../../data/graph/tinyG.txt');
+          var undirectedGraphFromFile = new Graph({
+            graphData: gd
+          });
+
+          describe("with a given start_vertex", function() {
+            var cycle = isCyclic(undirectedGraphFromFile , 0);
+            assert.equal(cycle.length > 0, true);
+            it("and returns the correct cycle", function() {
+              assert.deepEqual(cycle[0].sort(), [3,4,5,3].sort());
+            });
+          });
+
+          it("with no given start_vertex", function() {
+            assert.equal(isCyclic(undirectedGraphFromFile).length > 0, true);
+          });
         });
 
-        it("from a file with a given start_vertex", function() {
-          assert.equal(isCyclic(undirectedGraphFromFile , 0).length > 0, true);
-        });
-
-        it("from a file with no given start_vertex", function() {
-          assert.equal(isCyclic(undirectedGraphFromFile).length > 0, true);
-        });
       });
 
 
@@ -107,6 +133,19 @@ Object.keys(CycleDetectors).forEach(function(key) {
           });
 
           assert.equal(isCyclic(graphWithNoCycle), false);
+        });
+
+        describe("from a file", function() {
+
+          var gd = dsalgo.utils.requireText(__dirname, '../../../data/graph/tinyDAG.txt');
+          var dg = new Graph({
+            graphData: gd, 
+            directed: true
+          });
+
+          it("with no given start_vertex", function() {
+            assert.equal(isCyclic(dg).length === 0, true);
+          });
         });
       });
 
