@@ -61,8 +61,10 @@ var iterative = function(graph, start_vertex) {
 
 // inspired by
 // https://github.com/adlawson/search-algorithms/blob/master/javascript/dfs.js
-var recursive = function(graph, v, visited, fn) {
+var recursive = function(graph, v, visited, fn, order) {
   var DFS = recursive;
+  var altOrder = dsalgo.utils.isDefined(order) && (order != "in");
+  var w;
 
   if (graph.order() < 1) return Error("come on dog there's no nodes in this graph.");
 
@@ -70,17 +72,20 @@ var recursive = function(graph, v, visited, fn) {
 
   visited[v] = true;
 
+  if(altOrder && order == "pre") fn(v, w); 
+
   for (var i in graph.adjacency_list[v]) {
 
-    var w = graph.adjacency_list[v][i];
+    w = graph.adjacency_list[v][i];
 
     if (visited[w] !== true) {
-      fn(v, w);
-      DFS(graph, w, visited, fn);
+      if(!altOrder) fn(v, w);
+      DFS(graph, w, visited, fn, order);
     }
 
   }
 
+  if(altOrder && order == "post") fn(v, w); 
 };
 
 var recursive_info = function(graph, start_vertex) {

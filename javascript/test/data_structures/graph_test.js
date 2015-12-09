@@ -472,7 +472,7 @@ describe('Graph', function() {
   });
 
   describe('util functions', function() {
-    describe('#isAcylic', function() {
+    describe('#hasCycle', function() {
       it("can tell if its cyclic", function() {
 
         var gd = dsalgo.utils.requireText(__dirname, '../../data/graph/tinyDG.txt');
@@ -481,7 +481,18 @@ describe('Graph', function() {
           directed: true
         });
 
-         assert.equal(fileGraph.isAcylic(), false);
+         assert.equal(fileGraph.hasCycle(), true);
+      });
+
+      it("can tell if its not cyclic", function() {
+
+        var gd = dsalgo.utils.requireText(__dirname, '../../data/graph/tinyDAG.txt');
+        var fileGraph = new Graph({
+          graphData: gd,
+          directed: true
+        });
+
+         assert.equal(fileGraph.hasCycle(), false);
       });
     });
 

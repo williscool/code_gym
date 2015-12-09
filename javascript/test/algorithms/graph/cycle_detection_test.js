@@ -137,6 +137,7 @@ Object.keys(CycleDetectors).forEach(function(key) {
 
         describe("from a file", function() {
 
+          // http://algs4.cs.princeton.edu/42digraph/images/topological-sort.png
           var gd = dsalgo.utils.requireText(__dirname, '../../../data/graph/tinyDAG.txt');
           var dg = new Graph({
             graphData: gd, 

@@ -413,8 +413,8 @@ Graph.prototype.cycles = function() {
   return cycleChecker(this);
 };
 
-Graph.prototype.isAcylic = function() {
-  return this.cycles().length === 0;
+Graph.prototype.hasCycle = function() {
+  return this.cycles().length !== 0;
 };
 
 var UF = require('../algorithms/graph/uf.js').weighted_quick_union_with_path_compression;
