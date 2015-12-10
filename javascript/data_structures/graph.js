@@ -439,6 +439,26 @@ Graph.prototype.hasCycle = function() {
   return this.cycles().length !== 0;
 };
 
+
+// TODO: factor this code out into a connected components class and add the dfs versin
+// go a little somthing like this
+//
+// update UF notes too
+
+/*
+  this.vertex_list().forEach(function(v){
+    
+    if (marked[v]) return;
+    
+    DFS(ctx, v, marked, function(v,w) {
+      component_id[v] = count;
+    });
+
+    count++;
+
+  });
+ *
+ * */
 var UF = require('../algorithms/graph/uf.js').weighted_quick_union_with_path_compression;
 Graph.prototype.components = function() {
   // based on 
