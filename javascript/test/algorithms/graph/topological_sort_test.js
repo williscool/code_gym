@@ -34,7 +34,7 @@ describe('Topological Sort ', function() {
       arr.reverse();
     });
 
-    console.log(graph.adjacency_list)
+    // console.log(graph.adjacency_list)
 
     var order = topoSort(graph);
 

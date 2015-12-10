@@ -12,6 +12,7 @@ function TopologicalSort(graph){
 
   // used to check if we've visited a vertex before so we don;t call DFS again for no reason
   var marked = dsalgo.utils.simpleSet();
+  var order = [];
   
   graph.vertex_list().forEach(function (key){
     key = dsalgo.utils.makeNumberUnlessNaN(key);
