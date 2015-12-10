@@ -473,6 +473,41 @@ Graph.prototype.components = function() {
   return components;
 };
 
+
+Graph.prototype.adjacency_list_iterator = function(fn){
+  var ctx = this;
+
+  ctx.vertex_list().forEach(function (v){
+    ctx.adjacency_list[v].forEach(function (w){
+        fn(v,w);
+    });
+  });
+};
+
+// http://algs4.cs.princeton.edu/42digraph/Digraph.java.html
+Graph.prototype.reverse = function(revConf){
+
+    // try to use same config as this
+    var confCopy = dsalgo.utils.objDeepCopy(this.config);
+
+    // unless you want a differnt one
+    if(dsalgo.utils.isDefined(revConf)) confCopy = revConf;
+
+    // why? we need to add this from the object we've already created and we dont want to duplicate stuff
+    if(!revConf && this.config.adjList || this.config.graphData) {
+      delete confCopy.adjList;
+      delete confCopy.graphData; 
+    }
+
+    var reverse = new Graph(confCopy);
+
+    this.adjacency_list_iterator(function(v,w){
+        reverse.add_edge(w,v);
+    });
+    
+    return reverse;
+};
+
 // TODO: would also like to add the rest check functionality from here http://algs4.cs.princeton.edu/43mst/KruskalMST.java.html
 // to this. 
 //
