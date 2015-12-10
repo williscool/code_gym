@@ -68,8 +68,6 @@ var recursive = function(graph, v, visited, fn, order) {
 
   if (graph.order() < 1) return Error("come on dog there's no nodes in this graph.");
 
-  if (visited[v] === true) return;
-
   visited[v] = true;
 
   if(altOrder && order == "pre") fn(v, w); 
