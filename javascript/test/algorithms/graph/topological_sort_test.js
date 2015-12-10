@@ -25,16 +25,9 @@ describe('Topological Sort ', function() {
 
     var graph = new Graph({
       graphData: gd,
-      directed: true
+      directed: true,
+      reverse_adjacency_lists: true
     });
-
-    // TODO: figure out why the fuck I had to do this for this
-    // guess? toposort orders are not necessarily unique and the one from the princeton course stuff depends on some order that is imergent from the java data structures they use
-    graph.adjacency_list.forEach(function(arr){
-      arr.reverse();
-    });
-
-    // console.log(graph.adjacency_list)
 
     var order = topoSort(graph);
 

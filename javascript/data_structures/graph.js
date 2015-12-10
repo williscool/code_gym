@@ -88,6 +88,28 @@ Graph.prototype.add_from_graph_data = function(list) {
 
     context.add_edge(u, v, weight);
   });
+
+  // Why is this here? 
+  // because I base a lot of my test cases for my graph algorithms off of the 
+  // excellent digraph section of the website for sedgwick && wayne's algorithms textbook
+  //
+  // http://algs4.cs.princeton.edu/42digraph/
+  //
+  // The digraph object they use [1] depends on another object called a BAG [2]
+  //
+  // and while techically the ordering of vertices in the adjacency list of a graph is arbitrary that 
+  // data structure happens to read them off in the opposite order they were added to it
+  //
+  // so to match their out put I added this
+  //
+  // [1] http://algs4.cs.princeton.edu/42digraph/Digraph.java.html
+  // [2] http://algs4.cs.princeton.edu/13stacks/Bag.java.html
+
+  if(this.config.reverse_adjacency_lists) {
+    this.adjacency_list.forEach(function(arr, i){
+      arr.reverse();
+    });
+  }
 };
 
 Graph.prototype.add_from_adjacency_list = function(list) {

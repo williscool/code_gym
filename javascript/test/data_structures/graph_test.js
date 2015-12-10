@@ -259,9 +259,11 @@ describe('Graph', function() {
       it("file correctly", function() {
 
         var gd = dsalgo.utils.requireText(__dirname, '../../data/graph/tinyDG.txt');
+
         var fileGraph = new Graph({
           graphData: gd,
-          directed: true
+          directed: true,
+          reverse_adjacency_lists: true
         });
 
         fileGraph.adjacency_list.forEach(function(arr, i){
