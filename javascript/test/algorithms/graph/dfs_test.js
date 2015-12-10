@@ -99,6 +99,7 @@ var dsalgo = require('../../../utilities.js').dsalgo;
 // http://algs4.cs.princeton.edu/42digraph/DepthFirstOrder.java.html
 describe('Depth First Search', function() {
   var DFS = DFSContainer.recursive;
+  var toArray = DFSContainer.recursive_to_array;
 
   // http://algs4.cs.princeton.edu/42digraph/images/dag.png
   var gd = dsalgo.utils.requireText(__dirname, '../../../data/graph/tinyDAG.txt');
@@ -148,6 +149,7 @@ describe('Depth First Search', function() {
             //no children, just erase the root
             case "pre":
               assert.deepEqual(orderSets[orderName],[0,5,4,1,6,9,11,12,10,2,3,7,8]);
+              assert.deepEqual(toArray(graph,orderName),[0,5,4,1,6,9,11,12,10,2,3,7,8]);
               break;
 
             //one child, use one as the root
@@ -158,6 +160,7 @@ describe('Depth First Search', function() {
             //two children, little work to do
             case "post":
               assert.deepEqual(orderSets[orderName],[4,5,1,12,11,10,9,6,0,3,2,7,8]);
+              assert.deepEqual(toArray(graph,orderName),[4,5,1,12,11,10,9,6,0,3,2,7,8]);
               break;
           }
 

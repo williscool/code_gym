@@ -120,8 +120,30 @@ var recursive_info = function(graph, start_vertex) {
   return info;
 };
 
+
+function recursivetoArray(graph, orderName) {
+  var DFS = recursive;
+  var order = [];
+  var marked =  dsalgo.utils.simpleSet();
+
+  graph.vertex_list().forEach(function (vertexLabel){
+    vertexLabel = dsalgo.utils.makeNumberUnlessNaN(vertexLabel);
+    
+    if (marked[vertexLabel]) return;
+
+    DFS(graph, vertexLabel, marked, function(v,w) {
+      order.push(v);
+    }, orderName);
+
+    });
+
+  return order;
+}
+
+
 module.exports = {
   iterative: iterative,
   recursive: recursive, 
-  recursive_info : recursive_info 
+  recursive_info : recursive_info,
+  recursive_to_array : recursivetoArray
 };
