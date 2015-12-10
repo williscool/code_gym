@@ -180,3 +180,8 @@ utils.isEmpty = function(thing) {
   // otherwise is an object
   return Object.keys(thing).length === 0;
 };
+
+// http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-an-object/5344074#5344074
+utils.objDeepCopy = function(obj) {
+  return JSON.parse(JSON.stringify(obj));
+};
