@@ -6,9 +6,13 @@
 var dsalgo = require('../../utilities.js').dsalgo;
 var Queue = require('../../data_structures/queue.js').doubly_linked_list;
 var SPW = require('./shortest_path_walker.js');
+var Graph = require('../../data_structures/graph.js');
 
 function BF(graph, start_vertex) {
   this.source = start_vertex;
+  this.cost = 0;
+  this.hasNegativeCycle = false;
+  this.negative_cycles = [];
 
   if (graph.order() < 1) return Error("come on dog there's no nodes in this graph.");
 
@@ -30,7 +34,7 @@ function BF(graph, start_vertex) {
   onQuene[start_vertex] = true;
 
 
-  while (queue.length > 0) {
+  while (queue.length > 0 && !this.hasNegativeCycle) {
 
     var v = queue.dequeue();
     onQuene[v] = false;
@@ -52,6 +56,38 @@ function BF(graph, start_vertex) {
           onQuene[w] = true;
         }
       }
+
+      if(dsalgo.utils.mod(this.cost++, graph.order()) === 0) {
+
+        // we've relax edges more times than the number of verticies in the graphs times.
+        //
+        // this means there could be a negative cycle
+        // lets look for it
+        //
+        // http://cs.stackexchange.com/questions/6919/getting-negative-cycle-using-bellman-ford
+        //
+        // Negative-Weight Cycle Algorithms - Xiuzhen Huang
+        // http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.86.1981&rep=rep1&type=pdf
+
+        var possibleCycleGraph = new Graph({
+          directed: true
+        });
+       
+        Object.keys(info).forEach(function(vName){
+          var pred = info[vName].predecessor;
+          if(dsalgo.utils.isDefined(pred) && pred !== null){
+            var weight = graph.get_edge_weight(pred, vName);
+            possibleCycleGraph.add_edge(pred, vName, weight);
+          }
+        });
+      
+        var cycles = possibleCycleGraph.cycles();
+        if(cycles.length > 0){
+          this.hasNegativeCycle = true;
+          this.negative_cycles = cycles; 
+        }
+        
+      }
     }
 
   }
@@ -65,4 +101,4 @@ var shortestPath = function(target_vertex) {
 
 BF.prototype.shortest_path = shortestPath;
 
-module.exports = BF
+module.exports = BF;

@@ -193,6 +193,22 @@ describe('Bellman Ford', function() {
   
   describe('detects negative cycles', function() {
 
+    var gd = dsalgo.utils.requireText(__dirname, '../../../data/graph/tinyEWDnc.txt');
+    var ncG = new Graph({
+      graphData: gd, 
+      directed: true
+    });
+
+    var traversal = new BellmanFord(ncG, 0);
+
+      it("correctly", function() {
+        assert(traversal.hasNegativeCycle);
+      });
+
+      it("returns cycle", function() {
+        assert.equal(traversal.negative_cycles.length > 0, true);
+      });
+
   });
 
 });

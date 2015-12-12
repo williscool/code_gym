@@ -25,7 +25,9 @@ var onStack; // used to keep track of nodes we looked at before in directed grap
 //
 // I thought about the way my dfs pass a function to show display the order the nodes were visited in
 //
-// and I ended up with an algorithm that finds muliple cycles. pretty neat
+// and I ended up with an algorithm that finds the first cycle reachable from each vertex. pretty neat
+// 
+// I could use a side effect array inside of the DFS to check if we've found one cycle to determine if we've already found one but that would defeat the not having a side effect purpose lol
 //
 function DFSCycleCheck(graph, v, parent, visited, edgeTo, fn) {
   visited[v] = true;
