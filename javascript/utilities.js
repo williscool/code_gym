@@ -191,3 +191,8 @@ utils.stringRepeat = function(string, n) {
     n = n || 1;
     return Array(n+1).join(string);
 };
+
+// http://stackoverflow.com/questions/1730961/convert-a-2d-array-index-into-a-1d-index
+utils.oneDindex = function(row, col, row_length) {
+  return (row * row_length) + col;
+};
