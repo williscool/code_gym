@@ -185,3 +185,9 @@ utils.isEmpty = function(thing) {
 utils.objDeepCopy = function(obj) {
   return JSON.parse(JSON.stringify(obj));
 };
+
+// http://stackoverflow.com/questions/1877475/repeat-character-n-times
+utils.stringRepeat = function(string, n) {
+    n = n || 1;
+    return Array(n+1).join(string);
+};
