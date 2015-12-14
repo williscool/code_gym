@@ -23,7 +23,7 @@ function SquareGrid(width, height) {
 // http://stackoverflow.com/questions/4512405/javascript-variable-assignments-from-tuples
 SquareGrid.prototype.in_bounds = function(x,y) {
   return x >= 0 && x < this.width && y >= 0 && y < this.height;
-}
+};
 
 SquareGrid.prototype.passable = function(x,y) {
   var pass = true;
@@ -33,11 +33,11 @@ SquareGrid.prototype.passable = function(x,y) {
      }
   }
   return pass; 
-}
+};
 
 SquareGrid.prototype.locationID = function(x,y) {
   return [x,y].join(",");
-}
+};
 
 SquareGrid.prototype.neighbors = function(x,y) {
   var neighbors = [];
@@ -49,18 +49,18 @@ SquareGrid.prototype.neighbors = function(x,y) {
     if(ctx.in_bounds(x2,y2) && ctx.passable(x2,y2)){
       neighbors.push([x2,y2]); 
     }
-  }, this);
+  });
 
   // reverse the return order sometimes so the walk takes a cooler path
-  if(dsalgo.utils.mod(x + y, 2) == 0){
+  if(dsalgo.utils.mod(x + y, 2) === 0){
     neighbors.reverse();
   }
   return neighbors;
-}
+};
 
 SquareGrid.prototype.add_wall = function(x,y) {
   this.walls[this.locationID(x,y)] = true;
-}
+};
 
 SquareGrid.prototype.add_rect = function(x1,y1,x2,y2) {
 
@@ -71,7 +71,7 @@ SquareGrid.prototype.add_rect = function(x1,y1,x2,y2) {
   }
 
   return this;
-}
+};
 
 SquareGrid.prototype.tileToString = function(x,y, styleOpts) {
   
@@ -81,11 +81,11 @@ SquareGrid.prototype.tileToString = function(x,y, styleOpts) {
   var string = ".";
 
   if(!this.passable(x,y)) { // its a wall
-    string = dsalgo.utils.stringRepeat("#", styleOpts["width"]); 
-  } else if (styleOpts["distances"] && styleOpts["distances"][id]){
-    string = styleOpts["distances"][id];
-  } else if (styleOpts["point_to"] && styleOpts["point_to"][id]){
-    var pt = styleOpts["point_to"][id];
+    string = dsalgo.utils.stringRepeat("#", styleOpts.width); 
+  } else if (styleOpts.distances && styleOpts.distances[id]){
+    string = styleOpts.distances[id];
+  } else if (styleOpts.point_to && styleOpts.point_to[id]){
+    var pt = styleOpts.point_to[id];
     var x2 = x + pt[0], y2 = y + pt[1];
 
     if(x2 === x + 1){
@@ -97,15 +97,15 @@ SquareGrid.prototype.tileToString = function(x,y, styleOpts) {
     } else if (y2 === y - 1){
       string = "\u2191";
     }
-  } else if (styleOpts["start"] && styleOpts["start"][id]){
-    if(styleOpts["start"] == id){
+  } else if (styleOpts.start && styleOpts.start[id]){
+    if(styleOpts.start == id){
       string = "A";
     }
-  } else if (styleOpts["goal"] && styleOpts["goal"][id]){
-    if(styleOpts["goal"] == id){
+  } else if (styleOpts.goal && styleOpts.goal[id]){
+    if(styleOpts.goal == id){
       string = "Z";
     }
-  } else if (styleOpts["path"] && styleOpts["path"][id]){
+  } else if (styleOpts.path && styleOpts.path[id]){
       string = "@";
   }
 
@@ -113,10 +113,10 @@ SquareGrid.prototype.tileToString = function(x,y, styleOpts) {
     // why subtract one?
     //
     // w are padding to the width. and we already added the character itself
-    string = string + dsalgo.utils.stringRepeat(" ", styleOpts["width"] - 1) ;
+    string = string + dsalgo.utils.stringRepeat(" ", styleOpts.width - 1) ;
   }
   return string;
-}
+};
 
 SquareGrid.prototype.grid_iterator = function(fn) {
 
@@ -127,7 +127,7 @@ SquareGrid.prototype.grid_iterator = function(fn) {
   }
 
   return this;
-}
+};
 
 SquareGrid.prototype.toString = function(opts) {
 
@@ -143,19 +143,19 @@ SquareGrid.prototype.toString = function(opts) {
   });
 
   return text;
-}
+};
 
 SquareGrid.prototype.locationToNumber = function(x,y) {
   // because y is enumerated before x in this implementation
   return dsalgo.utils.oneDindex(y,x, this.width);
-}
+};
 
 SquareGrid.prototype.numberToLocation = function(id) {
   // because y is enumerated before x in this implementation
   var row = Math.floor(id / this.width);
   var col = dsalgo.utils.mod(id, this.width);
   return [col,row];
-}
+};
 
 SquareGrid.prototype.neighborsToAdjacencyList = function() {
 
@@ -177,10 +177,10 @@ SquareGrid.prototype.neighborsToAdjacencyList = function() {
       var testY3 = ctx.numberToLocation(neighborNumber)[1];
       
       adjList[loc].push(neighborNumber);
-    })
-  }, this);
+    });
+  });
 
   return adjList;
-}
+};
 
 module.exports = SquareGrid;
