@@ -84,14 +84,22 @@ SquareGrid.prototype.tileToString = function(x,y, styleOpts) {
   // default to period
   var string = ".";
 
-  if(!this.passable(x,y) || (styleOpts.point_to && styleOpts.point_to[id] === null) ) { // its a wall
+  if(!this.passable(x,y)) { // its a wall
+    // make wall full width
     string = dsalgo.utils.stringRepeat("#", styleOpts.width); 
+
   } else {
     // its not a wall its something else
 
-    if (id !== styleOpts.start && styleOpts.distances && styleOpts.distances[id] ){
+    if (styleOpts.distances && styleOpts.distances[id] ){
       string = styleOpts.distances[id];
-    } else if (id !== styleOpts.start && styleOpts.point_to && styleOpts.point_to[id].predecessor ){
+    } else if (styleOpts.start && styleOpts.start === id){
+        string = "A";
+    } else if (styleOpts.goal && styleOpts.goal === id){
+        string = "Z";
+    } else if (styleOpts.path && styleOpts.path[id]){
+        string = "@";
+    } else if (styleOpts.point_to && styleOpts.point_to[id].predecessor ){
       var pt = this.numberToLocation(styleOpts.point_to[id].predecessor);
       var x2 = pt[0], y2 = pt[1];
 
@@ -105,16 +113,6 @@ SquareGrid.prototype.tileToString = function(x,y, styleOpts) {
         string = "\u2191";
       }
 
-    } else if (styleOpts.start && styleOpts.start){
-      if(styleOpts.start == id){
-        string = "A";
-      }
-    } else if (styleOpts.goal && styleOpts.goal[id]){
-      if(styleOpts.goal == id){
-        string = "Z";
-      }
-    } else if (styleOpts.path && styleOpts.path[id]){
-        string = "@";
     }
 
     // why subtract one?

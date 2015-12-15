@@ -109,12 +109,12 @@ describe('Square Grid', function() {
     });
 
     describe("traversals", function() {
+      var graph = new Graph({
+        directed: true,
+        adjList: adjList
+      });
 
       it("bfs", function() {
-        var graph = new Graph({
-          directed: true,
-          adjList: adjList
-        });
 
         var start_number = sg.locationToNumber(8,7) ;
 
@@ -147,6 +147,43 @@ describe('Square Grid', function() {
 
         assert.deepEqual(toStr, bfsTEXT);
 
+      });
+
+      it("bfs early exit", function() {
+        var start_number = sg.locationToNumber(8,7) ;
+        var end_number = sg.locationToNumber(17,2) ;
+
+        var early_exit_traversal = new BFS(graph, start_number, function(v){
+          return v === end_number;
+        });
+
+        var earlyExitTEXT = dsalgo.utils.multilineString(function() {
+/*!
+. → → → ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← . . . . ####. . . . . . . 
+→ → → → → ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← . . . ####. . . . . . . 
+→ → → → → ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← Z . . . ####. . . . . . . 
+→ → ↑ ####↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← ← ← ← . . ####. . . . . . . 
+. ↑ ↑ ####→ ↓ ↓ ↓ ↓ ↓ ↓ ← ####↑ ← ← . . . ####. . . . . . . 
+. . ↑ ####→ → ↓ ↓ ↓ ↓ ← ← ####↑ ↑ . . . . ##########. . . . 
+. . . ####→ → → ↓ ↓ ← ← ← ####↑ . . . . . ##########. . . . 
+. . . ####→ → → A ← ← ← ← ####. . . . . . . . . . . . . . . 
+. . . ####→ → ↑ ↑ ↑ ← ← ← ####. . . . . . . . . . . . . . . 
+. . ↓ ####→ ↑ ↑ ↑ ↑ ↑ ← ← ####. . . . . . . . . . . . . . . 
+. ↓ ↓ ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ← ####. . . . . . . . . . . . . . . 
+→ ↓ ↓ ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ####. . . . . . . . . . . . . . . 
+→ → → → → ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ####. . . . . . . . . . . . . . . 
+→ → → → ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ####. . . . . . . . . . . . . . . 
+. → → ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ####. . . . . . . . . . . . . . . 
+*/
+});
+
+        var earlyToStr = sg.toString({
+          point_to : early_exit_traversal.info,
+          start : start_number,
+          goal : end_number,
+        });
+
+        assert.deepEqual(earlyToStr , earlyExitTEXT);
 
       });
 

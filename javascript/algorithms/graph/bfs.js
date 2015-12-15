@@ -22,20 +22,20 @@
 
 var Queue = require('../../data_structures/queue.js').doubly_linked_list;
 
-function BFS(graph, start_vertex) {
+function BFS(graph, start_vertex, fn) {
   this.start_vertex = start_vertex;
   if (graph.order() < 1) return Error("come on dog there's no nodes in this graph.");
 
-  var info = [];
+  this.info = [];
 
   for (var i = 0; i <= graph.order(); i++) {
-    info[i] = {
+    this.info[i] = {
       distance: null,
       predecessor: null
     };
   }
 
-  info[start_vertex].distance = 0;
+  this.info[start_vertex].distance = 0;
 
   var queue = new Queue();
   queue.enqueue(start_vertex);
@@ -55,13 +55,18 @@ function BFS(graph, start_vertex) {
 
     var v = queue.dequeue();
 
+    if(fn && fn(v)) {
+      // early exit condition
+      break;
+    } 
+
     for (var j = 0; j < graph.adjacency_list[v].length; j++) {
       var w = graph.adjacency_list[v][j];
 
-      if (info[w].distance === null) {
+      if (this.info[w].distance === null) {
 
-        info[w].distance = info[v].distance + 1;
-        info[w].predecessor = v;
+        this.info[w].distance = this.info[v].distance + 1;
+        this.info[w].predecessor = v;
         queue.enqueue(w);
       }
 
@@ -69,7 +74,6 @@ function BFS(graph, start_vertex) {
 
   }
 
-  this.info = info;
   return this;
 }
 
