@@ -127,7 +127,7 @@ var valueIfObject = function(a) {
   return a;
 };
 
-var heapPQDijkstra = function(graph, start_vertex, heapQueue, fn) {
+var heapPQDijkstra = function(graph, start_vertex, heapQueue, early_exit_condition, heuristicFn) {
 
   if (graph.order() < 1) return Error("come on dog there's no nodes in this graph.");
 
@@ -155,7 +155,7 @@ var heapPQDijkstra = function(graph, start_vertex, heapQueue, fn) {
     // because of course it is the lowest value in our min heap at the start of the algorithm
     var u = valueIfObject(queue.dequeue());
 
-    if(fn && fn(u)) {
+    if(early_exit_condition && early_exit_condition(u)) {
       // early exit condition
       break;
     } 
@@ -163,6 +163,8 @@ var heapPQDijkstra = function(graph, start_vertex, heapQueue, fn) {
     for (var k = 0; k < graph.adjacency_list[u].length; k++) {
       var v = graph.adjacency_list[u][k];
       var alt = info[u].distance + graph.get_edge_weight(u, v);
+
+      if(heuristicFn) alt = alt + heuristicFn(v);
 
       if (alt < info[v].distance) {
 
@@ -198,7 +200,7 @@ var heapPQDijkstra = function(graph, start_vertex, heapQueue, fn) {
 
 var binaryHeapPQ = require('../../data_structures/priority_queue.js').binaryHeap;
 
-var binaryHeapPQDijkstra = function(graph, start_vertex, fn) {
+var binaryHeapPQDijkstra = function(graph, start_vertex, early_exit_condition, heuristicFn) {
   // min priority queue
   var queue = new binaryHeapPQ(function(a, b) {
     if (a.priority != b.priority) return a.priority <= b.priority;
@@ -208,7 +210,7 @@ var binaryHeapPQDijkstra = function(graph, start_vertex, fn) {
     return a.order < b.order;
   });
 
-  var obj = heapPQDijkstra(graph, start_vertex, queue, fn);
+  var obj = heapPQDijkstra(graph, start_vertex, queue, early_exit_condition, heuristicFn);
 
   this.source = obj.sv;
   this.info = obj.nfo;

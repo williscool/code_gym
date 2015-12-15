@@ -218,10 +218,6 @@ describe('Square Grid', function() {
         sgD4.add_location_weight_to_graph_edge(x,y, forest_weight, graphD4);
       });
 
-      describe.skip("sets edge weigths correctly", function() {
-
-      });
-
       describe("traversals", function() {
         
         describe("djikstra", function() {
@@ -261,7 +257,7 @@ describe('Square Grid', function() {
             //
             // as opposed to only the ones we visit as we go along like in redblobgames implementation
             //
-            // but it give the correct shortest_path walk so im cool with it as long as this doesnt blow up and the path walk is correct
+            // but it gives the correct shortest_path walk so im cool with it as long as this doesnt blow up and the path walk is correct
             //
             assert.deepEqual( djikstraStr[8], djikstraTEXT[8]);
           });
@@ -293,10 +289,103 @@ describe('Square Grid', function() {
           });
         });
 
+    // NOTE: to self Greedy Best First Search is just bfs early exit with a priority queue and a heuristic cost added for nodes maybe do it sometime
+   
+
+    // https://en.wikipedia.org/wiki/A*_search_algorithm
+    // 
+    // http://www.redblobgames.com/pathfinding/a-star/introduction.html
+    // http://www.redblobgames.com/pathfinding/a-star/implementation.html
+    //
+    // this is tested with square_grid_test
+    //
+    // a* is literally djikstra with a heuristic of the distance to the goal added to the costs of the weights. 
+    // so I was too lazy to refactor it into its own object
+    //
+    // TODO: refactor Astar into its own object
+
+        describe("Astar", function() {
+          var start_number = sgD4.locationToNumber(1,4);
+          var end_number = sgD4.locationToNumber(7,8);
+
+          var astar_traversal = new Djikstra(graphD4, start_number, function(v){
+            return v === end_number;
+          }, function(v){
+            // manhattan distance 
+            // https://en.wikipedia.org/wiki/Taxicab_geometry
+
+            var from = sgD4.numberToLocation(v); // new vertex we are looking at
+            var to = sgD4.numberToLocation(end_number); // to goal
+            
+            var x1 = from[0], y1 = from[1];
+            var x2 = to[0], y2 = to[1];
+
+            return Math.abs(x1 - x2) +  Math.abs(y1 - y2);
+          });
+
+
+          it("draws graph traversal correctly", function() {
+          // my traversal gave a better path so i want to stick with it
+
+          var astarTEXT = dsalgo.utils.multilineString(function() {
+/*!
+→  ↓  ↓  ↓  ←  .  .  .  .  .  
+→  ↓  ↓  ↓  ←  .  .  .  .  .  
+→  ↓  ↓  ↓  ←  ←  ↓  .  .  .  
+→  ↓  ↓  ←  ←  ←  ←  ↓  .  .  
+→  A  ←  ←  ←  ←  ←  ←  ←  .  
+→  ↑  ↑  ←  ←  ←  ←  ←  .  .  
+→  ↑  ↑  ←  ←  ←  ←  ←  ←  .  
+↑  #########↑  ↑  ↑  ↑  ←  .  
+↑  #########↑  ↑  .  Z  .  .  
+↑  ←  ←  →  ↑  ←  .  .  .  .  
+*/
+});
+
+            var astarStr = sgD4.toString({
+              width: 3,
+              point_to : astar_traversal.info,
+              start : start_number,
+              goal : end_number,
+            });
+
+            assert.deepEqual( astarStr, astarTEXT);
+          });
+
+          it("draws path correctly", function() {
+          // NOTE: interestingly my priority queue gives a better path
+          // so ima stick with it
+          //
+          // again prolly reprioritizing the edges
+
+          var astarPathText = dsalgo.utils.multilineString(function() {
+/*!
+.  .  .  .  .  .  .  .  .  .  
+.  .  .  .  .  .  .  .  .  .  
+.  .  .  .  .  .  .  .  .  .  
+.  .  .  .  .  .  .  .  .  .  
+.  A  @  .  .  .  .  .  .  .  
+.  .  @  .  .  .  .  .  .  .  
+.  .  @  @  @  @  @  @  .  .  
+.  #########.  .  .  @  .  .  
+.  #########.  .  .  Z  .  .  
+.  .  .  .  .  .  .  .  .  .  
+*/
+});
+
+            var astarPathStr = sgD4.toString({
+              width: 3,
+              path : astar_traversal.shortest_path(end_number).order,
+              start : start_number,
+              goal : end_number,
+            });
+
+            assert.deepEqual( astarPathStr, astarPathText);
+          });
+        });
+
       });
     });
-
-    // NOTE: to self Greedy Best First Search is just bfs early exit with a priority queue and a heuristic cost added for nodes maybe do it sometime
 
   });
 
