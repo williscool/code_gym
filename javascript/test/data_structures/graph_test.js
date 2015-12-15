@@ -412,6 +412,17 @@ describe('Graph', function() {
 
     });
 
+    describe('default_weight config', function() {
+      var graph = new Graph({
+        default_weight: 1
+      });
+      graph.add_edge(0, 1);
+
+      it("sets an edge weight to a default value", function() {
+        assert.equal(1, graph.get_edge_weight(0, 1));
+      });
+    });
+
     describe('#set_edge_weight()', function() {
       var graph = new Graph();
       graph.add_edge(0, 1);

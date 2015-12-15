@@ -24,6 +24,15 @@ var naiveDijkstra = function(graph, start_vertex) {
   // 
   // is actually the same operation as a priority queue but it is a naive and unoptimized one
   // being that it is always going to look for the shortest distance in the queue
+  //
+  // also hindsight 20/20 this is also just a naive index priority queue. 
+  // so I could add a set that keeps track what nodes are still left to visit to the naive pq is and use the same interface as the other heaps
+  //
+  // but ill leave it for the nostalgia of writing a naive pq djikstra
+  //
+  // sidebar I really hate that so many people try to jump to teaching/ writing the most efficient version of an algorithm or data structure
+  //
+  // it robs the learner of the opportunity to learn the insights that lead the the optimal versions... but I digress
 
   if (graph.order() < 1) return Error("come on dog there's no nodes in this graph.");
 
@@ -118,7 +127,7 @@ var valueIfObject = function(a) {
   return a;
 };
 
-var heapPQDijkstra = function(graph, start_vertex, heapQueue) {
+var heapPQDijkstra = function(graph, start_vertex, heapQueue, fn) {
 
   if (graph.order() < 1) return Error("come on dog there's no nodes in this graph.");
 
@@ -146,6 +155,11 @@ var heapPQDijkstra = function(graph, start_vertex, heapQueue) {
     // because of course it is the lowest value in our min heap at the start of the algorithm
     var u = valueIfObject(queue.dequeue());
 
+    if(fn && fn(u)) {
+      // early exit condition
+      break;
+    } 
+
     for (var k = 0; k < graph.adjacency_list[u].length; k++) {
       var v = graph.adjacency_list[u][k];
       var alt = info[u].distance + graph.get_edge_weight(u, v);
@@ -166,6 +180,9 @@ var heapPQDijkstra = function(graph, start_vertex, heapQueue) {
         // havent had time to read it yet
         //
         // http://stackoverflow.com/a/18540646/511710
+        //
+        // another interesting critique of decreaseKey / changePriority 
+        // http://www.redblobgames.com/pathfinding/posts/reprioritize.html
         queue.changePriority(v, alt, v);
       }
 
@@ -181,7 +198,7 @@ var heapPQDijkstra = function(graph, start_vertex, heapQueue) {
 
 var binaryHeapPQ = require('../../data_structures/priority_queue.js').binaryHeap;
 
-var binaryHeapPQDijkstra = function(graph, start_vertex) {
+var binaryHeapPQDijkstra = function(graph, start_vertex, fn) {
   // min priority queue
   var queue = new binaryHeapPQ(function(a, b) {
     if (a.priority != b.priority) return a.priority <= b.priority;
@@ -191,7 +208,7 @@ var binaryHeapPQDijkstra = function(graph, start_vertex) {
     return a.order < b.order;
   });
 
-  var obj = heapPQDijkstra(graph, start_vertex, queue);
+  var obj = heapPQDijkstra(graph, start_vertex, queue, fn);
 
   this.source = obj.sv;
   this.info = obj.nfo;

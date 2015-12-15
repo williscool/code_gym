@@ -370,8 +370,12 @@ Graph.prototype.add_edge = function(from, to, weight, opts) {
    * */
 
   this.edges[edge_key] = true;
-  if (dsalgo.utils.isDefined(weight))
+
+  if (dsalgo.utils.isDefined(weight)){
     this.edges[edge_key] = weight;
+  } else if(dsalgo.utils.isDefined(this.config.default_weight)) {
+    this.edges[edge_key] = this.config.default_weight;
+  }
 
   /* final notes: 
    *

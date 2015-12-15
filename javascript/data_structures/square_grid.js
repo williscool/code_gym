@@ -91,14 +91,15 @@ SquareGrid.prototype.tileToString = function(x,y, styleOpts) {
   } else {
     // its not a wall its something else
 
-    if (styleOpts.distances && styleOpts.distances[id] ){
-      string = styleOpts.distances[id];
-    } else if (styleOpts.start && styleOpts.start === id){
+    if (styleOpts.start && styleOpts.start === id){
         string = "A";
     } else if (styleOpts.goal && styleOpts.goal === id){
         string = "Z";
-    } else if (styleOpts.path && styleOpts.path[id]){
+    } else if (styleOpts.path && styleOpts.path.indexOf(id) > -1  ) {
         string = "@";
+    } else if (styleOpts.distances && styleOpts.distances[id].distance){
+      string = styleOpts.distances[id].distance;
+      if(string === Number.POSITIVE_INFINITY) string = ".";
     } else if (styleOpts.point_to && styleOpts.point_to[id].predecessor ){
       var pt = this.numberToLocation(styleOpts.point_to[id].predecessor);
       var x2 = pt[0], y2 = pt[1];
@@ -115,10 +116,10 @@ SquareGrid.prototype.tileToString = function(x,y, styleOpts) {
 
     }
 
-    // why subtract one?
+    // why subtract?
     //
     // w are padding to the width. and we already added the character itself
-    string = string + dsalgo.utils.stringRepeat(" ", styleOpts.width - 1) ;
+    string = string + dsalgo.utils.stringRepeat(" ", styleOpts.width - string.length) ;
   }
 
   return string;
@@ -184,6 +185,20 @@ SquareGrid.prototype.neighborsToAdjacencyList = function() {
   });
 
   return adjList;
+};
+
+SquareGrid.prototype.add_location_weight_to_graph_edge = function (x,y, weight, graph){
+
+  var to = this.locationToNumber(x,y);
+  var ctx = this;
+
+  // need to add this weight for every edge that points this grid location / the vertex that represents it in the graph
+  this.neighbors(x,y).forEach(function (neighborArr){
+    var from = ctx.locationToNumber(neighborArr[0], neighborArr[1]);
+    graph.set_edge_weight(from,to,weight);
+  });
+
+  return this;
 };
 
 module.exports = SquareGrid;
