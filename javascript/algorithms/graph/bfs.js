@@ -22,13 +22,13 @@
 
 var Queue = require('../../data_structures/queue.js').doubly_linked_list;
 
-module.exports = function(graph, start_vertex) {
-
+function BFS(graph, start_vertex) {
+  this.start_vertex = start_vertex;
   if (graph.order() < 1) return Error("come on dog there's no nodes in this graph.");
 
   var info = [];
 
-  for (var i = 0; i < graph.order(); i++) {
+  for (var i = 0; i <= graph.order(); i++) {
     info[i] = {
       distance: null,
       predecessor: null
@@ -69,5 +69,21 @@ module.exports = function(graph, start_vertex) {
 
   }
 
-  return info;
+  this.info = info;
+  return this;
+}
+
+BFS.prototype.reconstruct_path = function(goal){
+
+  var current = goal;
+  var path = [current];
+  
+  while(current !== this.start_vertex){
+    current = this.info[current].predecessor;
+    path.push(current);
+  }
+
+  return path.reverse();
 };
+
+module.exports = BFS;

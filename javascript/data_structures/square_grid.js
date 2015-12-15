@@ -12,7 +12,11 @@ function SquareGrid(width, height) {
   this.walls = dsalgo.utils.simpleSet();
 
   // useful for enumerating all the locations around a location
-  this.DIRS = [[1,0], [0,1], [-1,0], [0,-1]];
+  // techincally the order of these doesnt matter but given the reveresing to create the zig zag pattern it will
+  //
+  // and im using redblobgames's example to test for correctness
+  // http://www.redblobgames.com/pathfinding/a-star/implementation.py
+  this.DIRS = [[1,0], [0,-1], [-1,0], [0,1]];
 
   if (!this.width || !this.height) {
     // without these we cant to proper bounds checking
@@ -75,46 +79,50 @@ SquareGrid.prototype.add_rect = function(x1,y1,x2,y2) {
 
 SquareGrid.prototype.tileToString = function(x,y, styleOpts) {
   
-  var id = this.locationID(x,y);
+  var id = this.locationToNumber(x,y);
 
   // default to period
   var string = ".";
 
-  if(!this.passable(x,y)) { // its a wall
+  if(!this.passable(x,y) || (styleOpts.point_to && styleOpts.point_to[id] === null) ) { // its a wall
     string = dsalgo.utils.stringRepeat("#", styleOpts.width); 
-  } else if (styleOpts.distances && styleOpts.distances[id]){
-    string = styleOpts.distances[id];
-  } else if (styleOpts.point_to && styleOpts.point_to[id]){
-    var pt = styleOpts.point_to[id];
-    var x2 = x + pt[0], y2 = y + pt[1];
+  } else {
+    // its not a wall its something else
 
-    if(x2 === x + 1){
-      string = "\u2192";
-    } else if (x2 === x - 1){
-      string = "\u2190";
-    } else if (y2 === y + 1){
-      string = "\u2193";
-    } else if (y2 === y - 1){
-      string = "\u2191";
-    }
-  } else if (styleOpts.start && styleOpts.start[id]){
-    if(styleOpts.start == id){
-      string = "A";
-    }
-  } else if (styleOpts.goal && styleOpts.goal[id]){
-    if(styleOpts.goal == id){
-      string = "Z";
-    }
-  } else if (styleOpts.path && styleOpts.path[id]){
-      string = "@";
-  }
+    if (id !== styleOpts.start && styleOpts.distances && styleOpts.distances[id] ){
+      string = styleOpts.distances[id];
+    } else if (id !== styleOpts.start && styleOpts.point_to && styleOpts.point_to[id].predecessor ){
+      var pt = this.numberToLocation(styleOpts.point_to[id].predecessor);
+      var x2 = pt[0], y2 = pt[1];
 
-  if(this.passable(x,y)) { // its not a wall
+      if(x2 === x + 1){
+        string = "\u2192";
+      } else if (x2 === x - 1){
+        string = "\u2190";
+      } else if (y2 === y + 1){
+        string = "\u2193";
+      } else if (y2 === y - 1){
+        string = "\u2191";
+      }
+
+    } else if (styleOpts.start && styleOpts.start){
+      if(styleOpts.start == id){
+        string = "A";
+      }
+    } else if (styleOpts.goal && styleOpts.goal[id]){
+      if(styleOpts.goal == id){
+        string = "Z";
+      }
+    } else if (styleOpts.path && styleOpts.path[id]){
+        string = "@";
+    }
+
     // why subtract one?
     //
     // w are padding to the width. and we already added the character itself
     string = string + dsalgo.utils.stringRepeat(" ", styleOpts.width - 1) ;
   }
+
   return string;
 };
 
@@ -173,9 +181,6 @@ SquareGrid.prototype.neighborsToAdjacencyList = function() {
         adjList[loc] = []; 
       }
 
-      var testX3 = ctx.numberToLocation(neighborNumber)[0];
-      var testY3 = ctx.numberToLocation(neighborNumber)[1];
-      
       adjList[loc].push(neighborNumber);
     });
   });

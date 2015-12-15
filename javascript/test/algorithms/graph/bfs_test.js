@@ -21,7 +21,8 @@ describe('Breadth First Search', function() {
       adjList: adjListToo
     });
 
-    var bfsInfo = new BFS(graph, 3);
+    var traversal = new BFS(graph, 3);
+    var bfsInfo = traversal.info;
 
     it("marks source vertex's predecessor as null", function() {
       assert.deepEqual(bfsInfo[3], {
@@ -63,6 +64,10 @@ describe('Breadth First Search', function() {
         distance: null,
         predecessor: null
       });
+    });
+
+    it('traces a traversal path correctly', function() {
+      assert.deepEqual(traversal.reconstruct_path(0), [3,2,4,1,0]);
     });
 
   });

@@ -2,6 +2,8 @@ var assert = require('assert');
 // var assert = require('chai').assert
 var SquareGrid = require('../../data_structures/square_grid.js');
 var dsalgo = require('../../utilities.js').dsalgo;
+var Graph = require('../../data_structures/graph.js');
+var BFS = require('../../algorithms/graph/bfs.js');
 
 describe('Square Grid', function() {
 
@@ -57,10 +59,10 @@ describe('Square Grid', function() {
       // (30 * 15) - 1 = 449
       it("can create an int id and and retrieve a location from it", function() {
         assert.equal(sg.locationToNumber(0,0), 0);
-        assert.deepEqual(sg.numberToLocation(0), [0,0])
+        assert.deepEqual(sg.numberToLocation(0), [0,0]);
 
-        assert.equal(sg.locationToNumber(29,14), 449 )
-        assert.deepEqual(sg.numberToLocation(449), [29, 14])
+        assert.equal(sg.locationToNumber(29,14), 449 );
+        assert.deepEqual(sg.numberToLocation(449), [29, 14]);
       });
 
       it("properly detects a location's status", function() {
@@ -68,41 +70,86 @@ describe('Square Grid', function() {
         var testX = sg.numberToLocation(449)[0];
         var testY = sg.numberToLocation(449)[1];
         
-        assert.equal(sg.passable(testX,testY), true )
+        assert.equal(sg.passable(testX,testY), true );
 
         var intID = sg.locationToNumber(21,0);
 
         var testX2 = sg.numberToLocation(intID)[0];
         var testY2 = sg.numberToLocation(intID)[1];
         
-        assert.equal(sg.passable(testX2,testY2), false )
+        assert.equal(sg.passable(testX2,testY2), false );
 
         var intIDagain = sg.locationToNumber(3,3);
 
         var testX3 = sg.numberToLocation(intIDagain)[0];
         var testY3 = sg.numberToLocation(intIDagain)[1];
         
-        assert.equal(sg.passable(testX3,testY3), false )
+        assert.equal(sg.passable(testX3,testY3), false );
       });
     });
 
+    var adjList = sg.neighborsToAdjacencyList();
+
     describe("can build an adjacency_list", function() {
-      var adjList = sg.neighborsToAdjacencyList();
 
       it("correctly", function() {
         
         var locationArr = sg.numberToLocation(adjList[0][0]);
         var locX = locationArr[0];
         var locY = locationArr[1];
-        assert.equal(sg.passable(locX, locY), true )
+        assert.equal(sg.passable(locX, locY), true );
       });
 
       it("and does not add non passable wall edges to adjacency_list", function() {
         var numberNextToWall = sg.locationToNumber(3,2);
         var wallNumber = sg.locationToNumber(3,3);
 
-        assert.equal(adjList[numberNextToWall].indexOf(wallNumber), -1 )
+        assert.equal(adjList[numberNextToWall].indexOf(wallNumber), -1 );
       });
+    });
+
+    describe("traversals", function() {
+
+      it("bfs", function() {
+        var graph = new Graph({
+          directed: true,
+          adjList: adjList
+        });
+
+        var start_number = sg.locationToNumber(8,7) ;
+
+        var traversal = new BFS(graph, start_number);
+
+        var bfsTEXT = dsalgo.utils.multilineString(function() {
+/*!
+→ → → → ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← ← ← ####↓ ↓ ↓ ↓ ↓ ↓ ↓ 
+→ → → → → ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← ← ← ← ####↓ ↓ ↓ ↓ ↓ ↓ ↓ 
+→ → → → → ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← ← ← ← ← ####→ ↓ ↓ ↓ ↓ ↓ ↓ 
+→ → ↑ ####↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← ← ← ← ← ← ####→ → ↓ ↓ ↓ ↓ ↓ 
+→ ↑ ↑ ####→ ↓ ↓ ↓ ↓ ↓ ↓ ← ####↑ ← ← ← ← ← ####→ → → ↓ ↓ ↓ ↓ 
+↑ ↑ ↑ ####→ → ↓ ↓ ↓ ↓ ← ← ####↑ ↑ ← ← ← ← ##########↓ ↓ ↓ ← 
+↑ ↑ ↑ ####→ → → ↓ ↓ ← ← ← ####↑ ↑ ↑ ← ← ← ##########↓ ↓ ← ← 
+↑ ↑ ↑ ####→ → → A ← ← ← ← ####↑ ↑ ↑ ↑ ← ← ← ← ← ← ← ← ← ← ← 
+↓ ↓ ↓ ####→ → ↑ ↑ ↑ ← ← ← ####↑ ↑ ↑ ↑ ↑ ← ← ← ← ← ← ← ← ← ← 
+↓ ↓ ↓ ####→ ↑ ↑ ↑ ↑ ↑ ← ← ####↑ ↑ ↑ ↑ ↑ ↑ ← ← ← ← ← ← ← ← ← 
+↓ ↓ ↓ ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ← ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ← ← ← ← ← ← ← ← 
+→ ↓ ↓ ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ← ← ← ← ← ← ← 
+→ → → → → ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ← ← ← ← ← ← 
+→ → → → ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ← ← ← ← ← 
+→ → → ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ← ← ← ← 
+*/
+});
+
+        var toStr = sg.toString({
+          point_to : traversal.info,
+          start : start_number,
+        });
+
+        assert.deepEqual(toStr, bfsTEXT);
+
+
+      });
+
     });
 
   });
