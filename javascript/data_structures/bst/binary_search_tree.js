@@ -5,14 +5,7 @@
 var dsalgo = require('../../utilities.js').dsalgo;
 var Queue = require('../queue.js').doubly_linked_list;
 var Stack = require('../stack.js').array;
-
-var Node = function(val) {
-  return {
-    left: null,
-    right: null,
-    value: val
-  };
-};
+var Node = require('./node.js');
 
 var BST = function() {
   this.root = null;
@@ -444,8 +437,78 @@ BST.prototype = {
     }
 	
     
-  }
+  }, balance: function () {
+    // balance the bst
+    // https://en.wikipedia.org/wiki/Day%E2%80%93Stout%E2%80%93Warren_algorithm
+    // http://www.geekviewpoint.com/java/bst/dsw_algorithm
+    // http://penguin.ewu.edu/~trolfe/DSWpaper/
+    // https://en.wikipedia.org/wiki/Tree_rotation
 
+    // degenerate tree == one where the nodes only have one child
+    // http://cobweb.cs.uga.edu/~eileen/2720/Notes/BST.ppt
+    // http://www.radford.edu/~mhtay/ITEC360/webpage/Lecture/06_p2_new.pdf
+    //
+    // https://en.wikipedia.org/wiki/Binary_tree#Types_of_binary_trees
+    //
+
+    // page 252 of Data Structures and Algorithms in Java
+    // https://github.com/DChaushev/Advanced-Data-Structures/blob/master/Day-Stout-Warren/src/BinarySearchTree.java
+    // http://web.eecs.umich.edu/~qstout/pap/CACM86.pdf
+    // http://courses.cs.vt.edu/cs2604/spring05/mcpherson/note/BalancingTrees.pdf
+    
+    if(root !== null) {
+      var pseudoRoot = new Node(null);
+      pseudoRoot.right = this.root;
+      this.makeSortedLinkedList(pseudoRoot); // aka backbone, aka vine, or tree_to_vine
+      this.makeCompleteBinaryTree(pseudoRoot, this.size()); // aka vine to tree
+      this.root = pseudoRoot.right;
+      pseudoRoot = null;
+    }
+
+  }, makeSortedLinkedList: function (startNode) {
+   
+    var tail = startNode;
+    var rest = tail.right;
+
+    while(rest !== null){
+
+      if(rest.left === null){
+        tail = rest;
+        rest = rest.right;
+      } else {
+        var temp = rest.left;
+        rest.left = temp.right;
+        temp.right = rest;
+        rest = temp;
+        tail.right = temp;
+      }
+    }
+
+  }, makeCompleteBinaryTree: function (startNode, size) {
+
+    // aka greatestPowerOf2LessThanN 
+    var numLeaves = size + 1 - Math.pow(2, Math.floor(Math.log(size + 1) / Math.log(2)));
+    this.compress(startNode, numLeaves);
+
+    size = size - numLeaves;
+
+    while(size > 1){
+      size = size >> 1;
+      this.compress(startNode, size);
+    }
+
+  }, compress: function (startNode, count) {
+     var scanner, child;
+     scanner = startNode;
+
+     for(var i = 0; i < count; i++){
+        child = scanner.right;
+        scanner.right = child.right;
+        scanner = scanner.right;
+        child.right = scanner.left;
+        scanner.left = child; 
+     }
+  }
 
   //TODO: fun interview style question to code for later
   //print a binary search tree representation with / \ and such

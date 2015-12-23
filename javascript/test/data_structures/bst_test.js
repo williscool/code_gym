@@ -1,5 +1,6 @@
 var assert = require('assert');
 var BST = require('../../data_structures/bst/binary_search_tree.js');
+var Node = require('../../data_structures/bst/node.js');
 
 describe('Binary Search Tree', function() {
 
@@ -183,6 +184,28 @@ describe('Binary Search Tree', function() {
       var bst = new BST();
       bst.add(60).add(45).add(70).add(65).add(67).add(80);
       assert.equal(bst.findSecondLargest().value, 70);
+    });
+  });
+
+  describe('#balance()', function() {
+    it("creates a sorted linked list aka a vine from the tree", function() {
+      var bst = new BST();
+      // http://www.radford.edu/~mhtay/ITEC360/webpage/Lecture/06_p2_new.pdf
+      bst.add(5).add(10).add(20).add(15).add(30).add(25).add(23).add(28).add(23).add(40);
+      assert.deepEqual(bst.toArray("level"), [5,10,20,15,30,25,40,23,28]);
+
+      var pseudoRoot = new Node(null);
+      pseudoRoot.right = bst.root;
+      bst.makeSortedLinkedList(pseudoRoot);
+      assert.deepEqual(bst.toArray("level"), [5,10,15,20,23,25,28,30,40]);
+    });
+
+    it("balances the tree", function() {
+      var bst = new BST();
+      // http://www.radford.edu/~mhtay/ITEC360/webpage/Lecture/06_p2_new.pdf
+      bst.add(5).add(10).add(20).add(15).add(30).add(25).add(23).add(28).add(23).add(40);
+      bst.balance();
+      assert.deepEqual(bst.toArray("level"), [25,20,30,10,23,28,40,5,15]);
     });
   });
 });
