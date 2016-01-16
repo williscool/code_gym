@@ -7,6 +7,10 @@
 // http://algs4.cs.princeton.edu/52trie/
 // http://algs4.cs.princeton.edu/lectures/52Tries.pdf
 // 
+//
+// how to get spelling suggestions out of a trie
+//
+// http://blog.afterthedeadline.com/2010/01/29/how-i-trie-to-make-spelling-suggestions/
 var dsalgo = require('../utilities.js').dsalgo;
 
 function Trie() {
