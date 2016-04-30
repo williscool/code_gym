@@ -30,4 +30,21 @@ var isPalindrome = function(str) {
     return isPalindrome(middleCharacters(str));
 };
 
-module.exports = isPalindrome;
+function isPalindromeIterative(str){
+    
+    var i = 0;
+    var j = str.length - 1;
+    
+    while(i <= j) {
+         if(str[i] !== str[j]) return false;
+         i++;
+         j--;
+    }
+    
+    return true;
+}
+
+module.exports = {
+  recursive: isPalindrome,
+  iterative: isPalindromeIterative
+};
