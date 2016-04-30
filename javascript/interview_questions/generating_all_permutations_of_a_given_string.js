@@ -22,20 +22,20 @@ function recursiveStringPermutations(prefix, string, stop){
 }
 
 // permutations of an array
-function permutations(array){
+function permutations(prefix, array, stop){
   
-  if (array.length === 0) return [[]];
+  if (array.length === stop) return [[]];
   
   var perms = [];
   
   for(var i = 0; i < array.length; i++) {
     
     var copy = array.slice(0);
-    var prefix = copy.splice(i,1);
+    prefix = copy.splice(i,1);
 
-    var rest = permutations(copy);
+    var rest = permutations(prefix, copy, stop);
     
-    for(var j = 0; j < rest.length ; j++) {
+    for(var j = 0; j < rest.length; j++) {
       perms.push(prefix.concat(rest[j])); 
     }
     
@@ -52,7 +52,10 @@ module.exports = {
   },
 
   recursive: function(str, len){
-    return permutations(str.split("")).map(function(arr){
+    var stop = 0;
+    if(dsalgo.utils.isDefined(len)) stop = len - 1;
+
+    return permutations([], str.split(""), stop).map(function(arr){
       return arr.join("")
     }); 
   }
