@@ -1,16 +1,19 @@
-### should be able to cd just to the directory and run npm test but can't yet 
+### should be able to cd just to the directory and run npm test but can't yet
 # re  https://github.com/ebdrup/mocha-jshint/issues/14
 #
 # https://nodejs.org/en/download/releases/
 language: node_js
 node_js:
+  - "8.4"
+  - "7"
+  - "6.11"
   - "5.1"
   - "4.2"
   - "0.12"
   - "0.11"
   - "0.10"
   - "iojs"
-install: 
+install:
   - npm install -g mocha
   - cd javascript/
   - npm install
