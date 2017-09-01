@@ -1,5 +1,7 @@
 /**
  * Implements a Singly Linked List
+ *
+ * @TODO add insertAt() and removeAt()
  * @class LinkedList
  */
 class LinkedList {

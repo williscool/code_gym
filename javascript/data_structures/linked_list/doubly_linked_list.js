@@ -7,6 +7,7 @@
  * Its makes said node both the head and the tail.
  *
  * Saves you a large amount of null checking in its methods. Pretty clever
+ * @TODO add insertAt() and removeAt()
  *
  * http://en.wikipedia.org/wiki/Doubly_linked_list
  * @class DoublyLinkedList
@@ -112,7 +113,7 @@ class DoublyLinkedList {
    * Time Complexity: O(1)
    *
    * @returns this
-   * @memberof LinkedList
+   * @memberof DoublyLinkedList
    */
   removeEnd() {
     if (this.tail) {
@@ -138,7 +139,7 @@ class DoublyLinkedList {
    * Space Complexity: O(n)
    *
    * @returns this
-   * @memberof LinkedList
+   * @memberof DoublyLinkedList
    */
   toArray() {
     const arr = [];
