@@ -1,7 +1,6 @@
 import LinkedList from './linked_list/singly_linked_list';
 
 /**
- *
  * Build a stack using a javascript array
  * @class stackWithArray
  *
@@ -15,6 +14,8 @@ class stackWithArray {
   /**
    * Push a new thing into the stack
    *
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
    * @param {any} thing
    * @returns this
    * @memberof stackWithArray
@@ -28,6 +29,8 @@ class stackWithArray {
   /**
    * Pops the thing on the top of the stack
    *
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
    * @param {any} topItem
    * @memberof stackWithArray
    */
@@ -35,8 +38,11 @@ class stackWithArray {
     let topItem;
     if (this.stack_top_index > -1) {
       topItem = this.items[this.stack_top_index];
-      this.items.splice(this.stack_top_index);
       // http://stackoverflow.com/questions/500606/javascript-array-delete-elements/500617#500617
+      // if you actually want to get rid of the item
+      // but this makes the runtime O(n)
+      // https://stackoverflow.com/questions/5175925/whats-the-time-complexity-of-array-splice-in-google-chrome
+      // this.items.splice(this.stack_top_index);
       this.stack_top_index -= 1;
     } else {
       throw Error('stack empty');
@@ -48,6 +54,7 @@ class stackWithArray {
   /**
    * Check if the stack is empty
    *
+   * Time Complexity: O(1)
    * @returns {bool} isEmpty
    * @memberof stackWithArray
    */
@@ -71,6 +78,8 @@ class stackWithLinkedList {
   /**
    * Push a new thing into the stack
    *
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
    * @param {any} thing
    * @returns this
    * @memberof stackWithLinkedList
@@ -84,7 +93,9 @@ class stackWithLinkedList {
   /**
    * Pops the thing on the top of the stack
    *
-   * @param {any} topItem
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   * @return {any} topItem
    * @memberof stackWithLinkedList
    */
   pop() {
@@ -103,6 +114,7 @@ class stackWithLinkedList {
   /**
    * Check if the stack is empty
    *
+   * Time Complexity: O(1)
    * @returns {bool} isEmpty
    * @memberof stackWithLinkedList
    */
