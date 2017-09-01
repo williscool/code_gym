@@ -1,1 +1,7 @@
-"extends": "airbnb-base/legacy"
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb-base",
+  "env": {
+    "mocha": true
+  }
+}

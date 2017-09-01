@@ -1,5 +1,5 @@
-var assert = require('assert');
-var Stack = require('../../data_structures/stack.js');
+import assert from 'assert';
+import Stack from '../../data_structures/stack';
 
 Object.keys(Stack).forEach(function(key) {
 
