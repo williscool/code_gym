@@ -15,9 +15,9 @@ node_js:
   - "iojs"
 install:
   - npm install -g mocha
+  - npm install -g yarn
   - cd javascript/
-  - npm install
+  - yarn
 script:
-  - cd ../
-  - mocha javascript/test/ --recursive
+  - mocha --compilers js:babel-register --recursive
 #  - npm test
