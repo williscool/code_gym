@@ -27,6 +27,16 @@ class stackWithArray {
   }
 
   /**
+   * View the item on the top of the stack
+   *
+   * @returns
+   * @memberof stackWithArray
+   */
+  peek() {
+    return this.items[0];
+  }
+
+  /**
    * Pops the thing on the top of the stack
    *
    * Time Complexity: O(1)
@@ -88,6 +98,16 @@ class stackWithLinkedList {
     this.stack_top_index = this.stack_top_index + 1;
     this.items.insertFront(thing);
     return this;
+  }
+
+  /**
+   * View the item on the top of the stack
+   *
+   * @returns
+   * @memberof stackWithArray
+   */
+  peek() {
+    return this.items.head.value;
   }
 
   /**

@@ -11,6 +11,14 @@ Object.keys(Stack).forEach((key) => {
       });
     });
 
+    describe('#peek()', () => {
+      const stack = new Stack[key]();
+      it('can show the value of the item on the top of the stack ', () => {
+        stack.push(42);
+        assert.equal(42, stack.peek());
+      });
+    });
+
     describe('#pop()', () => {
       const stack = new Stack[key]();
       stack.push(42);

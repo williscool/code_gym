@@ -1,157 +1,340 @@
-var DoublyLinkedList = require('./linked_list/doubly_linked_list.js');
+import DoublyLinkedList from './linked_list/doubly_linked_list';
+import StackTypes from './stack';
 
-function queueDll() {
-  this.items = new DoublyLinkedList();
-  this.length = 0;
+/**
+ * Queue with a doubly linked list
+ *
+ * @class queueDll
+ */
+class queueDll {
+  constructor() {
+    this.items = new DoublyLinkedList();
+    this.length = 0;
+  }
+
+  /**
+   * Add an item to the queue
+   *
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
+   * @param {any} val
+   * @returns this
+   * @memberof queueDll
+   */
+  enqueue(val) {
+    this.items.insertEnd(val);
+    this.length += 1;
+    return this;
+  }
+
+  /**
+   * Remove an item from the queue in First in First Out order
+   *
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
+   * @returns {any} value
+   * @memberof queueDll
+   */
+  dequeue() {
+    const value = this.peek();
+    this.items.removeFront();
+    this.length -= 1;
+    return value;
+  }
+
+
+  /**
+   * Just look at the first item in the queue
+   *
+   * Time Complexity: O(1)
+   *
+   * @returns {any} value
+   * @memberof queueDll
+   */
+  peek() {
+    return this.items.head.value;
+  }
+
+  /**
+   * See if the queue is empty
+   *
+   * Time Complexity: O(1)
+   *
+   * @returns {boolean} isEmpty
+   * @memberof queueDll
+   */
+  isEmpty() {
+    return this.length === 0;
+  }
+
+  /**
+   * Get an array representation of the queue
+   *
+   * Time Complexity: O(n)
+   *
+   * @returns {Array} queue
+   * @memberof queueDll
+   */
+  toArray() {
+    return this.items.toArray();
+  }
+
+  /**
+   * Used to invoke a function on each element of the queue
+   *
+   * Time Complexity: O(n)
+   *
+   * nice for testing things
+   *
+   * @param {any} fn
+   * @memberof queueDll
+   */
+  forEach(fn) {
+    this.toArray().forEach(fn);
+  }
+}
+/**
+ * Queue with an array
+ *
+ * @class queueArr
+ */
+class queueArr {
+  constructor() {
+    this.items = [];
+    this.length = 0;
+  }
+
+  /**
+   * Add an item to the queue
+   *
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
+   * @param {any} val
+   * @returns this
+   * @memberof queueArr
+   */
+  enqueue(val) {
+    this.items.push(val);
+    this.length += 1;
+    return this;
+  }
+
+  /**
+   * Remove an item from the queue in First in First Out order
+   *
+   * Time Complexity: O(1)
+   * Space Complexity: O(n)
+   *
+   * this is O(n) each time
+   * https://github.com/v8/v8/blob/master/src/array.js#L620
+   * which is fine for our academic purposes
+   * the way to allow both enqueue and dequeue to be constant time with an array
+   * backed queue is to use a fixed size queue and manipulate the front and rear indexs
+   * ala
+   * http://codereview.stackexchange.com/questions/64258/array-implementation-of-queue
+   *
+   * @returns {any} value
+   * @memberof queueArr
+   */
+  dequeue() {
+    const value = this.items.shift();
+    this.length -= 1;
+    return value;
+  }
+
+  /**
+   * Just look at the first item in the queue
+   *
+   * Time Complexity: O(1)
+   *
+   * @returns {any} value
+   * @memberof queueArr
+   */
+  peek() {
+    return this.items[this.items.length - 1];
+  }
+
+  /**
+   * See if the queue is empty
+   *
+   * Time Complexity: O(1)
+   *
+   * @returns {boolean} isEmpty
+   * @memberof queueArr
+   */
+  isEmpty() {
+    return this.length === 0;
+  }
+
+  /**
+   * Get an array representation of the queue
+   *
+   * Time Complexity: O(n)
+   *
+   * @returns {Array} queue
+   * @memberof queueArr
+   */
+  toArray() {
+    return this.items;
+  }
+
+  /**
+   * Used to invoke a function on each element of the queue
+   *
+   * Time Complexity: O(n)
+   *
+   * nice for testing things
+   *
+   * @param {any} fn
+   * @memberof queueArr
+   */
+  forEach(fn) {
+    this.toArray().forEach(fn);
+  }
 }
 
-queueDll.prototype.enqueue = function(val) {
-  this.items.insertEnd(val);
-  this.length++;
-  return this;
-};
+const Stack = StackTypes.linked_list;
+/**
+ * Makes a queue using 2 stacks.
+ *
+ * A favorite toy interview problem
+ *
+ * Why would you ever actually do this? Stackoverflow's got an answer
+ *
+ * https://stackoverflow.com/questions/7395400/why-do-we-do-implement-a-queue-using-2-stacks
+ * @class queueWithTwoStacks
+ */
+class queueWithTwoStacks {
+  constructor() {
+    this.in_stack = new Stack();
+    this.out_stack = new Stack();
+    this.length = 0;
+  }
 
-queueDll.prototype.dequeue = function() {
-  var value = this.peek();
-  this.items.removeFront();
-  this.length--;
-  return value;
-};
-
-queueDll.prototype.peek = function() {
-  return this.items.head.value;
-};
-
-queueDll.prototype.isEmpty = function() {
-  return this.length === 0;
-};
-
-queueDll.prototype.toArray = function() {
-  return this.items.toArray();
-};
-
-queueDll.prototype.forEach = function(fn) {
-  this.toArray().forEach(fn);
-};
-
-function queueArr() {
-  this.items = [];
-  this.length = 0;
-}
-
-queueArr.prototype.enqueue = function(val) {
-  this.items.push(val);
-  this.length++;
-  return this;
-};
-
-queueArr.prototype.dequeue = function() {
-  // this is O(n) each time
-  // https://github.com/v8/v8/blob/master/src/array.js#L620
-  //
-  // which is fine for our academic purposes 
-  //
-  // the way to allow both enqueue and dequeue to be constant time with an array
-  // backed queue is to use a fixed size queue and manipulate the front and rear indexs
-  //
-  // ala
-  //
-  // http://codereview.stackexchange.com/questions/64258/array-implementation-of-queue
-  // 
-  var value = this.items.shift();
-  this.length--;
-  return value;
-};
-
-queueArr.prototype.peek = function() {
-  return this.items[this.items.length - 1];
-};
-
-queueArr.prototype.isEmpty = function() {
-  return this.length === 0;
-};
-
-queueArr.prototype.toArray = function() {
-  return this.items;
-};
-
-queueArr.prototype.forEach = function(fn) {
-  this.toArray().forEach(fn);
-};
-
-var Stack = require('./stack.js').array;
-
-function queueWithTwoStacks(){
-  this.in_stack = new Stack();
-  this.out_stack = new Stack();
-  this.length = 0;
-}
-
-queueWithTwoStacks.prototype.enqueue = function(val) {
-  this.in_stack.push(val);
-  this.length++;
-  return this;
-};
-
-queueWithTwoStacks.prototype.dequeue = function() {
-  if(this.out_stack.isEmpty()){
-    // check if there is stuff on in stack and push on on out Stack
-    while (!this.in_stack.isEmpty()){
+  /**
+   * Moves things that where pushed fifo into the instack to the lifo outstack
+   *
+   * @memberof queueWithTwoStacks
+   */
+  flushInStackToOut() {
+    // check if there is stuff on in stack and push on out Stack
+    while (!this.in_stack.isEmpty()) {
       this.out_stack.push(this.in_stack.pop());
     }
   }
-  var value = this.out_stack.pop();
-  this.length--;
-  return value;
-};
 
-queueWithTwoStacks.prototype.peek = function() {
-  if(this.out_stack.isEmpty()){
-    // check if there is stuff on in stack and push on on out Stack
-    while (!this.in_stack.isEmpty()){
-      this.out_stack.push(this.in_stack.pop());
+  /**
+   * Take stuff from out_stack and return into an array
+   *
+   * @memberof queueWithTwoStacks
+   * @returns {any} output
+   */
+  flushOutStackToArray() {
+    const output = [];
+    while (!this.out_stack.isEmpty()) output.push(this.out_stack.pop());
+    return output;
+  }
+
+  /**
+   * Add an item to the queue
+   *
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
+   * @param {any} val
+   * @returns this
+   * @memberof queueWithTwoStacks
+   */
+  enqueue(val) {
+    this.in_stack.push(val);
+    this.length += 1;
+    return this;
+  }
+
+  /**
+   * Remove an item from the queue in First in First Out order
+   *
+   * Amoritized Time Complexity: O(1)
+   * Worst Case Time Complexity: O(n)
+   *
+   * @returns {any} value
+   * @memberof queueWithTwoStacks
+   */
+  dequeue() {
+    if (this.out_stack.isEmpty()) {
+      this.flushInStackToOut();
     }
-  }
-  
-  // first item in out stack is the first item its it representing array
-  return this.out_stack.items[0];
-};
-
-queueWithTwoStacks.prototype.isEmpty = function() {
-  return this.length === 0;
-};
-
-var dsalgo = require('../utilities.js').dsalgo;
-
-queueWithTwoStacks.prototype.toArray = function() {
-  // there are no items in the queue
-  if(this.out_stack.isEmpty() && this.in_stack.isEmpty()) return [];
-
-  // the out stack is empty just return the in_stack items
-  if(this.out_stack.isEmpty()){
-    // I use .push to make insert in my stack O(1). so items will be in order already
-    return this.in_stack.items;
+    const value = this.out_stack.pop();
+    this.length -= 1;
+    return value;
   }
 
-  var copy;
-  // in empty return out
-  if(this.in_stack.isEmpty()){
-    // js reverse mutes the array and would break the queue
-    copy = dsalgo.utils.arrayDeepCopy(this.out_stack.items);
-    return copy.reverse();
+  /**
+   * Just look at the first item in the queue
+   *
+   * Amoritized Time Complexity: O(1)
+   * Worst Case Time Complexity: O(n)
+   *
+   * @returns {any} value
+   * @memberof queueWithTwoStacks
+   */
+  peek() {
+    if (this.out_stack.isEmpty()) {
+      this.flushInStackToOut();
+    }
+    // first item in out stack is the first item its it representing array
+    return this.out_stack.peek();
   }
 
-  copy = dsalgo.utils.arrayDeepCopy(this.out_stack.items);
-  return copy.reverse().concat(this.in_stack.items);
-};
+  /**
+   * See if the queue is empty
+   *
+   * Time Complexity: O(1)
+   *
+   * @returns {boolean} isEmpty
+   * @memberof queueWithTwoStacks
+   */
+  isEmpty() {
+    return this.length === 0;
+  }
 
-queueWithTwoStacks.prototype.forEach = function(fn) {
-  this.toArray().forEach(fn);
-};
+  /**
+   * Get an array representation of the queue
+   *
+   * Time Complexity: O(n)
+   *
+   * @returns {Array} queue
+   * @memberof queueWithTwoStacks
+   */
+  toArray() {
+    let output = [];
+    // concat returns a copy with arrays concatenated.
+    // does not add in place. never forget
+    output = output.concat(this.flushOutStackToArray());
+    this.flushInStackToOut();
+    return output.concat(this.flushOutStackToArray());
+  }
 
+  /**
+   * Used to invoke a function on each element of the queue
+   *
+   * Time Complexity: O(n)
+   *
+   * nice for testing things
+   *
+   * @param {any} fn
+   * @memberof queueWithTwoStacks
+   */
+  forEach(fn) {
+    this.toArray().forEach(fn);
+  }
+}
 
-module.exports = {
+export default {
   doubly_linked_list: queueDll,
   array: queueArr,
-  with_two_stacks: queueWithTwoStacks
+  with_two_stacks: queueWithTwoStacks,
 };
