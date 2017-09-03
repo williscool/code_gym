@@ -38,6 +38,8 @@ class BST {
    * Time Complexity: O(log(n))
    * Space Complexity: O(1)
    *
+   * cleaner version inspired by here
+   *
    * @param {number} value - value to check if in BST
    * @returns this
    * @memberof BST
@@ -51,8 +53,7 @@ class BST {
 
     current = this.root;
 
-    // iterate forever until I say stop
-    while (true) {
+    while (current != null) {
       if (value < current.value) {
         // if no left, then new node goes on lef
         if (current.left === null) {
