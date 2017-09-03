@@ -3,12 +3,18 @@
  *
  * This version of a linked list is a version of a doubly linked list
  * where each node has links in both directions.
+ * @TODO add insertAt() and removeAt()
  *
  * https://en.wikipedia.org/wiki/Doubly_linked_list#Circular_doubly_linked_list
- * @TODO add insertAt() and removeAt()
  * @class CircularlyLinkedList
+ * @property {Object} head - the node at the head of the linked list
+ * @property {Object} tail - the node at the tail of the linked list
  */
 class CircularlyLinkedList {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+  }
   /**
    * Inserts an item at the front of the list linked list
    *

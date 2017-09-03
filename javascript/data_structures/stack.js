@@ -4,6 +4,8 @@ import LinkedList from './linked_list/singly_linked_list';
  * Build a stack using a javascript array
  * @class stackWithArray
  *
+ * @property {Array} items - the array we use to store the values in the stack
+ * @property {number} stack_top_index - array index of the top item in the stack
  */
 class stackWithArray {
   constructor() {
@@ -65,7 +67,7 @@ class stackWithArray {
    * Check if the stack is empty
    *
    * Time Complexity: O(1)
-   * @returns {bool} isEmpty
+   * @returns {boolean} isEmpty
    * @memberof stackWithArray
    */
   isEmpty() {
@@ -78,6 +80,8 @@ class stackWithArray {
  * Implements a stack with a linked list
  *
  * @class stackWithLinkedList
+ * @property {Array} items - the array we use to store the values in the stack
+ * @property {number} stack_top_index - used to tell how many items are in the stack
  */
 class stackWithLinkedList {
   constructor() {
@@ -95,7 +99,7 @@ class stackWithLinkedList {
    * @memberof stackWithLinkedList
    */
   push(thing) {
-    this.stack_top_index = this.stack_top_index + 1;
+    this.stack_top_index += 1;
     this.items.insertFront(thing);
     return this;
   }
@@ -135,7 +139,7 @@ class stackWithLinkedList {
    * Check if the stack is empty
    *
    * Time Complexity: O(1)
-   * @returns {bool} isEmpty
+   * @returns {boolean} isEmpty
    * @memberof stackWithLinkedList
    */
   isEmpty() {

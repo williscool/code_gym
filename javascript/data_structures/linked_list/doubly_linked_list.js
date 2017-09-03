@@ -11,6 +11,8 @@
  *
  * http://en.wikipedia.org/wiki/Doubly_linked_list
  * @class DoublyLinkedList
+ * @property {Object} head - the node at the head of the linked list
+ * @property {Object} tail - the node at the tail of the linked list
  */
 class DoublyLinkedList {
   constructor() {

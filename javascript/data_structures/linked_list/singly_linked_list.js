@@ -3,6 +3,8 @@
  *
  * @TODO add insertAt() and removeAt()
  * @class LinkedList
+ *
+ * @property {Object} head - the node at the head of the linked list
  */
 class LinkedList {
   constructor() {

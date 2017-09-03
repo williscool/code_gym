@@ -5,6 +5,8 @@ import StackTypes from './stack';
  * Queue with a doubly linked list
  *
  * @class queueDll
+ * @property {DoublyLinkedList} items - the DoublyLinkedList of items in the queue
+ * @property {number} length - the number of items in queue
  */
 class queueDll {
   constructor() {
@@ -99,6 +101,8 @@ class queueDll {
  * Queue with an array
  *
  * @class queueArr
+ * @property {Array} items - the array of items in the queue
+ * @property {number} length - the number of items in queue
  */
 class queueArr {
   constructor() {
@@ -206,6 +210,9 @@ const Stack = StackTypes.linked_list;
  *
  * https://stackoverflow.com/questions/7395400/why-do-we-do-implement-a-queue-using-2-stacks
  * @class queueWithTwoStacks
+ * @property {Stack.linked_list} in_stack - the items recently added to the queue
+ * @property {Stack.linked_list} out_stack - the items on there way out of the queue
+ * @property {number} length - the number of items in queue
  */
 class queueWithTwoStacks {
   constructor() {
