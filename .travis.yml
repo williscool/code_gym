@@ -8,7 +8,6 @@ node_js:
   - "7"
   - "6.11"
   - "5.1"
-  - "4.2"
 install:
   - npm install -g mocha
   - npm install -g yarn
