@@ -1,18 +1,12 @@
-### should be able to cd just to the directory and run npm test but can't yet
-# re  https://github.com/ebdrup/mocha-jshint/issues/14
-#
-# https://nodejs.org/en/download/releases/
+# Officially supporting the latest and the latest lts
 language: node_js
 node_js:
   - "8.4"
-  - "7"
   - "6.11"
-  - "5.1"
 install:
-  - npm install -g mocha
   - npm install -g yarn
+  - npm install -g mocha
   - cd javascript/
   - yarn
 script:
-  - mocha --compilers js:babel-register --recursive
-#  - npm test
+  - yarn test
