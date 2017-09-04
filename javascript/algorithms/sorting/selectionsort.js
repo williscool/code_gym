@@ -7,6 +7,8 @@ const swap = dsalgo.utils.swap;
 /**
  * Selection Sort
  *
+ * Time Complexity: O(n^2)
+ *
  * http://en.wikipedia.org/wiki/Selection_sort
  *
  * Rarely used as insertion sort is almost always better

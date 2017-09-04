@@ -9,6 +9,8 @@ const swap = dsalgo.utils.swap;
  *
  * Actually a fairly widely used algorithm for small arrays because its:
  *
+ * Time Complexity: O(n^2)
+ *
  * - Efficient for (quite) small data sets
  * - More efficient in practice than most other simple quadratic (i.e., O(n^2)) algorithms such as selection sort or bubble sort
  * - Stable; i.e., does not change the relative order of elements with equal keys
