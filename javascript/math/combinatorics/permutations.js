@@ -4,7 +4,7 @@
 // https://www.khanacademy.org/math/precalculus/prob_comb/combinatorics_precalc/v/permutation-formula
 //
 var factorial = require('../factorial.js').count_up_iterative;
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 
 // TODO: this function should throw an error is k is higher than n
 // https://github.com/josdejong/mathjs/blob/master/lib/function/probability/combinations.js#L47

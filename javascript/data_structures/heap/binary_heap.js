@@ -20,7 +20,7 @@
 // http://stackoverflow.com/questions/14719007/why-is-a-binary-heap-better-as-an-array-than-a-tree
 
 var util = require("util");
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 var seqsearch = require('../../algorithms/searching/sequentialsearch.js');
 
 function Heap(array, compfn) {
@@ -41,7 +41,7 @@ function Heap(array, compfn) {
   // always set to an array at first
   this.items = [];
 
-  // creation and updating of value set heavily influenced by 
+  // creation and updating of value set heavily influenced by
   //
   // http://stackoverflow.com/a/17581306/511710
   // http://stackoverflow.com/questions/17009056/how-to-implement-ologn-decrease-key-operation-for-min-heap-based-priority-queu#comment24578437_17009056
@@ -74,7 +74,7 @@ Heap.prototype.removeFromValueSet = function(key) {
 
 // updated swap here to also move index in value set
 // attaching it to the heap's prototype also allows the this value to bind properly
-// so that we are referencing the valueSet of this heap object 
+// so that we are referencing the valueSet of this heap object
 Heap.prototype.swap = function(list, firstIndex, secondIndex) {
   var firstItem = list[firstIndex];
   var secondItem = list[secondIndex];
@@ -147,7 +147,7 @@ Heap.prototype.siftUp = function(i) {
 
 Heap.prototype.insert = function(val) {
   this.items.push(val);
-  this.addToValueSet(val, this.size() - 1); //since we put the value at the end its starting vertex is the last of the array 
+  this.addToValueSet(val, this.size() - 1); //since we put the value at the end its starting vertex is the last of the array
   if (this.size() > 1) this.siftUp(this.items.length - 1);
   return this;
 };
@@ -157,8 +157,8 @@ Heap.prototype.siftDown = function(i, endPos) {
   // http://en.wikipedia.org/wiki/Binary_heap
   // interesting thing I've learned from research
   //
-  // Many implementations of heaps (even the one from the famous CLRS) 
-  // refer to what the main Heap (as opposed to the binary heap) wikipedia article 
+  // Many implementations of heaps (even the one from the famous CLRS)
+  // refer to what the main Heap (as opposed to the binary heap) wikipedia article
   // calls sift-down as heapify
 
   // extrema is semantic to largest or smallest
@@ -193,7 +193,7 @@ Heap.prototype.siftDown = function(i, endPos) {
     right = false;
 
   if (dsalgo.utils.isDefined(endPos)) {
-    // if either index value is greater than the endPos in a heapsort 
+    // if either index value is greater than the endPos in a heapsort
     //
     // it is in the sorted part the array and will be ignored for sifting the value down the heap
 
@@ -233,7 +233,7 @@ Heap.prototype.pop = function() {
   var retValue = this.items[0];
   var lastValue = this.items.pop();
 
-  // sift it down 
+  // sift it down
   if (this.size() > 0) {
     // pop off the last value to shorten array and set it as the new root of the array
     this.items[0] = lastValue;
@@ -300,11 +300,11 @@ Heap.prototype.reHeapifyAt = function(index) {
 };
 
 Heap.prototype.buildHeap = function() {
-  //  the old way I was doing it was the naive version 
+  //  the old way I was doing it was the naive version
   //
   //  in that you just call insert for each element in the array and its O(n log n)
-  //  
-  //  this is now the optimized version 
+  //
+  //  this is now the optimized version
   //  http://en.wikipedia.org/wiki/Binary_heap#Building_a_heap
 
   for (var i = (this.size() - 1) >> 1; i >= 0; i--) {
@@ -328,11 +328,11 @@ Heap.prototype.heapsort = function() {
 
   // sort the list
   //
-  // how? what do we know about a max heap? 
+  // how? what do we know about a max heap?
   //
   // the highest value is at the top...
   //
-  // so knowing that we can move that value to the end and then make another heap out of the remaining elements 
+  // so knowing that we can move that value to the end and then make another heap out of the remaining elements
   //
   // ignoring our previously swapped element
   //
@@ -346,7 +346,7 @@ Heap.prototype.heapsort = function() {
 
   var sorted_list = this.items;
 
-  // restore 
+  // restore
   this.items = heapified_list;
 
   return sorted_list;

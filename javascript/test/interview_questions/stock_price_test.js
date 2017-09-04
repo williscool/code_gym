@@ -1,6 +1,6 @@
 var assert = require('assert');
 var GetMaxProfit = require('../../interview_questions/stock_price.js');
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 
 describe('Stock Price Array Question', function() {
 

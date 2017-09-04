@@ -3,8 +3,8 @@
 // http://algs4.cs.princeton.edu/44sp/BellmanFordSP.java.html
 // http://www.geeksforgeeks.org/dynamic-programming-set-23-bellman-ford-algorithm/
 
-var dsalgo = require('../../utilities.js').dsalgo;
-var Queue = require('../../data_structures/queue.js').doubly_linked_list;
+var dsalgo = require('../../utilities.js').default;
+var Queue = require('../../data_structures/queue.js').default.doubly_linked_list;
 var SPW = require('./shortest_path_walker.js');
 var Graph = require('../../data_structures/graph.js');
 
@@ -40,7 +40,7 @@ function BF(graph, start_vertex) {
     onQuene[v] = false;
 
    // now we are in relax
-   
+
    for (var k = 0; k < graph.adjacency_list[v].length; k++) {
       var w = graph.adjacency_list[v][k];
 
@@ -72,7 +72,7 @@ function BF(graph, start_vertex) {
         var possibleCycleGraph = new Graph({
           directed: true
         });
-       
+
         Object.keys(info).forEach(function(vName){
           var pred = info[vName].predecessor;
           if(dsalgo.utils.isDefined(pred) && pred !== null){
@@ -80,13 +80,13 @@ function BF(graph, start_vertex) {
             possibleCycleGraph.add_edge(pred, vName, weight);
           }
         });
-      
+
         var cycles = possibleCycleGraph.cycles();
         if(cycles.length > 0){
           this.hasNegativeCycle = true;
-          this.negative_cycles = cycles; 
+          this.negative_cycles = cycles;
         }
-        
+
       }
     }
 

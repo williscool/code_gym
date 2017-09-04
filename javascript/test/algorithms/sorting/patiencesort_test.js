@@ -1,6 +1,6 @@
 var assert = require('assert');
 var patiencesort = require('../../../algorithms/sorting/patiencesort.js');
-var dsalgo = require('../../../utilities.js').dsalgo;
+var dsalgo = require('../../../utilities.js').default;
 
 describe('Patience Sort', function() {
 

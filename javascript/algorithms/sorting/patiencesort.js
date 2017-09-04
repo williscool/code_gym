@@ -1,11 +1,11 @@
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 var BinaryHeap = require('../../data_structures/heap/binary_heap.js').custom;
 // https://en.wikipedia.org/wiki/Patience_sorting
 
 // https://en.wikipedia.org/wiki/Patience_sorting#Python
 // https://en.wikipedia.org/wiki/Patience_sorting#Go
 function findPile(top_cards, n){
-  
+
   var pos = dsalgo.utils.bisectRight(top_cards,n);
   if (pos === top_cards.length){
     // add a new topcar
@@ -15,7 +15,7 @@ function findPile(top_cards, n){
     top_cards[pos] = n;
     return pos;
   }
-  
+
 }
 
 module.exports = function(list, LIS_MODE) {
@@ -26,8 +26,8 @@ module.exports = function(list, LIS_MODE) {
   var pile_id, newNum;
 
   for(var i = 0; i < list.length; i++) {
-    newNum = list[i]; 
-   
+    newNum = list[i];
+
     pile_id = findPile(top_cards,newNum);
 
     if( pile_id === -1 ) {
@@ -36,9 +36,9 @@ module.exports = function(list, LIS_MODE) {
     } else {
       piles[pile_id].push(newNum);
     }
-  
+
   }
-  
+
   if(LIS_MODE){
     return top_cards;
   }
@@ -48,7 +48,7 @@ module.exports = function(list, LIS_MODE) {
   var heap = new BinaryHeap([], function(a, b) {
     return a.value <= b.value;
   });
-  
+
   for(var j = 0; j < piles.length; j++) {
     heap.insert({
       pile_id: j,
@@ -61,7 +61,7 @@ module.exports = function(list, LIS_MODE) {
   var num, pid, obj;
 
   while(heap.size() > 0) {
-    obj = heap.pop(); 
+    obj = heap.pop();
     num = obj.value;
     pid = obj.pile_id;
 
@@ -75,7 +75,7 @@ module.exports = function(list, LIS_MODE) {
         value: num
       });
     }
-      
+
   }
 
   return result;

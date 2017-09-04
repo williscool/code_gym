@@ -1,10 +1,10 @@
 // http://en.wikipedia.org/wiki/Kruskal%27s_algorithm
 // http://algs4.cs.princeton.edu/43mst/
 
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 var UF = require('../../algorithms/graph/uf.js').weighted_quick_union_with_path_halving;
 
-var Queue = require('../../data_structures/queue.js').doubly_linked_list;
+var Queue = require('../../data_structures/queue.js').default.doubly_linked_list;
 var binaryHeapPQ = require('../../data_structures/priority_queue.js').binaryHeap;
 
 // inspired by http://algs4.cs.princeton.edu/43mst/KruskalMST.java.html

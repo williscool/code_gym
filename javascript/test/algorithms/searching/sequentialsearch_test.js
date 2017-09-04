@@ -1,6 +1,6 @@
 var assert = require('assert');
 var seqsearch = require('../../../algorithms/searching/sequentialsearch.js');
-var dsalgo = require('../../../utilities.js').dsalgo;
+var dsalgo = require('../../../utilities.js').default;
 
 describe('Sequential Search', function() {
 
@@ -26,7 +26,7 @@ describe('Sequential Search', function() {
       var value = array[Math.floor(array.length / 2)];
 
       // we cant be sure there are no dupes since the array is random
-      //  so we cant ask for a specfic index. 
+      //  so we cant ask for a specfic index.
       //  but we can make sure that the answer we get is not false
       //
       assert(seqsearch(array, value) !== false);

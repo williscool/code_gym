@@ -1,6 +1,6 @@
 // walks calculates shortest paths
 // based on the info object my graph traversals return
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 
 function shortestPath(info, source, target_vertex) {
 
@@ -13,7 +13,7 @@ function shortestPath(info, source, target_vertex) {
   }
 
   var currVertInfo = info[target_vertex];
-  // need to keep track of the vertex in the list. 
+  // need to keep track of the vertex in the list.
   // it wont be at its corresponding index in the array
   //
   // i.e. {vertex:6, distance: "1.51", predecessor: 3}
@@ -37,7 +37,7 @@ function shortestPath(info, source, target_vertex) {
 
     // need this break for the case of having added the source who has no predecessor
     //
-    // ahem. in js 0 == false so if zero is a vertex 
+    // ahem. in js 0 == false so if zero is a vertex
     // that can be checked that could fuck things up with out a proper defined check
 
     if (currVertInfo.predecessor === null) break;
@@ -59,7 +59,7 @@ function shortestPath(info, source, target_vertex) {
 
   path_info.order = [];
 
-  // unforunately now this will all go to hell if there is a vertex named order 
+  // unforunately now this will all go to hell if there is a vertex named order
   // but for our academic purposes of just learning how this algorithm works that is ok
   list.forEach(function(val) {
     var vert = val.vertex;

@@ -1,12 +1,12 @@
 // https://www.interviewcake.com/question/merging-ranges
-var dsalgo = require('../utilities.js').dsalgo;
+var dsalgo = require('../utilities.js').default;
 
 function MergingMeetings(list) {
   // sort the list and break ties with the ending time
   list.sort(function(a,b){
     if (a[0] != b[0]) return  a[0] > b[0];
     return  a[1] > b[1];
-  }); 
+  });
 
   var merged_meetings = [];
 
@@ -30,10 +30,10 @@ function MergingMeetings(list) {
       merged_meetings.push(currently_merging_meeting_arr);
       currently_merging_meeting_arr = meeting_arr;
     }
-      
-  
+
+
   });
-  
+
   merged_meetings.push(currently_merging_meeting_arr);
   return merged_meetings ;
 };

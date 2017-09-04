@@ -1,6 +1,6 @@
 var assert = require('assert');
 var radixsort = require('../../../algorithms/sorting/radixsort.js');
-var dsalgo = require('../../../utilities.js').dsalgo;
+var dsalgo = require('../../../utilities.js').default;
 
 describe('Radix Sort', function() {
 

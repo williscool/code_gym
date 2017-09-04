@@ -1,5 +1,5 @@
 // http://en.wikipedia.org/wiki/Merge_sort
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 var swap = dsalgo.utils.swap;
 
 // inspired by http://www.nczonline.net/blog/2012/10/02/computer-science-and-javascript-merge-sort/
@@ -67,7 +67,7 @@ var bottomUp = function(list) {
   for (blockSize = 1; blockSize < len; blockSize = (blockSize * 2)) {
 
     // we want to take all of the elements as long as we dont go out of bounds
-    // if we were to do len - blocksize then we would miss the last iteration in some cases where 
+    // if we were to do len - blocksize then we would miss the last iteration in some cases where
     // the right side is smaller than the left
     for (i = 0; i < len; i = i + (blockSize * 2)) {
       // javascript list slice is not inclusive of the element at the end index that you give it

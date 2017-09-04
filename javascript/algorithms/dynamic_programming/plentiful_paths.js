@@ -1,5 +1,5 @@
-var dsalgo = require('../../utilities.js').dsalgo;
-// http://wcipeg.com/wiki/Dynamic_programming 
+var dsalgo = require('../../utilities.js').default;
+// http://wcipeg.com/wiki/Dynamic_programming
 // http://wcipeg.com/wiki/Dynamic_programming#Example:_recursive_solution_to_Plentiful_Paths
 
 function rPP(A,x,y){
@@ -44,7 +44,7 @@ function iPP(A,M,N) {
           memo[x][y] = A[x][y] + Math.max( memo[x - 1][y], memo[x][y-1]);
         }
       }
-	  
+
     }
   }
 

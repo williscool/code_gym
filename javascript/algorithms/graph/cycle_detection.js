@@ -2,7 +2,7 @@
 //
 // http://www.geeksforgeeks.org/detect-cycle-in-a-graph/
 
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 var onStack; // used to keep track of nodes we looked at before in directed graph version of dfs cyclecheck
 
 // checks for if a cycle exists and returns an array representing the cycle if so. if not it returns an empty array
@@ -13,12 +13,12 @@ var onStack; // used to keep track of nodes we looked at before in directed grap
 // http://www.geeksforgeeks.org/detect-cycle-in-a-graph/
 //
 // updated to be more like http://algs4.cs.princeton.edu/41graph/Cycle.java.html
-// 
+//
 // so inspired by this http://stackoverflow.com/questions/8935323/detecting-cycles-of-a-graphmaybe-directed-or-undirected-in-haskell
 //
 // I went looking for a better solution than having side effects
 //
-// so inspired by these 
+// so inspired by these
 //
 // http://matt.might.net/articles/by-example-continuation-passing-style/
 // http://www.2ality.com/2012/06/continuation-passing-style.html
@@ -26,7 +26,7 @@ var onStack; // used to keep track of nodes we looked at before in directed grap
 // I thought about the way my dfs pass a function to show display the order the nodes were visited in
 //
 // and I ended up with an algorithm that finds the first cycle reachable from each vertex. pretty neat
-// 
+//
 // I could use a side effect array inside of the DFS to check if we've found one cycle to determine if we've already found one but that would defeat the not having a side effect purpose lol
 //
 function DFSCycleCheck(graph, v, parent, visited, edgeTo, fn) {
@@ -46,17 +46,17 @@ function DFSCycleCheck(graph, v, parent, visited, edgeTo, fn) {
       var cycle = [];
       // while x isDefined and not w
       for (var x = v; x && x != w; x = edgeTo[x]) {
-        cycle.push(x); 
+        cycle.push(x);
       }
-      cycle.push(w); 
-      cycle.push(v); 
+      cycle.push(w);
+      cycle.push(v);
       fn(cycle);
       return cycle;
     }
   }
 
   if(graph.directed) onStack[v] = false;
-  return fn([]); 
+  return fn([]);
 }
 
 // http://algs4.cs.princeton.edu/41graph/Cycle.java.html
@@ -70,11 +70,11 @@ function selfLoop(graph) {
           loop.push(v);
           loop.push(v);
           return loop;
-        } 
+        }
       }
   }
 
-  return []; 
+  return [];
 }
 
 // http://algs4.cs.princeton.edu/41graph/Cycle.java.html
@@ -88,18 +88,18 @@ function parallelEdges(graph) {
         var w = graph.adjacency_list[v][i];
         if(!dsalgo.utils.isDefined(seenEdge[graph.edge_key(v,w)])){
           seenEdge[graph.edge_key(v,w)] = 0;
-        } 
+        }
         if (seenEdge[graph.edge_key(v,w)] > 2) {
           var cycle = [];
           cycle.push(v);
           cycle.push(w);
           cycle.push(v);
           return cycle;
-        } 
+        }
         seenEdge[graph.edge_key(v,w)]++;
       }
   }
-  return []; 
+  return [];
 }
 
 module.exports = {
@@ -143,6 +143,6 @@ module.exports = {
     }
 
     return cycles;
-  } 
+  }
 
 };

@@ -1,6 +1,6 @@
 var assert = require('assert');
 var Graph = require('../../data_structures/graph.js');
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 
 describe('Graph', function() {
 

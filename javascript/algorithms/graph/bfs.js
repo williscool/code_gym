@@ -20,7 +20,7 @@
 // fun observation level order traversing a binary search tree is a depth first search
 // but for depth first search on a graph a node can be connected to more than 2 other nodes
 
-var Queue = require('../../data_structures/queue.js').doubly_linked_list;
+var Queue = require('../../data_structures/queue.js').default.doubly_linked_list;
 
 function BFS(graph, start_vertex, fn) {
   this.start_vertex = start_vertex;
@@ -45,7 +45,7 @@ function BFS(graph, start_vertex, fn) {
 
   // As long as the queue is not empty:
   //  Repeatedly dequeue a vertex v from the queue.
-  //  
+  //
   //  For each neighbor w of v that has not been visited:
   //     Set distance to 1 greater than v's distance
   //     Set predecessor to v
@@ -58,7 +58,7 @@ function BFS(graph, start_vertex, fn) {
     if(fn && fn(v)) {
       // early exit condition
       break;
-    } 
+    }
 
     for (var j = 0; j < graph.adjacency_list[v].length; j++) {
       var w = graph.adjacency_list[v][j];
@@ -81,7 +81,7 @@ BFS.prototype.reconstruct_path = function(goal){
 
   var current = goal;
   var path = [current];
-  
+
   while(current !== this.start_vertex){
     current = this.info[current].predecessor;
     path.push(current);

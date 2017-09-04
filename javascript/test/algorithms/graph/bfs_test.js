@@ -1,7 +1,7 @@
 var assert = require('assert');
 var BFS = require('../../../algorithms/graph/bfs.js');
 var Graph = require('../../../data_structures/graph.js');
-var dsalgo = require('../../../utilities.js').dsalgo;
+var dsalgo = require('../../../utilities.js').default;
 
 describe('Breadth First Search', function() {
 

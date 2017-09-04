@@ -1,5 +1,5 @@
 // http://en.wikipedia.org/wiki/Selection_sort
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 var swap = dsalgo.utils.swap;
 
 module.exports = function(list) {

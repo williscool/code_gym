@@ -1,6 +1,6 @@
 // https://en.wikipedia.org/wiki/Dynamic_programming#Egg_dropping_puzzle
 //
-// inspired by: 
+// inspired by:
 // http://www.geeksforgeeks.org/dynamic-programming-set-11-egg-dropping-puzzle/
 // http://datagenetics.com/blog/july22012/index.html
 // https://www.khanacademy.org/computer-programming/egg-drop-problem/1256290535
@@ -25,11 +25,11 @@ function naiveEggDrop(n, k) {
 
   // n eggs
   for (x = 1; x <= k; x++) {
-    // the left side of Math.max function assumes the egg broke at this floor and recursively calls the eggDrop function again on the remaining (k - 1) floors with the remaining (n-1) eggs 
+    // the left side of Math.max function assumes the egg broke at this floor and recursively calls the eggDrop function again on the remaining (k - 1) floors with the remaining (n-1) eggs
     //
     // the right side on the other hand assumes this floor DID NOT break the egg and recursively calls the eggDrop function with n eggs (since none broke) and (k - x)  floors. Where x is the interval we are skipping because if this floor did not break the egg neither will the floors below it
     //
-    // The 1 represents the "cost" of one trial of whether or not the egg breaks  
+    // The 1 represents the "cost" of one trial of whether or not the egg breaks
     // re: Lemma 5 from the Sniedovich paper/website
 
     result = 1 + Math.max(naiveEggDrop(n - 1, x - 1), naiveEggDrop(n, k - x));
@@ -40,9 +40,9 @@ function naiveEggDrop(n, k) {
   return min;
 }
 
-// O(nk) because we cache 
+// O(nk) because we cache
 // inspired by: http://algohub.blogspot.in/2014/05/egg-drop-puzzle.html
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 var cache = dsalgo.utils.simpleSet();
 
 function dpEggDrop(n, k) {

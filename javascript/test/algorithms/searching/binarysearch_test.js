@@ -1,7 +1,7 @@
 var assert = require('assert');
 var BSearch = require('../../../algorithms/searching/binarysearch.js');
 var quicksort = require('../../../algorithms/sorting/quicksort.js');
-var dsalgo = require('../../../utilities.js').dsalgo;
+var dsalgo = require('../../../utilities.js').default;
 
 Object.keys(BSearch).forEach(function(key) {
 
@@ -32,7 +32,7 @@ Object.keys(BSearch).forEach(function(key) {
           precision: 0
         });
 
-        // of course our illustrious binary search only works on sorted lists. 
+        // of course our illustrious binary search only works on sorted lists.
         // so we must sort this list first;
 
         array = quicksort(array);
@@ -40,7 +40,7 @@ Object.keys(BSearch).forEach(function(key) {
         var value = array[array.length >> 2 + 1];
 
         // we cant be sure there are no dupes since the array is random
-        //  so we cant ask for a specfic index. 
+        //  so we cant ask for a specfic index.
         //  but we can make sure that the answer we get is not false
         //
         assert(binarysearch(array, value) !== false);

@@ -1,6 +1,6 @@
 var assert = require('assert');
 var heapsort = require('../../../algorithms/sorting/heapsort.js');
-var dsalgo = require('../../../utilities.js').dsalgo;
+var dsalgo = require('../../../utilities.js').default;
 
 describe('heap Sort', function() {
 

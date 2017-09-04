@@ -1,7 +1,7 @@
 var assert = require('assert');
 var PrimMST = require('../../../algorithms/graph/prim.js');
 var Graph = require('../../../data_structures/graph.js');
-var dsalgo = require('../../../utilities.js').dsalgo;
+var dsalgo = require('../../../utilities.js').default;
 
 // http://algs4.cs.princeton.edu/43mst/images/mst.png
 var EWG = dsalgo.utils.requireText(__dirname, '../../../data/graph/tinyEWG.txt');

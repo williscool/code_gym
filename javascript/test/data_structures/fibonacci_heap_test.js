@@ -1,5 +1,5 @@
 var assert = require('assert');
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 
 var FibonacciHeap = require('../../data_structures/heap/fibonacci_heap.js');
 

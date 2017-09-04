@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 // I mean this is litterally a sorting function for an array
 // its gotta mutate it
-import { dsalgo } from '../../utilities';
+import dsalgo from '../../utilities';
 
 const swap = dsalgo.utils.swap;
 

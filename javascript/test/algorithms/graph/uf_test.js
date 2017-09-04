@@ -1,6 +1,6 @@
 var assert = require('assert');
 var UF = require('../../../algorithms/graph/uf.js');
-var dsalgo = require('../../../utilities.js').dsalgo;
+var dsalgo = require('../../../utilities.js').default;
 
 // http://algs4.cs.princeton.edu/15uf/images/dynamic-connectivity-tiny.png
 var connections = dsalgo.utils.requireText(__dirname, '../../../data/graph/tinyUF.txt');

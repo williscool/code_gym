@@ -5,7 +5,7 @@
 //
 // Why not just do it all at once and disable the ones I dont plan to use much by default
 // that is what is going on here
-var dsalgo = require('../utilities.js').dsalgo;
+var dsalgo = require('../utilities.js').default;
 
 function Graph(conf) {
   this.config = conf || {
@@ -31,7 +31,7 @@ function Graph(conf) {
   if (this.config.enable_matrices) {
 
     if (!this.config.max_size) {
-      // without this we couldnt set enough zeros and the represention 
+      // without this we couldnt set enough zeros and the represention
       // could end up not properly representing the graph
       throw new Error("You must set a maximum size of graph you want to be able to represent.");
     }
@@ -53,7 +53,7 @@ function Graph(conf) {
   if (this.config.ewg) {
     this.add_from_graph_data(this.config.ewg);
   }
-  
+
   if (this.config.graphData) {
     this.add_from_graph_data(this.config.graphData);
   }
@@ -75,12 +75,12 @@ Graph.prototype.add_from_graph_data = function(list) {
     var info = line.match(/\S+/g);
     var from = info[0];
     var to = info[1];
-    
+
     // NOTE:
     // im abusing the fact that this will be undefined in the unwieghted graph depictions
-    // so I dont have add an unweighted or weighted flag to the graph object. 
+    // so I dont have add an unweighted or weighted flag to the graph object.
     // making a not in case it blows up in my face yet again
-    var weight = parseFloat(info[2]); 
+    var weight = parseFloat(info[2]);
 
     var u = dsalgo.utils.makeNumberUnlessNaN(from);
     var v = dsalgo.utils.makeNumberUnlessNaN(to);
@@ -89,15 +89,15 @@ Graph.prototype.add_from_graph_data = function(list) {
     context.add_edge(u, v, weight);
   });
 
-  // Why is this here? 
-  // because I base a lot of my test cases for my graph algorithms off of the 
+  // Why is this here?
+  // because I base a lot of my test cases for my graph algorithms off of the
   // excellent digraph section of the website for sedgwick && wayne's algorithms textbook
   //
   // http://algs4.cs.princeton.edu/42digraph/
   //
   // The digraph object they use [1] depends on another object called a BAG [2]
   //
-  // and while techically the ordering of vertices in the adjacency list of a graph is arbitrary that 
+  // and while techically the ordering of vertices in the adjacency list of a graph is arbitrary that
   // data structure happens to read them off in the opposite order they were added to it
   //
   // so to match their out put I added this
@@ -161,7 +161,7 @@ Graph.prototype.edge_key = function(from, to) {
   var key_arr = [from, to];
 
   if (!this.directed) {
-    // if the graph is not a directed graph we will always refer to 
+    // if the graph is not a directed graph we will always refer to
     // the vertex with lowest sorted value first
     key_arr = key_arr.sort();
   }
@@ -244,7 +244,7 @@ Graph.prototype.add_edge = function(from, to, weight, opts) {
   //
   // from here http://bigocheatsheet.com/#graphs
   //
-  // - adjacency list 
+  // - adjacency list
   // - adjacency matrix
   // - edge list
   // - incidence matrix
@@ -258,14 +258,14 @@ Graph.prototype.add_edge = function(from, to, weight, opts) {
   //
   // switched to 0 indexed of course
 
-  /* i.e 
+  /* i.e
   *   var adjacency_list = [
-  *       [1,2,3], 
-  *       [0], 
-  *       [0,3], 
+  *       [1,2,3],
+  *       [0],
+  *       [0,3],
   *       [0,2]
   *    ];
-  * 
+  *
   * */
 
   this.adjacency_list[from].push(to);
@@ -317,12 +317,12 @@ Graph.prototype.add_edge = function(from, to, weight, opts) {
    * */
 
   // so you need to know which numbered edge you are working with to make this work
-  // there are severals ways to go about knowing that. 
+  // there are severals ways to go about knowing that.
   //
   // 1. know all the edges ahead of time and add them in order increasing n by 1 everytime
   // 2. store seperately the number as you go
   // 3, find it out when you add that next.
-  // 
+  //
   // Finding it out when you add the next would require you knowing the length of the largest
   // which is waaaay more computationally expensive than just keeping a count
 
@@ -341,24 +341,24 @@ Graph.prototype.add_edge = function(from, to, weight, opts) {
   }
 
   /* edge hash for handling duplicates aka graphs that do not support parallel edges
-   * 
+   *
    * to avoid duplicates like [0,1] [1,0] with a set
    *
    * http://www.quora.com/What-are-the-various-approaches-you-can-use-to-build-adjacency-list-representation-of-a-undirected-graph-having-time-complexity-better-than-O-V-*-E-and-avoiding-duplicate-edges
    *
    * here's how we sort the name of the keys by their "string Unicode code points" https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
    *
-   * then store them as a string key in a set. 
+   * then store them as a string key in a set.
    *
    * The value of that key could be the cost of the edge but for now merely stores existance
-   * 
+   *
    * very similar to add_edge from the boost c++ library
    *
    * http://www.boost.org/doc/libs/1_58_0/libs/graph/doc/adjacency_list.html
    *
-   * would have liked to link to so similar code in the boost library 
+   * would have liked to link to so similar code in the boost library
    *   but I dont understand C++ well enough to know what the fuck is going on in there lol
-   * 
+   *
    * var edge_set =  {"01":true, "02":true, "03":true, "23":true};
    *
    * later updated to support edges having weights
@@ -377,7 +377,7 @@ Graph.prototype.add_edge = function(from, to, weight, opts) {
     this.edges[edge_key] = this.config.default_weight;
   }
 
-  /* final notes: 
+  /* final notes:
    *
    * 1. here are some other nifty graph data structures you could use
    *
@@ -451,9 +451,9 @@ Graph.prototype.hasCycle = function() {
 
 /*
   this.vertex_list().forEach(function(v){
-    
+
     if (marked[v]) return;
-    
+
     DFS(ctx, v, marked, function(v,w) {
       component_id[v] = count;
     });
@@ -465,11 +465,11 @@ Graph.prototype.hasCycle = function() {
  * */
 var UF = require('../algorithms/graph/uf.js').weighted_quick_union_with_path_compression;
 Graph.prototype.components = function() {
-  // based on 
+  // based on
   // http://algs4.cs.princeton.edu/41graph/CC.java.html
   var uf = new UF(this.order());
-  
-  var ctx = this; 
+
+  var ctx = this;
 
   this.edge_set_list().forEach(function(edge_key) {
     var v = ctx.edge_key_vertex_from(edge_key);
@@ -480,7 +480,7 @@ Graph.prototype.components = function() {
 
     uf.union(v,w);
   });
-  
+
   var compSet = dsalgo.utils.simpleSet();
 
   for(var v in this.vertex_list()) {
@@ -520,7 +520,7 @@ Graph.prototype.reverse = function(revConf){
     // why? we need to add this from the object we've already created and we dont want to duplicate stuff
     if(!revConf && this.config.adjList || this.config.graphData) {
       delete confCopy.adjList;
-      delete confCopy.graphData; 
+      delete confCopy.graphData;
     }
 
     var reverse = new Graph(confCopy);
@@ -528,12 +528,12 @@ Graph.prototype.reverse = function(revConf){
     this.adjacency_list_iterator(function(v,w){
         reverse.add_edge(w,v);
     });
-    
+
     return reverse;
 };
 
 // TODO: would also like to add the rest check functionality from here http://algs4.cs.princeton.edu/43mst/KruskalMST.java.html
-// to this. 
+// to this.
 //
 // cut check for prim and kruskal
 module.exports = Graph;

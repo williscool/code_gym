@@ -1,5 +1,5 @@
 var assert = require('assert');
-var dsalgo = require('../../../utilities.js').dsalgo;
+var dsalgo = require('../../../utilities.js').default;
 var Graph = require('../../../data_structures/graph.js');
 var SCC = require('../../../algorithms/graph/strongly_connected_components.js');
 
@@ -18,7 +18,7 @@ Object.keys(SCC).forEach(function(key) {
         directed: true,
         reverse_adjacency_lists: true
       });
-      
+
       var components = sccFn(graph);
 
       // http://algs4.cs.princeton.edu/42digraph/BruteSCC.java.html

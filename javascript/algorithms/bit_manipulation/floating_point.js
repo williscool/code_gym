@@ -19,7 +19,7 @@
 //  http://blog.chewxy.com/2014/02/24/what-every-javascript-developer-should-know-about-floating-point-numbers/
 // http://bartaz.github.io/ieee754-visualization/
 //
-// also shout out cs 2110 from gatech for inspiration of the function interfaces  
+// also shout out cs 2110 from gatech for inspiration of the function interfaces
 
 // the exponent can be negative or positive in addition to whether the number itself is negative or positive
 //
@@ -27,13 +27,13 @@
 //
 // http://www.docjar.com/html/api/sun/misc/FloatingDecimal.java.html
 //  http://steve.hollasch.net/cgindex/coding/ieeefloat.html
-//  
+//
 // Lord it took me a lot of resources to understand this shit lol
 //
 // doesn't handle lots of edge and corner cases but is fine for educational purposes
 //
 
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 
 function dectoieee(dec) {
 
@@ -147,7 +147,7 @@ function dectoieee(dec) {
     mantissa = bin_fraction_chars.join("").substr(1);
 
   } else {
-    // fraction and integer part zero   
+    // fraction and integer part zero
     // special case denoted by zeros for for everything
     exponent_num = 0;
     mantissa = 0;
@@ -163,7 +163,7 @@ function dectoieee(dec) {
     exponent = "00000000";
   }
 
-  // ieee single precision 
+  // ieee single precision
   // need this cuz js drops leading zero
   if (exponent.length != 8) {
     extra_zeros = dsalgo.utils.simpleArrayFill(0, 8 - exponent.length);

@@ -1,6 +1,6 @@
 var assert = require('assert');
 var countingsort = require('../../../algorithms/sorting/countingsort.js');
-var dsalgo = require('../../../utilities.js').dsalgo;
+var dsalgo = require('../../../utilities.js').default;
 
 describe('Counting Sort', function() {
 

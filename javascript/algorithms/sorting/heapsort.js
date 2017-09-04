@@ -2,7 +2,7 @@
 // http://rosettacode.org/wiki/Sorting_algorithms/Heapsort
 // and the CLRS intro to algorithms version
 
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 var maxHeap = require('../../data_structures/heap/binary_heap.js').max;
 var swap = dsalgo.utils.swap;
 

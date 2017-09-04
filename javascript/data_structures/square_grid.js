@@ -4,7 +4,7 @@
 //  http://www.redblobgames.com/pathfinding/a-star/_introduction.js
 //
 // NOTE: the code for redblobgames python SquareGrid make extensive use of tuples which javascript aint got right now
-var dsalgo = require('../utilities.js').dsalgo;
+var dsalgo = require('../utilities.js').default;
 
 function SquareGrid(width, height) {
   this.width = width;
@@ -36,7 +36,7 @@ SquareGrid.prototype.passable = function(x,y) {
        pass = false;
      }
   }
-  return pass; 
+  return pass;
 };
 
 SquareGrid.prototype.locationID = function(x,y) {
@@ -49,9 +49,9 @@ SquareGrid.prototype.neighbors = function(x,y) {
 
   this.DIRS.forEach(function(dir){
     var x2 = x + dir[0], y2 = y + dir[1];
-    
+
     if(ctx.in_bounds(x2,y2) && ctx.passable(x2,y2)){
-      neighbors.push([x2,y2]); 
+      neighbors.push([x2,y2]);
     }
   });
 
@@ -78,7 +78,7 @@ SquareGrid.prototype.add_rect = function(x1,y1,x2,y2) {
 };
 
 SquareGrid.prototype.tileToString = function(x,y, styleOpts) {
-  
+
   var id = this.locationToNumber(x,y);
 
   // default to period
@@ -86,7 +86,7 @@ SquareGrid.prototype.tileToString = function(x,y, styleOpts) {
 
   if(!this.passable(x,y)) { // its a wall
     // make wall full width
-    string = dsalgo.utils.stringRepeat("#", styleOpts.width); 
+    string = dsalgo.utils.stringRepeat("#", styleOpts.width);
 
   } else {
     // its not a wall its something else
@@ -146,7 +146,7 @@ SquareGrid.prototype.toString = function(opts) {
 
   this.grid_iterator(function(x,y){
     text += ctx.tileToString(x,y, conf);
-    if(x === ctx.width - 1) text += "\n";  
+    if(x === ctx.width - 1) text += "\n";
   });
 
   return text;
@@ -170,14 +170,14 @@ SquareGrid.prototype.neighborsToAdjacencyList = function() {
   var adjList = [];
 
   this.grid_iterator(function(x,y){
-    var loc = ctx.locationToNumber(x,y); 
+    var loc = ctx.locationToNumber(x,y);
     ctx.neighbors(x,y).forEach(function (locationIDArr){
-      var x2 = locationIDArr[0]; 
-      var y2 = locationIDArr[1]; 
-      var neighborNumber = ctx.locationToNumber(x2,y2); 
+      var x2 = locationIDArr[0];
+      var y2 = locationIDArr[1];
+      var neighborNumber = ctx.locationToNumber(x2,y2);
 
       if (!dsalgo.utils.isDefined(adjList[loc])){
-        adjList[loc] = []; 
+        adjList[loc] = [];
       }
 
       adjList[loc].push(neighborNumber);

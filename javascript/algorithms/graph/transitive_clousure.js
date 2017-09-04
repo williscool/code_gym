@@ -5,7 +5,7 @@
 //
 // TODO: for funsies print out the table of whats reachable like in TransitiveClosure.java
 
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 var DFS = require('./dfs.js').recursive;
 
 function TransitiveClosure(graph){
@@ -17,10 +17,10 @@ function TransitiveClosure(graph){
     tc[start_vertex] = {};
 
     DFS(graph, start_vertex, tc[start_vertex], function(v,w){ });
-     
+
   });
 
   return tc;
-} 
+}
 
 module.exports = TransitiveClosure;

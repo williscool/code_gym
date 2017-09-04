@@ -1,5 +1,5 @@
 var assert = require('assert');
-var dsalgo = require('../../../utilities.js').dsalgo;
+var dsalgo = require('../../../utilities.js').default;
 var Graph = require('../../../data_structures/graph.js');
 var topoSort = require('../../../algorithms/graph/topological_sort.js');
 

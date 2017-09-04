@@ -6,12 +6,12 @@
 // https://gabormakrai.wordpress.com/2015/02/11/experimenting-with-dijkstras-algorithm/
 // https://github.com/gabormakrai/dijkstra-performance
 
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 var SPW = require('./shortest_path_walker.js');
 
 var naiveDijkstra = function(graph, start_vertex) {
   this.source = start_vertex;
-  // lightly influenced by 
+  // lightly influenced by
   // https://github.com/gabormakrai/dijkstra-performance/blob/master/Dijkstra.md
 
   // "Dijkstra's original algorithm does not use a min-priority queue and runs in time O(V^2)"
@@ -19,13 +19,13 @@ var naiveDijkstra = function(graph, start_vertex) {
   // That statement on the wikipedia article is actually technically false.
   //
   // The operation done on line 15 in the pseudocode http://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#Pseudocode
-  // 
-  // "u ← vertex in Q with min dist[u]" 
-  // 
+  //
+  // "u ← vertex in Q with min dist[u]"
+  //
   // is actually the same operation as a priority queue but it is a naive and unoptimized one
   // being that it is always going to look for the shortest distance in the queue
   //
-  // also hindsight 20/20 this is also just a naive index priority queue. 
+  // also hindsight 20/20 this is also just a naive index priority queue.
   // so I could add a set that keeps track what nodes are still left to visit to the naive pq is and use the same interface as the other heaps
   //
   // but ill leave it for the nostalgia of writing a naive pq djikstra
@@ -81,11 +81,11 @@ var naiveDijkstra = function(graph, start_vertex) {
 
     // fun fact that is TERRIBLY (that is not at all) explained in wikipedia article
     //
-    // at the first iteration of this function after you've added everything to the queue 
+    // at the first iteration of this function after you've added everything to the queue
     // the distance in the distance info array of all the verticies is POSITIVE_INFINITY
     //
     // EXCEPT ONE which is our source vertex.
-    // 
+    //
     // So which vertex does this loop start with?... of course its the source
     //
     // (I later noticed its mentioned in a comment beside the pseudocode on that line but still not well explained lol)
@@ -158,7 +158,7 @@ var heapPQDijkstra = function(graph, start_vertex, heapQueue, early_exit_conditi
     if(early_exit_condition && early_exit_condition(u)) {
       // early exit condition
       break;
-    } 
+    }
 
     for (var k = 0; k < graph.adjacency_list[u].length; k++) {
       var v = graph.adjacency_list[u][k];
@@ -178,12 +178,12 @@ var heapPQDijkstra = function(graph, start_vertex, heapQueue, early_exit_conditi
         // you could also keep that in the info array if you were using non number keys
         //
         // Also fun fact a 2007 paper from UT (djikstra's long time post) says doing decreaseKey
-        // doesn't perform as well on many graphs wonder what their implementation was? 
+        // doesn't perform as well on many graphs wonder what their implementation was?
         // havent had time to read it yet
         //
         // http://stackoverflow.com/a/18540646/511710
         //
-        // another interesting critique of decreaseKey / changePriority 
+        // another interesting critique of decreaseKey / changePriority
         // http://www.redblobgames.com/pathfinding/posts/reprioritize.html
         queue.changePriority(v, alt, v);
       }

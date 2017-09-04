@@ -1,5 +1,5 @@
 var assert = require('assert');
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 
 var BinomialHeap = require('../../data_structures/heap/binomial_heap.js');
 

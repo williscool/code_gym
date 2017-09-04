@@ -1,7 +1,7 @@
 // http://en.wikipedia.org/wiki/Depth-first_search
 
-var dsalgo = require('../../utilities.js').dsalgo;
-var Stack = require('../../data_structures/stack.js').array;
+var dsalgo = require('../../utilities.js').default;
+var Stack = require('../../data_structures/stack.js').default.array;
 
 var iterative = function(graph, start_vertex) {
 
@@ -70,7 +70,7 @@ var recursive = function(graph, v, visited, fn, order) {
 
   visited[v] = true;
 
-  if(altOrder && order == "pre") fn(v, w); 
+  if(altOrder && order == "pre") fn(v, w);
 
   for (var i in graph.adjacency_list[v]) {
 
@@ -83,7 +83,7 @@ var recursive = function(graph, v, visited, fn, order) {
 
   }
 
-  if(altOrder && order == "post") fn(v, w); 
+  if(altOrder && order == "post") fn(v, w);
 };
 
 var recursive_info = function(graph, start_vertex) {
@@ -128,7 +128,7 @@ function recursivetoArray(graph, orderName) {
 
   graph.vertex_list().forEach(function (vertexLabel){
     vertexLabel = dsalgo.utils.makeNumberUnlessNaN(vertexLabel);
-    
+
     if (marked[vertexLabel]) return;
 
     DFS(graph, vertexLabel, marked, function(v,w) {
@@ -143,7 +143,7 @@ function recursivetoArray(graph, orderName) {
 
 module.exports = {
   iterative: iterative,
-  recursive: recursive, 
+  recursive: recursive,
   recursive_info : recursive_info,
   recursive_to_array : recursivetoArray
 };

@@ -1,4 +1,4 @@
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 // https://en.wikipedia.org/wiki/Longest_common_substring_problem
 // http://wcipeg.com/wiki/Longest_common_substring
 // https://github.com/mission-peace/interview/blob/master/src/com/interview/dynamic/LongestCommonSubstring.java
@@ -10,11 +10,11 @@ function iLCS(x,y) {
   var N = y.length;
 
   var memo = dsalgo.utils.create2Darray(M + 1,N + 1);
-  
+
   var max = 0;
   for(var i = 0; i <= M; i++) {
     for(var j = 0;  j <= N ; j++){
-	  
+
       if(i === 0 || j === 0) {
         memo[i][j] = 0;
       } else if(x[i - 1] === y[j - 1]){
@@ -23,12 +23,12 @@ function iLCS(x,y) {
       } else {
         memo[i][j] = 0;
       }
-	  
+
     }
   }
 
   return max;
- 
+
 }
 
 

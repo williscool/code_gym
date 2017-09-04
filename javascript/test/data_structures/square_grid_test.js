@@ -1,7 +1,7 @@
 var assert = require('assert');
 // var assert = require('chai').assert
 var SquareGrid = require('../../data_structures/square_grid.js');
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 var Graph = require('../../data_structures/graph.js');
 var BFS = require('../../algorithms/graph/bfs.js');
 var Djikstra = require('../../algorithms/graph/djikstra.js').binaryHeapPQ;
@@ -35,21 +35,21 @@ describe('Square Grid', function() {
     it("text representation is correct", function() {
         var TEXT = dsalgo.utils.multilineString(function() {
 /*!
-. . . . . . . . . . . . . . . . . . . . . ####. . . . . . . 
-. . . . . . . . . . . . . . . . . . . . . ####. . . . . . . 
-. . . . . . . . . . . . . . . . . . . . . ####. . . . . . . 
-. . . ####. . . . . . . . . . . . . . . . ####. . . . . . . 
-. . . ####. . . . . . . . ####. . . . . . ####. . . . . . . 
-. . . ####. . . . . . . . ####. . . . . . ##########. . . . 
-. . . ####. . . . . . . . ####. . . . . . ##########. . . . 
-. . . ####. . . . . . . . ####. . . . . . . . . . . . . . . 
-. . . ####. . . . . . . . ####. . . . . . . . . . . . . . . 
-. . . ####. . . . . . . . ####. . . . . . . . . . . . . . . 
-. . . ####. . . . . . . . ####. . . . . . . . . . . . . . . 
-. . . ####. . . . . . . . ####. . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . ####. . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . ####. . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . ####. . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . ####. . . . . . .
+. . . . . . . . . . . . . . . . . . . . . ####. . . . . . .
+. . . . . . . . . . . . . . . . . . . . . ####. . . . . . .
+. . . ####. . . . . . . . . . . . . . . . ####. . . . . . .
+. . . ####. . . . . . . . ####. . . . . . ####. . . . . . .
+. . . ####. . . . . . . . ####. . . . . . ##########. . . .
+. . . ####. . . . . . . . ####. . . . . . ##########. . . .
+. . . ####. . . . . . . . ####. . . . . . . . . . . . . . .
+. . . ####. . . . . . . . ####. . . . . . . . . . . . . . .
+. . . ####. . . . . . . . ####. . . . . . . . . . . . . . .
+. . . ####. . . . . . . . ####. . . . . . . . . . . . . . .
+. . . ####. . . . . . . . ####. . . . . . . . . . . . . . .
+. . . . . . . . . . . . . ####. . . . . . . . . . . . . . .
+. . . . . . . . . . . . . ####. . . . . . . . . . . . . . .
+. . . . . . . . . . . . . ####. . . . . . . . . . . . . . .
 */
 });
 
@@ -70,21 +70,21 @@ describe('Square Grid', function() {
 
         var testX = sg.numberToLocation(449)[0];
         var testY = sg.numberToLocation(449)[1];
-        
+
         assert.equal(sg.passable(testX,testY), true );
 
         var intID = sg.locationToNumber(21,0);
 
         var testX2 = sg.numberToLocation(intID)[0];
         var testY2 = sg.numberToLocation(intID)[1];
-        
+
         assert.equal(sg.passable(testX2,testY2), false );
 
         var intIDagain = sg.locationToNumber(3,3);
 
         var testX3 = sg.numberToLocation(intIDagain)[0];
         var testY3 = sg.numberToLocation(intIDagain)[1];
-        
+
         assert.equal(sg.passable(testX3,testY3), false );
       });
     });
@@ -94,7 +94,7 @@ describe('Square Grid', function() {
     describe("can build an adjacency_list", function() {
 
       it("correctly", function() {
-        
+
         var locationArr = sg.numberToLocation(adjList[0][0]);
         var locX = locationArr[0];
         var locY = locationArr[1];
@@ -123,21 +123,21 @@ describe('Square Grid', function() {
 
         var bfsTEXT = dsalgo.utils.multilineString(function() {
 /*!
-→ → → → ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← ← ← ####↓ ↓ ↓ ↓ ↓ ↓ ↓ 
-→ → → → → ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← ← ← ← ####↓ ↓ ↓ ↓ ↓ ↓ ↓ 
-→ → → → → ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← ← ← ← ← ####→ ↓ ↓ ↓ ↓ ↓ ↓ 
-→ → ↑ ####↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← ← ← ← ← ← ####→ → ↓ ↓ ↓ ↓ ↓ 
-→ ↑ ↑ ####→ ↓ ↓ ↓ ↓ ↓ ↓ ← ####↑ ← ← ← ← ← ####→ → → ↓ ↓ ↓ ↓ 
-↑ ↑ ↑ ####→ → ↓ ↓ ↓ ↓ ← ← ####↑ ↑ ← ← ← ← ##########↓ ↓ ↓ ← 
-↑ ↑ ↑ ####→ → → ↓ ↓ ← ← ← ####↑ ↑ ↑ ← ← ← ##########↓ ↓ ← ← 
-↑ ↑ ↑ ####→ → → A ← ← ← ← ####↑ ↑ ↑ ↑ ← ← ← ← ← ← ← ← ← ← ← 
-↓ ↓ ↓ ####→ → ↑ ↑ ↑ ← ← ← ####↑ ↑ ↑ ↑ ↑ ← ← ← ← ← ← ← ← ← ← 
-↓ ↓ ↓ ####→ ↑ ↑ ↑ ↑ ↑ ← ← ####↑ ↑ ↑ ↑ ↑ ↑ ← ← ← ← ← ← ← ← ← 
-↓ ↓ ↓ ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ← ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ← ← ← ← ← ← ← ← 
-→ ↓ ↓ ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ← ← ← ← ← ← ← 
-→ → → → → ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ← ← ← ← ← ← 
-→ → → → ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ← ← ← ← ← 
-→ → → ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ← ← ← ← 
+→ → → → ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← ← ← ####↓ ↓ ↓ ↓ ↓ ↓ ↓
+→ → → → → ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← ← ← ← ####↓ ↓ ↓ ↓ ↓ ↓ ↓
+→ → → → → ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← ← ← ← ← ####→ ↓ ↓ ↓ ↓ ↓ ↓
+→ → ↑ ####↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← ← ← ← ← ← ####→ → ↓ ↓ ↓ ↓ ↓
+→ ↑ ↑ ####→ ↓ ↓ ↓ ↓ ↓ ↓ ← ####↑ ← ← ← ← ← ####→ → → ↓ ↓ ↓ ↓
+↑ ↑ ↑ ####→ → ↓ ↓ ↓ ↓ ← ← ####↑ ↑ ← ← ← ← ##########↓ ↓ ↓ ←
+↑ ↑ ↑ ####→ → → ↓ ↓ ← ← ← ####↑ ↑ ↑ ← ← ← ##########↓ ↓ ← ←
+↑ ↑ ↑ ####→ → → A ← ← ← ← ####↑ ↑ ↑ ↑ ← ← ← ← ← ← ← ← ← ← ←
+↓ ↓ ↓ ####→ → ↑ ↑ ↑ ← ← ← ####↑ ↑ ↑ ↑ ↑ ← ← ← ← ← ← ← ← ← ←
+↓ ↓ ↓ ####→ ↑ ↑ ↑ ↑ ↑ ← ← ####↑ ↑ ↑ ↑ ↑ ↑ ← ← ← ← ← ← ← ← ←
+↓ ↓ ↓ ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ← ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ← ← ← ← ← ← ← ←
+→ ↓ ↓ ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ← ← ← ← ← ← ←
+→ → → → → ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ← ← ← ← ← ←
+→ → → → ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ← ← ← ← ←
+→ → → ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ← ← ← ←
 */
 });
 
@@ -160,21 +160,21 @@ describe('Square Grid', function() {
 
         var earlyExitTEXT = dsalgo.utils.multilineString(function() {
 /*!
-. → → → ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← . . . . ####. . . . . . . 
-→ → → → → ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← . . . ####. . . . . . . 
-→ → → → → ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← Z . . . ####. . . . . . . 
-→ → ↑ ####↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← ← ← ← . . ####. . . . . . . 
-. ↑ ↑ ####→ ↓ ↓ ↓ ↓ ↓ ↓ ← ####↑ ← ← . . . ####. . . . . . . 
-. . ↑ ####→ → ↓ ↓ ↓ ↓ ← ← ####↑ ↑ . . . . ##########. . . . 
-. . . ####→ → → ↓ ↓ ← ← ← ####↑ . . . . . ##########. . . . 
-. . . ####→ → → A ← ← ← ← ####. . . . . . . . . . . . . . . 
-. . . ####→ → ↑ ↑ ↑ ← ← ← ####. . . . . . . . . . . . . . . 
-. . ↓ ####→ ↑ ↑ ↑ ↑ ↑ ← ← ####. . . . . . . . . . . . . . . 
-. ↓ ↓ ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ← ####. . . . . . . . . . . . . . . 
-→ ↓ ↓ ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ####. . . . . . . . . . . . . . . 
-→ → → → → ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ####. . . . . . . . . . . . . . . 
-→ → → → ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ####. . . . . . . . . . . . . . . 
-. → → ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ####. . . . . . . . . . . . . . . 
+. → → → ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← . . . . ####. . . . . . .
+→ → → → → ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← . . . ####. . . . . . .
+→ → → → → ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← Z . . . ####. . . . . . .
+→ → ↑ ####↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← ← ← ← . . ####. . . . . . .
+. ↑ ↑ ####→ ↓ ↓ ↓ ↓ ↓ ↓ ← ####↑ ← ← . . . ####. . . . . . .
+. . ↑ ####→ → ↓ ↓ ↓ ↓ ← ← ####↑ ↑ . . . . ##########. . . .
+. . . ####→ → → ↓ ↓ ← ← ← ####↑ . . . . . ##########. . . .
+. . . ####→ → → A ← ← ← ← ####. . . . . . . . . . . . . . .
+. . . ####→ → ↑ ↑ ↑ ← ← ← ####. . . . . . . . . . . . . . .
+. . ↓ ####→ ↑ ↑ ↑ ↑ ↑ ← ← ####. . . . . . . . . . . . . . .
+. ↓ ↓ ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ← ####. . . . . . . . . . . . . . .
+→ ↓ ↓ ####↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ####. . . . . . . . . . . . . . .
+→ → → → → ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ####. . . . . . . . . . . . . . .
+→ → → → ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ####. . . . . . . . . . . . . . .
+. → → ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ####. . . . . . . . . . . . . . .
 */
 });
 
@@ -192,7 +192,7 @@ describe('Square Grid', function() {
 
     describe('4th grid diagram from the redblobgames tutorial', function() {
       var sgD4 = new SquareGrid(10, 10);
-      
+
       sgD4.add_rect(1, 7, 4, 9);
 
       var adjListD4 = sgD4.neighborsToAdjacencyList();
@@ -202,13 +202,13 @@ describe('Square Grid', function() {
         adjList: adjListD4,
         default_weight: 1
       });
-  
+
       var heavy_weighted_points = [[3, 4], [3, 5], [4, 1], [4, 2],
-                    [4, 3], [4, 4], [4, 5], [4, 6], 
+                    [4, 3], [4, 4], [4, 5], [4, 6],
                     [4, 7], [4, 8], [5, 1], [5, 2],
-                    [5, 3], [5, 4], [5, 5], [5, 6], 
-                    [5, 7], [5, 8], [6, 2], [6, 3], 
-                    [6, 4], [6, 5], [6, 6], [6, 7], 
+                    [5, 3], [5, 4], [5, 5], [5, 6],
+                    [5, 7], [5, 8], [6, 2], [6, 3],
+                    [6, 4], [6, 5], [6, 6], [6, 7],
                     [7, 3], [7, 4], [7, 5]];
 
       var forest_weight = 5;
@@ -219,7 +219,7 @@ describe('Square Grid', function() {
       });
 
       describe("traversals", function() {
-        
+
         describe("djikstra", function() {
           var start_number = sgD4.locationToNumber(1,4);
           var end_number = sgD4.locationToNumber(7,8);
@@ -232,15 +232,15 @@ describe('Square Grid', function() {
           it("draws graph traversal correctly", function() {
           var djikstraTEXT = dsalgo.utils.multilineString(function() {
 /*!
-↓  ↓  ←  ←  ←  ←  ←  ←  ←  ←  
-↓  ↓  ←  ←  ←  ↑  ↑  ←  ←  ←  
-↓  ↓  ←  ←  ←  ←  ↑  ↑  ←  ←  
-↓  ↓  ←  ←  ←  ←  ←  ↑  ↑  .  
-→  A  ←  ←  ←  ←  .  .  .  .  
-↑  ↑  ←  ←  ←  ←  .  .  .  .  
-↑  ↑  ←  ←  ←  ←  ←  .  .  .  
-↑  #########↑  ←  ↓  .  .  .  
-↑  #########↓  ↓  ↓  Z  .  .  
+↓  ↓  ←  ←  ←  ←  ←  ←  ←  ←
+↓  ↓  ←  ←  ←  ↑  ↑  ←  ←  ←
+↓  ↓  ←  ←  ←  ←  ↑  ↑  ←  ←
+↓  ↓  ←  ←  ←  ←  ←  ↑  ↑  .
+→  A  ←  ←  ←  ←  .  .  .  .
+↑  ↑  ←  ←  ←  ←  .  .  .  .
+↑  ↑  ←  ←  ←  ←  ←  .  .  .
+↑  #########↑  ←  ↓  .  .  .
+↑  #########↓  ↓  ↓  Z  .  .
 ↑  ←  ←  ←  ←  ←  ←  ←  ←  .
 */
 });
@@ -265,16 +265,16 @@ describe('Square Grid', function() {
           it("draws path correctly", function() {
           var djikstraPathText = dsalgo.utils.multilineString(function() {
 /*!
-.  .  .  .  .  .  .  .  .  .  
-.  .  .  .  .  .  .  .  .  .  
-.  .  .  .  .  .  .  .  .  .  
-.  .  .  .  .  .  .  .  .  .  
-@  A  .  .  .  .  .  .  .  .  
-@  .  .  .  .  .  .  .  .  .  
-@  .  .  .  .  .  .  .  .  .  
-@  #########.  .  .  .  .  .  
-@  #########.  .  @  Z  .  .  
-@  @  @  @  @  @  @  .  .  .  
+.  .  .  .  .  .  .  .  .  .
+.  .  .  .  .  .  .  .  .  .
+.  .  .  .  .  .  .  .  .  .
+.  .  .  .  .  .  .  .  .  .
+@  A  .  .  .  .  .  .  .  .
+@  .  .  .  .  .  .  .  .  .
+@  .  .  .  .  .  .  .  .  .
+@  #########.  .  .  .  .  .
+@  #########.  .  @  Z  .  .
+@  @  @  @  @  @  @  .  .  .
 */
 });
 
@@ -290,16 +290,16 @@ describe('Square Grid', function() {
         });
 
     // NOTE: to self Greedy Best First Search is just bfs early exit with a priority queue and a heuristic cost added for nodes maybe do it sometime
-   
+
 
     // https://en.wikipedia.org/wiki/A*_search_algorithm
-    // 
+    //
     // http://www.redblobgames.com/pathfinding/a-star/introduction.html
     // http://www.redblobgames.com/pathfinding/a-star/implementation.html
     //
     // this is tested with square_grid_test
     //
-    // a* is literally djikstra with a heuristic of the distance to the goal added to the costs of the weights. 
+    // a* is literally djikstra with a heuristic of the distance to the goal added to the costs of the weights.
     // so I was too lazy to refactor it into its own object
     //
     // TODO: refactor Astar into its own object
@@ -311,12 +311,12 @@ describe('Square Grid', function() {
           var astar_traversal = new Djikstra(graphD4, start_number, function(v){
             return v === end_number;
           }, function(v){
-            // manhattan distance 
+            // manhattan distance
             // https://en.wikipedia.org/wiki/Taxicab_geometry
 
             var from = sgD4.numberToLocation(v); // new vertex we are looking at
             var to = sgD4.numberToLocation(end_number); // to goal
-            
+
             var x1 = from[0], y1 = from[1];
             var x2 = to[0], y2 = to[1];
 
@@ -329,16 +329,16 @@ describe('Square Grid', function() {
 
           var astarTEXT = dsalgo.utils.multilineString(function() {
 /*!
-→  ↓  ↓  ↓  ←  .  .  .  .  .  
-→  ↓  ↓  ↓  ←  .  .  .  .  .  
-→  ↓  ↓  ↓  ←  ←  ↓  .  .  .  
-→  ↓  ↓  ←  ←  ←  ←  ↓  .  .  
-→  A  ←  ←  ←  ←  ←  ←  ←  .  
-→  ↑  ↑  ←  ←  ←  ←  ←  .  .  
-→  ↑  ↑  ←  ←  ←  ←  ←  ←  .  
-↑  #########↑  ↑  ↑  ↑  ←  .  
-↑  #########↑  ↑  .  Z  .  .  
-↑  ←  ←  →  ↑  ←  .  .  .  .  
+→  ↓  ↓  ↓  ←  .  .  .  .  .
+→  ↓  ↓  ↓  ←  .  .  .  .  .
+→  ↓  ↓  ↓  ←  ←  ↓  .  .  .
+→  ↓  ↓  ←  ←  ←  ←  ↓  .  .
+→  A  ←  ←  ←  ←  ←  ←  ←  .
+→  ↑  ↑  ←  ←  ←  ←  ←  .  .
+→  ↑  ↑  ←  ←  ←  ←  ←  ←  .
+↑  #########↑  ↑  ↑  ↑  ←  .
+↑  #########↑  ↑  .  Z  .  .
+↑  ←  ←  →  ↑  ←  .  .  .  .
 */
 });
 
@@ -360,16 +360,16 @@ describe('Square Grid', function() {
 
           var astarPathText = dsalgo.utils.multilineString(function() {
 /*!
-.  .  .  .  .  .  .  .  .  .  
-.  .  .  .  .  .  .  .  .  .  
-.  .  .  .  .  .  .  .  .  .  
-.  .  .  .  .  .  .  .  .  .  
-.  A  @  .  .  .  .  .  .  .  
-.  .  @  .  .  .  .  .  .  .  
-.  .  @  @  @  @  @  @  .  .  
-.  #########.  .  .  @  .  .  
-.  #########.  .  .  Z  .  .  
-.  .  .  .  .  .  .  .  .  .  
+.  .  .  .  .  .  .  .  .  .
+.  .  .  .  .  .  .  .  .  .
+.  .  .  .  .  .  .  .  .  .
+.  .  .  .  .  .  .  .  .  .
+.  A  @  .  .  .  .  .  .  .
+.  .  @  .  .  .  .  .  .  .
+.  .  @  @  @  @  @  @  .  .
+.  #########.  .  .  @  .  .
+.  #########.  .  .  Z  .  .
+.  .  .  .  .  .  .  .  .  .
 */
 });
 

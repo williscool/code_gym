@@ -1,8 +1,8 @@
 // http://en.wikipedia.org/wiki/Disjoint-set_data_structure
 // http://algs4.cs.princeton.edu/15uf/
 //
-// an that accomplishs the same mission as uf 
-// is to run DFS over all the nodes in the graph and 
+// an that accomplishs the same mission as uf
+// is to run DFS over all the nodes in the graph and
 //
 // and keep a count that increase if you hit an unmarked node in a followup dfs.
 //
@@ -11,12 +11,12 @@
 // page 562 of CLRS asserts that this algorithm is faster if the number of Edges in a graph is static
 //
 // http://cs.stackexchange.com/questions/47596/dfs-vs-union-find-for-computing-connected-components-of-a-static-graph
-// 
+//
 // while that algo is probably easier to remember for interviews
 //
 // I'm just leaving for my notes
 //
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 var util = require("util");
 
 function quickFindUF(thingy) {

@@ -1,4 +1,4 @@
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 // https://en.wikipedia.org/wiki/Longest_increasing_subsequence
 //
 // https://www.youtube.com/watch?v=4fQJGoeW5VE
@@ -18,13 +18,13 @@ var dsalgo = require('../../utilities.js').dsalgo;
 //
 // So here goes. To paraphrase the yale pinewiki
 //
-// One way to do this would be to 
-//   
-//   "build up a table of longest increasing subsequences for each initial prefix of the array. 
+// One way to do this would be to
+//
+//   "build up a table of longest increasing subsequences for each initial prefix of the array.
 //
 //   At each step, when finding the longest increasing subsequence of elements 0..i ...
 //   store in table[i] the full longest increasing subsequence ending at position i "
-//  
+//
 //   but
 //
 //   "We don't really want to store in table[i] the full longest increasing subsequence ending at position i,
@@ -32,15 +32,15 @@ var dsalgo = require('../../utilities.js').dsalgo;
 //
 //   so to be more space efficient
 //
-//   "At each step, when finding the longest increasing subsequence of elements 0..i, 
-//   we can just scan through all the possible values for the second-to-last element and 
-//   read the length of the best possible subsequence ending there out of the table. 
+//   "At each step, when finding the longest increasing subsequence of elements 0..i,
+//   we can just scan through all the possible values for the second-to-last element and
+//   read the length of the best possible subsequence ending there out of the table.
 //
-//   When the table is complete, we can scan for the best last element and then work backwards to 
+//   When the table is complete, we can scan for the best last element and then work backwards to
 //   reconstruct the actual subsequence.
 //
-//   Since that second-to-last element also has a table entry that stores the index of its predecessor, 
-//   by following the indices we can generate a subsequence of length O(n), 
+//   Since that second-to-last element also has a table entry that stores the index of its predecessor,
+//   by following the indices we can generate a subsequence of length O(n),
 //   even though we only stored O(1) pieces of information in each table entry."
 //
 //  So At each position in our input arr in our auxillary space we are going to keep track of 2 things
@@ -50,43 +50,43 @@ var dsalgo = require('../../utilities.js').dsalgo;
 
 function iLIS (arr) {
   var len = arr.length;
-  
+
   if(len == 1) return arr;
 
   var memo = [], longestLen = 1, longestLenPosition = 0;
-  
+
   for(var i = 0; i < len; i++) {
-    
+
     memo.push({});
     memo[i].length = 1;
     memo[i].prev = len;
-	
+
     for(var j = 0;  j < i ; j++){
-	  
+
       if(arr[j] < arr[i] && memo[j].length + 1 > memo[i].length) {
-	  
+
         memo[i].length = memo[j].length + 1;
         memo[i].prev = j;
-      
+
         // saves us the extra O(n) highest len check from yale solution
         if(memo[i].length > longestLen) {
           longestLen = memo[i].length;
           longestLenPosition = i;
-        } 
+        }
       }
-	  
+
     }
   }
 
   var result = [];
- 
+
   var pos = longestLenPosition;
-  
+
   for (var k = 0; k < longestLen; k++) {
     result.push(arr[pos]);
     pos = memo[pos].prev;
   }
-  
+
   //console.log(memo);
   // you could push write them into the array from the last position but its the same thing
   return result.reverse();
@@ -97,7 +97,7 @@ function iLIS (arr) {
 // http://edusagar.com/questions/dynamic-programming/longest-increasing-subsequence-lis
 // http://codereview.stackexchange.com/questions/102232/calculating-longest-increasing-sub-sequence-recursively
 // http://jeffe.cs.illinois.edu/teaching/algorithms/notes/03-backtracking.pdf
-// http://jeffe.cs.illinois.edu/teaching/algorithms/notes/05-dynprog.pdf        
+// http://jeffe.cs.illinois.edu/teaching/algorithms/notes/05-dynprog.pdf
 //
 // http://zsurface.com/html/indexLongestIncreasingSubsequenceRecursion.html
 // also pg 45 of Competitive Programming ed 1 http://cpbook.net/
@@ -113,13 +113,13 @@ function iLIS (arr) {
 //
 // this is a O(2^n) algorithm that I dont really see how you could cache
 
-var max_list; 
+var max_list;
 function recursiveLIS(arr, k, tmp_list)  {
-  
+
   tmp_list.push(arr[k]);
 
   for(var i = k; i < arr.length - 1; i++) {
-	
+
       if( arr[k] < arr[i + 1]) {
         recursiveLIS(arr, i + 1, tmp_list);
       }
@@ -139,14 +139,14 @@ function recursiveLIS(arr, k, tmp_list)  {
 
 // this version only works for sequences with no duplicates. have to do the crazy parent array thing for dups
 function nlogkLIS(arr) {
-    
+
     if(arr.length < 2){
-      return arr; 
+      return arr;
     }
 
     var lo,hi,mid,j;
 
-    var M = [0]; // aka the tail index array of longest increasing subsequence ending at any index i 
+    var M = [0]; // aka the tail index array of longest increasing subsequence ending at any index i
     var P = []; // aka the previous index number in arr of the longest increasing subsequence at i
 
     var L = 1;
@@ -161,16 +161,16 @@ function nlogkLIS(arr) {
 
          while( lo > hi - 1){
            mid = (lo + hi) >> 1;
-           
+
            if(arr[M[mid - 1]] < arr[i]) {
               lo = mid;
            } else {
-              hi = mid; 
+              hi = mid;
            }
          }
 
          j = lo; // aka newL in wikipedia solution or the newest length of longest subsequence at the current arr[i]
-       
+
       }
 
       P[i] = M[j - 1];
@@ -184,7 +184,7 @@ function nlogkLIS(arr) {
     }
 
     var result = [];
-    var pos = M[L - 1]; 
+    var pos = M[L - 1];
 
     // console.log(M)
     // console.log(P)
@@ -217,7 +217,7 @@ function LISwithPatienceSort(arr){
   return patiencesort(arr, true);
 }
 
-// fun fact had to rewrite the recusive init anonymous function to init the max_list to nothing 
+// fun fact had to rewrite the recusive init anonymous function to init the max_list to nothing
 // otherwise it will only ever calculate the correct value for the first list you give it
 
 module.exports = {

@@ -1,6 +1,6 @@
 var assert = require('assert');
 var selectionsort = require('../../../algorithms/sorting/selectionsort.js');
-var dsalgo = require('../../../utilities.js').dsalgo;
+var dsalgo = require('../../../utilities.js').default;
 
 describe('Selection Sort', function() {
 

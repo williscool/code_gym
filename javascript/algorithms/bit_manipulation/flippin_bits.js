@@ -6,7 +6,7 @@
 //
 // https://en.wikipedia.org/wiki/Two%27s_complement#Converting_from_two.27s_complement_representation
 
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 
 module.exports = function(a, b) {
 

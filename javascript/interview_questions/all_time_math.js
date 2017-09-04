@@ -1,4 +1,4 @@
-var dsalgo = require('../utilities.js').dsalgo;
+var dsalgo = require('../utilities.js').default;
 
 function AllTimeMath() {
   this.max = null;
@@ -16,16 +16,16 @@ AllTimeMath.prototype = {
     if(this.numValues < 1) {
 
       // nothing is populated so populate it all
-      this.min = val; 
-      this.max = val; 
+      this.min = val;
+      this.max = val;
       this.mostOccurringValue = val;
-    } 
-    
+    }
+
     this.numValues++;
 
-    if(val > this.max) this.max = val; 
-    if(val < this.min) this.min = val; 
-    
+    if(val > this.max) this.max = val;
+    if(val < this.min) this.min = val;
+
     this.sumOfValues = this.sumOfValues + val;
 
     this.mean = this.sumOfValues / this.numValues;

@@ -1,6 +1,6 @@
 // https://en.wikipedia.org/wiki/Strongly_connected_component
 
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 var TC = require('./transitive_clousure.js');
 
 function naiveSCC(graph){
@@ -22,13 +22,13 @@ function naiveSCC(graph){
       if(reachable[v][w] && reachable[w][v]){
         component_id[v] = w;
       }
-       
+
     });
-     
+
   });
 
   var compSet = dsalgo.utils.simpleSet();
-  
+
   for(v in graph.vertex_list()) {
     if( !dsalgo.utils.isDefined(compSet[component_id[v]])) compSet[component_id[v]] = [];
     v = dsalgo.utils.makeNumberUnlessNaN(v);
@@ -42,7 +42,7 @@ function naiveSCC(graph){
   }
 
   return components;
-} 
+}
 
 var DFSContainer = require('./dfs.js');
 var DFS = DFSContainer.recursive;
@@ -52,7 +52,7 @@ function kosarajuSharirSCC(graph){
 
   // Step 1. Do the reverse post order traversal of the reverse of the graph
   var rpoOfReverseGraph = dfsToArray(graph.reverse(), "post").reverse();
-  
+
   var marked =  dsalgo.utils.simpleSet();
   var component_id = dsalgo.utils.simpleSet();
 
@@ -60,9 +60,9 @@ function kosarajuSharirSCC(graph){
 
   // 2. dfs in the order of the rpoOfReverseGraph and add components to id
   rpoOfReverseGraph.forEach(function(v){
-    
+
     if (marked[v]) return;
-    
+
     DFS(graph, v, marked, function(v,w) {
       component_id[v] = count;
     }, "pre");
@@ -73,7 +73,7 @@ function kosarajuSharirSCC(graph){
 
   // print it out
   var compSet = dsalgo.utils.simpleSet();
-  
+
   for(var v in graph.vertex_list()) {
     if( !dsalgo.utils.isDefined(compSet[component_id[v]])) compSet[component_id[v]] = [];
 
@@ -89,7 +89,7 @@ function kosarajuSharirSCC(graph){
 
   return components;
 
-} 
+}
 
 // TODO: in the future do the more in clever faster ones that only need one dfs
 // https://en.wikipedia.org/wiki/Strongly_connected_component#Algorithms

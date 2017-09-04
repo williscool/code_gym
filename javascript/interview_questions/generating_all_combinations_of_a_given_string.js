@@ -7,7 +7,7 @@
 // https://github.com/Zolmeister/Polish.js/blob/master/polish.js
 // http://thomas-cokelaer.info/blog/2012/11/how-do-use-itertools-in-python-to-build-permutation-or-combination/
 
-var dsalgo = require('../utilities.js').dsalgo;
+var dsalgo = require('../utilities.js').default;
 var result, combLen, replace;
 
 function generateRecursiveStringCombinations(prefix, remaining) {
@@ -16,10 +16,10 @@ function generateRecursiveStringCombinations(prefix, remaining) {
   if(dsalgo.utils.isDefined(combLen) && prefix.length >= combLen) return;
 
   for(var i = 0, l = remaining.length ; i < l; i++) {
-    
+
     // if there is no predetermined length always append our new combination. if there is a length defined than wait until our prefix reaches the proper size to
     if(!dsalgo.utils.isDefined(combLen) || prefix.length + 1 == combLen) {
-      result.push(prefix + remaining[i]); 
+      result.push(prefix + remaining[i]);
     }
 
     generateRecursiveStringCombinations( prefix + remaining[i], replace ? remaining : remaining.slice(i + 1) );
@@ -28,7 +28,7 @@ function generateRecursiveStringCombinations(prefix, remaining) {
 }
 
 module.exports = {
-  recursive: function (str, k, shouldReplace) { 
+  recursive: function (str, k, shouldReplace) {
     if(dsalgo.utils.isDefined(k)) combLen = k;
 
     if(!dsalgo.utils.isDefined(shouldReplace)) {
@@ -36,7 +36,7 @@ module.exports = {
     } else {
       replace = shouldReplace;
     }
-    
+
     result = [];
     generateRecursiveStringCombinations("", str);
     return result;

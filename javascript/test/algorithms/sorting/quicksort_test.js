@@ -1,6 +1,6 @@
 var assert = require('assert');
 var quicksort = require('../../../algorithms/sorting/quicksort.js');
-var dsalgo = require('../../../utilities.js').dsalgo;
+var dsalgo = require('../../../utilities.js').default;
 
 describe('Quick Sort', function() {
 

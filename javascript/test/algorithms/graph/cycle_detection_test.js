@@ -1,7 +1,7 @@
 var assert = require('assert');
 var CycleDetectors = require('../../../algorithms/graph/cycle_detection.js');
 var Graph = require('../../../data_structures/graph.js');
-var dsalgo = require('../../../utilities.js').dsalgo;
+var dsalgo = require('../../../utilities.js').default;
 
 Object.keys(CycleDetectors).forEach(function(key) {
 
@@ -42,7 +42,7 @@ Object.keys(CycleDetectors).forEach(function(key) {
 
           var gd = dsalgo.utils.requireText(__dirname, '../../../data/graph/tinyDG.txt');
           var dg = new Graph({
-            graphData: gd, 
+            graphData: gd,
             directed: true
           });
 
@@ -140,7 +140,7 @@ Object.keys(CycleDetectors).forEach(function(key) {
           // http://algs4.cs.princeton.edu/42digraph/images/topological-sort.png
           var gd = dsalgo.utils.requireText(__dirname, '../../../data/graph/tinyDAG.txt');
           var dg = new Graph({
-            graphData: gd, 
+            graphData: gd,
             directed: true
           });
 

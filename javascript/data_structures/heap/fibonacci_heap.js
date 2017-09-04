@@ -2,7 +2,7 @@
  *
  * inspirations
  *
- *  CLRS 3rd Edition 
+ *  CLRS 3rd Edition
  *  http://www.growingwiththeweb.com/2014/06/fibonacci-heap.html
  *  http://keithschwarz.com/interesting/code/?dir=fibonacci-heap
  *
@@ -18,12 +18,12 @@
  *  http://stackoverflow.com/questions/14333314/why-is-a-fibonacci-heap-called-a-fibonacci-heap
  *
  *
- ** debugging viz help from 
+ ** debugging viz help from
  *
  * https://www.cs.usfca.edu/~galles/visualization/FibonacciHeap.html
 */
 
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 
 function FibonacciHeap(node, size, compfn) {
   this.minNode = node || null;
@@ -64,8 +64,8 @@ FibonacciHeap.prototype.isEmpty = function() {
 };
 
 FibonacciHeap.prototype.mergeRootLists = function(a, b) {
-  // interesting note here this function dramatically simplifies the union operation 
-  // simply by returning the Min(a,b) 
+  // interesting note here this function dramatically simplifies the union operation
+  // simply by returning the Min(a,b)
   // would have been nice for them to have done it this way in CLRS
 
   if (!a && !b) return;
@@ -129,7 +129,7 @@ FibonacciHeap.prototype.peek = FibonacciHeap.prototype.findMin;
 
 FibonacciHeap.prototype.removeNodeFromList = function(node) {
   // another simplifying helper function
-  // the CLRS implementation does alot of adding one list to another minus 
+  // the CLRS implementation does alot of adding one list to another minus
   // the node you are removing. why not just make them point to each other?
 
   var prev = node.prev,
@@ -159,9 +159,9 @@ FibonacciHeap.prototype.linkHeaps = function(max, min) {
  * per the wikipedia article
  *
  *  In the second phase we decrease the number of roots by successively linking together roots of the same degree.
- * When two roots u and v have the same degree, we make one of them a child of the other so that the one with the smaller key remains the root. 
+ * When two roots u and v have the same degree, we make one of them a child of the other so that the one with the smaller key remains the root.
  *
- *  Its degree will increase by one. This is repeated until every root has a different degree. 
+ *  Its degree will increase by one. This is repeated until every root has a different degree.
  *
  * To find trees of the same degree efficiently we use an array of length O(log n) in which we keep a pointer to one root of each degree.
  *
@@ -174,7 +174,7 @@ FibonacciHeap.prototype.consolidate = function() {
 
   var start = this.minNode;
 
-  // put all the nodes in the root chain on the list 
+  // put all the nodes in the root chain on the list
   // this is useful because we are gonna reorder the chain so it helps to still
   // be able to access them in a predictable order
   //

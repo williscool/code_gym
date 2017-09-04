@@ -8,12 +8,12 @@
  * http://www.cse.yorku.ca/~aaw/Sotirios/BinomialHeapAlgorithm.html
  *
  *
- * debugging viz help from 
+ * debugging viz help from
  *
  * https://www.cs.usfca.edu/~galles/visualization/BinomialQueue.html
 */
 
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 
 function BinomialHeap(compfn) {
   this.root = null;
@@ -80,9 +80,9 @@ BinomialHeap.prototype.linkTreeNodes = function(node, other) {
 
 BinomialHeap.prototype.mergeHeaps = function(a, b) {
 
-  // all we are doing here is merging the linked lists that represents 
+  // all we are doing here is merging the linked lists that represents
   //
-  // the roots of the each sub binomial tree a and b in order 
+  // the roots of the each sub binomial tree a and b in order
   //
   // we aren't doing anything else to the tree right now
 
@@ -129,7 +129,7 @@ BinomialHeap.prototype.mergeHeaps = function(a, b) {
 BinomialHeap.prototype.union = function(otherHeap) {
   this.size += otherHeap.size;
 
-  // merge heaps will give us the lowest valued and root node of the two root chains after merging them 
+  // merge heaps will give us the lowest valued and root node of the two root chains after merging them
 
   var newRoot = BinomialHeap.prototype.mergeHeaps(this, otherHeap);
 
@@ -272,7 +272,7 @@ BinomialHeap.prototype.exchange = function(node, other) {
 
 };
 
-// decrease key 
+// decrease key
 // needs node out of node set to work
 BinomialHeap.prototype.decreaseKey = function(node, newKey) {
 
@@ -300,13 +300,13 @@ BinomialHeap.prototype.decreaseKey = function(node, newKey) {
 BinomialHeap.prototype.delete = function(node) {
 
   // doing it the academic way of decreasing node to negative inifity
-  // you could also just check for a another parameter i.e. toRoot 
+  // you could also just check for a another parameter i.e. toRoot
   // and move the node all the way to the root if for some crazy reason
   // you needed to store negative infinity but I dont
   //
   // only want node objects here no numbers
   //
-  // if you gave it just a number the extract min function would still run 
+  // if you gave it just a number the extract min function would still run
   // and this function would not only silently fail it would also lie that it succeded lol
 
   if (!(node instanceof Object)) {

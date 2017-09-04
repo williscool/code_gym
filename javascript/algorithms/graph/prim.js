@@ -1,15 +1,15 @@
 // http://en.wikipedia.org/wiki/Prim%27s_algorithm
 // http://algs4.cs.princeton.edu/43mst/
 //
-// The naive version of prim just uses a naive priority queue 
+// The naive version of prim just uses a naive priority queue
 // (a linear search through the array of edge costs)
-// to pick the next edge with the smallest cost 
+// to pick the next edge with the smallest cost
 //
 // not particularly interesting being that I already wrote an naive pq
 
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 
-var Queue = require('../../data_structures/queue.js').doubly_linked_list;
+var Queue = require('../../data_structures/queue.js').default.doubly_linked_list;
 var binaryHeapPQ = require('../../data_structures/priority_queue.js').binaryHeap;
 
 // inspired by http://algs4.cs.princeton.edu/43mst/LazyPrimMST.java.html

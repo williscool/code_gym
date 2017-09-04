@@ -1,7 +1,7 @@
 var assert = require('assert');
 var DFSContainer = require('../../../algorithms/graph/dfs.js');
 var Graph = require('../../../data_structures/graph.js');
-var dsalgo = require('../../../utilities.js').dsalgo;
+var dsalgo = require('../../../utilities.js').default;
 
 (["iterative", "recursive"]).forEach(function(key) {
 
@@ -122,13 +122,13 @@ describe('Depth First Search', function() {
   // TODO: investigate this further
 
   (["pre", "post"]).forEach(function(orderName) {
-   
+
      markedSets[orderName] = dsalgo.utils.simpleSet();
      orderSets[orderName] = [];
-  
+
     graph.vertex_list().forEach(function (vertexLabel){
       vertexLabel = dsalgo.utils.makeNumberUnlessNaN(vertexLabel);
-      
+
       if (markedSets[orderName][vertexLabel]) return;
 
       DFS(graph, vertexLabel, markedSets[orderName], function(v,w) {
@@ -167,6 +167,6 @@ describe('Depth First Search', function() {
       });
     });
   });
-  
+
 
 });

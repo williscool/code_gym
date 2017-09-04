@@ -1,6 +1,6 @@
 import assert from 'assert';
 import BubbleSort from '../../../algorithms/sorting/bubblesort';
-import { dsalgo } from '../../../utilities';
+import dsalgo from '../../../utilities';
 
 /**
  * inspired by: https://github.com/addyosmani/bubblesort/blob/master/test/test.js

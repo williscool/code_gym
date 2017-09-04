@@ -1,5 +1,5 @@
 // http://en.wikipedia.org/wiki/Insertion_sort
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 var swap = dsalgo.utils.swap;
 
 var naive = function(list) {

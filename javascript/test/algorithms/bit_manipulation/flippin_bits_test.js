@@ -1,5 +1,5 @@
 var assert = require('assert');
-var dsalgo = require('../../../utilities.js').dsalgo;
+var dsalgo = require('../../../utilities.js').default;
 var flippinBits = require('../../../algorithms/bit_manipulation/flippin_bits.js');
 
 describe("Flipping Some Bits", function() {

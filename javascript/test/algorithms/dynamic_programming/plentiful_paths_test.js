@@ -1,5 +1,5 @@
 var assert = require('assert');
-var dsalgo = require('../../../utilities.js').dsalgo;
+var dsalgo = require('../../../utilities.js').default;
 var pPathFns = require('../../../algorithms/dynamic_programming/plentiful_paths.js');
 
 var appleLocations = dsalgo.utils.multilineString(function() {

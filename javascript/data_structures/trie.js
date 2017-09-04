@@ -6,12 +6,12 @@
 //
 // http://algs4.cs.princeton.edu/52trie/
 // http://algs4.cs.princeton.edu/lectures/52Tries.pdf
-// 
+//
 //
 // how to get spelling suggestions out of a trie
 //
 // http://blog.afterthedeadline.com/2010/01/29/how-i-trie-to-make-spelling-suggestions/
-var dsalgo = require('../utilities.js').dsalgo;
+var dsalgo = require('../utilities.js').default;
 
 function Trie() {
   this.trie = {};
@@ -24,11 +24,11 @@ Trie.prototype.set = function(word) {
 
   word.split("").forEach(function(letter, i){
     var pos = currentNode[letter];
-    
+
     if(!dsalgo.utils.isDefined(pos)) {
-      
+
       if(i === word.length - 1) {
-        // at end of word. set its child to zero so we can tell that 
+        // at end of word. set its child to zero so we can tell that
         currentNode = currentNode[letter] = 0;
       } else {
         // not the end of a word. make it an object
@@ -39,7 +39,7 @@ Trie.prototype.set = function(word) {
     else if (pos === 0){
       // reached the end of a previosly added word. signify that and turn this position into an object so we can keep adding our new word
       // using * character to denote end of word
-      currentNode = currentNode[letter] = {'*':0}; 
+      currentNode = currentNode[letter] = {'*':0};
     } else {
       // no need to set anything just recurse in hash tree structure to lower level
       currentNode = currentNode[letter];

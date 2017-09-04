@@ -1,6 +1,6 @@
 var assert = require('assert');
 var MergeSort = require('../../../algorithms/sorting/mergesort.js');
-var dsalgo = require('../../../utilities.js').dsalgo;
+var dsalgo = require('../../../utilities.js').default;
 
 Object.keys(MergeSort).forEach(function(key) {
 

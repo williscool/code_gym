@@ -1,5 +1,5 @@
 // https://en.wikipedia.org/wiki/Dynamic_programming#Fibonacci_sequence
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 
 function naiveRecursive(n) {
   if (n === 0) return 0;

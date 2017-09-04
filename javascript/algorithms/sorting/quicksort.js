@@ -1,6 +1,6 @@
 // http://en.wikipedia.org/wiki/Quicksort
 // inplace
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 var swap = dsalgo.utils.swap;
 
 function quicksort(list, lo, hi) {
@@ -23,7 +23,7 @@ function partition(list, lo, hi) {
   pivotIndex = choosePivot(lo, hi);
   pivotVal = list[pivotIndex];
 
-  // move the value of the pivot to the highest index so that it is out of the way 
+  // move the value of the pivot to the highest index so that it is out of the way
   // while we compare all of the other element's values to it to figure out where to move it to
 
   list = swap(list, pivotIndex, hi);
@@ -53,7 +53,7 @@ function choosePivot(hi, lo) {
   // because if this pivot returns and incorrect index everything is fucked
   //
   // http://googleresearch.blogspot.com/2006/06/extra-extra-read-all-about-it-nearly.html
-  // 
+  //
   // I prefer using the midpoint but some algos call for using the first aka lo
   // i.e. https://www.hackerrank.com/challenges/quicksort2
   //

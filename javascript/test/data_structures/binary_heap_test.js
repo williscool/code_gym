@@ -1,5 +1,5 @@
 var assert = require('assert');
-var dsalgo = require('../../utilities.js').dsalgo;
+var dsalgo = require('../../utilities.js').default;
 
 var Heap = require('../../data_structures/heap/binary_heap.js');
 var minHeap = Heap.min;

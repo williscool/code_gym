@@ -2,12 +2,12 @@
 //
 // so there is naive where #dequeue()
 //
-// starts from the front of queue and looks for the highest/lowest prority element to the 
+// starts from the front of queue and looks for the highest/lowest prority element to the
 // end and only change the element if another element's priority is higher
 //
 // then we'll do one for each of the 3 heaps we've already written
 
-var dsalgo = require('../utilities.js').dsalgo;
+var dsalgo = require('../utilities.js').default;
 var BinaryHeap = require('./heap/binary_heap.js').custom;
 var BinomialHeap = require('./heap/binomial_heap.js');
 var FibonacciHeap = require('./heap/fibonacci_heap.js');
@@ -28,10 +28,10 @@ function naivePQ(extreme, comp) {
 }
 
 naivePQ.prototype.enqueue = function(val, p) {
-  // default could be negative infinity if you wanted 
+  // default could be negative infinity if you wanted
   //
   // But I'm assuming you would want the default to be neutral.
-  // So you could proritize or deproritize based on your explicity settings 
+  // So you could proritize or deproritize based on your explicity settings
 
   p = dsalgo.utils.isDefined(p) ? p : 0;
   this.items.push({
@@ -47,7 +47,7 @@ naivePQ.prototype.findExtreme = function(val) {
   // assume its item one with whatever prority than look for any item higher
   //
   // http://jsperf.com/comparison-of-numbers
-  // 
+  //
   // obviously this is an O(n) operation.
 
   var extremaItem;
@@ -89,7 +89,7 @@ function binaryHeapPQ(comp) {
       if (a.priority != b.priority) return a.priority >= b.priority;
 
       // this takes a bit of explaining see around line 132 inside the siftDown function
-      // of my heap I compare the elements being compared to do heap rotations with 
+      // of my heap I compare the elements being compared to do heap rotations with
       // the comparision function in an array and take the last value
       // so we need that last value to be the first element in the order of the queue
       //
@@ -98,13 +98,13 @@ function binaryHeapPQ(comp) {
 
   this.heap = new BinaryHeap([], this.comp);
 
-  // I just didnt want to add yet another function to the constructor 
+  // I just didnt want to add yet another function to the constructor
   // pls dont judge me
   this.heap.valueToString = heapValueToString;
 }
 
 binaryHeapPQ.prototype.enqueue = function(val, p) {
-  // default could be negative infinity if you wanted 
+  // default could be negative infinity if you wanted
   // But I think zero is more useful as it allows you to reproritize both postively and negatively
 
   p = dsalgo.utils.isDefined(p) ? p : 0;
@@ -132,7 +132,7 @@ binaryHeapPQ.prototype.changePriority = function(val, newPriority, order) {
   //
   // for instance
   // you could search for the value in the array representing the heap remove the value and then reinsert it
-  // 
+  //
   // but that operation is O(n * log(n))
   // O(n) to find the element and then log(n) to resatify the heap property
   //
@@ -153,7 +153,7 @@ binaryHeapPQ.prototype.changePriority = function(val, newPriority, order) {
   if (!dsalgo.utils.isDefined(order)) {
 
     // if the user doesn't define an order we have to linear search for the value
-    // this is obviously O(n). but we will be using this with djikstra's algorithm in which we will know the insertion order 
+    // this is obviously O(n). but we will be using this with djikstra's algorithm in which we will know the insertion order
     // greatly increasing the total speed of this whole operation
 
     var totalElements = this.heap.size();
@@ -177,7 +177,7 @@ binaryHeapPQ.prototype.changePriority = function(val, newPriority, order) {
     orderInserted = order;
   }
 
-  // why will this work? 
+  // why will this work?
   // because our toString function for this heap only looks at the value and the order it was inserted in
   var oldValueObj = {
     value: val,
@@ -200,7 +200,7 @@ binaryHeapPQ.prototype.changePriority = function(val, newPriority, order) {
 
 
 function binomialHeapPQ(comp) {
-  // Give a binomial heap the right comparator and it will work 
+  // Give a binomial heap the right comparator and it will work
   // as a stable prority queue like magic
   //
   // who knew?
@@ -212,7 +212,7 @@ function binomialHeapPQ(comp) {
 
   this.heap = new BinomialHeap(this.comp);
 
-  // still didnt want to add yet another function to the constructor 
+  // still didnt want to add yet another function to the constructor
   // again pls dont judge me
   this.heap.valueToString = heapValueToString;
 }
@@ -269,7 +269,7 @@ var bionomialAndFibchangePriority = function(val, newPriority, order) {
     orderInserted = order;
   }
 
-  // why will this work? 
+  // why will this work?
   // because our toString function for this heap only looks at the value and the order it was inserted in
   var oldValueObj = {
     value: val,
@@ -291,7 +291,7 @@ var bionomialAndFibchangePriority = function(val, newPriority, order) {
 binomialHeapPQ.prototype.changePriority = bionomialAndFibchangePriority;
 
 function fibonacciHeapPQ(comp) {
-  // Give a fibonacci heap the right comparator and it will work 
+  // Give a fibonacci heap the right comparator and it will work
   // as a stable prority queue like magic too
   //
   // again who knew?
@@ -304,8 +304,8 @@ function fibonacciHeapPQ(comp) {
   // this instantiation is ugly would like to clean it up
   this.heap = new FibonacciHeap(null, 0, this.comp);
 
-  // still didnt want to add yet another function to the constructor 
-  // 
+  // still didnt want to add yet another function to the constructor
+  //
   // I regret nothing
   this.heap.valueToString = heapValueToString;
 }

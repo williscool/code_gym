@@ -1,5 +1,5 @@
 var assert = require('assert');
-var dsalgo = require('../../../utilities.js').dsalgo;
+var dsalgo = require('../../../utilities.js').default;
 var Graph = require('../../../data_structures/graph.js');
 var TC = require('../../../algorithms/graph/transitive_clousure.js');
 
@@ -13,7 +13,7 @@ describe('Transitive Closure', function() {
       graphData: gd,
       directed: true
     });
-    
+
     var tc =  TC(graph);
     // http://algs4.cs.princeton.edu/42digraph/TransitiveClosure.java.html
     it('whether vertices can reach each other ', function() {

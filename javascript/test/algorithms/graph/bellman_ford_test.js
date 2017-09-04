@@ -1,10 +1,10 @@
 var assert = require('assert');
 var BellmanFord = require('../../../algorithms/graph/bellman_ford.js');
 var Graph = require('../../../data_structures/graph.js');
-var dsalgo = require('../../../utilities.js').dsalgo;
+var dsalgo = require('../../../utilities.js').default;
 
 describe('Bellman Ford', function() {
-  
+
   // http://algs4.cs.princeton.edu/44sp/images/shortest-path.png
   var EWD = dsalgo.utils.requireText(__dirname, '../../../data/graph/tinyEWD.txt');
   var graph = new Graph({
@@ -96,7 +96,7 @@ describe('Bellman Ford', function() {
       assert.equal(traversal.shortest_path(17), false);
     });
   });
-  
+
   describe('handles graphs with negative weight edges', function() {
       // http://algs4.cs.princeton.edu/44sp/images/shortest-path.png
       var EWDneg = dsalgo.utils.requireText(__dirname, '../../../data/graph/tinyEWDn.txt');
@@ -190,12 +190,12 @@ describe('Bellman Ford', function() {
     });
 
   });
-  
+
   describe('detects negative cycles', function() {
 
     var gd = dsalgo.utils.requireText(__dirname, '../../../data/graph/tinyEWDnc.txt');
     var ncG = new Graph({
-      graphData: gd, 
+      graphData: gd,
       directed: true
     });
 

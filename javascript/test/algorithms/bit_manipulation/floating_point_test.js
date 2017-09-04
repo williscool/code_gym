@@ -1,5 +1,5 @@
 var assert = require('assert');
-var dsalgo = require('../../../utilities.js').dsalgo;
+var dsalgo = require('../../../utilities.js').default;
 var IEEEConverter = require('../../../algorithms/bit_manipulation/floating_point.js');
 
 describe("Floating Point", function() {
