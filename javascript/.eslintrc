@@ -5,6 +5,6 @@
     "mocha": true
   },
   "rules": {
-    "max-len": ["error", { "ignoreComments": true }]
+    "max-len": ["error", 120, { "ignoreComments": true }]
   }
 }
