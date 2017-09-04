@@ -1,21 +1,25 @@
-// http://en.wikipedia.org/wiki/Merge_sort
-var dsalgo = require('../../utilities.js').default;
-var swap = dsalgo.utils.swap;
+/* eslint-disable no-param-reassign */
+// I mean this is litterally a sorting function for an array
 
-// inspired by http://www.nczonline.net/blog/2012/10/02/computer-science-and-javascript-merge-sort/
-// the wikipedia entry psuedocode was doing to much
+/**
+ * Adds the arrays that were sorted in sub arrays back together
+ *
+ * @param {array} left
+ * @param {array} right
+ * @returns {array}
+ */
 function merge(left, right) {
-  var result = [],
-    iLeft = 0,
-    iRight = 0;
+  const result = [];
+  let iLeft = 0;
+  let iRight = 0;
 
   while (iLeft < left.length && iRight < right.length) {
     if (left[iLeft] < right[iRight]) {
       result.push(left[iLeft]);
-      iLeft = iLeft + 1;
+      iLeft += 1;
     } else {
       result.push(right[iRight]);
-      iRight = iRight + 1;
+      iRight += 1;
     }
   }
 
@@ -26,20 +30,35 @@ function merge(left, right) {
   return result.concat(left.slice(iLeft)).concat(right.slice(iRight));
 }
 
-var topDown = function(list) {
-  var mergesort = topDown;
-
+/**
+ * Top Down Version of Merge Sort
+ *
+ * inspired by http://www.nczonline.net/blog/2012/10/02/computer-science-and-javascript-merge-sort/
+ * the wikipedia entry psuedocode was doing to much
+ *
+ * https://en.wikipedia.org/wiki/Merge_sort#Top-down_implementation
+ *
+ * Using the function shorthand in es6 didnt work with the recursion in this funtionn
+ *
+ * @param {array} list - input array to sort
+ * @returns {array}
+ */
+function topDownMergeSort(list) {
   if (list.length <= 1) {
     return list;
   }
 
-  var left = [],
-    right = [],
-    middle = list.length >> 1, // http://googleresearch.blogspot.com/2006/06/extra-extra-read-all-about-it-nearly.html
-    len = list.length,
-    i;
+  let left = [];
+  let right = [];
 
-  for (i = 0; i < len; i++) {
+  // http://googleresearch.blogspot.com/2006/06/extra-extra-read-all-about-it-nearly.html
+  // eslint-disable-next-line no-bitwise
+  const middle = list.length >> 1;
+
+  const len = list.length;
+  let i;
+
+  for (i = 0; i < len; i += 1) {
     if (i < middle) {
       left.push(list[i]);
     } else {
@@ -47,45 +66,63 @@ var topDown = function(list) {
     }
   }
 
-  left = mergesort(left);
-  right = mergesort(right);
+  left = topDownMergeSort(left);
+  right = topDownMergeSort(right);
 
   return merge(left, right);
-};
+}
 
-var bottomUp = function(list) {
-  var mergesort = bottomUp;
-
-  if (list.length <= 1) {
-    return list;
-  }
-
-  var len = list.length,
-    temp = [],
-    blockSize, i;
-
-  for (blockSize = 1; blockSize < len; blockSize = (blockSize * 2)) {
-
-    // we want to take all of the elements as long as we dont go out of bounds
-    // if we were to do len - blocksize then we would miss the last iteration in some cases where
-    // the right side is smaller than the left
-    for (i = 0; i < len; i = i + (blockSize * 2)) {
-      // javascript list slice is not inclusive of the element at the end index that you give it
-      var left = list.slice(i, i + blockSize),
-        right = list.slice(i + blockSize, Math.min((i + (2 * blockSize)), len));
-
-      temp = temp.concat(merge(left, right));
+/**
+ * Module of Merge Sorts
+ *
+ * Time Complexity: O(n log(n))
+ * Space Complexity: O(n)
+ *
+ * This sort is not inplace but it is stable
+ *
+ * http://algs4.cs.princeton.edu/22mergesort/
+ * http://en.wikipedia.org/wiki/Merge_sort
+ *
+ * @module MergeSort
+ */
+export default {
+  topDown: topDownMergeSort,
+  /**
+   * Bottom Up Version of MergeSort
+   *
+   * Super helpful video explaination (i promise im not trollin you this time)
+   * https://www.youtube.com/watch?v=lOUe8Q9jQow
+   *
+   * https://en.wikipedia.org/wiki/Merge_sort#Bottom-up_implementation_using_lists
+   * @param {array} list
+   * @returns {array}
+   */
+  bottomUp(list) {
+    if (list.length <= 1) {
+      return list;
     }
 
-    list = temp;
-    temp = [];
-  }
+    const len = list.length;
+    let temp = [];
+    let blockSize;
+    let i;
 
-  return list;
-};
+    for (blockSize = 1; blockSize < len; blockSize *= 2) {
+      // we want to take all of the elements as long as we dont go out of bounds
+      // if we were to do len - blocksize then we would miss the last iteration in some cases where
+      // the right side is smaller than the left
+      for (i = 0; i < len; i += (blockSize * 2)) {
+        // javascript list slice is not inclusive of the element at the end index that you give it
+        const left = list.slice(i, i + blockSize);
+        const right = list.slice(i + blockSize, Math.min((i + (2 * blockSize)), len));
 
+        temp = temp.concat(merge(left, right));
+      }
 
-module.exports = {
-  topDown: topDown,
-  bottomUp: bottomUp
+      list = temp;
+      temp = [];
+    }
+
+    return list;
+  },
 };
