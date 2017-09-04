@@ -1,19 +1,37 @@
-// http://en.wikipedia.org/wiki/Selection_sort
-var dsalgo = require('../../utilities.js').default;
-var swap = dsalgo.utils.swap;
+/* eslint-disable no-param-reassign */
+// I mean this is litterally a sorting function for an array
+import dsalgo from '../../utilities';
 
-module.exports = function(list) {
+const swap = dsalgo.utils.swap;
 
-  var len, i, j, iMin;
+/**
+ * Selection Sort
+ *
+ * http://en.wikipedia.org/wiki/Selection_sort
+ *
+ * Rarely used as insertion sort is almost always better
+ *
+ * https://en.wikipedia.org/wiki/Selection_sort#Comparison_to_other_sorting_algorithms
+ *
+ * Fun fact a variant of this is heapsort
+ *
+ * https://en.wikipedia.org/wiki/Selection_sort#Variants
+ *
+ * @module SelectionSort
+ * @param {array} list
+ * @returns {array}
+ */
+export default function (list) {
+  const len = list.length;
+  let i;
+  let j;
+  let iMin;
 
-  len = list.length;
-
-  for (j = 0; j < len - 1; j++) {
+  for (j = 0; j < len - 1; j += 1) {
     // start with first element in array assuming its the smallest
     iMin = j;
 
-    for (i = j + 1; i < len; i++) {
-
+    for (i = j + 1; i < len; i += 1) {
       if (list[i] < list[iMin]) {
         // swap out any smaller values
         iMin = i;
@@ -21,12 +39,11 @@ module.exports = function(list) {
     }
 
     // unless its the value we started this iteration with
-    if (iMin != j) {
+    if (iMin !== j) {
       // move this value to its correct place in the list
       list = swap(list, j, iMin);
     }
-
   }
 
   return list;
-};
+}
