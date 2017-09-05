@@ -1,6 +1,8 @@
 /**
  * Sequential or Linear Search
  *
+ * Time Complexity: O(n)
+ *
  * Hands down one of the simplest algorithms there is.
  *
  * You scan the array... you find the value or you dont lol.

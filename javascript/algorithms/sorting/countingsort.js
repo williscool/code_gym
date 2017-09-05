@@ -4,6 +4,10 @@
  *
  * http://en.wikipedia.org/wiki/Counting_sort
  *
+ * Time Complexity: O(n + k)
+ *
+ * where n is the number of items and k is the maxium value
+ *
  * inspired by http://en.wikibooks.org/wiki/Algorithm_Implementation/Sorting/Counting_sort
  *
  * turns out bucket sort is basically just a generalization of counting sort
