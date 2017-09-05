@@ -1,35 +1,33 @@
-var assert = require('assert');
-var BSearch = require('../../../algorithms/searching/binarysearch.js');
-var quicksort = require('../../../algorithms/sorting/quicksort.js');
-var dsalgo = require('../../../utilities.js').default;
+import assert from 'assert';
+import BSearch from '../../../algorithms/searching/binarysearch';
+import quicksort from '../../../algorithms/sorting/quicksort';
+import dsalgo from '../../../utilities';
 
-Object.keys(BSearch).forEach(function(key) {
-
-  var fn = BSearch[key];
-  var binarysearch = fn;
-  describe(key + ' Binary Search', function() {
-
-    describe('should work with arrays', function() {
-      it('that are empty', function() {
+Object.keys(BSearch).forEach((key) => {
+  const fn = BSearch[key];
+  const binarysearch = fn;
+  describe(`${key} Binary Search`, () => {
+    describe('should work with arrays', () => {
+      it('that are empty', () => {
         assert.equal(binarysearch([], 1), false);
       });
 
-      it('that have one element', function() {
+      it('that have one element', () => {
         assert.equal(binarysearch([1], 1), 0);
       });
 
-      it('with no duplicates', function() {
+      it('with no duplicates', () => {
         assert.equal(binarysearch([1, 2, 3, 6, 8, 9], 9), 5);
         assert.equal(binarysearch([1, 2, 3, 4, 5, 6], 7), false);
       });
 
-      it('that have duplicates', function() {
+      it('that have duplicates', () => {
         assert.equal(binarysearch([1, 1, 2, 3, 4, 4, 5, 5, 6, 9], 1), 0);
       });
 
-      it('that are random', function() {
-        var array = dsalgo.utils.makeRandomArray({
-          precision: 0
+      it('that are random', () => {
+        let array = dsalgo.utils.makeRandomArray({
+          precision: 0,
         });
 
         // of course our illustrious binary search only works on sorted lists.
@@ -37,7 +35,7 @@ Object.keys(BSearch).forEach(function(key) {
 
         array = quicksort(array);
         // value at  1 / 4 of arr + 1
-        var value = array[array.length >> 2 + 1];
+        const value = array[array.length >> 2 + 1]; // eslint-disable-line no-bitwise
 
         // we cant be sure there are no dupes since the array is random
         //  so we cant ask for a specfic index.
@@ -45,8 +43,6 @@ Object.keys(BSearch).forEach(function(key) {
         //
         assert(binarysearch(array, value) !== false);
       });
-
     });
-
   });
 });
