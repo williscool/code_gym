@@ -8,7 +8,7 @@
 // then we'll do one for each of the 3 heaps we've already written
 
 var dsalgo = require('../utilities.js').default;
-var BinaryHeap = require('./heap/binary_heap.js').custom;
+var BinaryHeap = require('./heap/binary_heap.js').default.custom;
 var BinomialHeap = require('./heap/binomial_heap.js');
 var FibonacciHeap = require('./heap/fibonacci_heap.js');
 
@@ -96,7 +96,7 @@ function binaryHeapPQ(comp) {
       return a.order < b.order;
   };
 
-  this.heap = new BinaryHeap([], this.comp);
+  this.heap = new BinaryHeap({ comp: this.comp });
 
   // I just didnt want to add yet another function to the constructor
   // pls dont judge me

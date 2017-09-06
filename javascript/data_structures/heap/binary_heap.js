@@ -1,4 +1,3 @@
-import util from 'util';
 import dsalgo from '../../utilities';
 import seqsearch from '../../algorithms/searching/sequentialsearch';
 
@@ -48,29 +47,31 @@ class Heap {
    * need to set comparator first or it wont be set for the constructors call to siftUp
    * heaps children can be == to also
    *
-   * TODO: should better handle only passing a comparison function instead of just an array
-   * http://exploringjs.com/es6/ch_parameter-handling.html#sec_named-parameters
-   * weird errors happen if you set array to a function;
+   * updated to use default params
    *
    * @param {[]} array
    * @param {Function} compfn
+   * @param {Function} valueToString
    *
    * @prop options - the options for the function will move to a param soon
    * @memberof Heap
    */
-  constructor(array, compfn) {
-    // will change the interface later
-    const options = {
-      array,
-      comp: compfn || ((a, b) => a >= b),
-      valueToString: a => JSON.stringify(a), // quick and dirty way to support objects also since they wont be that big
-    };
+  constructor({
+    array = [],
+    comp,
+    valueToString = a => JSON.stringify(a), // quick and dirty way to support objects also since they wont be that big
+  } = {}) {
+    this.comp = comp;
 
-    this.comp = options.comp;
-    this.valueToString = options.valueToString;
+    if (!dsalgo.utils.isDefined(this.comp)) {
+      // eslint-disable-next-line max-len
+      throw new Error('You must define a comparision function for a custom binary heap. check Min and Max for examples');
+    }
+
+    this.valueToString = valueToString;
 
     // always set to an array at first
-    this.items = [];
+    this.items = array;
 
     // creation and updating of value set heavily influenced by
     //
@@ -79,12 +80,10 @@ class Heap {
     // and https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#Running_time
     this.valueSet = dsalgo.utils.simpleSet();
 
-    if (options.array) {
-      this.items = array;
+    if (this.items.length > 0) {
       // add the items to our set with their index
-      const ctx = this;
       this.items.forEach((val, i) => {
-        ctx.addToValueSet(val, i);
+        this.addToValueSet(val, i);
       });
       this.buildHeap();
     }
@@ -687,22 +686,40 @@ class Heap {
   }
 }
 
-// min is the same logic as max just with a different comparator
-function minHeap(array) {
-  const comp = (a, b) => a <= b;
-  minHeap.super_.prototype.constructor.call(this, array, comp);
+/**
+ * Use a max compartor to create a max heap
+ *
+ * @class MaxHeap
+ * @extends {Heap}
+ */
+class MaxHeap extends Heap {
+  constructor({
+    array = [],
+    comp = (a, b) => a >= b,
+    valueToString = a => JSON.stringify(a), // quick and dirty way to support objects also since they wont be that big
+  } = {}) {
+    super({ array, comp, valueToString });
+  }
 }
 
-util.inherits(minHeap, Heap);
-
-function maxHeap(array) {
-  const comp = (a, b) => a >= b;
-  maxHeap.super_.prototype.constructor.call(this, array, comp);
+/**
+ * Min Heap is the EXACT same logic as max just with a different comparator
+ *
+ * @class MinHeap
+ * @extends {Heap}
+ */
+class MinHeap extends Heap {
+  constructor({
+    array = [],
+    comp = (a, b) => a <= b,
+    valueToString = a => JSON.stringify(a), // quick and dirty way to support objects also since they wont be that big
+  } = {}) {
+    super({ array, comp, valueToString });
+  }
 }
-util.inherits(maxHeap, Heap);
 
-module.exports = {
-  min: minHeap,
-  max: maxHeap,
+export default {
+  min: MinHeap,
+  max: MaxHeap,
   custom: Heap,
 };

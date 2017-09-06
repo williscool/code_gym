@@ -4,6 +4,7 @@ import Heap from '../../data_structures/heap/binary_heap';
 
 const MinHeap = Heap.min;
 const MaxHeap = Heap.max;
+const CustomHeap = Heap.custom;
 
 describe('Heap', () => {
   describe('Max', () => {
@@ -21,7 +22,7 @@ describe('Heap', () => {
       });
 
       it('multiple nodes', () => {
-        const heap = new MaxHeap([32, 15, 12, 47]);
+        const heap = new MaxHeap({ array: [32, 15, 12, 47] });
         assert.equal(heap.size(), 4);
         assert.equal(heap.peek(), 47);
       });
@@ -31,7 +32,7 @@ describe('Heap', () => {
           precision: 0,
         });
 
-        const heap = new MaxHeap(array);
+        const heap = new MaxHeap({ array });
 
         assert(heap.isValid());
       });
@@ -94,11 +95,11 @@ describe('Heap', () => {
 
     describe('#contains()', () => {
       it('should find values that are there', () => {
-        const heap = new MaxHeap([32, 15, 12, 47, 4]);
+        const heap = new MaxHeap({ array: [32, 15, 12, 47, 4] });
         assert.equal(heap.contains(47), 0);
       });
       it('should not find values that are not there', () => {
-        const heap = new MaxHeap([32, 15, 12, 47]);
+        const heap = new MaxHeap({ array: [32, 15, 12, 47] });
         assert.equal(heap.contains(0), false);
       });
     });
@@ -134,13 +135,13 @@ describe('Heap', () => {
 
     describe('#updateValue()', () => {
       it('update values that are in the heap', () => {
-        const heap = new MaxHeap([32, 15, 12, 42]);
+        const heap = new MaxHeap({ array: [32, 15, 12, 42] });
         const newIndex = heap.updateValue(42, 14);
         assert.equal(heap.valueAt(newIndex), 14);
         assert(heap.isValid());
       });
       it('returns false for values that are not there', () => {
-        const heap = new MaxHeap([32, 15, 12, 47]);
+        const heap = new MaxHeap({ array: [32, 15, 12, 47] });
         assert.equal(heap.updateValue(0, 31), false);
       });
     });
@@ -161,7 +162,7 @@ describe('Heap', () => {
       });
 
       it('multiple nodes', () => {
-        const heap = new MinHeap([32, 15, 12, 47]);
+        const heap = new MinHeap({ array: [32, 15, 12, 47] });
         assert.equal(heap.size(), 4);
         assert.equal(heap.peek(), 12);
       });
@@ -171,7 +172,7 @@ describe('Heap', () => {
           precision: 0,
         });
 
-        const heap = new MinHeap(array);
+        const heap = new MinHeap({ array });
 
         assert(heap.isValid());
       });
@@ -234,11 +235,11 @@ describe('Heap', () => {
 
     describe('#contains()', () => {
       it('should find values that are there', () => {
-        const heap = new MinHeap([32, 15, 12, 47]);
+        const heap = new MinHeap({ array: [32, 15, 12, 47] });
         assert.equal(heap.contains(12), 0);
       });
       it('should not find values that are not there', () => {
-        const heap = new MinHeap([32, 15, 12, 47]);
+        const heap = new MinHeap({ array: [32, 15, 12, 47] });
         assert.equal(heap.contains(0), false);
       });
     });
@@ -274,15 +275,25 @@ describe('Heap', () => {
 
     describe('#updateValue()', () => {
       it('update values that are in the heap', () => {
-        const heap = new MinHeap([32, 15, 12, 42]);
+        const heap = new MinHeap({ array: [32, 15, 12, 42] });
         const newIndex = heap.updateValue(42, 14);
         assert(heap.isValid());
         assert.equal(heap.valueAt(newIndex), 14);
       });
       it('returns false for values that are not there', () => {
-        const heap = new MinHeap([32, 15, 12, 47]);
+        const heap = new MinHeap({ array: [32, 15, 12, 47] });
         assert.equal(heap.updateValue(0, 31), false);
       });
+    });
+  });
+
+  describe('Custom', () => {
+    it('throws an error if you do not supply a comparison function', () => {
+      assert.throws(() => {
+        // its for a test
+        // eslint-disable-next-line no-new
+        new CustomHeap();
+      }, /comparision function for a custom binary heap/);
     });
   });
 });

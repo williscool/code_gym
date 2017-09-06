@@ -21,6 +21,11 @@
  ** debugging viz help from
  *
  * https://www.cs.usfca.edu/~galles/visualization/FibonacciHeap.html
+ *
+ * Also fun fact
+ *
+ * https://www.igvita.com/2009/03/26/ruby-algorithms-sorting-trie-heaps/
+ * this was done in ruby for a GSOC project in 08
 */
 
 var dsalgo = require('../../utilities.js').default;

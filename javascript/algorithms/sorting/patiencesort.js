@@ -1,5 +1,5 @@
 var dsalgo = require('../../utilities.js').default;
-var BinaryHeap = require('../../data_structures/heap/binary_heap.js').custom;
+var BinaryHeap = require('../../data_structures/heap/binary_heap.js').default.custom;
 // https://en.wikipedia.org/wiki/Patience_sorting
 
 // https://en.wikipedia.org/wiki/Patience_sorting#Python
@@ -45,9 +45,9 @@ module.exports = function(list, LIS_MODE) {
 
   // piles are now created and we have our LIS in top piles
   // now create sorted list from piles
-  var heap = new BinaryHeap([], function(a, b) {
+  var heap = new BinaryHeap({ comp: function(a, b) {
     return a.value <= b.value;
-  });
+  }});
 
   for(var j = 0; j < piles.length; j++) {
     heap.insert({
