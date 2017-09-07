@@ -2,9 +2,11 @@ import assert from 'assert';
 import dsalgo from '../../utilities';
 import Heap from '../../data_structures/heap/binary_heap';
 
-const MinHeap = Heap.min;
-const MaxHeap = Heap.max;
-const CustomHeap = Heap.custom;
+const {
+  min: MinHeap,
+  max: MaxHeap,
+  custom: CustomHeap,
+} = Heap;
 
 describe('Heap', () => {
   describe('Max', () => {

@@ -623,16 +623,16 @@ class Heap {
    *
    * Time Complexity: O(n * log(n))
    *
-   * @returns
+   * note about this function. It will invalidate the heap property of this data structure if you dont restore it!
+   *
+   * how to handle this?
+   * either re heap after or create a copy of the items in original order and reset them later
+   *
+   * @returns {number[]}
    * @memberof Heap
    */
   heapsort() {
-    // note about this function. it can break the heap property of this data structure if you dont restore it!
-    //
-    // how to handle this?
-    // either re heap after or create a copy of the items in original order and reset them later
-
-    // store the array in its orginal heapified for so we can restore it later
+    // store the array in its orginal heapified form so we can restore it later
     const heapifiedList = dsalgo.utils.arrayDeepCopy(this.items);
 
     const len = this.size();

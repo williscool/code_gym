@@ -1,17 +1,26 @@
-// http://en.wikipedia.org/wiki/Heapsort
-// http://rosettacode.org/wiki/Sorting_algorithms/Heapsort
-// and the CLRS intro to algorithms version
 
-var dsalgo = require('../../utilities.js').default;
-var maxHeap = require('../../data_structures/heap/binary_heap.js').default.max;
-var swap = dsalgo.utils.swap;
+import Heap from '../../data_structures/heap/binary_heap';
 
-module.exports = function(list) {
+const MaxHeap = Heap.max;
 
-  // build a heap does a similar thing to heapify in the wikipiedia version of the algorithm
-  // all you care about is that you have a valid heap to start with
-
-  var heap = new maxHeap({ array: list });
-
+/**
+ * Uses a max heap to sort an array
+ *
+ * Though I bet you could use a min heap and reverse it to get the same effect
+ *
+ * inspirtations:
+ *
+ * http://en.wikipedia.org/wiki/Heapsort
+ * http://rosettacode.org/wiki/Sorting_algorithms/Heapsort
+ * and the CLRS intro to algorithms version
+ *
+ * @module HeapSort
+ * @param {any} list
+ * @returns
+ */
+export default function (list) {
+  // build a heap does a similar thing to heapify in the wikipiedia version of this algorithm
+  // all you care about is that you have a valid heap when you begin the algorithm
+  const heap = new MaxHeap({ array: list });
   return heap.heapsort();
-};
+}
