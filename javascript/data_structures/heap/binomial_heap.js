@@ -141,19 +141,6 @@ class BinomialHeap {
   }
 
   /**
-   * An alias of `findMin`
-   *
-   * Used to have a uniform interface for all of the heap implementation
-   *
-   * @alias findMin
-   * @returns
-   * @memberof BinomialHeap
-   */
-  peek() {
-    return this.findMin();
-  }
-
-  /**
    * Makes the first input `node` the new parent of `other` node's children in O(1) time.
    *
    * Time Complexity: O(1)
@@ -449,18 +436,6 @@ class BinomialHeap {
   }
 
   /**
-   * Alias of extractMin
-   *
-   * Used to have uniform interfaces for all of the heaps
-   *
-   * @returns {BinomHeapNode}
-   * @memberof BinomialHeap
-   */
-  pop() {
-    return this.extractMin();
-  }
-
-  /**
    * Kinda similar to the swap operation in my `BinaryHeap`
    *
    * Swaps the keys and values of 2 nodes
@@ -580,20 +555,39 @@ class BinomialHeap {
     const node = this.getFromNodeSet(val);
     return dsalgo.utils.isDefined(node) ? node : false;
   }
-
-  /**
-   * Just an alias for `delete`
-   *
-   * Time Complexity: O(1)
-   *
-   * @param {any} node
-   * @returns
-   * @memberof BinomialHeap
-   */
-  remove(node) {
-    return this.delete(node);
-  }
 }
+
+/**
+ * An alias of `findMin`
+ *
+ * Used to have a uniform interface for all of the heap implementation
+ *
+ * @alias findMin
+ * @returns
+ * @memberof BinomialHeap
+ */
+BinomialHeap.prototype.peek = BinomialHeap.prototype.findMin;
+
+/**
+ * Just an alias for `delete`
+ *
+ * @param {any} node
+ * @returns
+ * @memberof BinomialHeap
+ */
+
+BinomialHeap.prototype.remove = BinomialHeap.prototype.delete;
+
+
+/**
+ * Alias of `extractMin`
+ *
+ * Used to have uniform interfaces for all of the heaps
+ *
+ * @returns {BinomHeapNode}
+ * @memberof BinomialHeap
+ */
+BinomialHeap.prototype.pop = BinomialHeap.prototype.extractMin;
 
 /**
  * A Binomial Heap Tree Node
