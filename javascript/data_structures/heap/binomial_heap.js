@@ -5,41 +5,6 @@ import dsalgo from '../../utilities';
 // want to keep it as faithful to how it was coded by the people who presented it to me (CLR) as possible
 
 /**
- * A Binomial Heap Tree Node
- *
- * @class BinomHeapNode
- * @property {number} value - the value held at this node of the binary search tree
- * @property {number} degree - the number of edges attached to this node https://en.wikipedia.org/wiki/Degree_(graph_theory)
- * @property {BinomHeapNode} parent - a reference to the object that represent's the nodes parent in this Binomial Heap Tree
- * @property {BinomHeapNode} child - a reference to the object that represent's the nodes child in this Binomial Heap Tree
- * @property {BinomHeapNode} sibling - a reference to the object that represent's the nodes sibling in this Binomial Heap Tree
- */
-class BinomHeapNode {
-  /**
-   * Creates an instance of Node.
-   * with the value of val
-   *
-   * @param {any} val
-   * @memberof Node
-   */
-  constructor({
-    key,
-    value,
-    degree = 0,
-    parent = null,
-    child = null,
-    sibling = null,
-  } = {}) {
-    this.key = key;
-    this.value = value;
-    this.degree = degree;
-    this.parent = parent;
-    this.child = child;
-    this.sibling = sibling;
-  }
-}
-
-/**
  * Binomial Heap
  *
  * A heap made of a forest of binomial trees with the heap property numbered k=0, 1, 2, ..., n, each containing either 0 or 2^k nodes.
@@ -372,6 +337,7 @@ class BinomialHeap {
   insert(key, val) {
     const tempHeap = new BinomialHeap();
 
+    // eslint-disable-next-line no-use-before-define
     const newNode = new BinomHeapNode({
       key,
       value: val,
@@ -583,7 +549,7 @@ class BinomialHeap {
     // for instance if you gave it just a number the extract min function would still run
     // and this function would not only silently fail... it would also lie that it succeded lol
 
-    if (!(node instanceof BinomHeapNode)) {
+    if (!(node instanceof BinomHeapNode)) { // eslint-disable-line no-use-before-define
       throw new Error('Pass this function a valid BinomHeapNode or you are gonna have a bad time');
     }
 
@@ -626,6 +592,41 @@ class BinomialHeap {
    */
   remove(node) {
     return this.delete(node);
+  }
+}
+
+/**
+ * A Binomial Heap Tree Node
+ *
+ * @class BinomHeapNode
+ * @property {number} value - the value held at this node of the binary search tree
+ * @property {number} degree - the number of edges attached to this node https://en.wikipedia.org/wiki/Degree_(graph_theory)
+ * @property {BinomHeapNode} parent - a reference to the object that represent's the nodes parent in this Binomial Heap Tree
+ * @property {BinomHeapNode} child - a reference to the object that represent's the nodes child in this Binomial Heap Tree
+ * @property {BinomHeapNode} sibling - a reference to the object that represent's the nodes sibling in this Binomial Heap Tree
+ */
+class BinomHeapNode {
+  /**
+   * Creates an instance of Node.
+   * with the value of val
+   *
+   * @param {any} val
+   * @memberof Node
+   */
+  constructor({
+    key,
+    value,
+    degree = 0,
+    parent = null,
+    child = null,
+    sibling = null,
+  } = {}) {
+    this.key = key;
+    this.value = value;
+    this.degree = degree;
+    this.parent = parent;
+    this.child = child;
+    this.sibling = sibling;
   }
 }
 
