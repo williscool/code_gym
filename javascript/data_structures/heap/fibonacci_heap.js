@@ -46,23 +46,24 @@ import dsalgo from '../../utilities';
 */
 
 class FibonacciHeap {
-  constructor(node, size, compfn) {
-    this.minNode = node || null;
-    // this could be zero so I gotta use my fancy function
-    this.size = dsalgo.utils.isDefined(size) ? size : 0;
+  constructor({
+    // fib heap is also a min heap by default
+    node = null,
+    size = 0,
+    comp = (a, b) => a.key <= b.key,
+    valueToString = a => JSON.stringify(a), // quick and dirty way to support objects also since they wont be that big
+  } = {}) {
+    this.minNode = node;
+    this.comp = comp;
+    this.size = size;
 
     // gotta make sure we increase the size if a node is set in contructor
     if (node) this.size += 1;
 
-    // fib heap is also a min heap by default
-    this.comp = compfn || ((a, b) => a.key <= b.key);
-
     // node set for keeping track of references to objects
     // same use as in binomial heap
     this.nodeSet = dsalgo.utils.simpleSet();
-    this.valueToString = function (a) {
-      return JSON.stringify(a);
-    };
+    this.valueToString = valueToString;
   }
 
   /**
@@ -344,9 +345,11 @@ class FibonacciHeap {
   /**
    * Extract the minimum value node from the heap
    *
-   * This is one of the new not constant operation in this data structure.
+   * This is one of the few not constant operation in this data structure.
    *
    * Most of the other operations just put off all the work until you need to remove something from the tree or change its value
+   *
+   * Time Complexity: O(log(n))
    *
    * Then subroutines of this then restore the heap property
    *

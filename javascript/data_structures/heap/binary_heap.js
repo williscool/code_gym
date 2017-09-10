@@ -53,7 +53,9 @@ class Heap {
    * @param {Function} compfn
    * @param {Function} valueToString
    *
-   * @prop options - the options for the function will move to a param soon
+   * @prop array - the options for the function will move to a param soon
+   * @prop comp - the comparision function
+   * @prop valueToString - function to turn your input values (which could be numbers or objects) into a string defaults to `JSON.stringify`
    * @memberof Heap
    */
   constructor({
