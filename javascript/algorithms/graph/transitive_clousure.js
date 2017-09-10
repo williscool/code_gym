@@ -12,7 +12,7 @@ function TransitiveClosure(graph){
 
   var tc = dsalgo.utils.simpleSet();
 
-  graph.vertex_list().forEach(function (start_vertex){
+  graph.vertexList().forEach(function (start_vertex){
 
     tc[start_vertex] = {};
 

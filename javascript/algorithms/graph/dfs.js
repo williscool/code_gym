@@ -126,7 +126,7 @@ function recursivetoArray(graph, orderName) {
   var order = [];
   var marked =  dsalgo.utils.simpleSet();
 
-  graph.vertex_list().forEach(function (vertexLabel){
+  graph.vertexList().forEach(function (vertexLabel){
     vertexLabel = dsalgo.utils.makeNumberUnlessNaN(vertexLabel);
 
     if (marked[vertexLabel]) return;

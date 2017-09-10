@@ -1,6 +1,6 @@
 var assert = require('assert');
 var dsalgo = require('../../../utilities.js').default;
-var Graph = require('../../../data_structures/graph.js');
+var Graph = require('../../../data_structures/graph.js').default;
 var topoSort = require('../../../algorithms/graph/topological_sort.js');
 
 describe('Topological Sort ', function() {
@@ -40,12 +40,12 @@ describe('Topological Sort ', function() {
       directed: true
     });
 
-    test.add_edge(5, 2);
-    test.add_edge(5, 0);
-    test.add_edge(4, 0);
-    test.add_edge(4, 1);
-    test.add_edge(2, 3);
-    test.add_edge(3, 1);
+    test.addEdge(5, 2);
+    test.addEdge(5, 0);
+    test.addEdge(4, 0);
+    test.addEdge(4, 1);
+    test.addEdge(2, 3);
+    test.addEdge(3, 1);
 
     var otord = topoSort(test);
     it('in correct order in a graph thats made up', function() {

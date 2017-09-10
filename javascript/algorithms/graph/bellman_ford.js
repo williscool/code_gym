@@ -6,7 +6,7 @@
 var dsalgo = require('../../utilities.js').default;
 var Queue = require('../../data_structures/queue.js').default.doubly_linked_list;
 var SPW = require('./shortest_path_walker.js');
-var Graph = require('../../data_structures/graph.js');
+var Graph = require('../../data_structures/graph.js').default;
 
 function BF(graph, start_vertex) {
   this.source = start_vertex;
@@ -44,7 +44,7 @@ function BF(graph, start_vertex) {
    for (var k = 0; k < graph.adjacency_list[v].length; k++) {
       var w = graph.adjacency_list[v][k];
 
-      var alt = info[v].distance + graph.get_edge_weight(v, w);
+      var alt = info[v].distance + graph.getEdgeWeight(v, w);
 
       if (info[w].distance > alt) { // if the old distance is greater
 
@@ -76,8 +76,8 @@ function BF(graph, start_vertex) {
         Object.keys(info).forEach(function(vName){
           var pred = info[vName].predecessor;
           if(dsalgo.utils.isDefined(pred) && pred !== null){
-            var weight = graph.get_edge_weight(pred, vName);
-            possibleCycleGraph.add_edge(pred, vName, weight);
+            var weight = graph.getEdgeWeight(pred, vName);
+            possibleCycleGraph.addEdge(pred, vName, weight);
           }
         });
 

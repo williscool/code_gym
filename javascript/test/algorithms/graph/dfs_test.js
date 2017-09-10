@@ -1,6 +1,6 @@
 var assert = require('assert');
 var DFSContainer = require('../../../algorithms/graph/dfs.js');
-var Graph = require('../../../data_structures/graph.js');
+var Graph = require('../../../data_structures/graph.js').default;
 var dsalgo = require('../../../utilities.js').default;
 
 (["iterative", "recursive"]).forEach(function(key) {
@@ -126,7 +126,7 @@ describe('Depth First Search', function() {
      markedSets[orderName] = dsalgo.utils.simpleSet();
      orderSets[orderName] = [];
 
-    graph.vertex_list().forEach(function (vertexLabel){
+    graph.vertexList().forEach(function (vertexLabel){
       vertexLabel = dsalgo.utils.makeNumberUnlessNaN(vertexLabel);
 
       if (markedSets[orderName][vertexLabel]) return;

@@ -284,10 +284,13 @@ class BinaryHeapPQ {
  *
  * who knew?
  *
+ * @param {string} order - the whether this heap should be min or max ordered
+ *
  * @class BinomialHeapPQ
  */
 class BinomialHeapPQ {
   constructor({
+    order = 'max',
     comp = (a, b) => {
       if (a.key !== b.key) return a.key >= b.key;
       return a.value.order < b.value.order;
@@ -297,6 +300,7 @@ class BinomialHeapPQ {
     this.comp = comp;
 
     this.heap = new BinomialHeap({
+      order,
       comp: this.comp,
     });
 

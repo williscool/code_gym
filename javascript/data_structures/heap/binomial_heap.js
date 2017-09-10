@@ -58,6 +58,7 @@ class BinomialHeap {
    * @memberof BinomialHeap
    */
   constructor({
+    order = 'min', // default to min ordered. false if max or
     comp = (a, b) => a.key <= b.key,
     valueToString = a => JSON.stringify(a), // quick and dirty way to support objects also since they wont be that big
   } = {}) {
@@ -72,6 +73,16 @@ class BinomialHeap {
     //
     this.nodeSet = dsalgo.utils.simpleSet();
     this.valueToString = valueToString;
+    this.order = order;
+
+    if (!(this.order === 'min' || this.order === 'max')) {
+      throw new Error('min and max are the only valid heap orders');
+    }
+    this.degreeComp = (a, b) => a <= b;
+
+    if (this.order === 'max') {
+      this.degreeComp = (a, b) => a >= b;
+    }
   }
 
   /**
@@ -194,8 +205,16 @@ class BinomialHeap {
     let aNext = a.root;
     let bNext = b.root;
 
-    // TODO: is this supposed to used comparator? if so switch to it (note I dont think so. this comparing node DEGREE not VALUE)
-    if (a.root.degree <= b.root.degree) {
+    // TODO: figure out wtf this is about? what follows is my theory so far
+    //
+    // some explaination
+    //
+    // on its own in the binomial heap test I am using it as a min heap
+    // to properly structure the tree you want to merge the roots with lower degree
+    //
+    // in djikstra for some reason i need to link changes with high degree
+    // why? idk
+    if (a.degreeComp(a.root.degree, b.root.degree)) {
       root = a.root;
       aNext = aNext.sibling;
     } else {
@@ -206,8 +225,8 @@ class BinomialHeap {
     let tail = root;
 
     while (aNext && bNext) {
-      // TODO: is this supposed to used comparator? if so switch to it
-      if (aNext.degree <= bNext.degree) {
+      // needs comparator again
+      if (a.degreeComp(aNext.degree, bNext.degree)) {
         tail.sibling = aNext;
         aNext = aNext.sibling;
       } else {

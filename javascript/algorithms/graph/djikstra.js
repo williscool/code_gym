@@ -100,7 +100,7 @@ var naiveDijkstra = function(graph, start_vertex) {
 
     for (var j = 0; j < graph.adjacency_list[u].length; j++) {
       var v = graph.adjacency_list[u][j];
-      var alt = info[u].distance + graph.get_edge_weight(u, v);
+      var alt = info[u].distance + graph.getEdgeWeight(u, v);
 
       if (alt < info[v].distance) {
 
@@ -153,6 +153,7 @@ var heapPQDijkstra = function(graph, start_vertex, heapQueue, early_exit_conditi
 
     // u starts at the source vertex
     // because of course it is the lowest value in our min heap at the start of the algorithm
+
     var u = valueIfObject(queue.dequeue());
 
     if(early_exit_condition && early_exit_condition(u)) {
@@ -162,7 +163,7 @@ var heapPQDijkstra = function(graph, start_vertex, heapQueue, early_exit_conditi
 
     for (var k = 0; k < graph.adjacency_list[u].length; k++) {
       var v = graph.adjacency_list[u][k];
-      var alt = info[u].distance + graph.get_edge_weight(u, v);
+      var alt = info[u].distance + graph.getEdgeWeight(u, v);
 
       if(heuristicFn) alt = alt + heuristicFn(v);
 
@@ -202,12 +203,14 @@ var binaryHeapPQ = require('../../data_structures/priority_queue.js').binaryHeap
 
 var binaryHeapPQDijkstra = function(graph, start_vertex, early_exit_condition, heuristicFn) {
   // min priority queue
-  var queue = new binaryHeapPQ(function(a, b) {
-    if (a.priority != b.priority) return a.priority <= b.priority;
+  var queue = new binaryHeapPQ({
+    comp: (a, b) => {
+      if (a.priority != b.priority) return a.priority <= b.priority;
 
-    // break value ties with insertion order
-    // remember djikstra is greedy so it would always pick first anyway
-    return a.order < b.order;
+      // break value ties with insertion order
+      // remember djikstra is greedy so it would always pick first anyway
+      return a.order < b.order;
+    }
   });
 
   var obj = heapPQDijkstra(graph, start_vertex, queue, early_exit_condition, heuristicFn);
@@ -222,9 +225,11 @@ var binomialHeapPQ = require('../../data_structures/priority_queue.js').binomial
 
 var binomialHeapPQDijkstra = function(graph, start_vertex) {
   // min priority queue with binomial heap
-  var queue = new binomialHeapPQ(function(a, b) {
-    if (a.key != b.key) return a.key <= b.key;
-    return a.value.order < b.value.order;
+  var queue = new binomialHeapPQ({
+    comp: (a, b) => {
+      if (a.key != b.key) return a.key <= b.key;
+      return a.value.order < b.value.order;
+    }
   });
 
   var obj = heapPQDijkstra(graph, start_vertex, queue);
@@ -239,9 +244,11 @@ var fibonacciHeapPQ = require('../../data_structures/priority_queue.js').fibonac
 
 var fibonacciHeapPQDijkstra = function(graph, start_vertex) {
   // min priority queue with fibonacci heap
-  var queue = new fibonacciHeapPQ(function(a, b) {
-    if (a.key != b.key) return a.key <= b.key;
-    return a.value.order < b.value.order;
+  var queue = new fibonacciHeapPQ({
+    comp: (a, b) => {
+      if (a.key != b.key) return a.key <= b.key;
+      return a.value.order < b.value.order;
+    }
   });
 
   var obj = heapPQDijkstra(graph, start_vertex, queue);

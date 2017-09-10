@@ -66,6 +66,8 @@ describe('Binomial Heap', () => {
       assert.equal(heap.pop().key, 24);
       assert.equal(heap.peek().key, 25);
       assert.equal(heap.size, 6);
+      assert.equal(heap.pop().key, 25);
+      assert.equal(heap.size, 5);
     });
 
     it('restores heap property and puts values in correct place', () => {

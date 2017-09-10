@@ -2,7 +2,7 @@ var assert = require('assert');
 // var assert = require('chai').assert
 var SquareGrid = require('../../data_structures/square_grid.js');
 var dsalgo = require('../../utilities.js').default;
-var Graph = require('../../data_structures/graph.js');
+var Graph = require('../../data_structures/graph.js').default;
 var BFS = require('../../algorithms/graph/bfs.js');
 var Djikstra = require('../../algorithms/graph/djikstra.js').binaryHeapPQ;
 

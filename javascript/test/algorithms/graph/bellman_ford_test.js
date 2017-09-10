@@ -1,6 +1,6 @@
 var assert = require('assert');
 var BellmanFord = require('../../../algorithms/graph/bellman_ford.js');
-var Graph = require('../../../data_structures/graph.js');
+var Graph = require('../../../data_structures/graph.js').default;
 var dsalgo = require('../../../utilities.js').default;
 
 describe('Bellman Ford', function() {

@@ -125,6 +125,8 @@ export default {
      * cribbed from:
      * http://stackoverflow.com/a/20223361/511710
      *
+     * @todo there are probably more functions in here with the same off by one as zero fill had
+     *
      * @param {any} value
      * @param {any} len
      * @returns {array}
@@ -132,7 +134,10 @@ export default {
     simpleArrayFill(value, len) {
       const A = [];
       let i = 0;
-      while (i < len) A[i += 1] = value;
+      while (i < len) {
+        A[i] = value;
+        i += 1;
+      }
       return A;
     },
 
@@ -307,8 +312,10 @@ export default {
       const row = [];
       // while (cols--) row.push(); // only need this if adding a fill
       //
-      // eslint-disable-next-line no-cond-assign
-      while (rows -= 1) arr.push(row.slice());
+      while (rows > 0) {
+        arr.push(row.slice());
+        rows -= 1;
+      }
       return arr;
     },
     /* eslint-enable no-param-reassign */

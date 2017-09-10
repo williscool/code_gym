@@ -195,7 +195,7 @@ SquareGrid.prototype.add_location_weight_to_graph_edge = function (x,y, weight, 
   // need to add this weight for every edge that points this grid location / the vertex that represents it in the graph
   this.neighbors(x,y).forEach(function (neighborArr){
     var from = ctx.locationToNumber(neighborArr[0], neighborArr[1]);
-    graph.set_edge_weight(from,to,weight);
+    graph.setEdgeWeight(from,to,weight);
   });
 
   return this;

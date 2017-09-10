@@ -12,6 +12,8 @@ var dsalgo = require('../../utilities.js').default;
 var Queue = require('../../data_structures/queue.js').default.doubly_linked_list;
 var binaryHeapPQ = require('../../data_structures/priority_queue.js').binaryHeap;
 
+var Graph = require('../../data_structures/graph.js').default;
+
 // inspired by http://algs4.cs.princeton.edu/43mst/LazyPrimMST.java.html
 function lazyPrimMST(graph, start_vertex) {
 
@@ -23,11 +25,13 @@ function lazyPrimMST(graph, start_vertex) {
   this.marked = dsalgo.utils.simpleSet();
 
   // min priority queue
-  this.pq = new binaryHeapPQ(function(a, b) {
-    if (a.priority != b.priority) return a.priority <= b.priority;
+  this.pq = new binaryHeapPQ({
+    comp: (a, b) => {
+      if (a.priority != b.priority) return a.priority <= b.priority;
 
-    // break value ties with insertion order
-    return a.order < b.order;
+      // break value ties with insertion order
+      return a.order < b.order;
+    }
   });
 
   // return the PrimMST after prim function of first vertex if given a start_vertex
@@ -39,7 +43,7 @@ function lazyPrimMST(graph, start_vertex) {
   // if we get this return the PrimMST object after scanning all the verticies
   // this will give us a spanning forest
   var ctx = this;
-  this.graph.vertex_list().forEach(function(val) {
+  this.graph.vertexList().forEach(function(val) {
     if (!ctx.marked[val]) ctx.prim(val);
   });
 
@@ -55,9 +59,9 @@ lazyPrimMST.prototype.scan = function(v) {
 
       if (!this.marked[w]) {
 
-        var edge_key = this.graph.edge_key(v, w);
+        var edgeKey = this.graph.edgeKey(v, w);
 
-        this.pq.enqueue(edge_key, this.graph.get_edge_weight(v, w));
+        this.pq.enqueue(edgeKey, this.graph.getEdgeWeight(v, w));
       }
     }
   }
@@ -67,15 +71,15 @@ lazyPrimMST.prototype.prim = function(start_vertex) {
   this.scan(start_vertex);
 
   while (this.pq.size() > 0) {
-    var current_edge_key = this.pq.dequeue();
+    var current_edgeKey = this.pq.dequeue();
 
-    var v = this.graph.edge_key_vertex_from(current_edge_key);
-    var w = this.graph.edge_key_vertex_to(current_edge_key);
+    var v = Graph.edgeKeyVertexFrom(current_edgeKey);
+    var w = Graph.edgeKeyVertexTo(current_edgeKey);
 
     if (this.marked[v] && this.marked[w]) continue; // skip this loop iteration
 
-    this.mst.enqueue(current_edge_key);
-    this.weight = this.weight + this.graph.get_edge_weight(v, w);
+    this.mst.enqueue(current_edgeKey);
+    this.weight = this.weight + this.graph.getEdgeWeight(v, w);
 
     if (!this.marked[v]) this.scan(v);
     if (!this.marked[w]) this.scan(w);
@@ -100,7 +104,7 @@ function eagerPrimMST(graph, start_vertex) {
 
   // init distance to all verticies to pos infinity
   var ctx = this;
-  this.graph.vertex_list().forEach(function(val) {
+  this.graph.vertexList().forEach(function(val) {
     ctx.distTo[val] = Number.POSITIVE_INFINITY;
   });
 
@@ -122,7 +126,7 @@ function eagerPrimMST(graph, start_vertex) {
 
   // if we get this return the PrimMST object after scanning all the verticies
   // this will give us a spanning forest
-  this.graph.vertex_list().forEach(function(val) {
+  this.graph.vertexList().forEach(function(val) {
     if (!dsalgo.utils.isDefined(ctx.marked[val])) ctx.prim(val);
   });
 
@@ -137,9 +141,9 @@ eagerPrimMST.prototype.buildMSTQueue = function() {
   var ctx = this;
   this.vertexPQOrder.forEach(function(v) {
     if (!dsalgo.utils.isDefined(ctx.edgeTo[v])) return; // if vertex has no edge to itself
-    var edge_key = ctx.edgeTo[v];
-    ctx.mst.enqueue(edge_key);
-    ctx.weight = ctx.weight + ctx.graph.get_edge_weight_by_key(edge_key);
+    var edgeKey = ctx.edgeTo[v];
+    ctx.mst.enqueue(edgeKey);
+    ctx.weight = ctx.weight + ctx.graph.getEdgeWeightByKey(edgeKey);
   });
 };
 
@@ -170,12 +174,12 @@ eagerPrimMST.prototype.scan = function(v) {
 
     if (dsalgo.utils.isDefined(this.marked[w])) continue;
 
-    var edge_key = this.graph.edge_key(v, w);
-    var edge_weight = this.graph.get_edge_weight_by_key(edge_key);
+    var edgeKey = this.graph.edgeKey(v, w);
+    var edge_weight = this.graph.getEdgeWeightByKey(edgeKey);
 
     if (edge_weight < this.distTo[w]) {
       this.distTo[w] = edge_weight;
-      this.edgeTo[w] = edge_key;
+      this.edgeTo[w] = edgeKey;
 
       if (dsalgo.utils.isDefined(this.marked[w])) { // if we have encountered this vertex before and thus it is in the pq
         this.pq.changePriority(w, this.distTo[w], this.marked[w]);

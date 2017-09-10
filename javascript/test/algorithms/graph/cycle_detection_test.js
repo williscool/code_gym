@@ -1,6 +1,6 @@
 var assert = require('assert');
 var CycleDetectors = require('../../../algorithms/graph/cycle_detection.js');
-var Graph = require('../../../data_structures/graph.js');
+var Graph = require('../../../data_structures/graph.js').default;
 var dsalgo = require('../../../utilities.js').default;
 
 Object.keys(CycleDetectors).forEach(function(key) {

@@ -1,6 +1,6 @@
 var assert = require('assert');
 var dsalgo = require('../../../utilities.js').default;
-var Graph = require('../../../data_structures/graph.js');
+var Graph = require('../../../data_structures/graph.js').default;
 var SCC = require('../../../algorithms/graph/strongly_connected_components.js');
 
 

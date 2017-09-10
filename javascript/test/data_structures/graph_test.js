@@ -1,41 +1,44 @@
-var assert = require('assert');
-var Graph = require('../../data_structures/graph.js');
-var dsalgo = require('../../utilities.js').default;
+import assert from 'assert';
+import dsalgo from '../../utilities';
+import Graph from '../../data_structures/graph';
 
-describe('Graph', function() {
-
-  describe('constructor', function() {
-    it("instantiates", function() {
+describe('Graph', () => {
+  describe('constructor', () => {
+    it('instantiates', () => {
       // as long as this doesn't blow up im happy
-      var graph = new Graph();
+      // its for a test
+      // eslint-disable-next-line no-new
+      new Graph();
     });
 
-    it("throws an error if you ask for matrices without supplying a size", function() {
-      assert.throws(function() {
+    it('throws an error if you ask for matrices without supplying a size', () => {
+      assert.throws(() => {
+        // its for a test
+        // eslint-disable-next-line no-new
         new Graph({
-          enable_matrices: true
+          enable_matrices: true,
         });
       }, /maximum size/);
     });
 
-    describe("can build from an adjacency_list", function() {
-      it("correctly", function() {
-        var adjList = [
+    describe('can build from an adjacency_list', () => {
+      it('correctly', () => {
+        const adjList = [
           [1, 2, 3],
           [0],
           [0, 3],
-          [0, 2]
+          [0, 2],
         ];
 
-        var graph = new Graph({
-          adjList: adjList
+        const graph = new Graph({
+          adjList,
         });
 
         assert.deepEqual(graph.adjacency_list, adjList);
       });
 
-      it("with an unconnected vertex correctly", function() {
-        var adjListToo = [
+      it('with an unconnected vertex correctly', () => {
+        const adjListToo = [
           [1],
           [0, 4, 5],
           [3, 4, 5],
@@ -43,20 +46,19 @@ describe('Graph', function() {
           [1, 2],
           [1, 2, 6],
           [3, 5],
-          []
+          [],
         ];
 
-        var graph = new Graph({
-          adjList: adjListToo
+        const graph = new Graph({
+          adjList: adjListToo,
         });
 
         assert.deepEqual(graph.adjacency_list, adjListToo);
       });
     });
 
-    describe("can build from an edge weighted digraph", function() {
-
-      var adjList = [[4, 2],
+    describe('can build from an edge weighted digraph', () => {
+      const adjList = [[4, 2],
         [3],
         [7],
         [6],
@@ -65,7 +67,7 @@ describe('Graph', function() {
         [2, 0, 4],
         [5, 3]];
 
-      var edgeSet = {
+      const edgeSet = {
         '0,2': 0.26,
         '0,4': 0.38,
         '1,3': 0.29,
@@ -80,17 +82,16 @@ describe('Graph', function() {
         '6,2': 0.4,
         '6,4': 0.93,
         '7,3': 0.39,
-        '7,5': 0.28
+        '7,5': 0.28,
       };
 
 
-      it("string correctly", function() {
-
+      it('string correctly', () => {
         // http://algs4.cs.princeton.edu/44sp/images/edge-weighted-digraph-representation.png
         // i.e. http://algs4.cs.princeton.edu/44sp/tinyEWD.txt
         // http://algs4.cs.princeton.edu/44sp/images/shortest-path.png
-        var EWD = dsalgo.utils.multilineString(function() {
-/*!
+        const EWD = dsalgo.utils.multilineString(() => {
+          /*!
 8
 15
 4 5 0.35
@@ -109,22 +110,21 @@ describe('Graph', function() {
 6 0 0.58
 6 4 0.93
 */
-});
-        var graph = new Graph({
+        });
+        const graph = new Graph({
           ewg: EWD,
-          directed: true
+          directed: true,
         });
 
         assert.deepEqual(graph.adjacency_list, adjList);
         assert.deepEqual(graph.edges, edgeSet);
       });
 
-      it("file correctly", function() {
-
-        var EWD = dsalgo.utils.requireText(__dirname, '../../data/graph/tinyEWD.txt');
-        var graph = new Graph({
+      it('file correctly', () => {
+        const EWD = dsalgo.utils.requireText(__dirname, '../../data/graph/tinyEWD.txt');
+        const graph = new Graph({
           ewg: EWD,
-          directed: true
+          directed: true,
         });
 
         assert.deepEqual(graph.adjacency_list, adjList);
@@ -133,30 +133,28 @@ describe('Graph', function() {
     });
 
     // http://algs4.cs.princeton.edu/41graph/
-    describe("can build from an unweighted graph data type", function() {
-
+    describe('can build from an unweighted graph data type', () => {
       // http://algs4.cs.princeton.edu/41graph/images/adjacency-lists.png
-      var adjList = [[6, 2, 1, 5],
+      const adjList = [[6, 2, 1, 5],
         [0],
         [0],
-        [5,4],
+        [5, 4],
         [5, 6, 3],
         [3, 4, 0],
         [0, 4],
         [8],
         [7],
-        [11,10, 12],
+        [11, 10, 12],
         [9],
         [9, 12],
-        [11,9]];
+        [11, 9]];
 
-      it("string correctly", function() {
-
+      it('string correctly', () => {
         // http://algs4.cs.princeton.edu/41graph/images/graph-input.png
         // i.e. http://algs4.cs.princeton.edu/41graph/tinyG.txt
         // http://algs4.cs.princeton.edu/44sp/images/shortest-path.png
-        var graphText = dsalgo.utils.multilineString(function() {
-/*!
+        const graphText = dsalgo.utils.multilineString(() => {
+          /*!
 13
 13
 0 5
@@ -173,53 +171,50 @@ describe('Graph', function() {
 9 11
 5 3
 */
-});
-        var graph = new Graph({
+        });
+        const graph = new Graph({
           graphData: graphText,
         });
 
-        graph.adjacency_list.forEach(function(arr, i){
+        graph.adjacency_list.forEach((arr, i) => {
           assert.deepEqual(graph.adjacency_list[i].sort(), adjList[i].sort());
         });
       });
 
-      it("file correctly", function() {
-
-        var gd = dsalgo.utils.requireText(__dirname, '../../data/graph/tinyG.txt');
-        var graph = new Graph({
+      it('file correctly', () => {
+        const gd = dsalgo.utils.requireText(__dirname, '../../data/graph/tinyG.txt');
+        const graph = new Graph({
           graphData: gd,
         });
 
-        graph.adjacency_list.forEach(function(arr, i){
+        graph.adjacency_list.forEach((arr, i) => {
           assert.deepEqual(graph.adjacency_list[i].sort(), adjList[i].sort());
         });
       });
     });
 
     // http://algs4.cs.princeton.edu/42digraph/
-    describe("can build from an unweighted digraph data type", function() {
-
+    describe('can build from an unweighted digraph data type', () => {
       // http://algs4.cs.princeton.edu/42digraph/images/digraph-input.png
-      var adjList = [
+      const adjList = [
         [1, 5],
         [],
-        [0,3],
-        [2,5],
-        [3,2],
+        [0, 3],
+        [2, 5],
+        [3, 2],
         [4],
-        [0,8,4,9],
-        [9,6],
+        [0, 8, 4, 9],
+        [9, 6],
         [6],
-        [10,11],
+        [10, 11],
         [12],
-        [12,4],
-        [9]
+        [12, 4],
+        [9],
       ];
 
-      it("string correctly", function() {
-
-        var graphText = dsalgo.utils.multilineString(function() {
-/*!
+      it('string correctly', () => {
+        const graphText = dsalgo.utils.multilineString(() => {
+          /*!
 13
 22
  4  2
@@ -245,147 +240,141 @@ describe('Graph', function() {
  6  9
  7  6
 */
-});
-        var gt = new Graph({
+        });
+        const gt = new Graph({
           graphData: graphText,
-          directed: true
+          directed: true,
         });
 
-        gt.adjacency_list.forEach(function(arr, i){
+        gt.adjacency_list.forEach((arr, i) => {
           assert.deepEqual(gt.adjacency_list[i].sort(), adjList[i].sort());
         });
       });
 
-      it("file correctly", function() {
+      it('file correctly', () => {
+        const gd = dsalgo.utils.requireText(__dirname, '../../data/graph/tinyDG.txt');
 
-        var gd = dsalgo.utils.requireText(__dirname, '../../data/graph/tinyDG.txt');
-
-        var fileGraph = new Graph({
+        const fileGraph = new Graph({
           graphData: gd,
           directed: true,
-          reverse_adjacency_lists: true
+          reverse_adjacency_lists: true,
         });
 
-        fileGraph.adjacency_list.forEach(function(arr, i){
+        fileGraph.adjacency_list.forEach((arr, i) => {
           assert.deepEqual(fileGraph.adjacency_list[i].sort(), adjList[i].sort());
         });
       });
     });
-
   });
 
-  describe('Vertex Functions', function() {
-    describe('#add_vertex() and #vertex_list()', function() {
-      var graph = new Graph();
-      graph.add_vertex(0);
+  describe('Vertex Functions', () => {
+    describe('#addVertex() and #vertexList()', () => {
+      const graph = new Graph();
+      graph.addVertex(0);
 
-      it("adds a vertex to the vertex_list", function() {
-        assert(0 in graph.vertex_list());
+      it('adds a vertex to the vertexList', () => {
+        assert(0 in graph.vertexList());
       });
-
     });
 
-    describe('#order()', function() {
-      var graph = new Graph();
-      graph.add_vertex(0);
+    describe('#order()', () => {
+      const graph = new Graph();
+      graph.addVertex(0);
 
-      it("gives correct number of vertices", function() {
+      it('gives correct number of vertices', () => {
         assert.equal(graph.order(), 1);
       });
     });
 
-    describe('degree', function() {
-      var graph = new Graph();
-      graph.add_edge(0, 1).add_edge(0, 2).add_edge(0, 3).add_edge(2, 3);
+    describe('degree', () => {
+      const graph = new Graph();
+      graph.addEdge(0, 1).addEdge(0, 2).addEdge(0, 3).addEdge(2, 3);
 
-      describe("#vertex_out_degree()", function() {
-        it("correctly reports values", function() {
-          assert.equal(graph.vertex_out_degree(0), 3);
-          assert.equal(graph.vertex_out_degree(1), 1);
-          assert.equal(graph.vertex_out_degree(2), 2);
-          assert.equal(graph.vertex_out_degree(3), 2);
+      describe('#vertexOutDegree()', () => {
+        it('correctly reports values', () => {
+          assert.equal(graph.vertexOutDegree(0), 3);
+          assert.equal(graph.vertexOutDegree(1), 1);
+          assert.equal(graph.vertexOutDegree(2), 2);
+          assert.equal(graph.vertexOutDegree(3), 2);
         });
 
-        it("returns false for invalid vertex", function() {
-          assert.equal(graph.vertex_out_degree(23), false);
+        it('returns false for invalid vertex', () => {
+          assert.equal(graph.vertexOutDegree(23), false);
         });
 
-        it("returns 0 for valid vertex but unconnected vertex", function() {
-          graph.add_vertex(17);
-          assert.equal(graph.vertex_out_degree(17), 0);
-        });
-      });
-
-      describe("#vertex_in_degree()", function() {
-        it("correctly reports values", function() {
-          assert.equal(graph.vertex_in_degree(0), 3);
-          assert.equal(graph.vertex_in_degree(1), 1);
-          assert.equal(graph.vertex_in_degree(2), 2);
-          assert.equal(graph.vertex_in_degree(3), 2);
-        });
-
-        it("returns false for invalid vertex", function() {
-          assert.equal(graph.vertex_in_degree(23), false);
-        });
-
-        it("returns 0 for valid vertex but unconnected vertex", function() {
-          graph.add_vertex(17);
-          assert.equal(graph.vertex_in_degree(17), 0);
+        it('returns 0 for valid vertex but unconnected vertex', () => {
+          graph.addVertex(17);
+          assert.equal(graph.vertexOutDegree(17), 0);
         });
       });
 
+      describe('#vertexInDegree()', () => {
+        it('correctly reports values', () => {
+          assert.equal(graph.vertexInDegree(0), 3);
+          assert.equal(graph.vertexInDegree(1), 1);
+          assert.equal(graph.vertexInDegree(2), 2);
+          assert.equal(graph.vertexInDegree(3), 2);
+        });
+
+        it('returns false for invalid vertex', () => {
+          assert.equal(graph.vertexInDegree(23), false);
+        });
+
+        it('returns 0 for valid vertex but unconnected vertex', () => {
+          graph.addVertex(17);
+          assert.equal(graph.vertexInDegree(17), 0);
+        });
+      });
     });
   });
 
-  describe('Edge Functions', function() {
-    var graph = new Graph({
-      enable_matrices: true,
-      max_size: 4
-    });
+  describe('Edge Functions', () => {
+    describe('#addEdge()', () => {
+      const graph = new Graph({
+        enable_matrices: true,
+        max_size: 4,
+      });
+      graph.addEdge(0, 1).addEdge(0, 2).addEdge(0, 3).addEdge(2, 3);
 
-    describe('#add_edge()', function() {
-
-      graph.add_edge(0, 1).add_edge(0, 2).add_edge(0, 3).add_edge(2, 3);
-
-      it("adds vertices to the vertex_list", function() {
-        assert.deepEqual(graph.vertex_list(), ["0", "1", "2", "3"]);
+      it('adds vertices to the vertexList', () => {
+        assert.deepEqual(graph.vertexList(), ['0', '1', '2', '3']);
       });
 
 
-      it("#size() is correct", function() {
+      it('#size() is correct', () => {
         assert.equal(graph.size(), 4);
       });
 
-      it("produces a correct adjacency_list", function() {
-        var adjList = [
+      it('produces a correct adjacency_list', () => {
+        const adjList = [
           [1, 2, 3],
           [0],
           [0, 3],
-          [0, 2]
+          [0, 2],
         ];
 
         assert.deepEqual(graph.adjacency_list, adjList);
       });
 
-      it("produces a correct adjacency_matrix", function() {
-        var adjMatrix = [
+      it('produces a correct adjacency_matrix', () => {
+        const adjMatrix = [
           [0, 1, 1, 1],
           [1, 0, 0, 0],
           [1, 0, 0, 1],
-          [1, 0, 1, 0]
+          [1, 0, 1, 0],
         ];
 
         assert.deepEqual(graph.adjacency_matrix, adjMatrix);
       });
 
-      it("produces a correct edge_list", function() {
-        var edgeList = [[0, 1], [0, 2], [0, 3], [2, 3]];
+      it('produces a correct edge_list', () => {
+        const edgeList = [[0, 1], [0, 2], [0, 3], [2, 3]];
 
         assert.deepEqual(graph.edge_list, edgeList);
       });
 
-      it("produces a correct incidence list", function() {
-        var edgeMatrix = [
+      it('produces a correct incidence list', () => {
+        const edgeMatrix = [
           [1, 1, 1, 0],
           [1, 0, 0, 0],
           [0, 1, 0, 1],
@@ -394,134 +383,128 @@ describe('Graph', function() {
         assert.deepEqual(graph.edge_matrix, edgeMatrix);
       });
 
-      it("produces a correct edge set", function() {
-        var edgeSet = {
-          "0,1": true,
-          "0,2": true,
-          "0,3": true,
-          "2,3": true
+      it('produces a correct edge set', () => {
+        const edgeSet = {
+          '0,1': true,
+          '0,2': true,
+          '0,3': true,
+          '2,3': true,
         };
         assert.deepEqual(graph.edges, edgeSet);
       });
 
-      it("supports edges with weights", function() {
-        var graph = new Graph();
-        graph.add_edge(30, 20, 112);
-        assert.equal(112, graph.get_edge_weight(20, 30));
-      });
-
-    });
-
-    describe('default_weight config', function() {
-      var graph = new Graph({
-        default_weight: 1
-      });
-      graph.add_edge(0, 1);
-
-      it("sets an edge weight to a default value", function() {
-        assert.equal(1, graph.get_edge_weight(0, 1));
+      it('supports edges with weights', () => {
+        const anotherGraph = new Graph();
+        anotherGraph.addEdge(30, 20, 112);
+        assert.equal(112, anotherGraph.getEdgeWeight(20, 30));
       });
     });
 
-    describe('#set_edge_weight()', function() {
-      var graph = new Graph();
-      graph.add_edge(0, 1);
+    describe('default_weight config', () => {
+      const graph = new Graph({
+        default_weight: 1,
+      });
+      graph.addEdge(0, 1);
 
-      it("updates the weight of a previously created edge", function() {
-        graph.set_edge_weight(0, 1, 112);
-        assert.equal(112, graph.get_edge_weight(0, 1));
+      it('sets an edge weight to a default value', () => {
+        assert.equal(1, graph.getEdgeWeight(0, 1));
       });
     });
 
-    describe('#size()', function() {
-      var graph = new Graph();
-      graph.add_edge(0, 1);
+    describe('#setEdgeWeight()', () => {
+      const graph = new Graph();
+      graph.addEdge(0, 1);
 
-      it("gives correct number of edges", function() {
+      it('updates the weight of a previously created edge', () => {
+        graph.setEdgeWeight(0, 1, 112);
+        assert.equal(112, graph.getEdgeWeight(0, 1));
+      });
+    });
+
+    describe('#size()', () => {
+      const graph = new Graph();
+      graph.addEdge(0, 1);
+
+      it('gives correct number of edges', () => {
         assert.equal(graph.size(), 1);
       });
     });
 
-    describe('#edge_set_list() and #edge_key_vertex_*()', function() {
-      var graph = new Graph();
-      graph.add_edge(0, 1);
-      var first_edge_key = graph.edge_set_list()[0];
+    describe('#edgeSetList() and #edgeKey_vertex_*()', () => {
+      const graph = new Graph();
+      graph.addEdge(0, 1);
+      const firstEdgeKey = graph.edgeSetList()[0];
 
-      it("#edge_key_vertex_from", function() {
-        assert.equal(graph.edge_key_vertex_from(first_edge_key), 0);
+      it('#edgeKeyVertexFrom', () => {
+        assert.equal(Graph.edgeKeyVertexFrom(firstEdgeKey), 0);
       });
 
-      it("#edge_key_vertex_to", function() {
-        assert.equal(graph.edge_key_vertex_to(first_edge_key), 1);
-      });
-    });
-
-    describe('#get_edge_weight_by_key()', function() {
-      var graph = new Graph();
-      graph.add_edge(0, 1);
-      var first_edge_key = graph.edge_set_list()[0];
-      graph.set_edge_weight(0, 1, 112);
-
-      it("updates the weight of a previously created edge", function() {
-        assert.equal(112, graph.get_edge_weight_by_key(first_edge_key));
+      it('#edgeKeyVertexTo', () => {
+        assert.equal(Graph.edgeKeyVertexTo(firstEdgeKey), 1);
       });
     });
 
-    describe('#edge_key_other_vertex()', function() {
-      var graph = new Graph();
-      graph.add_edge(0, 1);
-      var first_edge_key = graph.edge_set_list()[0];
+    describe('#getEdgeWeightByKey()', () => {
+      const graph = new Graph();
+      graph.addEdge(0, 1);
+      const firstEdgeKey = graph.edgeSetList()[0];
+      graph.setEdgeWeight(0, 1, 112);
 
-      it("gives the other vertex when given vertex from the edge", function() {
-        assert.equal(graph.edge_key_other_vertex(first_edge_key, 0), 1);
-        assert.equal(graph.edge_key_other_vertex(first_edge_key, 1), 0);
-      });
-
-      it("returns false when given an invalid vertex", function() {
-        assert.equal(graph.edge_key_other_vertex(first_edge_key, 300), false);
+      it('updates the weight of a previously created edge', () => {
+        assert.equal(112, graph.getEdgeWeightByKey(firstEdgeKey));
       });
     });
 
-  });
+    describe('#edgeKeyOtherVertex()', () => {
+      const graph = new Graph();
+      graph.addEdge(0, 1);
+      const firstEdgeKey = graph.edgeSetList()[0];
 
-  describe('util functions', function() {
-    describe('#hasCycle', function() {
-      it("can tell if its cyclic", function() {
-
-        var gd = dsalgo.utils.requireText(__dirname, '../../data/graph/tinyDG.txt');
-        var fileGraph = new Graph({
-          graphData: gd,
-          directed: true
-        });
-
-         assert.equal(fileGraph.hasCycle(), true);
+      it('gives the other vertex when given vertex from the edge', () => {
+        assert.equal(Graph.edgeKeyOtherVertex(firstEdgeKey, 0), 1);
+        assert.equal(Graph.edgeKeyOtherVertex(firstEdgeKey, 1), 0);
       });
 
-      it("can tell if its not cyclic", function() {
-
-        var gd = dsalgo.utils.requireText(__dirname, '../../data/graph/tinyDAG.txt');
-        var fileGraph = new Graph({
-          graphData: gd,
-          directed: true
-        });
-
-         assert.equal(fileGraph.hasCycle(), false);
-      });
-    });
-
-    describe('#components', function() {
-      it("gives graph components", function() {
-
-        var gd = dsalgo.utils.requireText(__dirname, '../../data/graph/tinyG.txt');
-        var fileGraph = new Graph({
-          graphData: gd,
-        });
-
-        assert.equal(fileGraph.components().length > 0,  true);
-        assert.equal(fileGraph.components().length === 3,  true);
+      it('returns false when given an invalid vertex', () => {
+        assert.equal(Graph.edgeKeyOtherVertex(firstEdgeKey, 300), false);
       });
     });
   });
 
+  describe('util functions', () => {
+    describe('#hasCycle', () => {
+      it('can tell if its cyclic', () => {
+        const gd = dsalgo.utils.requireText(__dirname, '../../data/graph/tinyDG.txt');
+        const fileGraph = new Graph({
+          graphData: gd,
+          directed: true,
+        });
+
+        assert.equal(fileGraph.hasCycle(), true);
+      });
+
+      it('can tell if its not cyclic', () => {
+        const gd = dsalgo.utils.requireText(__dirname, '../../data/graph/tinyDAG.txt');
+        const fileGraph = new Graph({
+          graphData: gd,
+          directed: true,
+        });
+
+        assert.equal(fileGraph.hasCycle(), false);
+      });
+    });
+
+    describe('#components', () => {
+      it('gives graph components', () => {
+        const gd = dsalgo.utils.requireText(__dirname, '../../data/graph/tinyG.txt');
+        const fileGraph = new Graph({
+          graphData: gd,
+        });
+
+        assert.equal(fileGraph.components().length > 0, true);
+        assert.equal(fileGraph.components().length === 3, true);
+      });
+    });
+  });
 });
 

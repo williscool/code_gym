@@ -1,6 +1,6 @@
 var assert = require('assert');
 var Djikstra = require('../../../algorithms/graph/djikstra.js');
-var Graph = require('../../../data_structures/graph.js');
+var Graph = require('../../../data_structures/graph.js').default;
 var dsalgo = require('../../../utilities.js').default;
 
 // http://algs4.cs.princeton.edu/44sp/images/shortest-path.png

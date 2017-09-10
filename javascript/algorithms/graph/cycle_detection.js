@@ -62,7 +62,7 @@ function DFSCycleCheck(graph, v, parent, visited, edgeTo, fn) {
 // http://algs4.cs.princeton.edu/41graph/Cycle.java.html
 function selfLoop(graph) {
 
-  for (var v in graph.vertex_list()) {
+  for (var v in graph.vertexList()) {
       for (var i = 0; i < graph.adjacency_list[v].length; i++) {
         var w = graph.adjacency_list[v][i];
         if( v == w){
@@ -83,20 +83,20 @@ function selfLoop(graph) {
 function parallelEdges(graph) {
   var seenEdge = dsalgo.utils.simpleSet();
 
-  for (var v in graph.vertex_list()) {
+  for (var v in graph.vertexList()) {
       for (var i = 0; i < graph.adjacency_list[v].length; i++) {
         var w = graph.adjacency_list[v][i];
-        if(!dsalgo.utils.isDefined(seenEdge[graph.edge_key(v,w)])){
-          seenEdge[graph.edge_key(v,w)] = 0;
+        if(!dsalgo.utils.isDefined(seenEdge[graph.edgeKey(v,w)])){
+          seenEdge[graph.edgeKey(v,w)] = 0;
         }
-        if (seenEdge[graph.edge_key(v,w)] > 2) {
+        if (seenEdge[graph.edgeKey(v,w)] > 2) {
           var cycle = [];
           cycle.push(v);
           cycle.push(w);
           cycle.push(v);
           return cycle;
         }
-        seenEdge[graph.edge_key(v,w)]++;
+        seenEdge[graph.edgeKey(v,w)]++;
       }
   }
   return [];
@@ -136,7 +136,7 @@ module.exports = {
     } else {
 
       // if there is no explicit start vertex set try them all
-      for (var i in graph.vertex_list()) {
+      for (var i in graph.vertexList()) {
          DFSCycleCheck(graph, i, null, dsalgo.utils.simpleSet(), dsalgo.utils.simpleSet(), cycleAdder);
       }
 

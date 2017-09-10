@@ -1,6 +1,6 @@
 var assert = require('assert');
 var Kruskal = require('../../../algorithms/graph/kruskal.js');
-var Graph = require('../../../data_structures/graph.js');
+var Graph = require('../../../data_structures/graph.js').default;
 var dsalgo = require('../../../utilities.js').default;
 
 // http://algs4.cs.princeton.edu/43mst/images/mst.png
@@ -17,12 +17,12 @@ describe('Kruskal', function() {
   var mstInfo = [];
   var treeWeight = 0;
 
-  mstQueue.forEach(function(edge_key) {
-    var current_edge_weight = graph.get_edge_weight_by_key(edge_key);
+  mstQueue.forEach(function(edgeKey) {
+    var current_edge_weight = graph.getEdgeWeightByKey(edgeKey);
     treeWeight = treeWeight + current_edge_weight;
 
     mstInfo.push({
-      edge: edge_key,
+      edge: edgeKey,
       weight: current_edge_weight.toFixed(2)
     });
   });

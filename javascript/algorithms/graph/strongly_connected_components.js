@@ -9,15 +9,15 @@ function naiveSCC(graph){
   var component_id = dsalgo.utils.simpleSet();
 
   // intially every vert is in its own comp
-  for(v in graph.vertex_list()) {
+  for(v in graph.vertexList()) {
     component_id [v] = v;
   }
 
   var reachable = TC(graph);
 
-  graph.vertex_list().forEach(function (v){
+  graph.vertexList().forEach(function (v){
 
-    graph.vertex_list().forEach(function (w){
+    graph.vertexList().forEach(function (w){
 
       if(reachable[v][w] && reachable[w][v]){
         component_id[v] = w;
@@ -29,7 +29,7 @@ function naiveSCC(graph){
 
   var compSet = dsalgo.utils.simpleSet();
 
-  for(v in graph.vertex_list()) {
+  for(v in graph.vertexList()) {
     if( !dsalgo.utils.isDefined(compSet[component_id[v]])) compSet[component_id[v]] = [];
     v = dsalgo.utils.makeNumberUnlessNaN(v);
     compSet[component_id[v]].push(v);
@@ -74,7 +74,7 @@ function kosarajuSharirSCC(graph){
   // print it out
   var compSet = dsalgo.utils.simpleSet();
 
-  for(var v in graph.vertex_list()) {
+  for(var v in graph.vertexList()) {
     if( !dsalgo.utils.isDefined(compSet[component_id[v]])) compSet[component_id[v]] = [];
 
     v = dsalgo.utils.makeNumberUnlessNaN(v);

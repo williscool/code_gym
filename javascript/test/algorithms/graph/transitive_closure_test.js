@@ -1,6 +1,6 @@
 var assert = require('assert');
 var dsalgo = require('../../../utilities.js').default;
-var Graph = require('../../../data_structures/graph.js');
+var Graph = require('../../../data_structures/graph.js').default;
 var TC = require('../../../algorithms/graph/transitive_clousure.js');
 
 describe('Transitive Closure', function() {
