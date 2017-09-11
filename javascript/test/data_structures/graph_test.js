@@ -90,8 +90,7 @@ describe('Graph', () => {
         // http://algs4.cs.princeton.edu/44sp/images/edge-weighted-digraph-representation.png
         // i.e. http://algs4.cs.princeton.edu/44sp/tinyEWD.txt
         // http://algs4.cs.princeton.edu/44sp/images/shortest-path.png
-        const EWD = dsalgo.utils.multilineString(() => {
-          /*!
+        const EWD = `
 8
 15
 4 5 0.35
@@ -109,8 +108,7 @@ describe('Graph', () => {
 3 6 0.52
 6 0 0.58
 6 4 0.93
-*/
-        });
+`;
         const graph = new Graph({
           ewg: EWD,
           directed: true,
@@ -153,8 +151,7 @@ describe('Graph', () => {
         // http://algs4.cs.princeton.edu/41graph/images/graph-input.png
         // i.e. http://algs4.cs.princeton.edu/41graph/tinyG.txt
         // http://algs4.cs.princeton.edu/44sp/images/shortest-path.png
-        const graphText = dsalgo.utils.multilineString(() => {
-          /*!
+        const graphText = `
 13
 13
 0 5
@@ -170,8 +167,7 @@ describe('Graph', () => {
 7 8
 9 11
 5 3
-*/
-        });
+`;
         const graph = new Graph({
           graphData: graphText,
         });
@@ -213,8 +209,7 @@ describe('Graph', () => {
       ];
 
       it('string correctly', () => {
-        const graphText = dsalgo.utils.multilineString(() => {
-          /*!
+        const graphText = `
 13
 22
  4  2
@@ -239,8 +234,7 @@ describe('Graph', () => {
  6  4
  6  9
  7  6
-*/
-        });
+`;
         const gt = new Graph({
           graphData: graphText,
           directed: true,
@@ -507,4 +501,3 @@ describe('Graph', () => {
     });
   });
 });
-

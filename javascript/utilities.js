@@ -144,6 +144,8 @@ export default {
     /**
      * Coerce string into a number... unless its not a number
      *
+     * In that case it just returns it unaltered
+     *
      * @param {any} val
      * @returns
      */
@@ -169,7 +171,8 @@ export default {
      * @returns {string}
      */
     multilineString(f) {
-      // note monkeying with this voodoo regex lol
+      // not monkeying with this voodoo regex lol
+      // this is deprecated anyway
       // eslint-disable-next-line no-useless-escape
       return f.toString().replace(/^[^\/]+\/\*!?/, '').replace(/\*\/[^\/]+$/, '');
     },
@@ -213,7 +216,7 @@ export default {
      *
      * Note the one parameter to path.resolve it just used to magically figure out.
      *
-     * Pretty sure it was not every supposed to work that way lmao. Why it did is fun mystery to solve another day
+     * Pretty sure it was not ever supposed to work that way lmao. Why it did is fun mystery to solve another day
      *
      *
      * @param {any} dirName
