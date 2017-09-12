@@ -1,25 +1,22 @@
-var assert = require('assert');
-var DFSContainer = require('../../../algorithms/graph/dfs.js');
-var Graph = require('../../../data_structures/graph.js').default;
-var dsalgo = require('../../../utilities.js').default;
+import assert from 'assert';
+import dsalgo from '../../../utilities';
+import DFSContainer from '../../../algorithms/graph/dfs';
+import Graph from '../../../data_structures/graph';
 
-(["iterative", "recursive"]).forEach(function(key) {
-
-  describe(key + ' Depth First Search', function() {
-
+(['iterative', 'recursive']).forEach((key) => {
+  describe(`${key} Depth First Search`, () => {
     // iife
-    var fn = (function functionPicker(key) {
-      if (key == "recursive") {
+    const fn = (function functionPicker() {
+      if (key === 'recursive') {
         return DFSContainer.recursive_info;
-      } else {
-        return DFSContainer.iterative;
       }
-    })();
+      return DFSContainer.iterative;
+    }());
 
-    var DFS = fn;
-    describe('traverse graph', function() {
+    const DFS = fn;
+    describe('traverse graph', () => {
       // http://en.wikipedia.org/wiki/Depth-first_search#/media/File:Depth-first-tree.svg
-      var adjListToo = [
+      const adjListToo = [
         [], // make zero an un connected vertex so I can number stuff just like picture
         [2, 7, 8],
         [1, 3, 6],
@@ -32,85 +29,83 @@ var dsalgo = require('../../../utilities.js').default;
         [8, 10, 11],
         [9],
         [9],
-        [8]
+        [8],
       ];
 
-      var graph = new Graph({
-        adjList: adjListToo
+      const graph = new Graph({
+        adjList: adjListToo,
       });
 
-      var dfsInfo = new DFS(graph, 1);
+      const dfsInfo = new DFS(graph, 1);
 
-      it("marks source vertex's predecessor as null", function() {
+      it("marks source vertex's predecessor as null", () => {
         assert.deepEqual(dfsInfo[1], {
           visitedOrder: 1,
           predecessor: null,
           distance: 0,
-          isVisited: true
+          isVisited: true,
         });
       });
 
-      it('goes in correct order', function() {
-        //dfsInfo.forEach(function(val,i){
+      it('goes in correct order', () => {
+        // dfsInfo.forEach(function(val,i){
         //  console.log("index: "+ i);
         //  console.log(val);
-        //})
+        // })
         assert.deepEqual(dfsInfo[2], {
           visitedOrder: 2,
           predecessor: 1,
           distance: 1,
-          isVisited: true
+          isVisited: true,
         });
         assert.deepEqual(dfsInfo[3], {
           visitedOrder: 3,
           predecessor: 2,
           distance: 2,
-          isVisited: true
+          isVisited: true,
         });
         assert.deepEqual(dfsInfo[11], {
           visitedOrder: 11,
           predecessor: 9,
           distance: 3,
-          isVisited: true
+          isVisited: true,
         });
         assert.deepEqual(dfsInfo[12], {
           visitedOrder: 12,
           predecessor: 8,
           distance: 2,
-          isVisited: true
+          isVisited: true,
         });
       });
 
-      it('doesnt mark unconnected vertex', function() {
+      it('doesnt mark unconnected vertex', () => {
         assert.deepEqual(dfsInfo[0], {
           visitedOrder: null,
           predecessor: null,
           distance: null,
-          isVisited: false
+          isVisited: false,
         });
       });
-
     });
-
   });
-
 });
 
+
 // http://algs4.cs.princeton.edu/42digraph/DepthFirstOrder.java.html
-describe('Depth First Search', function() {
-  var DFS = DFSContainer.recursive;
-  var toArray = DFSContainer.recursive_to_array;
+describe('Depth First Search', () => {
+  const DFS = DFSContainer.recursive;
+  const toArray = DFSContainer.recursive_to_array;
 
   // http://algs4.cs.princeton.edu/42digraph/images/dag.png
-  var gd = dsalgo.utils.requireText(__dirname, '../../../data/graph/tinyDAG.txt');
-  var graph = new Graph({
+  const gd = dsalgo.utils.requireText(__dirname, '../../../data/graph/tinyDAG.txt');
+  const graph = new Graph({
     graphData: gd,
     directed: true,
-    reverse_adjacency_lists: true
+    reverse_adjacency_lists: true,
   });
 
-  var markedSets = dsalgo.utils.simpleSet();
-  var orderSets = dsalgo.utils.simpleSet();
+  const markedSets = dsalgo.utils.simpleSet();
+  const orderSets = dsalgo.utils.simpleSet();
 
   // fun fact learned from trying to test the in order traversal
   // because the graph we are running this on is directed by definition you may not be be able to reach each vertex from every other vertex
@@ -121,52 +116,46 @@ describe('Depth First Search', function() {
   // at least that what I think is right. googling "inorder graph traversal" get you nothing but stuff about binary trees
   // TODO: investigate this further
 
-  (["pre", "post"]).forEach(function(orderName) {
+  (['pre', 'post']).forEach((orderName) => {
+    markedSets[orderName] = dsalgo.utils.simpleSet();
+    orderSets[orderName] = [];
 
-     markedSets[orderName] = dsalgo.utils.simpleSet();
-     orderSets[orderName] = [];
-
-    graph.vertexList().forEach(function (vertexLabel){
-      vertexLabel = dsalgo.utils.makeNumberUnlessNaN(vertexLabel);
+    graph.vertexList().forEach((vLabel) => {
+      const vertexLabel = dsalgo.utils.makeNumberUnlessNaN(vLabel);
 
       if (markedSets[orderName][vertexLabel]) return;
 
-      DFS(graph, vertexLabel, markedSets[orderName], function(v,w) {
+      DFS(graph, vertexLabel, markedSets[orderName], (v) => {
         orderSets[orderName].push(v);
       }, orderName);
-
     });
-
   });
 
-  Object.keys(orderSets).forEach(function(orderName) {
+  Object.keys(orderSets).forEach((orderName) => {
+    describe(`${orderName}order traversal`, () => {
+      it('visits vertices in correct order', () => {
+        switch (orderName) {
+          // no children, just erase the root
+          case 'pre':
+            assert.deepEqual(orderSets[orderName], [0, 5, 4, 1, 6, 9, 11, 12, 10, 2, 3, 7, 8]);
+            assert.deepEqual(toArray(graph, orderName), [0, 5, 4, 1, 6, 9, 11, 12, 10, 2, 3, 7, 8]);
+            break;
 
-    describe(orderName + 'order traversal', function() {
+            // one child, use one as the root
+          case 'in':
+            // could test visitation ability but already did in Transitive Closure
+            break;
 
-        it("visits vertices in correct order", function(){
-          switch (orderName) {
+            // two children, little work to do
+          case 'post':
+            assert.deepEqual(orderSets[orderName], [4, 5, 1, 12, 11, 10, 9, 6, 0, 3, 2, 7, 8]);
+            assert.deepEqual(toArray(graph, orderName), [4, 5, 1, 12, 11, 10, 9, 6, 0, 3, 2, 7, 8]);
+            break;
 
-            //no children, just erase the root
-            case "pre":
-              assert.deepEqual(orderSets[orderName],[0,5,4,1,6,9,11,12,10,2,3,7,8]);
-              assert.deepEqual(toArray(graph,orderName),[0,5,4,1,6,9,11,12,10,2,3,7,8]);
-              break;
-
-            //one child, use one as the root
-            case "in":
-              // could test visitation ability but already did in Transitive Closure
-              break;
-
-            //two children, little work to do
-            case "post":
-              assert.deepEqual(orderSets[orderName],[4,5,1,12,11,10,9,6,0,3,2,7,8]);
-              assert.deepEqual(toArray(graph,orderName),[4,5,1,12,11,10,9,6,0,3,2,7,8]);
-              break;
-          }
-
+          default:
+            // do nothing
+        }
       });
     });
   });
-
-
 });
