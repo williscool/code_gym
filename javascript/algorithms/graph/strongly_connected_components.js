@@ -44,7 +44,7 @@ function naiveSCC(graph){
   return components;
 }
 
-var DFSContainer = require('./dfs.js');
+var DFSContainer = require('./dfs.js').default;
 var DFS = DFSContainer.recursive;
 var dfsToArray = DFSContainer.recursive_to_array;
 

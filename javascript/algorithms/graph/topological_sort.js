@@ -6,7 +6,7 @@
 // TODO: when I es6ify this also do this problem http://www.geeksforgeeks.org/given-sorted-dictionary-find-precedence-characters/
 
 var dsalgo = require('../../utilities.js').default;
-var dfsToArray = require('./dfs.js').recursive_to_array;
+var dfsToArray = require('./dfs.js').default.recursive_to_array;
 
 function TopologicalSort(graph){
 

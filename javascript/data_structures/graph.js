@@ -19,6 +19,7 @@ const cycleChecker = cycleCheckerUtils.dfsish;
  * @prop {number} config.ewg input edge weighted digraph text representation to build a graph from. deprecated in favor of graphData
  * @prop {boolean} config.reverse_adjacency_lists reverse the order of the adjacency lists
  * @prop {number} config.graphData input text representation to build a graph from
+ * @prop {array} adjacency_list the represetation of the same name. a 2d array of which vertices are connected 2 each other
  */
 class Graph {
   /**
