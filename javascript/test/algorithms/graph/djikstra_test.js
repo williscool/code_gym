@@ -1,103 +1,101 @@
-var assert = require('assert');
-var Djikstra = require('../../../algorithms/graph/djikstra.js');
-var Graph = require('../../../data_structures/graph.js').default;
-var dsalgo = require('../../../utilities.js').default;
+const assert = require('assert');
+const Djikstra = require('../../../algorithms/graph/djikstra.js').default;
+const Graph = require('../../../data_structures/graph.js').default;
+const dsalgo = require('../../../utilities.js').default;
 
 // http://algs4.cs.princeton.edu/44sp/images/shortest-path.png
-var EWD = dsalgo.utils.requireText(__dirname, '../../../data/graph/tinyEWD.txt');
+const EWD = dsalgo.utils.requireText(__dirname, '../../../data/graph/tinyEWD.txt');
 
-Object.keys(Djikstra).forEach(function(key) {
-
-  describe(key + ' Djikstra', function() {
-
-    var graph = new Graph({
+Object.keys(Djikstra).forEach((key) => {
+  describe(`${key} Djikstra`, () => {
+    const graph = new Graph({
       ewg: EWD,
-      directed: true
+      directed: true,
     });
 
-    var traversal = new Djikstra[key](graph, 0);
-    var info = traversal.info;
+    const traversal = new Djikstra[key](graph, 0);
+    const info = traversal.info;
 
-    describe('traverse graph', function() {
-
+    describe('traverse graph', () => {
       // round off float vals
-      info.forEach(function(infoObj) {
+      info.forEach((infoObj) => {
+        // needs to alter input parameter to round the floats
+        // eslint-disable-next-line no-param-reassign
         infoObj.distance = infoObj.distance.toFixed(2);
       });
 
-      it("marks source vertex's predecessor as null", function() {
+      it("marks source vertex's predecessor as null", () => {
         assert.deepEqual(info[0], {
           distance: 0,
-          predecessor: null
+          predecessor: null,
         });
       });
 
-      it('correctly assigns path weights', function() {
+      it('correctly assigns path weights', () => {
         // remember toFixed in JS returns strings
         assert.deepEqual(info[2], {
-          distance: "0.26",
-          predecessor: 0
+          distance: '0.26',
+          predecessor: 0,
         });
         assert.deepEqual(info[7], {
-          distance: "0.60",
-          predecessor: 2
+          distance: '0.60',
+          predecessor: 2,
         });
         assert.deepEqual(info[3], {
-          distance: "0.99",
-          predecessor: 7
+          distance: '0.99',
+          predecessor: 7,
         });
         assert.deepEqual(info[6], {
-          distance: "1.51",
-          predecessor: 3
+          distance: '1.51',
+          predecessor: 3,
         });
       });
-
     });
 
-    describe('shortest path', function() {
-      var shortest_path_info = traversal.shortest_path(6);
+    describe('shortest path', () => {
+      const shortestPathInfo = traversal.shortestPath(6);
 
       /*
        * So not needing to do this here takes a bit of explaining and I'm leaving it here because of that
-       * long story short in this instance info and shortest_path_info are pointing the same instance of the string objects
+       *
+       * long story short in this instance info and shortestPathInfo are pointing the same instance of the string objects
        * that represent the distances so we dont have to turn them into strings again
        *
-       * Object.keys(shortest_path_info).forEach(function(key){
+       * Object.keys(shortestPathInfo).forEach(function(key){
        *  // remember toFixed in JS returns strings
-       *  shortest_path_info[key].distance = shortest_path_info[key].distance.toFixed(2);
+       *  shortestPathInfo[key].distance = shortestPathInfo[key].distance.toFixed(2);
        * });
        *
        * another fun fact "0.00" == 0 in js
        * */
 
-      it("returns verticies in correct order for a valid path", function() {
-        assert.deepEqual(shortest_path_info[0], {
-          distance: "0.00",
-          predecessor: null
+      it('returns verticies in correct order for a valid path', () => {
+        assert.deepEqual(shortestPathInfo[0], {
+          distance: '0.00',
+          predecessor: null,
         });
-        assert.deepEqual(shortest_path_info[2], {
-          distance: "0.26",
-          predecessor: 0
+        assert.deepEqual(shortestPathInfo[2], {
+          distance: '0.26',
+          predecessor: 0,
         });
-        assert.deepEqual(shortest_path_info[7], {
-          distance: "0.60",
-          predecessor: 2
+        assert.deepEqual(shortestPathInfo[7], {
+          distance: '0.60',
+          predecessor: 2,
         });
-        assert.deepEqual(shortest_path_info[3], {
-          distance: "0.99",
-          predecessor: 7
+        assert.deepEqual(shortestPathInfo[3], {
+          distance: '0.99',
+          predecessor: 7,
         });
-        assert.deepEqual(shortest_path_info[6], {
-          distance: "1.51",
-          predecessor: 3
+        assert.deepEqual(shortestPathInfo[6], {
+          distance: '1.51',
+          predecessor: 3,
         });
-        assert.deepEqual(shortest_path_info.order, [0, 2, 7, 3, 6]);
+        assert.deepEqual(shortestPathInfo.order, [0, 2, 7, 3, 6]);
       });
 
-      it("returns false for vertex not in graph with no path", function() {
-        assert.equal(traversal.shortest_path(17), false);
+      it('returns false for vertex not in graph with no path', () => {
+        assert.equal(traversal.shortestPath(17), false);
       });
     });
-
   });
 });
