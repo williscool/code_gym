@@ -1,18 +1,30 @@
-// walks calculates shortest paths
-// based on the info object my graph traversals return
-var dsalgo = require('../../utilities.js').default;
+import dsalgo from '../../utilities';
 
-function shortestPath(info, source, target_vertex) {
+/**
+ * Walks shortest paths
+ *
+ * based on the info object from my graph traversals return
+ *
+ * Just follows the predecessor chain of a target vertex back to source if possible
+ *
+ * returns false if not possible
+ *
+ * Returns information of about the traversal order an cost if possible
+ *
+ * @param {any} info
+ * @param {any} source
+ * @param {any} targetVertex
+ * @returns {array|boolean}
+ */
+function shortestPath(info, source, targetVertex) {
+  if (!info) throw new Error('dude I need a graph traversal to work with');
 
-  if (!info)
-    throw new Error("dude I need a graph traversal to work with");
-
-  if (!info[target_vertex]) {
+  if (!info[targetVertex]) {
     // vertex isn't in the list period so there is no shortest path to it
     return false;
   }
 
-  var currVertInfo = info[target_vertex];
+  let currVertInfo = info[targetVertex];
   // need to keep track of the vertex in the list.
   // it wont be at its corresponding index in the array
   //
@@ -21,9 +33,9 @@ function shortestPath(info, source, target_vertex) {
   // also js is pass by reference so it would mute the orginal info object anyway unless we deep cloned
   // so might as well just embrace that and delete it later
 
-  currVertInfo.vertex = target_vertex;
+  currVertInfo.vertex = targetVertex;
 
-  var list = [];
+  const list = [];
 
   // would have used unshift but its O(n) each time
   // http://stackoverflow.com/questions/1590247/how-do-you-implement-a-stack-and-a-queue-in-javascript#comment1453625_1590262
@@ -32,7 +44,6 @@ function shortestPath(info, source, target_vertex) {
   // faster to just reverse the array at the end
 
   while (currVertInfo) {
-
     list.push(currVertInfo);
 
     // need this break for the case of having added the source who has no predecessor
@@ -42,7 +53,7 @@ function shortestPath(info, source, target_vertex) {
 
     if (currVertInfo.predecessor === null) break;
 
-    var nextVertInfo = info[currVertInfo.predecessor];
+    const nextVertInfo = info[currVertInfo.predecessor];
     nextVertInfo.vertex = currVertInfo.predecessor;
 
     currVertInfo = nextVertInfo;
@@ -55,20 +66,26 @@ function shortestPath(info, source, target_vertex) {
   // reverse our array as it is in backwards order since we added to end of array and not beginning
   list.reverse();
 
-  var path_info = dsalgo.utils.simpleSet();
+  const pathInfo = dsalgo.utils.simpleSet();
 
-  path_info.order = [];
+  pathInfo.order = [];
 
   // unforunately now this will all go to hell if there is a vertex named order
   // but for our academic purposes of just learning how this algorithm works that is ok
-  list.forEach(function(val) {
-    var vert = val.vertex;
-    delete val.vertex;
-    path_info.order.push(vert);
-    path_info[vert] = val;
+
+  // One could also simply return an object with the satelite data of the traversal in one field
+  // and the path of the traversal in another. but again this is just for funsies and to learn so f dat
+
+  list.forEach((val) => {
+    const vert = val.vertex;
+    // TODO: figure out why this next line in necssary
+    delete val.vertex; // eslint-disable-line no-param-reassign
+
+    pathInfo.order.push(vert);
+    pathInfo[vert] = val;
   });
 
-  return path_info;
-};
+  return pathInfo;
+}
 
-module.exports = shortestPath;
+export default shortestPath;

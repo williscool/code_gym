@@ -54,6 +54,8 @@ const {
  *
  * it robs the learner of the opportunity to learn the insights that lead the the optimal versions... but I digress
  *
+ * Time Complexity: |V^2|
+ *
  * @class NaiveDijkstra
  */
 class NaiveDijkstra {
@@ -183,6 +185,8 @@ NaiveDijkstra.prototype.shortestPath = shortestPath;
  *
  * Generic object that excepts a heap as a parameter
  *
+ * Time Complexity: Dependant on the heap implementation
+ *
  * @class HeapPQDijkstra
  */
 class HeapPQDijkstra {
@@ -276,6 +280,8 @@ class HeapPQDijkstra {
 /**
  * Implements Dijkstra's algorithm with a binary heap
  *
+ * Time Complexity: (|E| + |V|) log |V|
+ *
  * @class BinaryHeapPQDijkstra
  */
 class BinaryHeapPQDijkstra extends HeapPQDijkstra {
@@ -310,6 +316,8 @@ BinaryHeapPQDijkstra.prototype.shortestPath = shortestPath;
 /**
  * Implements Dijkstra's algorithm with a binomial heap
  *
+ * Time Complexity: (|E| + |V|) log |V|
+ *
  * @class BinomialHeapPQDijkstra
  */
 class BinomialHeapPQDijkstra extends HeapPQDijkstra {
@@ -337,6 +345,8 @@ BinomialHeapPQDijkstra.prototype.shortestPath = shortestPath;
 
 /**
  * Implements Dijkstra's algorithm with a fibbonccci heap
+ *
+ * Time Complexity: |E| + |V| log |V|
  *
  * @class FibonacciHeapPQDijkstra
  */

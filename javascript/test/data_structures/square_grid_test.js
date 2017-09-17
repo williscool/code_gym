@@ -3,8 +3,8 @@ var assert = require('assert');
 var SquareGrid = require('../../data_structures/square_grid.js');
 var dsalgo = require('../../utilities.js').default;
 var Graph = require('../../data_structures/graph.js').default;
-var BFS = require('../../algorithms/graph/bfs.js');
-var Djikstra = require('../../algorithms/graph/djikstra.js').binaryHeapPQ;
+var BFS = require('../../algorithms/graph/bfs.js').default;
+var Djikstra = require('../../algorithms/graph/djikstra.js').default.binaryHeapPQ;
 
 describe('Square Grid', function() {
 

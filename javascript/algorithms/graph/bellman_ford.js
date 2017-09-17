@@ -5,7 +5,7 @@
 
 var dsalgo = require('../../utilities.js').default;
 var Queue = require('../../data_structures/queue.js').default.doubly_linked_list;
-var SPW = require('./shortest_path_walker.js');
+var SPW = require('./shortest_path_walker.js').default;
 var Graph = require('../../data_structures/graph.js').default;
 
 function BF(graph, start_vertex) {
