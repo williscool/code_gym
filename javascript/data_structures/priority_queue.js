@@ -3,6 +3,24 @@ import BinaryHeapTypes from './heap/binary_heap';
 import BinomialHeap from './heap/binomial_heap';
 import FibonacciHeap from './heap/fibonacci_heap';
 
+/**
+ * http://en.wikipedia.org/wiki/Priority_queue
+ *
+ * I made a naive one and then
+ *
+ * one for each of the 3 heap types I already made
+ *
+ * Pq's are pretty simple data structures a in terms of interface themselves.
+ *
+ * You have a bunch of items with prorities and you return the ones with the highest or lowest depending on if this is a max or min pq
+ *
+ * Dead simple. Making that efficient is where the complexity comes and its why people came up with those (and many more) crazy heap types.
+ *
+ * To make operations in this faster
+ *
+ * @module PriorityQueue
+ */
+
 const BinaryHeap = BinaryHeapTypes.custom;
 
 /**
@@ -108,9 +126,13 @@ class naivePQ {
 /**
  * Makes a Priority Queue with a binary heap
  *
- * @param {function} comp
  */
 class BinaryHeapPQ {
+  /**
+   * Creates an instance of BinaryHeapPQ.
+   * @param {function} comp defaults to max priority queue
+   * @memberof BinaryHeapPQ
+   */
   constructor({
     comp = (a, b) => {
       // have to break ties with the order values were inserted in
@@ -232,7 +254,8 @@ class BinaryHeapPQ {
 
     if (!dsalgo.utils.isDefined(order)) {
       // if the user doesn't define an order we have to linear search for the value
-      // this is obviously O(n). but we will be using this with djikstra's algorithm in which we will know the insertion order
+      // this is obviously O(n). but we will be using this most with's algorithm
+      // in which we will know the insertion order ahead of time (namely djikstra and prim's)
       // greatly increasing the total speed of this whole operation
 
       const totalElements = this.heap.size();
@@ -289,6 +312,11 @@ class BinaryHeapPQ {
  * @class BinomialHeapPQ
  */
 class BinomialHeapPQ {
+  /**
+   * Creates an instance of BinomialHeapPQ.
+   * @param {function} comp defaults to max priority queue
+   * @memberof BinomialHeapPQ
+   */
   constructor({
     order = 'max',
     comp = (a, b) => {
@@ -434,6 +462,11 @@ BinomialHeapPQ.prototype.changePriority = bionomialAndFibchangePriority;
  * @class FibonacciHeapPQ
  */
 class FibonacciHeapPQ {
+  /**
+   * Creates an instance of FibonacciHeapPQ.
+   * @param {function} comp defaults to max priority queue
+   * @memberof FibonacciHeapPQ
+   */
   constructor({
     comp = (a, b) => {
       if (a.key !== b.key) return a.key >= b.key;
@@ -509,23 +542,6 @@ class FibonacciHeapPQ {
 
 FibonacciHeapPQ.prototype.changePriority = bionomialAndFibchangePriority;
 
-/**
- * http://en.wikipedia.org/wiki/Priority_queue
- *
- * I made a naive one and then
- *
- * one for each of the 3 heap types I already made
- *
- * Pq's are pretty simple data structures a in terms of interface themselves.
- *
- * You have a bunch of items with prorities and you return the ones with the highest or lowest depending on if this is a max or min pq
- *
- * Dead simple. Making that efficient is where the complexity comes and its why people came up with those (and many more) crazy heap types.
- *
- * To make operations in this faster
- *
- * @module ProrityQueue
- */
 module.exports = {
   naive: naivePQ,
   binaryHeap: BinaryHeapPQ,
