@@ -674,9 +674,24 @@ class Graph {
   }
 
   // TODO: when we get to connected components factor this code out into a connected components class and add the dfs version
-  // go a little somthing like this
   //
-  // update UF notes too
+  // an algorithm that accomplishs the same mission as uf in finding connected components
+  //
+  // is to run DFS over all the nodes in the graph and
+  //
+  // and keep a count that increases if you hit an unmarked node in a followup dfs.
+  //
+  // http://algs4.cs.princeton.edu/41graph/CC.java.html
+  //
+  // page 562 of CLRS asserts that this algorithm is faster if the number of Edges in a graph is static
+  //
+  // http://cs.stackexchange.com/questions/47596/dfs-vs-union-find-for-computing-connected-components-of-a-static-graph
+  //
+  // while that algo is probably easier to remember for interviews
+  //
+  // I'm just leaving for my notes
+  //
+  // code would go a little somthing like this
 
   /*
     this.vertexList().forEach(function(v){
@@ -703,7 +718,7 @@ class Graph {
    * @memberof Graph
    */
   components() {
-    const uf = new UF(this.order());
+    const uf = new UF({ N: this.order() });
 
     this.edgeSetList().forEach((edgeKey) => {
       let v = Graph.edgeKeyVertexFrom(edgeKey);

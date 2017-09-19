@@ -34,7 +34,7 @@ function Kruskal(graph) {
     ctx.pq.enqueue(edgeKey, ctx.graph.getEdgeWeightByKey(edgeKey));
   });
 
-  var uf = new UF(this.graph.order());
+  var uf = new UF({N: this.graph.order()});
 
   while (this.pq.size() > 0 && (this.mst.length < graph.order() - 1)) {
 
