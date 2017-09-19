@@ -1,6 +1,6 @@
-const assert = require('assert');
-const UF = require('../../../algorithms/graph/uf.js');
-const dsalgo = require('../../../utilities.js').default;
+import assert from 'assert';
+import dsalgo from '../../../utilities';
+import UF from '../../../algorithms/graph/uf';
 
 // http://algs4.cs.princeton.edu/15uf/images/dynamic-connectivity-tiny.png
 const connections = dsalgo.utils.requireText(__dirname, '../../../data/graph/tinyUF.txt');

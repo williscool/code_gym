@@ -439,7 +439,7 @@ function addSiteFromText(txt) {
 QuickFindUF.prototype.addFromText = addSiteFromText;
 QuickUnionUF.prototype.addFromText = addSiteFromText;
 
-module.exports = {
+export default {
   quick_find: QuickFindUF,
   quick_union: QuickUnionUF,
   weighted_quick_union: WeightedQuickUnionUF,
