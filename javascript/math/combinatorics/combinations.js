@@ -1,24 +1,74 @@
-// http://en.wikipedia.org/wiki/Combination
-// "In mathematics, a combination is a way of selecting items from a collection, such that (unlike permutations) the order of selection does not matter."
-//
-// https://www.khanacademy.org/math/precalculus/prob_comb/combinations/v/combination-formula
-var permutations = require('./permutations.js').without_repetition;
-var factorial = require('../factorial.js').default.count_up_iterative;
+import FactorialTypes from '../factorial';
+import PermutationTypes from './permutations';
+/**
+ * "In mathematics, a combination is a way of selecting items from a collection,
+ * such that (unlike permutations) the order of selection does not matter."
+ *
+ * http://en.wikipedia.org/wiki/Combination
+ *
+ * https://www.mathsisfun.com/combinatorics/combinations-permutations.html
+ *
+ * https://www.khanacademy.org/math/precalculus/prob_comb/combinations/v/combination-formula
+ *
+ * Important Note:
+ *
+ * Combinations are defined if and only if
+ *
+ * 0 <= k <= n
+ *
+ * otherwise its 0
+ *
+ * http://math.stackexchange.com/questions/551920/what-is-zero-choose-one/551926#551926
+ * @module Combinations
+ */
 
-// NOTE: http://math.stackexchange.com/questions/551920/what-is-zero-choose-one/551926#551926
+const factorial = FactorialTypes.count_up_iterative;
+const permutations = PermutationTypes.without_repetition;
+
+/**
+ * In combinations with replacement we adjust our permutations formula to reduce it by how many ways the objects could be in order
+ * (because we aren't interested in their order any more)
+ *
+ * if and only if
+ *
+ * 0 <= k <= n
+ *
+ * otherwise its 0
+ *
+ * also specialy case for 0 choose 0 ... there is always 1 way to do nothing lol
+ *
+ * https://math.stackexchange.com/a/2020891/237639
+ *
+ * @param {number} n
+ * @param {number} k
+ * @returns {number}
+ */
 function withoutRep(n, k) {
+  if (k < 0 || k > n) return 0;
   if (n === 0 && k === 0) return 1;
-  if (k === 0) return 0;
   return permutations(n, k) / factorial(k);
 }
 
-/// combo with_repetition how do they work? https://www.youtube.com/watch?v=ZcSSI6VY1kM
+/**
+ * combo with_repetition how do they work? https://www.youtube.com/watch?v=ZcSSI6VY1kM
+ *
+ * another solid explaination
+ *
+ * https://math.stackexchange.com/questions/208377/combination-with-repetitions
+ *
+ * TODO: figure out why k - 1 thats the part I dont get. I get that you can use all numbers on each choice but why minus one?
+ *
+ * @param {number} n
+ * @param {number} k
+ * @returns {number}
+ */
 function withRep(n, k) {
+  if (k < 0 || k > n) return 0;
   if (n === 0 && k === 0) return 1;
-  return withoutRep(n + k - 1, k);
+  return withoutRep(k + (n - 1), k);
 }
 
-module.exports = {
+export default {
   without_repetition: withoutRep,
-  with_repetition: withRep
+  with_repetition: withRep,
 };
