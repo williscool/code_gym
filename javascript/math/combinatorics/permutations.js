@@ -3,7 +3,7 @@
 //
 // https://www.khanacademy.org/math/precalculus/prob_comb/combinatorics_precalc/v/permutation-formula
 //
-var factorial = require('../factorial.js').count_up_iterative;
+var factorial = require('../factorial.js').default.count_up_iterative;
 var dsalgo = require('../../utilities.js').default;
 
 // TODO: this function should throw an error is k is higher than n
