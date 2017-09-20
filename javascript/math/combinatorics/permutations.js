@@ -73,7 +73,7 @@ function withoutRep(n, k) {
  *
  * calculate them at the same time
  *
- * with a for loop that runs from n - k to n while multiplying the result.
+ * with a for loop that runs from (n - k) + 1 to n while multiplying the result.
  *
  * @param {number} n
  * @param {number} k

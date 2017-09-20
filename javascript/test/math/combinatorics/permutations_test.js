@@ -9,13 +9,14 @@ const {
 } = PermutationTypes;
 
 (['without_repetition', 'without_repetition_optimized']).forEach((key) => {
-  // iife
-  const permutations = (function functionPicker() {
+  // es6 arrow function iife
+  // https://stackoverflow.com/a/22138612/511710
+  const permutations = (() => {
     if (key === 'without_repetition') {
       return permutationsWithRep;
     }
     return permutationsWithRepOpt;
-  }());
+  })();
 
   describe(`Permutations ${key}`, () => {
     it('should calculate the permutations of a number', () => {
