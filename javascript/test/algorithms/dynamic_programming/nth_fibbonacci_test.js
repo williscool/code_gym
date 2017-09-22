@@ -1,10 +1,10 @@
-var assert = require('assert');
-var fibbonacciFns = require('../../../algorithms/dynamic_programming/nth_fibbonacci.js');
+import assert from 'assert';
+import fibbonacciFns from '../../../algorithms/dynamic_programming/nth_fibbonacci';
 
-Object.keys(fibbonacciFns).forEach(function(key) {
-  describe(key + " nth fibbonacci", function() {
-    var fibbonacci = fibbonacciFns[key];
-    it("shoiuld calculate nth fibbonacci number", function() {
+Object.keys(fibbonacciFns).forEach((key) => {
+  describe(`${key} nth fibbonacci`, () => {
+    const fibbonacci = fibbonacciFns[key];
+    it('shoiuld calculate nth fibbonacci number', () => {
       assert.equal(fibbonacci(0), 0);
       assert.equal(fibbonacci(1), 1);
       assert.equal(fibbonacci(2), 1);
