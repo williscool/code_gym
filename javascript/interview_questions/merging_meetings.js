@@ -35,7 +35,7 @@ function MergingMeetings(list) {
   });
 
   merged_meetings.push(currently_merging_meeting_arr);
-  return merged_meetings ;
+  return merged_meetings;
 };
 
 module.exports = MergingMeetings;

@@ -1,4 +1,3 @@
-/* eslint max-len: ["error", 120, { "ignoreComments": true }] */
 import fs from 'fs';
 import path from 'path';
 

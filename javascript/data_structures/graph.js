@@ -146,6 +146,8 @@ class Graph {
     // and while techically the ordering of vertices in the adjacency list of a graph is arbitrary that
     // data structure happens to read them off in the opposite order they were added to it
     //
+    // (I imagine perhaps it is implemented using a stack internally)
+    //
     // so to match their output for testing I added this
     //
     // [1] http://algs4.cs.princeton.edu/42digraph/Digraph.java.html

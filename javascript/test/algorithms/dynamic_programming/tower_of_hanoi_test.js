@@ -5,7 +5,7 @@ describe('Tower of Hanoi', () => {
   it('3 disks', () => {
     const n = 3;
     const moves = toh(n, 1, 2, 3);
-    console.log(moves);
+    // console.log(moves);
     // console.log(moves.length);
     //
     // TODO: test the actual moves

@@ -5,9 +5,9 @@
  *
  * https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
  *
- * @export
  * @param {any} limit
- * @returns
+ * @returns {array}
+ * @module SieveOfEratosthenes
  */
 export default function SieveOfEratosthenes(limit) {
   const primes = [];
