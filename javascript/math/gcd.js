@@ -1,17 +1,51 @@
-// https://en.wikipedia.org/wiki/Euclidean_algorithm
-// inspired by: http://introcs.cs.princeton.edu/java/23recursion/Euclid.java.html
 
-function gcd(p, q) {
+/**
+ * https://en.wikipedia.org/wiki/Euclidean_algorithm
+ *
+ * The greatest common divisor (gcd) of two positive integers is the largest integer that divides evenly into both of them.
+ *
+ * inspired by: http://introcs.cs.princeton.edu/java/23recursion/Euclid.java.html
+ *
+ * https://en.wikipedia.org/wiki/Greatest_common_divisor#Using_Euclid.27s_algorithm
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Arithmetic_Operators#Remainder_()
+ *
+ * if(!(p > q)) return Error("p must be greater than q");
+ *
+ * @module GCD
+ */
 
-  // if(!(p > q)) return Error("p must be greater than q");
-
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Arithmetic_Operators#Remainder_()
-  // dear God javascript why? Just why why why?
-  // long story short javascript does not have a modulo operator just a remainder
-  // alas division by 0 is NaN so we have this hack
-  // if(p == 0) return q;
+/**
+ * Recursive Euclidean Disvision for GCD
+ *
+ * @param {number} p
+ * @param {number} q
+ * @returns {number}
+ */
+function recursive(p, q) {
   if (q === 0) return p;
-  return gcd(q, p % q);
+  return recursive(q, p % q);
 }
 
-module.exports = gcd;
+/**
+ * Iterative Euclidean Disvision for GCD
+ *
+ * @param {number} p
+ * @param {number} q
+ * @returns {number}
+ */
+// the param reassigns are kinda the point of the algorithm
+function iterative(p, q) {
+  while (q !== 0) {
+    const temp = q;
+    q = p % q; // eslint-disable-line no-param-reassign
+    p = temp; // eslint-disable-line no-param-reassign
+  }
+
+  return p;
+}
+
+export default {
+  recursive,
+  iterative,
+};
