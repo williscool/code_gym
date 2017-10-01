@@ -24,6 +24,8 @@ import dsalgo from '../../utilities';
  *
  * Explantion of dp in general and the log(n) fib http://otfried.org/courses/cs300/notes/dynamic-programming.pdf
  *
+ * Great video explanation : https://www.youtube.com/watch?v=P8Xa2BitN3I
+ *
  * @module nthFibbonaacci
  */
 
@@ -41,9 +43,10 @@ import dsalgo from '../../utilities';
 function naiveRecursive(n) {
   if (n === 0) return 0;
   if (n === 1) return 1;
-  return naiveRecursive(n - 2) + naiveRecursive(n - 1);
+  return naiveRecursive(n - 1) + naiveRecursive(n - 2);
 }
 
+const cache = [0, 1];
 /**
  * Here save exponetial time in the recusive solution by caching the result to subproblems
  *
@@ -56,10 +59,8 @@ function naiveRecursive(n) {
  * @returns {number}
  */
 function memoizedRecursive(n) {
-  const cache = [0, 1];
-
   if (!dsalgo.utils.isDefined(cache[n])) {
-    cache[n] = memoizedRecursive(n - 2) + memoizedRecursive(n - 1);
+    cache[n] = memoizedRecursive(n - 1) + memoizedRecursive(n - 2);
   }
 
   return cache[n];
@@ -71,8 +72,8 @@ function memoizedRecursive(n) {
  * We observe that we can replace the recursion with a simple loop
  * that fills the array in order, instead of relying on recursion
  *
- * @param {any} n
- * @returns
+ * @param {number} n
+ * @returns {number}
  */
 function iterative(n) {
   if (n === 0) return 0;
@@ -81,7 +82,7 @@ function iterative(n) {
   const sequence = [0, 1];
 
   for (let i = 2; i <= n; i += 1) {
-    sequence[i] = sequence[i - 2] + sequence[i - 1];
+    sequence[i] = sequence[i - 1] + sequence[i - 2];
   }
 
   return sequence[n];
