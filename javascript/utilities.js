@@ -302,7 +302,7 @@ export default {
      *
      * http://stackoverflow.com/a/3690005/511710
      *
-     * Useful for graph problem solving
+     * Useful for dynamic programming programming problem solving
      *
      * @param {number} rows
      * @param {number} cols
@@ -312,8 +312,7 @@ export default {
       if (!this.isDefined(cols)) cols = rows;
       const arr = [];
       const row = [];
-      // while (cols--) row.push(); // only need this if adding a fill
-      //
+
       while (rows > 0) {
         arr.push(row.slice());
         rows -= 1;
