@@ -1,43 +1,18 @@
 // inspired by: http://www.geeksforgeeks.org/dynamic-programming-set-10-0-1-knapsack-problem/
-var assert = require('assert');
-var naiveKnapsack = require('../../../algorithms/dynamic_programming/knapsack.js').naive;
-var topDownKnapsack = require('../../../algorithms/dynamic_programming/knapsack.js').top_down;
-var bottomUpKnapsack = require('../../../algorithms/dynamic_programming/knapsack.js').bottom_up;
+import assert from 'assert';
+import KnapsackTypes from '../../../algorithms/dynamic_programming/knapsack';
 
-describe("Knapsack Problem", function() {
-  describe("Naive Solution", function() {
-    it("capacity=50 values=[60,100,120] weights=[10,20,30]", function() {
-      var W, weights, values;
+describe('Knapsack Problem', () => {
+  const W = 50;
+  const values = [60, 100, 120];
+  const weights = [10, 20, 30];
 
-      W = 50;
-      values = [60, 100, 120];
-      weights = [10, 20, 30];
-
-      assert.equal(naiveKnapsack(W, weights, values, values.length), 220);
-    });
-  });
-
-  describe("TopDown Solution", function() {
-    it("capacity=50 values=[60,100,120] weights=[10,20,30]", function() {
-      var W, weights, values;
-
-      W = 50;
-      values = [60, 100, 120];
-      weights = [10, 20, 30];
-
-      assert.equal(topDownKnapsack(W, weights, values, values.length), 220);
-    });
-  });
-
-  describe("Bottom Up Solution", function() {
-    it("capacity=50 values=[60,100,120] weights=[10,20,30]", function() {
-      var W, weights, values;
-
-      W = 50;
-      values = [60, 100, 120];
-      weights = [10, 20, 30];
-
-      assert.equal(bottomUpKnapsack(W, weights, values, values.length), 220);
+  Object.keys(KnapsackTypes).forEach((key) => {
+    describe(`${key} Solution`, () => {
+      const knapsack = KnapsackTypes[key];
+      it(`capacity=${W} values=[${values}] weights=[${weights}]`, () => {
+        assert.equal(knapsack(W, weights, values, values.length), 220);
+      });
     });
   });
 });
