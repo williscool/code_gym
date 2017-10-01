@@ -25,8 +25,8 @@ export default {
   /**
    * This is the orginal version
    *
-   * @param {array} list
-   * @returns
+   * @param {array} list input array
+   * @returns {array} sorted version of input array
    */
   naive(list) {
     const len = list.length;
@@ -51,8 +51,8 @@ export default {
   /**
    * This version is optimized by skipping examing the already sort items at each pass
    *
-   * @param {array} list
-   * @returns
+   * @param {array} list input array
+   * @returns {array} sorted version of input array
    */
   optimized(list) {
     let len;
@@ -89,8 +89,8 @@ export default {
    * This algorithm assumes that the last element we had to swap was the last element out of place at that iteration
    * so it shortens the amount of elements looked at on subsequent iterations by that many
    *
-   * @param {array} list
-   * @returns
+   * @param {array} list input array
+   * @returns {array} sorted version of input array
    */
   stopAtLastSorted(list) {
     let len;

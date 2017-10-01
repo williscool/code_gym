@@ -8,8 +8,8 @@
  *
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/max
  *
- * @param {number[]} numArray
- * @returns
+ * @param {number[]} numArray array to get max value from
+ * @returns {number} max value in input array
  */
 function arrayMax(numArray) {
   return Math.max.apply(null, numArray);
@@ -20,9 +20,9 @@ function arrayMax(numArray) {
  *
  * http://stackoverflow.com/a/8492462/511710
  *
- * @param {any} b
- * @param {any} n
- * @returns
+ * @param {number} b base of the number
+ * @param {number} n number
+ * @returns {number} base changed number?
  */
 function log(b, n) {
   return Math.log(n) / Math.log(b);
@@ -33,10 +33,10 @@ function log(b, n) {
  *
  * Used to chooze the bucket to place a number in for the radix sort
  *
- * @param {any} base
- * @param {any} value
- * @param {any} digit
- * @returns
+ * @param {number} base base of the number
+ * @param {number} value value of the number
+ * @param {number} digit value of the digit at the place
+ * @returns {number} index to put number in bucket
  */
 function indexFunction(base, value, digit) {
   return Math.floor((value / (base ** digit)) % base);
@@ -63,9 +63,9 @@ function indexFunction(base, value, digit) {
  *
  * @module RadixSort
  * @export RadixSort
- * @param {any} list
+ * @param {array} list input array
  * @param {number} base - the base of the numbers we are sorting. defaults to 10 aka decimal
- * @returns
+ * @returns {array} sorted version of input array
  */
 export default function (list, base = 10) {
   if (list.length < 2) {

@@ -21,8 +21,8 @@ class CircularlyLinkedList {
    * Time Complexity: O(1)
    * Space Complexity: O(1)
    *
-   * @param {any} val
-   * @returns this
+   * @param {any} val value to insert into linked list
+   * @returns {this} reference to this linked list
    * @memberof CircularlyLinkedList
    */
   insertFront(val) {
@@ -58,8 +58,8 @@ class CircularlyLinkedList {
    * Time Complexity: O(1)
    * Space Complexity: O(1)
    *
-   * @param {any} val
-   * @returns this
+   * @param {any} val value to insert into linked list
+   * @returns {this} reference to this linked list
    * @memberof CircularlyLinkedList
    */
   insertEnd(val) {
@@ -92,7 +92,7 @@ class CircularlyLinkedList {
    *
    * Time Complexity: O(1)
    *
-   * @returns this
+   * @returns {this} reference to this linked list
    * @memberof LinkedList
    */
   removeFront() {
@@ -124,7 +124,7 @@ class CircularlyLinkedList {
    * Time Complexity: O(n)
    * Space Complexity: O(n)
    *
-   * @returns this
+   * @returns {array} this linked list's value in an array
    * @memberof LinkedList
    */
   toArray() {

@@ -17,8 +17,8 @@ class LinkedList {
    * Time Complexity: O(1)
    * Space Complexity: O(1)
    *
-   * @param {any} val
-   * @returns this
+   * @param {any} val value to insert into linked list
+   * @returns {this} reference to this linked list
    * @memberof LinkedList
    */
   insertFront(val) {
@@ -43,8 +43,8 @@ class LinkedList {
    * Time Complexity: O(n)
    * Space Complexity: O(1)
    *
-   * @param {any} val
-   * @returns this
+   * @param {any} val value to insert into linked list
+   * @returns {this} reference to this linked list
    * @memberof LinkedList
    */
   insertEnd(val) {
@@ -73,7 +73,7 @@ class LinkedList {
    * Time Complexity: O(1)
    * Space Complexity: O(1)
    *
-   * @returns this
+   * @returns {this} reference to this linked list
    * @memberof LinkedList
    */
   removeFront() {
@@ -91,7 +91,7 @@ class LinkedList {
    *
    * Time Complexity: O(n)
    *
-   * @returns this
+   * @returns {this} reference to this linked list
    * @memberof LinkedList
    */
   removeEnd() {
@@ -117,7 +117,7 @@ class LinkedList {
    * Time Complexity: O(n)
    * Space Complexity: O(n)
    *
-   * @returns this
+   * @returns {array} this linked list's value in an array
    * @memberof LinkedList
    */
   toArray() {

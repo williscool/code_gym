@@ -1,6 +1,7 @@
 var dsalgo = require('../../utilities.js').default;
 // http://wcipeg.com/wiki/Dynamic_programming
 // http://wcipeg.com/wiki/Dynamic_programming#Example:_recursive_solution_to_Plentiful_Paths
+// great video explaination https://youtu.be/P8Xa2BitN3I?t=264
 
 function rPP(A,x,y){
   // cheat and make A[x][y] = 0 if it is not 1; so we dont have to do the extra zero setting work

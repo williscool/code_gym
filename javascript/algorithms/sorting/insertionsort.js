@@ -31,8 +31,8 @@ export default {
   /**
    * The original version
    *
-   * @param {array} list
-   * @returns {array}
+   * @param {array} list input array
+   * @returns {array} sorted version of input array
    */
   naive(list) {
     const len = list.length;
@@ -73,8 +73,8 @@ export default {
    * slight optimization by storing the value to swap into place
    * when we are finished moving the higher values in front of it
    *
-   * @param {any} list
-   * @returns {array}
+   * @param {array} list input array
+   * @returns {array} sorted version of input array
    */
   optimized(list) {
     const len = list.length;

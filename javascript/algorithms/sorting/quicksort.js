@@ -22,9 +22,9 @@ const swap = dsalgo.utils.swap;
  * https://en.wikipedia.org/wiki/Quicksort#Choice_of_pivot
  *
  *
- * @param {number} lo - lowest index to use to calculate pivot
  * @param {number} hi - highest index to used to calculate pivot
- * @returns {number}
+ * @param {number} lo - lowest index to use to calculate pivot
+ * @returns {number} the new index to pivot around
  */
 function choosePivot(hi, lo) {
   // eslint-disable-next-line no-bitwise
@@ -40,7 +40,8 @@ function choosePivot(hi, lo) {
  * @param {array} list - input array to sort
  * @param {number} lo - lowest index to use to calculate pivot
  * @param {number} hi - highest index to used to calculate pivot
- * @returns {array}
+ * @returns {array} sorted version of input array
+ *
  */
 function partition(list, lo, hi) {
   // pick our pivot value
@@ -86,7 +87,7 @@ function partition(list, lo, hi) {
  * @param {array} list - input array to sort
  * @param {number} lo - lowest index to use to calculate pivot
  * @param {number} hi - highest index to used to calculate pivot
- * @returns {array}
+ * @returns {array} sorted version of input array
  */
 function quicksort(list, lo, hi) {
   if (lo < hi) {
@@ -104,7 +105,8 @@ function quicksort(list, lo, hi) {
  *
  * @module quicksort
  * @exports {{quicksort}}
- * @param {any} list
+ * @param {array} list input array
+ * @returns {array} sorted version of input array
  */
 export default function (list) {
   return quicksort(list, 0, list.length - 1);

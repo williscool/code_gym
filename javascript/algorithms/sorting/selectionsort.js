@@ -20,8 +20,9 @@ const swap = dsalgo.utils.swap;
  * https://en.wikipedia.org/wiki/Selection_sort#Variants
  *
  * @module SelectionSort
- * @param {array} list
- * @returns {array}
+ *
+ * @param {array} list input array
+ * @returns {array} sorted version of input array
  */
 export default function (list) {
   const len = list.length;

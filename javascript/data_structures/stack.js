@@ -18,9 +18,9 @@ class stackWithArray {
    *
    * Time Complexity: O(1)
    * Space Complexity: O(1)
-   * @param {any} thing
-   * @returns this
+   * @param {any} thing value to get pushed on to stack
    * @memberof stackWithArray
+   * @returns {this} returns instance of this stack to
    */
   push(thing) {
     this.stack_top_index = this.stack_top_index + 1;
@@ -31,8 +31,8 @@ class stackWithArray {
   /**
    * View the item on the top of the stack
    *
-   * @returns
    * @memberof stackWithArray
+   * @returns {any} the value of the item at the top of the stac
    */
   peek() {
     return this.items[0];
@@ -43,8 +43,9 @@ class stackWithArray {
    *
    * Time Complexity: O(1)
    * Space Complexity: O(1)
-   * @param {any} topItem
+   *
    * @memberof stackWithArray
+   * @return {any} topItem the value of the item at the top of the stack
    */
   pop() {
     let topItem;
@@ -94,9 +95,10 @@ class stackWithLinkedList {
    *
    * Time Complexity: O(1)
    * Space Complexity: O(1)
-   * @param {any} thing
-   * @returns this
+   *
    * @memberof stackWithLinkedList
+   * @param {any} thing thing to put into stack
+   * @returns {this} this instance of the stack
    */
   push(thing) {
     this.stack_top_index += 1;
@@ -107,7 +109,7 @@ class stackWithLinkedList {
   /**
    * View the item on the top of the stack
    *
-   * @returns
+   * @returns {any} value of thing on the top of the stack
    * @memberof stackWithArray
    */
   peek() {
@@ -115,11 +117,11 @@ class stackWithLinkedList {
   }
 
   /**
-   * Pops the thing on the top of the stack
+   * Pops aka removes the thing on the top of the stack
    *
    * Time Complexity: O(1)
    * Space Complexity: O(1)
-   * @return {any} topItem
+   * @returns {any} the value from the item from the top of the stakc
    * @memberof stackWithLinkedList
    */
   pop() {

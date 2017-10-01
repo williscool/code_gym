@@ -1,5 +1,4 @@
 /* eslint newline-per-chained-call: 0 */
-/* eslint max-len: 0 */
 // very useful to look at the add chains all on one line
 // to make sure you added the values to the bst in the order you meant to
 import assert from 'assert';

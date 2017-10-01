@@ -63,11 +63,11 @@ export default {
    * somewhat inspired by
    * http://www.bradoncode.com/blog/2012/04/big-o-algorithm-examples-in-javascript.html
    *
-   * @param {number[]} list
-   * @param {number} needle
-   * @param {number} [min=0]
-   * @param {number} [max=list.length]
-   * @returns
+   * @param {number[]} list input array to search for value
+   * @param {number} needle value to search for
+   * @param {number} [inputMin=0] minimum index to scan
+   * @param {number} [inputMax=list.length] maximum index to scan
+   * @returns {boolean} was value in array?
    */
   iterative(list, needle, inputMin = 0, inputMax = list.length) {
     const result = false;

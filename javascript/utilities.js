@@ -18,7 +18,7 @@ export default {
      * @param {array} list
      * @param {number} firstIndex
      * @param {number} secondIndex
-     * @returns
+     * @returns {array} reference to input list
      */
     /* eslint-disable no-param-reassign */
     swap(list, firstIndex, secondIndex) {
@@ -41,8 +41,8 @@ export default {
      * https://github.com/jasmine/jasmine/blob/master/src/core/matchers/toBeTruthy.js
      * http://nfriedly.com/techblog/2009/07/advanced-javascript-operators-and-truthy-falsy/
      *
-     * @param {any} thing
-     * @returns
+     * @param {any} thing value to test if truthy
+     * @returns {boolean} if value is truthy or not
      */
     isTruthy(thing) {
       return !!thing;
@@ -306,7 +306,7 @@ export default {
      *
      * @param {number} rows
      * @param {number} cols
-     * @returns
+     * @returns {[][]}
      */
     create2Darray(rows, cols) {
       if (!this.isDefined(cols)) cols = rows;

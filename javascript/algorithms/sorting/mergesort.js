@@ -4,9 +4,9 @@
 /**
  * Adds the arrays that were sorted in sub arrays back together
  *
- * @param {array} left
- * @param {array} right
- * @returns {array}
+ * @param {array} left leftside input array to merge
+ * @param {array} right rightside input array to merge
+ * @returns {array} the merged array
  */
 function merge(left, right) {
   const result = [];
@@ -40,8 +40,8 @@ function merge(left, right) {
  *
  * Using the function shorthand in es6 didnt work with the recursion in this funtionn
  *
- * @param {array} list - input array to sort
- * @returns {array}
+ * @param {array} list input array
+ * @returns {array} sorted version of input array
  */
 function topDownMergeSort(list) {
   if (list.length <= 1) {
@@ -94,8 +94,8 @@ export default {
    * https://www.youtube.com/watch?v=lOUe8Q9jQow
    *
    * https://en.wikipedia.org/wiki/Merge_sort#Bottom-up_implementation_using_lists
-   * @param {array} list
-   * @returns {array}
+   * @param {array} list input array
+   * @returns {array} sorted version of input array
    */
   bottomUp(list) {
     if (list.length <= 1) {

@@ -26,8 +26,8 @@
  *
  * @module CountingSort
  *
- * @param {array} list
- * @returns {array}
+ * @param {array} list input array
+ * @returns {array} sorted version of input array
  */
 export default function (list) {
   const counts = [];

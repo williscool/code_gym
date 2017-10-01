@@ -20,9 +20,9 @@ class queueDll {
    * Time Complexity: O(1)
    * Space Complexity: O(1)
    *
-   * @param {any} val
-   * @returns this
    * @memberof queueDll
+   * @param {any} val value to add to queue
+   * @returns {this} reference to this queue. useful for chaining
    */
   enqueue(val) {
     this.items.insertEnd(val);
@@ -64,7 +64,7 @@ class queueDll {
    *
    * Time Complexity: O(1)
    *
-   * @returns {boolean} isEmpty
+   * @returns {boolean} is the queue empty?
    * @memberof queueDll
    */
   isEmpty() {
@@ -76,7 +76,7 @@ class queueDll {
    *
    * Time Complexity: O(n)
    *
-   * @returns {Array} queue
+   * @returns {Array} array with the elements in the queue
    * @memberof queueDll
    */
   toArray() {
@@ -90,8 +90,8 @@ class queueDll {
    *
    * nice for testing things
    *
-   * @param {any} fn
    * @memberof queueDll
+   * @param {any} fn function to run on values in the queue
    */
   forEach(fn) {
     this.toArray().forEach(fn);
@@ -116,9 +116,9 @@ class queueArr {
    * Time Complexity: O(1)
    * Space Complexity: O(1)
    *
-   * @param {any} val
-   * @returns this
    * @memberof queueArr
+   * @param {any} val value to add to the queue
+   * @returns {this} reference to this queue
    */
   enqueue(val) {
     this.items.push(val);
@@ -192,7 +192,7 @@ class queueArr {
    *
    * nice for testing things
    *
-   * @param {any} fn
+   * @param {any} fn function to run on values in the queue
    * @memberof queueArr
    */
   forEach(fn) {
@@ -251,8 +251,8 @@ class queueWithTwoStacks {
    * Time Complexity: O(1)
    * Space Complexity: O(1)
    *
-   * @param {any} val
-   * @returns this
+   * @param {any} val value to add to the queue
+   * @returns {this} reference to this queue
    * @memberof queueWithTwoStacks
    */
   enqueue(val) {
@@ -313,7 +313,7 @@ class queueWithTwoStacks {
    *
    * Time Complexity: O(n)
    *
-   * @returns {Array} queue
+   * @returns {Array} queue in array form
    * @memberof queueWithTwoStacks
    */
   toArray() {
@@ -332,7 +332,7 @@ class queueWithTwoStacks {
    *
    * nice for testing things
    *
-   * @param {any} fn
+   * @param {any} fn function to run on values in the queue
    * @memberof queueWithTwoStacks
    */
   forEach(fn) {

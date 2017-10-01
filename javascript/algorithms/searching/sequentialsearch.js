@@ -20,9 +20,9 @@
  * All you need is the right size (not too big not) unsorted data
  *
  * @module SequentialSearch
- * @param {number[]} list
- * @param {number} needle
- * @returns {boolean}
+ * @param {number[]} list input array to search for value
+ * @param {number} needle value to search for
+ * @returns {boolean} was value in array?
  */
 export default function (list, needle) {
   const len = list.length;

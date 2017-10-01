@@ -21,7 +21,7 @@
  *
  * also decided to make it (mostly) conform to es6 Map api because why not. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
  *
- * @param {number} size
+ * @param {number} size the number of elements in the table
  */
 class HashTable {
   constructor(size) {
@@ -39,6 +39,8 @@ class HashTable {
    *
    * My particular implementation is cribed from here
    *
+   * https://gist.github.com/alexhawkins/f6329420f40e5cafa0a4
+   *
    * but as it does with many concept sedgewick & wanye's
    *
    * algorithms book's companion website does an excellent job of explaining what you want too accomplish with a has function
@@ -49,7 +51,7 @@ class HashTable {
    *
    * @param {string} str - the string you are looking to generate a hash of
    * @param {number} max - the maximum number of items in a string
-   * @returns index
+   * @returns {number} index to put value into hash table
    * @memberof HashTable
    */
   hashFunc(str, max) {
@@ -76,9 +78,9 @@ class HashTable {
    * Time Complexity: O(1)
    * Space Complexity: O(1)
    *
-   * @param {string} key
-   * @param {any} val
-   * @returns this
+   * @param {string} key key at which to set a value
+   * @param {any} val value to set at the key
+   * @returns {this} reference to this hash table
    * @memberof HashTable
    */
   set(key, val) {
@@ -131,8 +133,8 @@ class HashTable {
    *
    * where m = the length of the longest array bucket in the case of a collision
    *
-   * @param {string} key
-   * @returns
+   * @param {string} key key from which to get value
+   * @returns {any} value from the table
    * @memberof HashTable
    */
   get(key) {
@@ -164,8 +166,8 @@ class HashTable {
    *
    * might have to scan that to see if the key is present
    *
-   * @param {any} key
-   * @returns
+   * @param {any} key key to check if exists in the table
+   * @returns {boolean} was value in table?
    * @memberof HashTable
    */
   has(key) {
@@ -183,8 +185,8 @@ class HashTable {
    *
    * where m = the length of the longest array bucket in the case of a collision
    *
-   * @param {string} key
-   * @returns
+   * @param {string} key key of value to remove from table
+   * @returns {any} value that was removed from table
    * @memberof HashTable
    */
   delete(key) {
@@ -215,7 +217,7 @@ class HashTable {
    *
    * where m = the length of the longest array bucket in the case of a collision
    *
-   * @param {number} newLimit
+   * @param {number} newLimit new size of table
    * @memberof HashTable
    */
   resize(newLimit) {

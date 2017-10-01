@@ -41,7 +41,7 @@ class BST {
    * cleaner version inspired by here
    *
    * @param {number} value - value to check if in BST
-   * @returns this
+   * @returns {this} reference to this bst
    * @memberof BST
    */
   add(value) {
@@ -84,14 +84,12 @@ class BST {
    *
    * Time Complexity: O(log(n))
    *
-   * @param {number} value
-   * @param {boolean} returnNodeModeParam
-   * @returns {Object|boolean}
    * @memberof BST
+   * @param {number} value to check if in bst
+   * @param {boolean} returnNodeMode should this function return a reference to the node if found (true) or a boolean (false)
+   * @returns {Object|boolean} referene to the node holding the value or a boolean
    */
-  contains(value, returnNodeModeParam) {
-    const returnNodeMode = returnNodeModeParam || false;
-
+  contains(value, returnNodeMode = false) {
     let found = false;
     let current = this.root;
     let parent = null;
@@ -124,8 +122,8 @@ class BST {
    *
    * Time Complexity: O(log(n))
    *
-   * @param {number} value
-   * @returns this
+   * @param {number} value value to remove from this bst
+   * @returns {this} reference to this bst
    * @memberof BST
    */
   remove(value) {
@@ -266,9 +264,9 @@ class BST {
    * http://en.wikipedia.org/wiki/Tree_traversal
    * http://btv.melezinek.cz/binary-search-tree.html
    *
-   * @param {any} fn
-   * @param {string} order
-   * @returns this
+   * @param {any} fn function to run on the nodes in the bst
+   * @param {string} order traversal order to run fn in. "in", "post", or "pre"
+   * @returns {this} reference to this bst
    * @memberof BST
    */
   traverse(fn, order) {
@@ -280,7 +278,7 @@ class BST {
      *
      * https://en.wikipedia.org/wiki/Tree_traversal#In-order
      *
-     * @param {Node} node
+     * @param {Node} node node to begin traversal from
      */
     function inOrder(node) {
       if (node) {
@@ -408,7 +406,7 @@ class BST {
    * Time Complexity: O(n)
    * Space Complexity: O(n)
    *
-   * @param {string} order
+   * @param {string} order traversal order. can be "pre", "post", or "in" order
    * @returns {number} result
    * @memberof BST
    */
@@ -438,7 +436,7 @@ class BST {
   /**
    * Returns the number of levels of nodes in the tree
    *
-   * @returns {number}
+   * @returns {number} the height of the tree
    * @memberof BST
    */
   height() {
@@ -447,8 +445,8 @@ class BST {
   /**
    * Returns the number of levels of nodes in the tree from this starting node
    *
-   * @param {Node} node - starting node
-   * @returns {number}
+   * @param {Node} node starting node
+   * @returns {number} the height of the tree starting at this node
    * @memberof BST
    */
   heightFromNode(node) {
@@ -472,7 +470,7 @@ class BST {
   /**
    * String representation of the array of this BST
    *
-   * @returns {string}
+   * @returns {string} string representation of this bst
    * @memberof BST
    */
   toString() {
@@ -489,10 +487,10 @@ class BST {
    *
    *  or would need to add if(!upperBound && !lowerBound) check
    *
-   * @param {any} currentNode
-   * @param {any} lowerBound
-   * @param {any} upperBound
-   * @returns
+   * @param {any} currentNode the node we arr examining
+   * @param {any} lowerBound the lowest value to check if this section of the tree is valid
+   * @param {any} upperBound the highest value to check if this section of the tree is valid
+   * @returns {boolean} whether or not the tree is valid
    * @memberof BST
    */
   isBSTValid(currentNode, lowerBound, upperBound) {
@@ -511,8 +509,8 @@ class BST {
    * Iterative version of checking if a banary search tree is valid
    *
    * @static
-   * @param {any} root
-   * @returns
+   * @param {any} root the node to begin the valid check from
+   * @returns {boolean} whether or not the tree is valid
    * @memberof BST
    */
   static isBSTValidIterative(root) {
@@ -547,9 +545,9 @@ class BST {
   }
 
   /**
-   * Instance Method of valid check for BST
+   * Instance method of valid check for BST
    *
-   * @returns
+   * @returns {boolean} is this a valid bst?
    * @memberof BST
    */
   isValid() {
@@ -561,7 +559,7 @@ class BST {
   /**
    * instance method of iterative valid BST check
    *
-   * @returns
+   * @returns {boolean} is this a valid bst?
    * @memberof BST
    */
   isValidIterative() {
@@ -572,8 +570,8 @@ class BST {
    * Find the larget node in the subtree starting at the input node
    *
    * @static
-   * @param {Node} currentNode
-   * @returns
+   * @param {Node} cn currentNode node to examine now
+   * @returns {Node} node containing the largest value at the subtree under the input node
    * @memberof BST
    */
   static findLargestAtNode(cn) {
@@ -588,18 +586,17 @@ class BST {
   /**
    * Find the largest node in this tree instance
    *
-   * @returns
+   * @returns {Node} node containing the largest value in the tree
    * @memberof BST
    */
   findLargest() {
     return BST.findLargestAtNode(this.root);
   }
 
-  // https://www.interviewcake.com/question/ruby/second-largest-item-in-bst
-
   /**
    * Find the second largest node in a tree instance
    *
+   * https://www.interviewcake.com/question/ruby/second-largest-item-in-bst
    * @returns
    * @memberof BST
    */
@@ -662,7 +659,7 @@ class BST {
    * Used in the process of balancing a BST
    *
    * @static
-   * @param {Node} startNode
+   * @param {Node} startNode node to start making linked list from
    * @memberof BST
    */
   static makeSortedLinkedList(startNode) {
@@ -689,9 +686,10 @@ class BST {
    * except possibly the last, is completely filled, and all nodes are as far left as possible.
    *
    * http://web.cecs.pdx.edu/~sheard/course/Cs163/Doc/FullvsComplete.html
+   *
    * @static
-   * @param {Node} startNode
-   * @param {number} size
+   * @param {Node} startNode node to start from
+   * @param {number} size number of nodes in the tree
    * @memberof BST
    */
   static makeCompleteBinaryTree(startNode, size) {
@@ -721,8 +719,8 @@ class BST {
    * used in the course of making the sorted linkedlist version of it into a complete binary tree
    *
    * @static
-   * @param {Node} startNode
-   * @param {number} count
+   * @param {Node} startNode node to start the compression from
+   * @param {number} count idk will fix later
    * @memberof BST
    */
   static compress(startNode, count) {
