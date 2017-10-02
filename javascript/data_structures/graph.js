@@ -193,7 +193,7 @@ class Graph {
    * Then inits its adjacency_list
    *
    * @param {any} val the name of the input vertex
-   * @returns this
+   * @returns {this} reference to this graph for chaining
    * @memberof Graph
    */
   addVertex(val) {
@@ -217,7 +217,7 @@ class Graph {
    * "0,1"
    *
    * @static
-   * @returns {string}
+   * @returns {string} string to use to deliniate edge name
    * @memberof Graph
    */
   static edgeKeySplitStringFn() {
@@ -233,7 +233,7 @@ class Graph {
    *
    * @param {any} from the originating node of this edge
    * @param {any} to the terminating node of this edge
-   * @returns {string}
+   * @returns {string} string representing the edge between from and to
    * @memberof Graph
    */
   edgeKey(from, to) {
@@ -253,7 +253,7 @@ class Graph {
    *
    * @static
    * @param {string} edgeKey string of edge to get vertex from
-   * @returns {any}
+   * @returns {string} originating vertex of this edge
    * @memberof Graph
    */
   static edgeKeyVertexFrom(edgeKey) {
@@ -265,7 +265,7 @@ class Graph {
    *
    * @static
    * @param {string} edgeKey string of edge to get vertex from
-   * @returns {any}
+   * @returns {string} terminating vertex of this edge
    * @memberof Graph
    */
   static edgeKeyVertexTo(edgeKey) {
@@ -278,7 +278,7 @@ class Graph {
    * @static
    * @param {any} edgeKey input edge
    * @param {any} v input vertex
-   * @returns {any}
+   * @returns {string} the vertex that is on the input edge that is not the input vertex
    * @memberof Graph
    */
   static edgeKeyOtherVertex(edgeKey, v) {
@@ -310,7 +310,7 @@ class Graph {
    * @param {any} from the originating node of this edge
    * @param {any} to the terminating node of this edge
    *
-   * @returns
+   * @returns {boolean} is there an edge between from and 2 verticies
    * @memberof Graph
    */
   edgePresent(from, to) {
@@ -324,7 +324,7 @@ class Graph {
    * @param {any} from the originating node of this edge
    * @param {any} to the terminating node of this edge
    * @param {number} weight the weight of the vertex
-   * @returns this
+   * @returns {this} ref for this graph
    * @memberof Graph
    */
   setEdgeWeight(from, to, weight) {
@@ -340,7 +340,7 @@ class Graph {
    * Return the weight of an edge from its key
    *
    * @param {string} key input edgeKey
-   * @returns
+   * @returns {number|undefined} weight of an edge if it exists and undefined if not
    * @memberof Graph
    */
   getEdgeWeightByKey(key) {
@@ -359,7 +359,7 @@ class Graph {
    *
    * @param {any} from the originating node of this edge
    * @param {any} to the terminating node of this edge
-   * @returns
+   * @returns {number|undefined} weight of an edge if it exists and undefined if not
    * @memberof Graph
    */
   getEdgeWeight(from, to) {
@@ -397,7 +397,7 @@ class Graph {
    * @param {number} weight the weight of this edge
    * @param {any} opts options about this edge
    * @param {any} opts.allow_parallel should parallel edges be allowed in this graph
-   * @returns this for chaining
+   * @returns {this} for chaining
    * @memberof Graph
    */
   addEdge(from, to, weight, opts) {
@@ -560,8 +560,8 @@ class Graph {
    *
    * Because checking length of an array is constant. If it wasn't obi this would be O(V)
    *
-   * @param {any} vert there vertex to check for out degree
-   * @returns {number|boolean}
+   * @param {any} vert the vertex to check for out degree
+   * @returns {number|boolean} out degree of the vertex if there are connected verticies and false if not
    * @memberof Graph
    */
   vertexOutDegree(vert) {
@@ -590,7 +590,7 @@ class Graph {
    * Time Complexity: O(V)
    *
    * @param {any} vert there vertex to check for in degree
-   * @returns {number|boolean}
+   * @returns {number|boolean} in degree of the vertex if there are connected verticies and false if not
    * @memberof Graph
    */
   vertexInDegree(vert) {
@@ -612,7 +612,7 @@ class Graph {
    *
    * Time Complexity: O(V)
    *
-   * @returns {array}
+   * @returns {array} array with the names of the verticies in the graph
    * @memberof Graph
    */
   vertexList() {
@@ -624,7 +624,7 @@ class Graph {
    *
    * Time Complexity: O(V)
    *
-   * @returns {number}
+   * @returns {number} number of verticies in the graph
    * @memberof Graph
    */
   order() {
@@ -636,7 +636,7 @@ class Graph {
    *
    * Time Complexity: O(E)
    *
-   * @returns {array}
+   * @returns {array} array with the names of the edges in the graph
    * @memberof Graph
    */
   edgeSetList() {
@@ -648,7 +648,7 @@ class Graph {
    *
    * Time Complexity: O(E)
    *
-   * @returns {number}
+   * @returns {number} Number of edges in the graph
    * @memberof Graph
    */
   size() {
@@ -658,7 +658,7 @@ class Graph {
   /**
    * Enumerates the vertices in the cycles of a graph
    *
-   * @returns {number[][]}
+   * @returns {array[]} array of arrays with the verticies in the cycles in the graph
    * @memberof Graph
    */
   cycles() {
@@ -668,7 +668,7 @@ class Graph {
   /**
    * If the graph has a cycle or not
    *
-   * @returns {boolean}
+   * @returns {boolean} if there are cycles in the graph or not
    * @memberof Graph
    */
   hasCycle() {
@@ -716,7 +716,7 @@ class Graph {
    * based on
    * http://algs4.cs.princeton.edu/41graph/CC.java.html
    *
-   * @returns {[][]}
+   * @returns {[][]} connected components in the graph
    * @memberof Graph
    */
   components() {
@@ -761,7 +761,7 @@ class Graph {
    *
    * Useful utility function for reversing a graph
    *
-   * @param {any} fn
+   * @param {any} fn function to run on all the edges in the graph
    * @memberof Graph
    */
   adjacencyListIterator(fn) {
@@ -780,8 +780,8 @@ class Graph {
    * inspire by:
    * http://algs4.cs.princeton.edu/42digraph/Digraph.java.html
    *
-   * @param {any} revConf
-   * @returns
+   * @param {any} revConf (optional) new configuration object for this graph
+   * @returns {Graph} reverse version of this graph
    * @memberof Graph
    */
   reverse(revConf) {

@@ -18,6 +18,7 @@ const factorial = FactorialTypes.count_up_iterative;
 
 /**
  * Permutations with repetition
+ *
  * (often refered to as with replacement which I think is a poor choice of words and horribly confusing in this context)
  *
  * These are the easiest to calculate.
@@ -26,10 +27,9 @@ const factorial = FactorialTypes.count_up_iterative;
  *
  * We are doing that k times... thus n ^ k
  *
- *
- * @param {number} n
- * @param {number} k
- * @returns {number}
+ * @param {number} n number of elements
+ * @param {number} k # of subset of n elements to choose
+ * @returns {number} number of possible permutations
  */
 function withRep(n, k) {
   return n ** k;
@@ -44,9 +44,9 @@ function withRep(n, k) {
  *
  * n!/(n - k)!
  *
- * @param {number} n
- * @param {number} k
- * @returns {number}
+ * @param {number} n number of elements
+ * @param {number} k # of subset of n elements to choose
+ * @returns {number} number of possible permutations
  */
 function withoutRep(n, k) {
   if (!dsalgo.utils.isDefined(k)) return factorial(n);
@@ -75,9 +75,9 @@ function withoutRep(n, k) {
  *
  * with a for loop that runs from (n - k) + 1 to n while multiplying the result.
  *
- * @param {number} n
- * @param {number} k
- * @returns {number}
+ * @param {number} n number of elements
+ * @param {number} k # of subset of n elements to choose
+ * @returns {number} number of possible permutations
  */
 function withoutRepOptimized(n, k) {
   if (!dsalgo.utils.isDefined(k)) return factorial(n);

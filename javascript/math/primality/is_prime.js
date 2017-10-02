@@ -23,8 +23,8 @@
  *
  * inspired by: http://www.thatjsdude.com/interview/js1.html#isPrime
  *
- * @param {number} n
- * @returns {boolean}
+ * @param {number} n number to check if prime
+ * @returns {boolean} is number prime?
  */
 function naiveTrialDivision(n) {
   if (n < 2) return false;
@@ -65,8 +65,8 @@ function naiveTrialDivision(n) {
  * https://github.com/mgechev/javascript-algorithms/blob/master/src/primes/is-prime.js
  * https://en.wikipedia.org/wiki/Primality_test#Pseudocode
  *
- * @param {number} n
- * @returns {boolean}
+ * @param {number} n number to check if prime
+ * @returns {boolean} is number prime?
  */
 function optimizedTrialDivision(n) {
   if (n < 2) return false;

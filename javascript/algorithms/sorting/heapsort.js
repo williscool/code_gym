@@ -15,8 +15,8 @@ const MaxHeap = Heap.max;
  * and the CLRS intro to algorithms version
  *
  * @module HeapSort
- * @param {any} list
- * @returns
+ * @param {array} list input array
+ * @returns {array} sorted version of input array
  */
 export default function (list) {
   // build a heap does a similar thing to heapify in the wikipiedia version of this algorithm

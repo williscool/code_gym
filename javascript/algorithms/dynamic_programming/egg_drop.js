@@ -27,7 +27,7 @@ import dsalgo from '../../utilities';
  *
  * @param {number} n number of eggs
  * @param {number} k number of floors to be tested
- * @returns {number}
+ * @returns {number} number of drops needed to find the critical height in the worst case
  */
 function naiveEggDrop(n, k) {
   // n eggs
@@ -71,7 +71,7 @@ const cache = dsalgo.utils.simpleSet();
  *
  * @param {number} n number of eggs
  * @param {number} k number of floors to be tested
- * @returns {number}
+ * @returns {number} number of drops needed to find the critical height in the worst case
  */
 function topDownEggDrop(n, k) {
   const cacheKey = `${n}:${k}`;
@@ -101,7 +101,7 @@ function topDownEggDrop(n, k) {
  *
  * @param {number} n number of eggs
  * @param {number} k number of floors to be tested
- * @returns {number}
+ * @returns {number} number of drops needed to find the critical height in the worst case
  */
 function bottomUpEggDrop(n, k) {
   const memo = dsalgo.utils.create2Darray(n + 1, k + 1); // initlize 2d array memoization table

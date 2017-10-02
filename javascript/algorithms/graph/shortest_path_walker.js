@@ -11,10 +11,10 @@ import dsalgo from '../../utilities';
  *
  * Returns information of about the traversal order an cost if possible
  *
- * @param {any} info
- * @param {any} source
- * @param {any} targetVertex
- * @returns {array|boolean}
+ * @param {any} info traversal info from dijkstra or bellman
+ * @param {any} source start vertex
+ * @param {any} targetVertex vertex to terminate path in
+ * @returns {array|boolean} array of verts in the shortest path if there is a path from start to target. false if not
  */
 function shortestPath(info, source, targetVertex) {
   if (!info) throw new Error('dude I need a graph traversal to work with');

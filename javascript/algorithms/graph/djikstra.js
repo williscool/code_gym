@@ -56,14 +56,17 @@ const {
  *
  * Time Complexity: |V^2|
  *
+ * @prop {array} info array of objects describing each vertex, like
+ *     [{distance: _, predecessor: _ }]
+ *
  * @class NaiveDijkstra
  */
 class NaiveDijkstra {
   /**
    * Creates an instance of NaiveDijkstra.
    *
-   * @param {any} graph
-   * @param {any} startVertex
+   * @param {any} graph graph to traverse
+   * @param {any} startVertex vertex to start traversal from
    * @memberof NaiveDijkstra
    */
   constructor(graph, startVertex) {
@@ -136,9 +139,9 @@ class NaiveDijkstra {
    *
    * so sue me :P
    *
-   * @param {array} array
-   * @param {Object} vertexHash
-   * @returns {number}
+   * @param {array} array to find smallest value in
+   * @param {Object} vertexHash hash of visted verticies
+   * @returns {number} index of value with lowest priority
    */
   static findMinIndex(array, vertexHash) {
     let lowest = Number.POSITIVE_INFINITY;
@@ -153,8 +156,6 @@ class NaiveDijkstra {
     });
 
     if (index === -1) {
-      // this means everything else was pos infinity. just return the next vertex in the set
-      // return Object.keys(vertexHash)[0];
       throw new Error('index set to negative one in findMinIndex. This should not happen!');
     }
 
@@ -171,8 +172,8 @@ class NaiveDijkstra {
  *
  * It's function is explained in the module that exports it
  *
- * @param {any} targetVertex
- * @returns
+ * @param {any} targetVertex vertex to terminate path in
+ * @returns {array|boolean} array of verts in the shortest path if there is a path from start to target. false if not
  */
 function shortestPath(targetVertex) {
   return SPW(this.info, this.source, targetVertex);

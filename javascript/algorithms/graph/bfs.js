@@ -93,7 +93,7 @@ class BFS {
    * working back through its predecessor chain to the startVertex
    *
    * @param {any} goal vertex the bfs terminated in
-   * @returns {array}
+   * @returns {array} array of the verts in the path
    * @memberof BFS
    */
   reconstructPath(goal) {

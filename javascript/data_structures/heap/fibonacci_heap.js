@@ -71,8 +71,8 @@ class FibonacciHeap {
    *
    * Time Complexity: O(1)
    *
-   * @param {any} key
-   * @param {any} val
+   * @param {string} key value storing
+   * @param {any} val index value is being stored at
    * @memberof FibonacciHeap
    */
   addToNodeSet(key, val) {
@@ -85,8 +85,8 @@ class FibonacciHeap {
    *
    * Time Complexity: O(1)
    *
-   * @param {any} key
-   * @returns
+   * @param {string} key key of value to return from set
+   * @returns {any} value from the set based on they key
    * @memberof FibonacciHeap
    */
   getFromNodeSet(key) {
@@ -98,7 +98,7 @@ class FibonacciHeap {
    *
    * Time Complexity: O(1)
    *
-   * @param {any} key
+   * @param {string} key key of value to remove from set
    * @memberof FibonacciHeap
    */
   removeFromNodeSet(key) {
@@ -110,7 +110,7 @@ class FibonacciHeap {
    *
    * Time Complexity: O(1)
    *
-   * @returns {boolean}
+   * @returns {boolean} is there anything in heap?
    * @memberof FibonacciHeap
    */
   isEmpty() {
@@ -120,9 +120,9 @@ class FibonacciHeap {
   /**
    * Merge the root linked lists of 2 fib heaps
    *
-   * @param {FibHeapNode} a
-   * @param {FibHeapNode} b
-   * @returns {FibHeapNode}
+   * @param {FibHeapNode} a root of heap a
+   * @param {FibHeapNode} b root of heap b
+   * @returns {FibHeapNode} reference to the head of the heap with the extrema value
    * @memberof FibonacciHeap
    */
   mergeRootLists(a, b) {
@@ -155,9 +155,9 @@ class FibonacciHeap {
    *
    * Time Complexity: O(1)
    *
-   * @param {any} key
-   * @param {any} val
-   * @returns this
+   * @param {number} key key to insert value at in nodeset (usually the number order)
+   * @param {any} val value to insert into heap
+   * @returns {this} reference to this heap for chaining
    * @memberof FibonacciHeap
    */
   insert(key, val) {
@@ -195,7 +195,8 @@ class FibonacciHeap {
   /**
    * Unites 2 fib heaps
    *
-   * @param {any} otherHeap
+   * @param {any} otherHeap other fib heap to merge this one with
+   * @return {undefined}
    * @memberof FibonacciHeap
    */
   union(otherHeap) {
@@ -210,7 +211,7 @@ class FibonacciHeap {
    *
    * Time Complexity: O(1)
    *
-   * @returns {FibHeapNode}
+   * @returns {FibHeapNode} reference to the min node in heap
    * @memberof FibonacciHeap
    */
   findMin() {
@@ -224,8 +225,8 @@ class FibonacciHeap {
    * the node you are removing. why not just make them point to each other?
    *
    * @static
-   * @param {any} node
-   * @returns
+   * @param {any} node node to remove from list
+   * @returns {FibHeapNode} reference to removed node
    * @memberof FibonacciHeap
    */
   static removeNodeFromList(node) {
@@ -247,8 +248,8 @@ class FibonacciHeap {
   /**
    * Links 2 subtrees in a fib heap together
    *
-   * @param {any} max
-   * @param {any} min
+   * @param {any} max first fib heap node to link
+   * @param {any} min second fib heap node to link
    * @memberof FibonacciHeap
    */
   linkHeaps(max, min) {
@@ -274,6 +275,7 @@ class FibonacciHeap {
    *
    * TODO: one day FAAR in the future. dig deep and figure out if this function is correct. apparently this data structure can still work even if you don't build the heap structure correct o.o
    *
+   * @returns {FibHeapNode} reference to the min node in heap
    * @memberof FibonacciHeap
    */
   consolidate() {
@@ -353,7 +355,7 @@ class FibonacciHeap {
    *
    * Then subroutines of this then restore the heap property
    *
-   * @returns {FibHeapNode}
+   * @returns {FibHeapNode} reference to the min node in heap
    * @memberof FibonacciHeap
    */
   extractMin() {
@@ -402,8 +404,8 @@ class FibonacciHeap {
    * https://www.youtube.com/watch?v=M37HHf099oM
    * https://www.youtube.com/watch?v=jKduDKsfl6U
    *
-   * @param {FibHeapNode} node
-   * @param {FibHeapNode} parent
+   * @param {FibHeapNode} node node to cut
+   * @param {FibHeapNode} parent parent of node to cut
    * @memberof FibonacciHeap
    */
   cut(node, parent) {
@@ -419,10 +421,12 @@ class FibonacciHeap {
    *  CASCADING-CUT calls itself recursively in line 6 on y’s parent ´.
    *  The CASCADING-CUT procedure recurses its way up the tree until it finds either a root or an unmarked node.
    *
-   * TODO: also waaay of in the future WHY THIS FUCK DID THIS THING WORK when I had a typo in it originally where I spelled cut as `cur`
+   * TODO: also waaay of in the future WHY THIS FUCK DID THIS THING WORK when I had a typo bug in it originally where I spelled cut as `cur`
    * so my implementation was off but not only did it work in this test it also stilll worked in djikstra's algorith... wtf?
    *
-   * @param {any} node
+   * great question to ask some computer science professor
+   *
+   * @param {any} node node from which to start the cascading cut
    * @memberof FibonacciHeap
    */
   cascadingCut(node) {
@@ -444,9 +448,9 @@ class FibonacciHeap {
    *
    * Needs a reference to node out from the node set to work
    *
-   * @param {FibHeapNode} node
-   * @param {number} newKey
-   * @returns
+   * @param {FibHeapNode} node node to change the value of
+   * @param {FibHeapNode} newKey new value to change the node's value to
+   * @returns {FibHeapNode} reference to the node who's value was changed
    * @memberof FibonacciHeap
    */
   decreaseKey(node, newKey) {
@@ -475,8 +479,8 @@ class FibonacciHeap {
    * 1. Change this node's value to negative infinity
    * 2. then run extractMin to remove that lowest and node our target node from the tree :)
    *
-   * @param {FibHeapNode} node
-   * @returns {boolean} if this operation succedes
+   * @param {any} node to remove from heap
+   * @returns {boolean} if this operation succeeds
    * @memberof FibonacciHeap
    */
   delete(node) {
@@ -500,8 +504,8 @@ class FibonacciHeap {
    *
    * Time Complexity: O(1)
    *
-   * @param {any} val
-   * @returns
+   * @param {any} val value to check if is in heap
+   * @returns {any|boolean} was the value in the heap or nah?
    * @memberof FibonacciHeap
    */
   contains(val) {

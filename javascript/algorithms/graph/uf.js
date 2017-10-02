@@ -67,7 +67,7 @@ class QuickFindUF {
    * Time Complexity: O(n)
    * Space Complexity: O(n)
    *
-   * @param {any} N
+   * @param {any} N number of possible sites in the structure
    * @memberof QuickFindUF
    */
   initalizeComponentArray(N) {
@@ -80,7 +80,7 @@ class QuickFindUF {
    *
    * Time Complexity: O(1)
    *
-   * @param {any} p
+   * @param {any} p name of a site/vertex
    * @memberof QuickFindUF
    */
   validate(p) {
@@ -97,8 +97,8 @@ class QuickFindUF {
    *
    * Time Complexity: O(1)
    *
-   * @param {any} p
-   * @returns
+   * @param {any} p name of a site/vertex
+   * @returns {number} component input site belongs to
    * @memberof QuickFindUF
    */
   find(p) {
@@ -113,9 +113,9 @@ class QuickFindUF {
    *
    * Time Complexity: O(1)
    *
-   * @param {any} p
-   * @param {any} q
-   * @returns {boolean}
+   * @param {any} p first site
+   * @param {any} q second site
+   * @returns {boolean} are they connected?
    * @memberof QuickFindUF
    */
   connected(p, q) {
@@ -138,8 +138,8 @@ class QuickFindUF {
    *
    * Time Complexity: O(n)
    *
-   * @param {any} p
-   * @param {any} q
+   * @param {any} p first site
+   * @param {any} q second site
    * @memberof QuickFindUF
    */
   union(p, q) {
@@ -205,7 +205,7 @@ class QuickUnionUF {
    * Time Complexity: O(n)
    * Space Complexity: O(n)
    *
-   * @param {any} N
+   * @param {any} N total number of sites
    * @memberof QuickUnionUF
    */
   initalizeComponentArray(N) {
@@ -218,7 +218,7 @@ class QuickUnionUF {
    *
    * Time Complexity: O(1)
    *
-   * @param {any} p
+   * @param {any} p name of a site/vertex
    * @memberof QuickUnionUF
    */
   validate(p) {
@@ -243,8 +243,8 @@ class QuickUnionUF {
    *
    * O(height of the tree form by the path structure)
    *
-   * @param {any} p
-   * @returns {any}
+   * @param {any} inputP name of a site/vertex
+   * @returns {number} component input site belongs to
    * @memberof QuickUnionUF
    */
   find(inputP) {
@@ -261,9 +261,9 @@ class QuickUnionUF {
   /**
    * A 2 sites are connected in this implementation if they share the same root
    *
-   * @param {any} p
-   * @param {any} q
-   * @returns
+   * @param {any} p first site
+   * @param {any} q second site
+   * @returns {boolean} are they connected?
    * @memberof QuickUnionUF
    */
   connected(p, q) {
@@ -273,9 +273,8 @@ class QuickUnionUF {
   /**
    * To unite 2 sites we simply need to find their roots and overwrite one with the other
    *
-   * @param {any} p
-   * @param {any} q
-   * @returns
+   * @param {any} p first site
+   * @param {any} q second site
    * @memberof QuickUnionUF
    */
   union(p, q) {
@@ -303,7 +302,7 @@ class WeightedQuickUnionUF extends QuickUnionUF {
   /**
    * Updates `super.initalizeComponentArray` to also init the tree size array
    *
-   * @param {any} N
+   * @param {any} N number of possible sites
    * @memberof WeightedQuickUnionUF
    */
   initalizeComponentArray(N) {
@@ -321,8 +320,8 @@ class WeightedQuickUnionUF extends QuickUnionUF {
    *
    * https://www.youtube.com/watch?v=R45MPl59MC0
    *
-   * @param {any} p
-   * @param {any} q
+   * @param {any} p first site
+   * @param {any} q second site
    * @memberof WeightedQuickUnionUF
    */
   union(p, q) {
@@ -356,8 +355,8 @@ class WeightedQuickUnionPathCompressionUF extends WeightedQuickUnionUF {
    *
    * by adding a loop to find() that links every sie on the path from p to the root.
    *
-   * @param {any} p
-   * @returns
+   * @param {any} inputP name of a site/vertex
+   * @returns {number} component input site belongs to
    * @memberof WeightedQuickUnionPathCompressionUF
    */
   find(inputP) {
@@ -393,8 +392,8 @@ class WeightedQuickUnionPathHalvingUF extends WeightedQuickUnionUF {
    *
    * Along the way to finding the root of the tree
    *
-   * @param {any} p
-   * @returns
+   * @param {any} inputP name of a site/vertex
+   * @returns {number} component input site belongs to
    * @memberof WeightedQuickUnionPathHalvingUF
    */
   find(inputP) {
@@ -415,7 +414,7 @@ class WeightedQuickUnionPathHalvingUF extends WeightedQuickUnionUF {
  *
  * i.e. http://algs4.cs.princeton.edu/15uf/tinyUF.txt
  *
- * @param {any} list
+ * @param {any} txt text to build site list and components from
  */
 function addSiteFromText(txt) {
   const context = this;

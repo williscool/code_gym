@@ -7,11 +7,11 @@
  * http://en.wikibooks.org/wiki/Algorithm_Implementation/Search/Binary_search#JavaScript
  * Recursive Binary Search
  *
- * @param {number[]} list
- * @param {number} needle
- * @param {number} [inputMin=0]
- * @param {number} [inputMax=list.length]
- * @returns
+ * @param {number[]} list input array to search for value
+ * @param {number} needle value to search for
+ * @param {number} [inputMin=0] minimum index to scan
+ * @param {number} [inputMax=list.length] maximum index to scan
+ * @returns {number|boolean} was value in array? in so return the index if not return false
  */
 function rBinarySearch(list, needle, inputMin = 0, inputMax = list.length) {
   const min = inputMin;
@@ -67,7 +67,7 @@ export default {
    * @param {number} needle value to search for
    * @param {number} [inputMin=0] minimum index to scan
    * @param {number} [inputMax=list.length] maximum index to scan
-   * @returns {boolean} was value in array?
+   * @returns {number|boolean} was value in array? in so return the index if not return false
    */
   iterative(list, needle, inputMin = 0, inputMax = list.length) {
     const result = false;

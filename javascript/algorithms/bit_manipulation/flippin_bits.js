@@ -15,10 +15,9 @@ import dsalgo from '../../utilities';
  *
  * https://en.wikipedia.org/wiki/Two%27s_complement#Converting_from_two.27s_complement_representation
  *
- * @export
- * @param {number} a
- * @param {number} b
- * @returns {Object}
+ * @param {number} a first input number
+ * @param {number} b second input number
+ * @returns {Object} object with b used to do operations on a
  */
 export default function (a, b) {
   const flips = {};

@@ -13,8 +13,8 @@
  * This implementation of factorial starts from n
  * and mulplies it by all integers less than n and greater than 0
  *
- * @param {number} n
- * @returns {number}
+ * @param {number} n number to factorial
+ * @returns {number} number factorialed
  */
 function countDown(n) {
   if (n === 0) return 1;
@@ -34,8 +34,8 @@ function countDown(n) {
  *
  * https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/p/challenge-iterative-factorial
  *
- * @param {number} n
- * @returns {number}
+ * @param {number} n number to factorial
+ * @returns {number} number factorialed
  */
 function countUp(n) {
   let result = 1;
@@ -54,8 +54,8 @@ function countUp(n) {
  *
  * With the value for the base case where n === 0 returning 1;
  *
- * @param {number} n
- * @returns {number}
+ * @param {number} n number to factorial
+ * @returns {number} number factorialed
  */
 function recursive(n) {
   // base case:

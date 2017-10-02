@@ -33,9 +33,9 @@ import seqsearch from '../../algorithms/searching/sequentialsearch';
  * https://github.com/thauburger/js-heap/blob/master/heap.js
  * http://www.benfrederickson.com/heap-visualization/
  *
- * @prop items - the array that represents this heap
- * @prop comp - the comparision function for this heap
- * @prop valueToString - a function that turns a given value into a string used for object key
+ * @prop {number[]} items - the array that represents this heap
+ * @prop {Function} comp - the comparision function for this heap
+ * @prop {Function} valueToString - function to turn your input values (which could be numbers or objects) into a string defaults to `JSON.stringify`
  *
  * @class Heap
  */
@@ -49,13 +49,10 @@ class Heap {
    *
    * updated to use default params
    *
-   * @param {[]} array
-   * @param {Function} compfn
-   * @param {Function} valueToString
+   * @param {[]} array (optional) input array to create heap from
+   * @param {Function} compfn comparison function for values in the heap
+   * @param {Function} valueToString function to turn a value in the heap into a string (used to access heap values in constant time in priority queues)
    *
-   * @prop array - the options for the function will move to a param soon
-   * @prop comp - the comparision function
-   * @prop valueToString - function to turn your input values (which could be numbers or objects) into a string defaults to `JSON.stringify`
    * @memberof Heap
    */
   constructor({
@@ -96,12 +93,11 @@ class Heap {
    *
    * Time Complexity: O(1)
    *
-   * @param {string} key
-   * @param {any} val
+   * @param {string} key value storing
+   * @param {any} val index value is being stored at
    * @memberof Heap
    */
   addToValueSet(key, val) {
-    // key = value storing, val = indexAt
     this.valueSet[this.valueToString(key)] = val;
   }
 
@@ -110,8 +106,8 @@ class Heap {
    *
    * Time Complexity: O(1)
    *
-   * @param {string} key
-   * @returns
+   * @param {string} key key of value to return from set
+   * @returns {any} value from the set based on they key
    * @memberof Heap
    */
   getFromValueSet(key) {
@@ -123,7 +119,7 @@ class Heap {
    *
    * Time Complexity: O(1)
    *
-   * @param {string} key
+   * @param {string} key key of value to remove from set
    * @memberof Heap
    */
   removeFromValueSet(key) {
@@ -146,10 +142,10 @@ class Heap {
    *
    * @todo swith change the swap calls and interface
    *
-   * @param {array} list
-   * @param {number} firstIndex
-   * @param {number} secondIndex
-   * @returns {array}
+   * @param {array} list the list to do the swapping on. always `this.items`
+   * @param {number} firstIndex the index to swap from
+   * @param {number} secondIndex the index to swap to
+   * @returns {array} the list with stuff swapped (happens in place so this is kind unecessary)
    * @memberof Heap
    */
   swap(list, firstIndex, secondIndex) {
@@ -168,8 +164,8 @@ class Heap {
    *
    * Time Complexity: O(1)
    *
-   * @param {number} i
-   * @returns {number}
+   * @param {number} i index from which to retrive value
+   * @returns {any} value at index i
    * @memberof Heap
    */
   valueAt(i) {
@@ -182,8 +178,8 @@ class Heap {
    * Time Complexity: O(1)
    *
    * @static
-   * @param {number} i
-   * @returns {number}
+   * @param {number} i input index
+   * @returns {number} index of input `i`'s parent
    * @memberof Heap
    */
   static parentI(i) {
@@ -198,8 +194,8 @@ class Heap {
    * Time Complexity: O(1)
    *
    * not running this in a browser on the window object so name is cool
-   * @param {number} i
-   * @returns {number}
+   * @param {number} i input index
+   * @returns {number} value at input i's parent index
    * @memberof Heap
    */
   parent(i) {
@@ -213,8 +209,8 @@ class Heap {
    * Time Complexity: O(1)
    *
    * @static
-   * @param {number} i
-   * @returns {number}
+   * @param {number} i input index
+   * @returns {number} index of left child of index i
    * @memberof Heap
    */
   static leftI(i) {
@@ -227,8 +223,8 @@ class Heap {
    * Time Complexity: O(1)
    *
    * @static
-   * @param {number} i
-   * @returns {number}
+   * @param {number} i input index
+   * @returns {number} index of right child of index i
    * @memberof Heap
    */
   static rightI(i) {
@@ -236,14 +232,14 @@ class Heap {
   }
 
   /**
-   * Retpurns the value at the input index's left child
+   * Returns the value at the input index's left child
    *
    * Using `Heap.leftI` to get the value from of the array representing the binary heap
    *
    * Time Complexity: O(1)
    *
-   * @param {number} i
-   * @returns {number}
+   * @param {number} i input index
+   * @returns {number} value at left child index of input i
    * @memberof Heap
    */
   left(i) {
@@ -257,8 +253,8 @@ class Heap {
    *
    * Time Complexity: O(1)
    *
-   * @param {number} i
-   * @returns {number}
+   * @param {number} i input index
+   * @returns {number} value at right child index of input i
    * @memberof Heap
    */
   right(i) {
@@ -272,8 +268,8 @@ class Heap {
    *
    * Time Complexity: O(1)
    *
-   * @param {any} val
-   * @returns
+   * @param {any} val value to check if in heap
+   * @returns {number|boolean} returns index of value or false if it does not exist in heap
    * @memberof Heap
    */
   contains(val) {
@@ -287,8 +283,8 @@ class Heap {
    *
    * Time Complexity: O(n)
    *
-   * @param {number} val
-   * @returns {boolean}
+   * @param {any} val value to check if in heap
+   * @returns {number|boolean} returns index of value or false if it does not exist in heap
    * @memberof Heap
    */
   naiveContains(val) {
@@ -300,7 +296,7 @@ class Heap {
    *
    * Time Complexity: O(1)
    *
-   * @returns
+   * @returns {any} value on top of the heap
    * @memberof Heap
    */
   peek() {
@@ -314,7 +310,7 @@ class Heap {
    *
    * Time Complexity: O(1)
    *
-   * @returns {number}
+   * @returns {number} number of items in the heap
    * @memberof Heap
    */
   size() {
@@ -334,7 +330,7 @@ class Heap {
    *
    * Time Complexity: O(log(n))
    *
-   * @param {number} i
+   * @param {number} i index to begin sifting up from
    * @memberof Heap
    */
   siftUp(i) {
@@ -364,8 +360,8 @@ class Heap {
    *
    * Time Complexity: O(log(n))
    *
-   * @param {number} val
-   * @returns {this}
+   * @param {number} val value to insert into heap
+   * @returns {this} reference to this heap for chaining
    * @memberof Heap
    */
   insert(val) {
@@ -389,8 +385,8 @@ class Heap {
    * refer to what the main Heap (as opposed to the binary heap) wikipedia article
    * calls sift-down as heapify
    *
-   * @param {number} i
-   * @param {number} endPos
+   * @param {number} i index to begin operation at
+   * @param {number} endPos final position to consider for the operation (used in heapsort to not scan already sorted section of heap array)
    * @memberof Heap
    */
   siftDown(i, endPos) {
@@ -467,7 +463,7 @@ class Heap {
    *
    * Time Complexity: O(log(n))
    *
-   * @returns {numbere}
+   * @returns {number} value from top of heap
    * @memberof Heap
    */
   pop() {
@@ -497,8 +493,8 @@ class Heap {
    *
    * Time Complexity: O(log(n))
    *
-   * @param {any} index
-   * @returns {this}
+   * @param {any} index to start retoring heap property at
+   * @returns {this} reference to this heap
    * @memberof Heap
    */
   reHeapifyAt(index) {
@@ -552,21 +548,21 @@ class Heap {
     return inHeap;
 
     // dont know what returning the index you removed from could be useful for but why not?
-    // you could also just return true
+    // you could also just return true or just nothing
   }
 
   /**
    * Used to change the value of a node in the heap
    *
-   * This is used in a prority queue implementation to change the prority of things in the queue
+   * This is used in a priority queue implementation to change the prority of things in the queue
    *
-   * Because of the propeties of our heap it make doing this operation efficient for priority queue implementations
+   * Because of the properties of our heap it make doing this operation efficient for priority queue implementations
    *
    * Time Complexity: O(log(n))
    *
-   * @param {any} val
-   * @param {any} newValue
-   * @returns
+   * @param {any} val to change in the heap
+   * @param {any} newValue new value to change val to
+   * @returns {number} index of the new value in the heap
    * @memberof Heap
    */
   updateValue(val, newValue) {
@@ -630,7 +626,7 @@ class Heap {
    * how to handle this?
    * either re heap after or create a copy of the items in original order and reset them later
    *
-   * @returns {number[]}
+   * @returns {number[]} sorted version of the heap array
    * @memberof Heap
    */
   heapsort() {
@@ -664,7 +660,7 @@ class Heap {
    *
    * Time Complexity: O(log(n))
    *
-   * @returns
+   * @returns {boolean} is heap valid or nah?
    * @memberof Heap
    */
   isValid() {

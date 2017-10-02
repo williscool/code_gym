@@ -109,8 +109,8 @@ class LazyPrimMST {
    *
    * connected spanning tree limbs in least cost order
    *
-   * @param {any} startVertex
-   * @returns {Object}
+   * @param {any} startVertex vertex to start traversal from
+   * @returns {Queue} queue representing minimum spanning tree
    * @memberof LazyPrimMST
    */
   prim(startVertex) {
@@ -144,9 +144,8 @@ class LazyPrimMST {
  *
  * inspired by http://algs4.cs.princeton.edu/43mst/PrimMST.java.html
  *
- * @param {any} graph
- * @param {any} startVertex
- * @returns
+ * @param {any} graph graph to traverse
+ * @param {any} startVertex vertex to start traversal from
  */
 class EagerPrimMST {
   constructor(graph, startVertex) {
@@ -223,8 +222,8 @@ class EagerPrimMST {
   * In eager prim though the checking for marked verticies
   * is done in the scan instead of here in  the tree building phase
   *
-  * @param {any} startVertex
-  * @returns {Object}
+  * @param {any} startVertex vertex to start traversal from
+  * @returns {Queue} hash representing minimum spanning tree
   * @memberof EagerPrimMST
   */
   prim(startVertex) {

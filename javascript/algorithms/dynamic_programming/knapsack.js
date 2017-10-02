@@ -27,7 +27,7 @@ import dsalgo from '../../utilities';
  * @param {number[]} itemWeights the weights of the items to choose from
  * @param {number[]} itemValues the values of the items to choose from
  * @param {number} n # of item we are choosing to us or not use
- * @returns {number}
+ * @returns {number} maximized value you can fit into the knapsack given the constraints
  */
 function naiveKnapsack(W, itemWeights, itemValues, n) {
   // base case of zero capacity or zero items
@@ -61,7 +61,7 @@ const tdCache = [];
  * @param {number[]} itemWeights the weights of the items to choose from
  * @param {number[]} itemValues the values of the items to choose from
  * @param {number} n # of item we are choosing to us or not use
- * @returns {number}
+ * @returns {number} maximized value you can fit into the knapsack given the constraints
  */
 function topDownKnapsack(W, itemWeights, itemValues, n) {
   if (dsalgo.utils.isDefined(tdCache[n]) && dsalgo.utils.isDefined(tdCache[n][W])) return tdCache[n][W];
@@ -88,7 +88,7 @@ function topDownKnapsack(W, itemWeights, itemValues, n) {
  * @param {number[]} itemWeights the weights of the items to choose from
  * @param {number[]} itemValues the values of the items to choose from
  * @param {number} n # of items to choose from
- * @returns {number}
+ * @returns {number} maximized value you can fit into the knapsack given the constraints
  */
 function bottomUpKnapsack(W, itemWeights, itemValues, n) {
   const buCache = [];

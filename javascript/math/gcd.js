@@ -18,9 +18,9 @@
 /**
  * Recursive Euclidean Disvision for GCD
  *
- * @param {number} p
- * @param {number} q
- * @returns {number}
+ * @param {number} p first input number
+ * @param {number} q second input number
+ * @returns {number} greatest common divisor of the 2 inputs
  */
 function recursive(p, q) {
   if (q === 0) return p;
@@ -30,9 +30,9 @@ function recursive(p, q) {
 /**
  * Iterative Euclidean Disvision for GCD
  *
- * @param {number} p
- * @param {number} q
- * @returns {number}
+ * @param {number} p first input number
+ * @param {number} q second input number
+ * @returns {number} greatest common divisor of the 2 inputs
  */
 // the param reassigns are kinda the point of the algorithm
 function iterative(p, q) {

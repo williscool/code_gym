@@ -22,7 +22,7 @@
  * @module SequentialSearch
  * @param {number[]} list input array to search for value
  * @param {number} needle value to search for
- * @returns {boolean} was value in array?
+ * @returns {number|boolean} was value in array?
  */
 export default function (list, needle) {
   const len = list.length;

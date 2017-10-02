@@ -57,8 +57,8 @@ export default {
      * Inspired by:
      *
      * https://github.com/jasmine/jasmine/blob/master/src/core/matchers/toBeFalsy.js
-     * @param {any} thing
-     * @returns
+     * @param {any} thing thing to test if falsy
+     * @returns {boolean} is thing falsy?
      */
     isFalsy(thing) {
       return !this.isTruthy(thing);
@@ -70,8 +70,8 @@ export default {
      * Inspired by:
      * https://github.com/jasmine/jasmine/blob/master/src/core/matchers/toBeFalsy.js
      *
-     * @param {any} thing
-     * @returns
+     * @param {any} thing thing to test
+     * @returns {boolean} false if thing is undefined true otherwise
      */
     isDefined(thing) {
       return this.isFalsy(typeof thing === 'undefined');
@@ -84,7 +84,7 @@ export default {
      *
      * @param {any} config - configuration object for random array
      * @param {number} config.precision - configure how precise to make floting point numbers
-     * @returns {array}
+     * @returns {number[]} array with random numbers
      */
     makeRandomArray(config) {
       const conf = config || {};
@@ -109,8 +109,8 @@ export default {
      *
      * http://davidwalsh.name/javascript-clone-array
      *
-     * @param {array} thing
-     * @returns
+     * @param {array} thing input
+     * @returns {array} copy
      */
     arrayDeepCopy(thing) {
       return thing.slice(0);
@@ -126,9 +126,9 @@ export default {
      *
      * @todo there are probably more functions in here with the same off by one as zero fill had
      *
-     * @param {any} value
-     * @param {any} len
-     * @returns {array}
+     * @param {any} value value to fill array with
+     * @param {any} len number of times you want value repeated in array
+     * @returns {array} array full of repeated input value
      */
     simpleArrayFill(value, len) {
       const A = [];
@@ -145,8 +145,8 @@ export default {
      *
      * In that case it just returns it unaltered
      *
-     * @param {any} val
-     * @returns
+     * @param {any} val input
+     * @returns {any} number version of value if it is a number. value unchanged if not
      */
     makeNumberUnlessNaN(val) {
       const num = parseInt(val, 10);
@@ -164,10 +164,9 @@ export default {
      *
      * http://stackoverflow.com/questions/805107/creating-multiline-strings-in-javascript/5571069#5571069
      *
-     * @deprecated in favor of using template literals once we get the suite all es6 https://stackoverflow.com/a/805113/511710
-     *
-     * @param {Function} f
-     * @returns {string}
+     * @deprecated in favor of using template literals once we get the codebase all es6 https://stackoverflow.com/a/805113/511710
+     * @param {Function} f function to extract multiline comment from
+     * @returns {string} multiline string
      */
     multilineString(f) {
       // not monkeying with this voodoo regex lol
@@ -181,8 +180,8 @@ export default {
      *
      * http://stackoverflow.com/a/12834464/511710
      *
-     * @param {Object} obj
-     * @returns {Object}
+     * @param {Object} obj obj to sort keys
+     * @returns {Object} version of object with the keys in sorted order
      */
     sortObjectByKey(obj) {
       const keys = Object.keys(obj).sort();
@@ -218,9 +217,9 @@ export default {
      * Pretty sure it was not ever supposed to work that way lmao. Why it did is fun mystery to solve another day
      *
      *
-     * @param {any} dirName
-     * @param {any} pathName
-     * @returns
+     * @param {any} dirName base directory from which to start looking for file usually `__dirname`
+     * @param {any} pathName path or relative path from which to get text file for requiring
+     * @returns {string} text from pathName file
      */
     requireText(dirName, pathName) {
       // eslint-disable-next-line max-len
@@ -242,7 +241,7 @@ export default {
      */
     simpleSet() {
       // http://stackoverflow.com/a/18890005/511710
-      // https://github.com/mbostock/d3/blob/master/src/arrays/set.js#L10
+      // https://github.com/d3/d3/blob/v3.5.17/src/arrays/set.js#L11
       return Object.create(null);
     },
 
@@ -251,8 +250,8 @@ export default {
      *
      * http://stackoverflow.com/questions/9939760/how-do-i-convert-an-integer-to-binary-in-javascript/16155417#16155417
      *
-     * @param {number} n
-     * @returns
+     * @param {number} n number to get binary representation of
+     * @returns {string} string of input number in binary form
      */
     dec2bin(n) {
       // litterally the whole point of this function lol
@@ -263,6 +262,8 @@ export default {
     /**
      * bisect like from python
      *
+     * Returns the index where to insert item x in list a, assuming a is sorted.
+     *
      * https://github.com/python/cpython/blob/master/Lib/bisect.py
      * https://github.com/python/cpython/blob/master/Lib/test/test_bisect.py
      *
@@ -270,15 +271,14 @@ export default {
      * https://github.com/mbostock/d3/blob/master/src/arrays/bisect.js
      * https://github.com/mbostock/d3/blob/master/test/arrays/bisect-test.js
      *
-     * @param {array} arr
-     * @param {number} number
-     * @param {number} lo
-     * @param {number} hi
-     * @returns
+     * @param {array} arr array to bisect in
+     * @param {number} number number to bisect into place
+     * @param {number} [lo=0] the lowest postion in arr to consider for the bisect
+     * @param {number} [hi=arr.length] the highest position in arr to consider for bisect
+     * @returns {number} position to insert value into
      */
     /* eslint-disable no-param-reassign */
-    bisectRight(arr, number, lo, hi) {
-      if (!this.isDefined(lo)) lo = 0;
+    bisectRight(arr, number, lo = 0, hi) {
       if (!this.isDefined(hi)) hi = arr.length;
 
       while (lo < hi) {
@@ -304,9 +304,9 @@ export default {
      *
      * Useful for dynamic programming programming problem solving
      *
-     * @param {number} rows
-     * @param {number} cols
-     * @returns {[][]}
+     * @param {number} rows number of rows to have in 2d array
+     * @param {number} cols num of cols to have in 2d array
+     * @returns {[][]} 2d array
      */
     create2Darray(rows, cols) {
       if (!this.isDefined(cols)) cols = rows;
@@ -328,9 +328,9 @@ export default {
      * https://github.com/djktno/rabin-karp-js/blob/master/rk.js
      * https://github.com/morenoh149/rabin-karp-search/blob/master/index.js
      *
-     * @param {number} a
-     * @param {number} b
-     * @returns
+     * @param {number} a number to be modulo'd
+     * @param {number} b number doing the modulo'ing
+     * @returns {number} modulus
      */
     mod(a, b) {
       return ((a % b) + b) % b;
@@ -345,8 +345,8 @@ export default {
      * https://github.com/rails/rails/blob/42b0c942520e59399d70c2170253aa5275a42af1/activesupport/lib/active_support/core_ext/object/blank.rb
      * https://github.com/jprichardson/string.js/blob/master/lib/string.js // if i want to update to be just like blank and check for blank strings
      *
-     * @param {any} thing
-     * @returns
+     * @param {any} thing to tell if empty or not
+     * @returns {boolean} if thing is empty or not
      */
     isEmpty(thing) {
       // does thingy exisit
@@ -364,8 +364,8 @@ export default {
      *
      * http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-an-object/5344074#5344074
      *
-     * @param {Object} obj
-     * @returns {Object}
+     * @param {Object} obj input
+     * @returns {Object} copy of object
      */
     objDeepCopy(obj) {
       return JSON.parse(JSON.stringify(obj));
@@ -378,9 +378,9 @@ export default {
      *
      *  http://stackoverflow.com/questions/1877475/repeat-character-n-times
      *
-     * @param {string} string
-     * @param {number} number
-     * @returns
+     * @param {string} string string to repeat
+     * @param {number} number # of time to repeat string
+     * @returns {string} input string repeated # of times
      */
     stringRepeat(string, number) {
       const n = number || 1;
@@ -392,10 +392,10 @@ export default {
      *
     * http://stackoverflow.com/questions/173061/convert-a-2d-array-index-into-a-1d-index
      *
-     * @param {number} row
-     * @param {number} col
-     * @param {number} rowLength
-     * @returns
+     * @param {number} row row to access
+     * @param {number} col column to access
+     * @param {number} rowLength lenght of rows
+     * @returns {number} index in 1d version of 2d array
      */
     oneDindex(row, col, rowLength) {
       return (row * rowLength) + col;

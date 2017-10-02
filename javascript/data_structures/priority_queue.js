@@ -50,7 +50,7 @@ class naivePQ {
    *
    * @param {number} val - the inserted value
    * @param {number} [p=0] - its priority level
-   * @returns this
+   * @returns {this} reference to the pq useful for call chaining
    * @memberof naivePQ
    */
   enqueue(val, p = 0) {
@@ -78,7 +78,7 @@ class naivePQ {
    *
    * Time Complexity O(n)
    *
-   * @returns {any}
+   * @returns {any} item representing the extrema value
    * @memberof naivePQ
    */
   findExtreme() {
@@ -102,7 +102,7 @@ class naivePQ {
    *
    * Time Complexity: O(n)
    *
-   * @returns this
+   * @returns {this} pq ref for chaining
    * @memberof naivePQ
    */
   dequeue() {
@@ -115,7 +115,7 @@ class naivePQ {
    *
    * Time Complexity: O(1)
    *
-   * @returns
+   * @returns {any} refence to value of extreme priority in pq
    * @memberof naivePQ
    */
   peek() {
@@ -164,9 +164,9 @@ class BinaryHeapPQ {
    *
    * Time Complexity: O(log(n))
    *
-   * @param {number} val
-   * @param {number} [p=0]
-   * @returns
+   * @param {number} val value to add to queue
+   * @param {number} [p=0] priority of value we are adding to queue. defaults to 0 to allows reproritizing postively and negatively
+   * @returns {this} this pq
    * @memberof BinaryHeapPQ
    */
   enqueue(val, p = 0) {
@@ -187,7 +187,7 @@ class BinaryHeapPQ {
    *
    * Because of use of BinaryHeap.pop
    *
-   * @returns this
+   * @returns {any} extreme value from queue
    * @memberof BinaryHeapPQ
    */
   dequeue() {
@@ -199,7 +199,7 @@ class BinaryHeapPQ {
    *
    * Time Complexity: O(1)
    *
-   * @returns
+   * @returns {any} value of extreme from queue
    * @memberof BinaryHeapPQ
    */
   peek() {
@@ -211,7 +211,7 @@ class BinaryHeapPQ {
    *
    * Time Complexity: O(1)
    *
-   * @returns
+   * @returns {number} number of items in queue
    * @memberof BinaryHeapPQ
    */
   size() {
@@ -245,7 +245,7 @@ class BinaryHeapPQ {
    * @param {any} val - the value whose priority we changing
    * @param {number} newPriority - the new priority to be changed to
    * @param {number} order - the order at which that value was inserted
-   * @returns
+   * @returns {any|boolean} returns a reference to the object with the value changed if present. returns false if not
    * @memberof BinaryHeapPQ
    */
   changePriority(val, newPriority, order) {
@@ -339,9 +339,9 @@ class BinomialHeapPQ {
    *
    * Time Complexity: O(log(n))
    *
-   * @param {number} val
-   * @param {number} [p=0]
-   * @returns
+   * @param {number} val - the inserted value
+   * @param {number} [p=0] - its priority level
+   * @returns {this} reference to the pq useful for call chaining
    * @memberof BinomialHeapPQ
    */
   enqueue(val, p = 0) {
@@ -360,7 +360,7 @@ class BinomialHeapPQ {
    *
    * Because of use of BinomialHeapPQ.pop
    *
-   * @returns this
+   * @returns {any} value of extreme in pq
    * @memberof BinomialHeapPQ
    */
   dequeue() {
@@ -372,7 +372,7 @@ class BinomialHeapPQ {
    *
    * Time Complexity: O(log(n))
    *
-   * @returns {number}
+   * @returns {number} value of extrema
    * @memberof BinomialHeapPQ
    */
   peek() {
@@ -384,7 +384,7 @@ class BinomialHeapPQ {
    *
    * Time Complexity: O(1)
    *
-   * @returns
+   * @returns {number} number of things in the queue
    * @memberof BinomialHeapPQ
    */
   size() {
@@ -401,10 +401,10 @@ class BinomialHeapPQ {
  *
  * Time Complexity: O(1) or O(n)
  *
- * @param {number} val
- * @param {number} newPriority
- * @param {number} order
- * @returns {boolean}
+ * @param {number} val to change the priority of
+ * @param {number} newPriority new priority to change value to
+ * @param {number} order order the value to be changed was added in
+ * @returns {any|boolean} node value was changed on if
  */
 function bionomialAndFibchangePriority(val, newPriority, order) {
   let orderInserted = null;
@@ -487,9 +487,9 @@ class FibonacciHeapPQ {
    *
    * Time Complexity: O(1)
    *
-   * @param {number} val
-   * @param {number} [p=0]
-   * @returns
+   * @param {number} val - the inserted value
+   * @param {number} [p=0] - its priority level
+   * @returns {this} reference to the pq useful for call chaining
    * @memberof FibonacciHeapPQ
    */
   enqueue(val, p = 0) {
@@ -508,7 +508,7 @@ class FibonacciHeapPQ {
    *
    * Because of use of BinomialHeapPQ.pop
    *
-   * @returns this
+   * @returns {any} extreme value from queue
    * @memberof FibonacciHeapPQ
    */
   dequeue() {
@@ -520,7 +520,7 @@ class FibonacciHeapPQ {
    *
    * Time Complexity: O(1)
    *
-   * @returns {number}
+   * @returns {any} extreme value from queue
    * @memberof FibonacciHeapPQ
    */
   peek() {
@@ -532,7 +532,7 @@ class FibonacciHeapPQ {
    *
    * Time Complexity: O(1)
    *
-   * @returns
+   *  @returns {number} number of things in the queue
    * @memberof FibonacciHeapPQ
    */
   size() {

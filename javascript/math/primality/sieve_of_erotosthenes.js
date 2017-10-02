@@ -5,8 +5,8 @@
  *
  * https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
  *
- * @param {any} limit
- * @returns {array}
+ * @param {any} limit last number to check if prime
+ * @returns {number[]} array of all primes under limit
  * @module SieveOfEratosthenes
  */
 export default function SieveOfEratosthenes(limit) {

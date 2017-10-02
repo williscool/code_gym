@@ -39,9 +39,9 @@ const permutations = PermutationTypes.without_repetition;
  *
  * https://math.stackexchange.com/a/2020891/237639
  *
- * @param {number} n
- * @param {number} k
- * @returns {number}
+ * @param {number} n number of elements
+ * @param {number} k # of subset of n elements to choose
+ * @returns {number} number of possible combinations
  */
 function withoutRep(n, k) {
   if (k < 0 || k > n) return 0;
@@ -56,11 +56,11 @@ function withoutRep(n, k) {
  *
  * https://math.stackexchange.com/questions/208377/combination-with-repetitions
  *
- * TODO: figure out why k - 1 thats the part I dont get. I get that you can use all numbers on each choice but why minus one?
+ * TODO: figure out why n - 1 thats the part I dont get. I get that you can use all numbers on each choice but why minus one?
  *
- * @param {number} n
- * @param {number} k
- * @returns {number}
+ * @param {number} n number of elements
+ * @param {number} k # of subset of n elements to choose
+ * @returns {number} number of possible combinations
  */
 function withRep(n, k) {
   if (k < 0 || k > n) return 0;

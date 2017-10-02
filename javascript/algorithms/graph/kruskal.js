@@ -22,9 +22,9 @@ const BinaryHeapPQ = PriorityQueueTypes.binaryHeap;
  * http://algs4.cs.princeton.edu/43mst/
  * inspired by http://algs4.cs.princeton.edu/43mst/KruskalMST.java.html
  *
- * @property weight the weight of a minimum spanning tree
- * @property mst a queue with the edges of the mst
- * @param {any} graph
+ * @property {number} weight the weight of a minimum spanning tree
+ * @property {Queue} mst a queue with the edges of the mst
+ * @param {any} graph graph to traversal
  */
 class Kruskal {
   constructor(graph) {

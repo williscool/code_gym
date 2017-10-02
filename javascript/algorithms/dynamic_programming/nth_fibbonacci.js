@@ -37,8 +37,8 @@ import dsalgo from '../../utilities';
  *
  * https://www.quora.com/What-is-the-space-complexity-of-a-recursive-Fibonacci-function
  *
- * @param {number} n
- * @returns {number}
+ * @param {number} n fib number to calculate
+ * @returns {number} nth fibonacci number
  */
 function naiveRecursive(n) {
   if (n === 0) return 0;
@@ -55,8 +55,8 @@ const cache = [0, 1];
  * Time Complexity: O(n)
  * Space Complexity: O(n)
  *
- * @param {number} n
- * @returns {number}
+ * @param {number} n fib number to calculate
+ * @returns {number} nth fibonacci number
  */
 function memoizedRecursive(n) {
   if (!dsalgo.utils.isDefined(cache[n])) {
@@ -72,8 +72,8 @@ function memoizedRecursive(n) {
  * We observe that we can replace the recursion with a simple loop
  * that fills the array in order, instead of relying on recursion
  *
- * @param {number} n
- * @returns {number}
+ * @param {number} n fib number to calculate
+ * @returns {number} nth fibonacci number
  */
 function iterative(n) {
   if (n === 0) return 0;
@@ -101,8 +101,8 @@ function iterative(n) {
  * Time Complexity: O(n)
  * Space Complexity: O(1)
  *
- * @param {number} n
- * @returns {number}
+ * @param {number} n fib number to calculate
+ * @returns {number} nth fibonacci number
  */
 function iterativeConstantSpace(n) {
   let n1 = 0;

@@ -22,7 +22,8 @@ const Stack = StackTypes.array;
  *
  * @param {Graph} graph input graph to tranverse
  * @param {any} startVertex vertex to start the traversal from
- * @returns {array}
+ * @returns {array} Array of objects describing each vertex, like
+ *     [{distance: _, predecessor: _ }]
  */
 function iterative(graph, startVertex) {
   if (graph.order() < 1) throw new Error("come on dog there's no nodes in this graph.");
@@ -134,7 +135,8 @@ function recursive(graph, v, visited, fn, order = 'in') {
  *
  * @param {Graph} graph input graph to tranverse
  * @param {any} startVertex from which to start graph traversal
- * @returns
+ * @returns {array} Array of objects describing each vertex, like
+ *     [{distance: _, predecessor: _ }]
  */
 function recursiveInfo(graph, startVertex) {
   const info = [];
@@ -178,7 +180,7 @@ function recursiveInfo(graph, startVertex) {
  *
  * @param {any} graph input graph
  * @param {any} orderName order type to traverse the graph in
- * @returns
+ * @returns {array} array of verts in graph traversal order
  */
 function recursivetoArray(graph, orderName) {
   const DFS = recursive;

@@ -33,12 +33,12 @@
  * http://www2.hh.se/staff/vero/itads/2007/lectures/lecture4/printL4.pdf
  * http://introcs.cs.princeton.edu/java/23recursion/TowersOfHanoi.java.html
  *
- * @param {number} numDisks
- * @param {number} source
- * @param {number} destination
- * @param {number} spare
- * @param {number[]} [result=[]]
- * @returns {array}
+ * @param {number} numDisks total number of disks on all poles
+ * @param {number} source number of disks on the start pole
+ * @param {number} destination number of disks on the destination pole
+ * @param {number} spare number of disks on the spare pole
+ * @param {number[]} [result=[]] array used to store the result
+ * @returns {array} moves used to all the disks form the start to the destination pole
  */
 function Hanoi(numDisks, source, destination, spare, result = []) {
   // if(numDisks === 0) // do nothing

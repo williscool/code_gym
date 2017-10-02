@@ -53,8 +53,9 @@ class BinomialHeap {
    *
    * default to min heap
    *
-   * @prop comp - comparator function defaults to min heap
-   * @prop valueToString - function to turn your input values (which could be numbers or objects) into a string defaults to `JSON.stringify`
+   * @prop {Function} comp - comparator function defaults to min heap
+   * @prop {Function} degreeComp - function that returns a <= b if this is a min heap or a >= b if max heap
+   * @prop {Function} valueToString - function to turn your input values (which could be numbers or objects) into a string defaults to `JSON.stringify`
    * @memberof BinomialHeap
    */
   constructor({
@@ -90,8 +91,8 @@ class BinomialHeap {
    *
    * Time Complexity: O(1)
    *
-   * @param {any} key
-   * @param {any} val
+   * @param {string} key value storing
+   * @param {any} val index value is being stored at
    * @memberof BinomialHeap
    */
   addToNodeSet(key, val) {
@@ -104,8 +105,8 @@ class BinomialHeap {
    *
    * Time Complexity: O(1)
    *
-   * @param {any} key
-   * @returns
+   * @param {string} key key of value to return from set
+   * @returns {any} value from the set based on they key
    * @memberof BinomialHeap
    */
   getFromNodeSet(key) {
@@ -117,7 +118,7 @@ class BinomialHeap {
    *
    * Time Complexity: O(1)
    *
-   * @param {any} key
+   * @param {string} key key of value to remove from set
    * @memberof BinomialHeap
    */
   removeFromNodeSet(key) {
@@ -131,7 +132,7 @@ class BinomialHeap {
    *
    * Time Complexity: O(log(n))
    *
-   * @returns {BinomHeapNode}
+   * @returns {BinomHeapNode} node holding the extrema value
    * @memberof BinomialHeap
    */
   findMin() {
@@ -157,8 +158,8 @@ class BinomialHeap {
    * Time Complexity: O(1)
    *
    * @static
-   * @param {any} node
-   * @param {any} other
+   * @param {any} node node to make new parent
+   * @param {any} other node who will become child of other node
    * @memberof BinomialHeap
    */
   static linkTreeNodes(node, other) {
@@ -261,8 +262,8 @@ class BinomialHeap {
    *
    * Time Complexity: O(log(n))
    *
-   * @param {any} otherHeap
-   * @returns
+   * @param {any} otherHeap other biomial heap to merge this one with
+   * @return {undefined}
    * @memberof BinomialHeap
    */
   union(otherHeap) {
@@ -335,9 +336,9 @@ class BinomialHeap {
    *
    * Time Complexity: O(log(n))
    *
-   * @param {any} key
-   * @param {any} val
-   * @returns
+   * @param {number} key key to insert value at in nodeset (usually the number order)
+   * @param {any} val value to insert into heap
+   * @returns {this} reference to this heap for chaining
    * @memberof BinomialHeap
    */
   insert(key, val) {
@@ -373,9 +374,9 @@ class BinomialHeap {
    * Time Complexity: O(log(n))
    *
    * @static
-   * @param {BinomialHeap} heap
-   * @param {BinomHeapNode} root
-   * @param {BinomHeapNode} prev
+   * @param {BinomialHeap} heap heap from which to remove root
+   * @param {BinomHeapNode} rootToBeRemoved reference to the root to be removed
+   * @param {BinomHeapNode} prev previous link of rootToBeRemoved in root chain
    * @memberof BinomialHeap
    */
   static removeRoot(heap, rootToBeRemoved, prev) {
@@ -417,13 +418,14 @@ class BinomialHeap {
    * Extract the minimum value from the binomial heap
    *
    * Works by:
-   * (Only step one is done in this function in this implementattion)
+   *
+   * (Only step one is done in this function in this implementation)
    * 1. finding the minimum root node in the root node linked list same as findMin while keeping a reference to its prev
    * 2. the rest is done in `removeRoot`
    *
    * Time Complexity: O(log(n))
    *
-   * @returns {BinomHeapNode}
+   * @returns {BinomHeapNode} the heap node representing the extrema value
    * @memberof BinomialHeap
    */
   extractMin() {
@@ -462,8 +464,8 @@ class BinomialHeap {
    * Time Complexity: O(1)
    *
    * @static
-   * @param {any} node
-   * @param {any} other
+   * @param {any} node node to move stuff from
+   * @param {any} other node to move stuff too
    * @memberof BinomialHeap
    */
   static exchange(node, other) {
@@ -486,13 +488,13 @@ class BinomialHeap {
    *
    * decrease key
    *
-   * Needs a reference to node out from the node set to work
+   * Needs a reference to node from the node set to work
    *
    * Time Complexity: O(log(n))
    *
-   * @param {BinomHeapNode} node
-   * @param {BinomHeapNode} newKey
-   * @returns {BinomHeapNode}
+   * @param {BinomHeapNode} node node to change the value of
+   * @param {BinomHeapNode} newKey new value to change the node's value to
+   * @returns {BinomHeapNode} reference to the node who's value was changed
    * @memberof BinomialHeap
    */
   decreaseKey(node, newKey) {
@@ -528,8 +530,8 @@ class BinomialHeap {
    *
    * Time Complexity: O(log(n))
    *
-   * @param {any} node
-   * @returns
+   * @param {any} node to remove from heap
+   * @returns {boolean|undefined} if the node was removed or not
    * @memberof BinomialHeap
    */
   delete(node) {
@@ -566,8 +568,8 @@ class BinomialHeap {
    *
    * Time Complexity: O(1)
    *
-   * @param {any} val
-   * @returns
+   * @param {any} val value to check if is in heap
+   * @returns {any|boolean} was the value in the heap or nah?
    * @memberof BinomialHeap
    */
   contains(val) {
@@ -582,7 +584,6 @@ class BinomialHeap {
  * Used to have a uniform interface for all of the heap implementation
  *
  * @alias findMin
- * @returns
  * @memberof BinomialHeap
  */
 BinomialHeap.prototype.peek = BinomialHeap.prototype.findMin;
@@ -590,8 +591,7 @@ BinomialHeap.prototype.peek = BinomialHeap.prototype.findMin;
 /**
  * Just an alias for `delete`
  *
- * @param {any} node
- * @returns
+ * @alias delete
  * @memberof BinomialHeap
  */
 
@@ -603,7 +603,7 @@ BinomialHeap.prototype.remove = BinomialHeap.prototype.delete;
  *
  * Used to have uniform interfaces for all of the heaps
  *
- * @returns {BinomHeapNode}
+ * @alias extractMin
  * @memberof BinomialHeap
  */
 BinomialHeap.prototype.pop = BinomialHeap.prototype.extractMin;
@@ -623,7 +623,7 @@ class BinomHeapNode {
    * Creates an instance of Node.
    * with the value of val
    *
-   * @param {any} val
+   * @param {any} val value for node to have
    * @memberof Node
    */
   constructor({

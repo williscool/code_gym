@@ -48,8 +48,8 @@ import dsalgo from '../../utilities';
 /**
   * This function transforms a string representing a decimal number to its ieee floating binary representation as a string
   *
-  * @param {string} decInput
-  * @returns {string}
+  * @param {string} decInput input decimal number
+  * @returns {string} output iee floating point number
   */
 function dectoieee(decInput) {
   let positive = true;
@@ -197,8 +197,8 @@ function dectoieee(decInput) {
  *
  * https://en.wikipedia.org/wiki/Single-precision_floating-point_format#Converting_from_single-precision_binary_to_decimal
  *
- * @param {string} ieee
- * @returns {string}
+ * @param {string} ieee input ieee floating point num
+ * @returns {string} output decimal number as a string
  */
 function ieeetodec(ieee) {
   const numbers = ieee.split('');
