@@ -1,6 +1,6 @@
 {
   "name": "js_code_gym",
-  "version": "0.5.0",
+  "version": "0.7.0",
   "description": "Data Structures and Algorithms in Javascript",
   "main": "utilities.js",
   "directories": {
