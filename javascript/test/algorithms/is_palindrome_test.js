@@ -1,24 +1,23 @@
-var assert = require('assert');
-var isPalindromeFns = require('../../algorithms/is_palindrome.js');
+import assert from 'assert';
+import isPalindromeFns from '../../algorithms/is_palindrome';
 
-Object.keys(isPalindromeFns).forEach(function(key) {
+Object.keys(isPalindromeFns).forEach((key) => {
+  const isPalindrome = isPalindromeFns[key];
 
-  var isPalindrome = isPalindromeFns[key];
-
-  describe(key + " isPalindrome", function() {
-    describe("should check if a string is a palindrome", function() {
-      it("a", function() {
-        assert.equal(isPalindrome("a"), true);
+  describe(`${key} isPalindrome`, () => {
+    describe('should check if a string is a palindrome', () => {
+      it('a', () => {
+        assert.equal(isPalindrome('a'), true);
       });
-      it("motor", function() {
-        assert.equal(isPalindrome("motor"), false);
+      it('motor', () => {
+        assert.equal(isPalindrome('motor'), false);
       });
-      it("rotor", function() {
-        assert.equal(isPalindrome("rotor"), true);
+      it('rotor', () => {
+        assert.equal(isPalindrome('rotor'), true);
       });
       // https://misterpalindrome.files.wordpress.com/2013/04/mr-palindrome-evil-olive.jpg
-      it("evilolive", function() {
-        assert.equal(isPalindrome("evilolive"), true);
+      it('evilolive', () => {
+        assert.equal(isPalindrome('evilolive'), true);
       });
     });
   });
