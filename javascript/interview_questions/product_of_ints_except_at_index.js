@@ -1,130 +1,178 @@
-// https://www.interviewcake.com/question/product-of-other-numbers
+import dsalgo from '../utilities';
 
-// n^2
+/**
+ * https://www.interviewcake.com/question/product-of-other-numbers
+ *
+ * You have a list of integers, and for each index you want to find the product of every integer except the integer at that index.
+ *
+ * Write a function get_products_of_all_ints_except_at_index() that takes a list of integers and returns a list of the products.
+ *
+ * Do not use division in your solution.
+ *
+ * Also I could throw an exception if there are are less than 2 numbers in the array (because there is no other index to do the multiplication with in that case)
+ * but its pretty trival to guard on that edge case
+ *
+ * @module ProductOfIntsExceptAtIndex
+ */
 
-// n extra space
 
-// slow as balls
-var dsalgo = require('../utilities.js').default;
+/**
+ * This is the naive solution. aka slow as balls lol
+ *
+ * In this solution you simply interate over the input array n times for each n indicies (expect the one at the current iteration of course)
+ *
+ * And multiply the numbers in the auxillary array.
+ *
+ * Time Complexity: O(n^2)
+ * Extra Space Complexity: O(n)
+ *
+ * @param {number[]} ints input ints array
+ * @returns {number[]} output product of ints except at index
+ */
+function slowProductOfAllExceptAtIndex(ints) {
+  const productArr = [];
 
-function slowProductOfAllExceptAtIndex (ints){
+  ints.forEach((num, i) => {
+    ints.forEach((otherNum, j) => {
+      if (i !== j) {
+        if (!dsalgo.utils.isDefined(productArr[i])) {
+          productArr[i] = otherNum;
+        } else {
+          productArr[i] *= otherNum;
+        }
+      }
+    });
+  });
 
-	var product_arr = [];
-
-	ints.forEach(function (num, i,array) {
-		ints.forEach(function (otherNum, j) {
-			if(i != j){
-				if(!dsalgo.utils.isDefined(product_arr[i])) {
-					product_arr[i] =  otherNum;
-				} else {
-					product_arr[i] = product_arr[i] * otherNum;
-				}
-			}
-		});
-	});
-
-	return product_arr;
+  return productArr;
 }
 
-// 5n
-// n extra space
-// but uses division so it would blowup on zero
+// there is an intermediate version that you could put here that is but O(n) uses 3 extra arrays
+// one for the products of the numbers before index
+// one for the products of the numbers after index
+// and another one to multply those together at each index in
+// but not particularly intesresting to code so I'll leave as a comments
 
-function divisionPAllExceptAtIndex(ints){
-
-	var product_arr = [ints[0]];
-
-	ints.forEach(function (num, i,array) {
-		if(i > 0) {
-			product_arr[i] = product_arr[i - 1] * num;
-		}
-	});
-
-	ints.reverse();
-	product_arr.reverse();
-
-	var multiplicator = ints[0];
-
-	ints.forEach(function (num, i,array) {
-		if(i > 0) {
-			product_arr[i] = product_arr[i] * multiplicator;
-			multiplicator = multiplicator * num;
-		}
-	});
-
-	ints.forEach(function (num, i,array) {
-		product_arr[i] = product_arr[i] /  num;
-	});
-
-  // reverse it back again lol
-	product_arr.reverse();
-	return product_arr;
-}
-
-// 5n
-
-// n extra space
-
+/**
+ * This solution works by multiplying all of the numbers before an index in the aux arr...
+ *
+ * Then reversing both ... thus allowing you to multiply all of the numbers after each index into each.
+ *
+ * Finally reverse the aux arr one more time to get it back into the original order of the input array
+ *
+ * Then return it
+ *
+ * Time Complexity: O(5n)
+ * Extra Space Complexity: O(n)
+ *
+ * @param {number[]} ints input ints array
+ * @returns {number[]} output product of ints except at index
+ */
 function foreachPAllExceptAtIndex(ints) {
+  let numsBefore = ints[0]; // start with 1 to not affect the product
+  const productArr = [];
 
-	var numsBefore = ints[0];
-	var product_arr = [ints[0]];
+  ints.forEach((num, i) => {
+    productArr[i] = numsBefore;
+    numsBefore *= num;
+  });
 
-	ints.forEach(function (num, i,array) {
-		if(i > 0) {
-			product_arr[i] = numsBefore;
-			numsBefore = numsBefore * num;
-		}
-	});
+  ints.reverse();
+  productArr.reverse();
 
-	ints.reverse();
-	product_arr.reverse();
+  let numsAfter = ints[0];
 
-	var numsAfter = ints[0];
-
-	ints.forEach(function (num, i,array) {
-		if(i > 0) {
-			product_arr[i] = product_arr[i] * numsAfter;
-			numsAfter = numsAfter * num;
-		}
-	});
+  ints.forEach((num, i) => {
+    if (i > 0) { // first number has already had all other nums multipled into it in first pass of numsBefore so skip it
+      productArr[i] *= numsAfter;
+      numsAfter *= num;
+    }
+  });
 
   // again reverse it back
-	product_arr.reverse();
-	return product_arr;
+  productArr.reverse();
+  return productArr;
 }
 
 
-// 2n version
-// still n extra space of course
-
+/**
+ * This version gets rid of the need for reversing the arrays
+ * and just uses 2 while loops to go first forward then back
+ *
+ * waaaay more elegant
+ *
+ * Time Complexity: O(2n)
+ * Extra Space Complexity: O(n)
+ *
+ * @param {number[]} ints input ints array
+ * @returns {number[]} output product of ints except at index
+ */
 function whilePAllExceptAtIndex(ints) {
+  let numsBefore = 1;
+  const productArr = [];
+  let i = 0;
 
-	var numsBefore = ints[0];
-	var product_arr = [ints[0]];
-	var i = 1;
+  while (i < ints.length) {
+    productArr[i] = numsBefore;
+    numsBefore *= ints[i];
+    i += 1;
+  }
 
-	while (i < ints.length) {
-		product_arr[i] = numsBefore;
-		numsBefore = numsBefore * ints[i];
-		i++;
-	}
+  let numsAfter = 1;
+  i = ints.length - 1;
 
-	var numsAfter = ints[ints.length - 1];
-	i = ints.length - 2;
+  while (i >= 0) {
+    productArr[i] *= numsAfter;
+    numsAfter *= ints[i];
+    i -= 1;
+  }
 
-	while (i >= 0) {
-		product_arr[i] = product_arr[i] * numsAfter;
-		numsAfter = numsAfter * ints[i];
-		i--	;
-	}
-
-	return product_arr;
+  return productArr;
 }
 
-module.exports = {
+/**
+ * This is bonus style uses division to get the job done.
+ *
+ * but because of this it would blowup on zero
+ *
+ * Extra Space Complexity: O(n)
+ *
+ * @param {number[]} ints input ints array
+ * @returns {number[]} output product of ints except at index
+ */
+function divisionPAllExceptAtIndex(ints) {
+  const productArr = [ints[0]];
+
+  ints.forEach((num, i) => {
+    if (i > 0) {
+      productArr[i] = productArr[i - 1] * num;
+    }
+  });
+
+  ints.reverse();
+  productArr.reverse();
+
+  let multiplicator = ints[0];
+
+  ints.forEach((num, i) => {
+    if (i > 0) {
+      productArr[i] *= multiplicator;
+      multiplicator *= num;
+    }
+  });
+
+  ints.forEach((num, i) => {
+    productArr[i] /= num;
+  });
+
+  // reverse it back again lol
+  productArr.reverse();
+  return productArr;
+}
+
+export default {
   slow: slowProductOfAllExceptAtIndex,
-  division: divisionPAllExceptAtIndex,
   foreach_loop: foreachPAllExceptAtIndex,
-  while_loop: whilePAllExceptAtIndex
+  while_loop: whilePAllExceptAtIndex,
+  division: divisionPAllExceptAtIndex,
 };
