@@ -4,7 +4,9 @@
 
 I have written, tested, documented, and linted several hundred data structures, algorithms, and coding problems in javascript.
 
-As of today roughly 30 directories, ~200 files, and ~550 tests.
+As of today roughly 30 directories, ~200 files, and ~550 tests, ~10000 lines of code.
+
+Handcrafted from scratch (my rule is outside of testing I type every character.)
 
 # About this (from a computer sciency point of view)
 
