@@ -7,9 +7,10 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha --compilers js:babel-register --recursive"
+    "test": "mocha --require babel-register --recursive"
   },
   "devDependencies": {
+    "mocha":"^4.0.1",
     "babel-eslint": "^7.2.3",
     "babel-preset-airbnb": "^2.4.0",
     "babel-register": "^6.26.0",
