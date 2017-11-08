@@ -1,53 +1,68 @@
-var dsalgo = require('../utilities.js').default;
 
-function AllTimeMath() {
-  this.max = null;
-  this.min = null;
-  this.mean = null;
-  this.mode = null;
-  this.numValues = 0;
-  this.sumOfValues = 0;
-  this.occurences = dsalgo.utils.simpleArrayFill(0,111);
-  this.mostOccurringValue = null;
-}
+import dsalgo from '../utilities';
 
-AllTimeMath.prototype = {
-   insert: function (val){
-    if(this.numValues < 1) {
+/**
+ * Now defunct (I can't find a link to it anymore) question from interview cake.
+ *
+ * Probably thought it was too easy lol. It pretty much is
+ *
+ * Very simple just a data structure that allows you to insert numbers and maintains
+ *
+ * The Min, Max, Mean and Mode of all of the numbers.
+ *
+ * No more complicated than that.
+ *
+ */
+class AllTimeMath {
+  constructor() {
+    this.max = null;
+    this.min = null;
+    this.mean = null;
+    this.mode = null;
+    this.numValues = 0;
+    this.sumOfValues = 0;
+    this.occurences = [];
+    this.mostOccurringValue = null;
+  }
 
+  insert(val) {
+    if (this.numValues < 1) {
       // nothing is populated so populate it all
       this.min = val;
       this.max = val;
       this.mostOccurringValue = val;
     }
 
-    this.numValues++;
+    this.numValues += 1;
 
-    if(val > this.max) this.max = val;
-    if(val < this.min) this.min = val;
+    if (val > this.max) this.max = val;
+    if (val < this.min) this.min = val;
 
     this.sumOfValues = this.sumOfValues + val;
 
     this.mean = this.sumOfValues / this.numValues;
 
-    this.occurences[val]++;
+    if (!dsalgo.utils.isDefined(this.occurences[val])) {
+      this.occurences[val] = 0;
+    }
+    this.occurences[val] += 1;
 
-    if(this.occurences[val] > this.occurences[this.mostOccurringValue]){
+    if (this.occurences[val] > this.occurences[this.mostOccurringValue]) {
       this.mostOccurringValue = val;
     }
-   },
-   get_max: function(){
-     return this.max;
-   },
-   get_min: function(){
-     return this.min;
-   },
-   get_mean: function(){
-     return this.mean;
-   },
-   get_mode: function(){
-     return this.mostOccurringValue;
-   }
-};
+  }
+  getMax() {
+    return this.max;
+  }
+  getMin() {
+    return this.min;
+  }
+  getMean() {
+    return this.mean;
+  }
+  getMode() {
+    return this.mostOccurringValue;
+  }
+}
 
-module.exports = AllTimeMath;
+export default AllTimeMath;
