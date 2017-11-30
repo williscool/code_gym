@@ -1,11 +1,11 @@
 {
   "parser": "babel-eslint",
-  "extends": "airbnb-base",
+  "extends": ["airbnb-base", "prettier"],
   "env": {
     "mocha": true
   },
   "rules": {
     "max-len": ["error", 120, { "ignoreComments": true }],
-    "valid-jsdoc": ["error", {"requireReturn": false}]
+    "valid-jsdoc": ["error", { "requireReturn": false }]
   }
 }

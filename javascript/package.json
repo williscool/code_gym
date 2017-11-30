@@ -10,13 +10,18 @@
     "test": "mocha --require babel-register --recursive"
   },
   "devDependencies": {
-    "mocha":"^4.0.1",
     "babel-eslint": "^7.2.3",
     "babel-preset-airbnb": "^2.4.0",
     "babel-register": "^6.26.0",
     "eslint": "~4.5.0",
     "eslint-config-airbnb-base": "~11.3.2",
-    "eslint-plugin-import": "~2.7.0"
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "~2.7.0",
+    "mocha": "^4.0.1",
+    "prettier-eslint": "^8.2.2"
+  },
+  "prettier": {
+    "singleQuote": true
   },
   "author": "William Harris",
   "license": "ISC"

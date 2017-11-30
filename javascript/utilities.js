@@ -217,6 +217,10 @@ export default {
      * Pretty sure it was not ever supposed to work that way lmao. Why it did is fun mystery to solve another day
      *
      *
+     * TODO: switch to `require.resolve`
+     * https://stackoverflow.com/a/36434983/511710
+     *
+     *
      * @param {any} dirName base directory from which to start looking for file usually `__dirname`
      * @param {any} pathName path or relative path from which to get text file for requiring
      * @returns {string} text from pathName file
