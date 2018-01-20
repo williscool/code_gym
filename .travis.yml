@@ -1,6 +1,8 @@
 # Officially supporting the latest and the latest lts
 language: node_js
 node_js:
+  - "9.4.0"
+  - "8.9.4"
   - "8.4"
   - "6.11"
 install:
