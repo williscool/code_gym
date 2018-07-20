@@ -135,8 +135,8 @@ class BST {
 
     // no need to look to remove node if it wasn't found
     if (found) { // http://james.padolsey.com/javascript/truthy-falsey/
-      const current = found[0];
-      parent = found[1];
+      const [current, inputParent] = found;
+      parent = inputParent;
 
       // figure out how many children
       childCount = (current.left ? 1 : 0) + (current.right ? 1 : 0);
@@ -398,6 +398,7 @@ class BST {
 
     return this;
   }
+
   /**
    * Transforms BST into Array in specified traversal order
    *
@@ -419,6 +420,7 @@ class BST {
 
     return result;
   }
+
   /**
    * Return how many nodes are in the tree
    *
@@ -433,6 +435,7 @@ class BST {
   size() {
     return this.toArray().length;
   }
+
   /**
    * Returns the number of levels of nodes in the tree
    *
@@ -442,6 +445,7 @@ class BST {
   height() {
     return this.heightFromNode(this.root);
   }
+
   /**
    * Returns the number of levels of nodes in the tree from this starting node
    *
@@ -456,15 +460,7 @@ class BST {
     const lheight = this.height(node.left);
     const rheight = this.height(node.right);
 
-    let returnHeight;
-
-    if (lheight > rheight) {
-      returnHeight = (lheight + 1);
-    } else {
-      returnHeight = (rheight + 1);
-    }
-
-    return returnHeight;
+    return Math.max(lheight, rheight) + 1;
   }
 
   /**
@@ -517,17 +513,10 @@ class BST {
     const nodeStack = new Stack();
     nodeStack.push([root, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY]);
 
-    let nodeInfoArr;
-    let currentNode;
-    let lowerBound;
-    let upperBound;
-
     while (!nodeStack.isEmpty()) {
-      nodeInfoArr = nodeStack.pop();
+      const nodeInfoArr = nodeStack.pop();
 
-      currentNode = nodeInfoArr[0];
-      lowerBound = nodeInfoArr[1];
-      upperBound = nodeInfoArr[2];
+      const [currentNode, lowerBound, upperBound] = nodeInfoArr;
 
       if (currentNode.value > lowerBound && currentNode.value < upperBound) {
         if (currentNode.left) {
@@ -609,8 +598,8 @@ class BST {
     while (currentNode.right) {
       // node is parent of largest node and the largest node has no children
       if (currentNode.right !== null &&
-          currentNode.right.right === null
-          && currentNode.right.left === null) {
+        currentNode.right.right === null &&
+        currentNode.right.left === null) {
         return currentNode;
       }
 
@@ -622,6 +611,7 @@ class BST {
       currentNode = currentNode.right;
     }
   }
+
   /**
    * Balance the BST
    *
@@ -644,7 +634,7 @@ class BST {
    * @memberof BST
    */
   balance() {
-    if (root !== null) {
+    if (this.root !== null) {
       let pseudoRoot = new Node(null);
       pseudoRoot.right = this.root;
       BST.makeSortedLinkedList(pseudoRoot); // aka backbone, aka vine, or tree_to_vine
@@ -653,6 +643,7 @@ class BST {
       pseudoRoot = null;
     }
   }
+
   /**
    * Makes a BST tree a sorted linked list
    *
@@ -679,6 +670,7 @@ class BST {
       }
     }
   }
+
   /**
    * Makes a tree that was turned into a sorted linked list into complete binary tree
    *
@@ -696,10 +688,10 @@ class BST {
     // aka greatestPowerOf2LessThanN
     let newSize = size;
     const numLeaves = newSize +
-     (1 -
-      (2 **
-        (Math.floor(
-          Math.log(size + 1) / Math.log(2)))));
+      (1 -
+        (2 **
+          (Math.floor(
+            Math.log(size + 1) / Math.log(2)))));
     this.compress(startNode, numLeaves);
 
     newSize -= numLeaves;
@@ -709,6 +701,7 @@ class BST {
       this.compress(startNode, newSize);
     }
   }
+
   /**
    * @TODO really figure out wtf this does
    *
