@@ -6,6 +6,7 @@
   },
   "rules": {
     "max-len": ["error", 120, { "ignoreComments": true }],
-    "valid-jsdoc": ["error", { "requireReturn": false }]
+    "valid-jsdoc": ["error", { "requireReturn": false }],
+    "require-jsdoc": "error"
   }
 }

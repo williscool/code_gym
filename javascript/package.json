@@ -7,18 +7,20 @@
     "test": "test"
   },
   "scripts": {
+    "lint": "eslint . --ext .js",
+    "mocha": "mocha --require babel-register",
     "test": "mocha --require babel-register --recursive"
   },
   "devDependencies": {
-    "babel-eslint": "^7.2.3",
-    "babel-preset-airbnb": "^2.4.0",
+    "babel-eslint": "^8.2.6",
+    "babel-preset-airbnb": "^2.5.2",
     "babel-register": "^6.26.0",
-    "eslint": "~4.5.0",
-    "eslint-config-airbnb-base": "~11.3.2",
+    "eslint": "~5.1.0",
+    "eslint-config-airbnb-base": "~13.0.0",
     "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-import": "~2.7.0",
-    "mocha": "^4.0.1",
-    "prettier-eslint": "^8.2.2"
+    "eslint-plugin-import": "~2.13.0",
+    "mocha": "^5.2.0",
+    "prettier-eslint": "^8.8.2"
   },
   "prettier": {
     "singleQuote": true

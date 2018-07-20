@@ -46,6 +46,22 @@ Fun fact: I'm the reason there is a [note at the top of the style guide](https:/
 
 [https://github.com/kdn251/interviews](https://github.com/kdn251/interviews)
 
+## Testing
+
+individual tests
+
+```bash
+ yarn mocha test/data_structures/bst_test.js
+```
+
+test suite
+
+```bash
+ yarn test
+```
+
+note: once I finish es6/ es6 next migration I'll enforce lint and test on commit
+
 ## Order I wrote things in (top is most recent bottom is least recent)
 
 in case you are interested in following my curriculum of sorts
@@ -102,7 +118,7 @@ in case you are interested in following my curriculum of sorts
 ### algos
 
 - union find
-- kruskal  http://stackoverflow.com/questions/1195872/kruskal-vs-prim
+- kruskal http://stackoverflow.com/questions/1195872/kruskal-vs-prim
 - prim
 - djikstra
 - dfs
@@ -114,7 +130,6 @@ in case you are interested in following my curriculum of sorts
 - adjacency matrx
 - Incidence list
 - Incidence matrix
-
 
 #### heaps
 
@@ -151,7 +166,6 @@ in case you are interested in following my curriculum of sorts
 - linked list
 - stack with array
 - array in c
-
 
 ## Listing of Stuff
 
