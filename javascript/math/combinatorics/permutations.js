@@ -12,6 +12,8 @@ import dsalgo from '../../utilities';
  *
  * https://www.khanacademy.org/math/precalculus/prob_comb/combinatorics_precalc/v/permutation-formula
  *
+ * https://betterexplained.com/articles/easy-permutations-and-combinations/
+ *
  * @module Permutations
  */
 const factorial = FactorialTypes.count_up_iterative;

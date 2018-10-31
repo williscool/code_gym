@@ -19,6 +19,9 @@ import PermutationTypes from './permutations';
  * otherwise its 0
  *
  * http://math.stackexchange.com/questions/551920/what-is-zero-choose-one/551926#551926
+ *
+ *
+ * https://betterexplained.com/articles/easy-permutations-and-combinations/
  * @module Combinations
  */
 
